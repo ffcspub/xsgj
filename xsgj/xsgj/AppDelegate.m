@@ -14,6 +14,7 @@
 #import "OtherViewController.h"
 #import "XTGLViewController.h"
 #import "XZGLViewController.h"
+#import "LoginViewController.h"
 
 @implementation AppDelegate
 
@@ -22,9 +23,20 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize tabBarController = _tabBarController;
 
+-(void)initStyle{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+    if (IOS7_OR_LATER) {
+        //        [[UINavigationBar appearance]setBackgroundImage:[UIImage imageNamed:@"MyNavigationBar1"] forBarMetrics:UIBarMetricsDefault];
+        [[UINavigationBar appearance] setBarTintColor:HEX_RGB(0x409be4)];
+        [[UINavigationBar appearance]setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,[UIFont boldSystemFontOfSize:20],UITextAttributeFont,@0.0,UITextAttributeTextShadowOffset, nil]];
+    }
+#endif
+}
+
 -(void)addThirthPart{
     [MAMapServices sharedServices].apiKey =@"9dfdf1c3299afea34b2c97c45010afaa";
 }
+
 
 -(void)initTabBarController{
     _tabBarController = [[AKTabBarController alloc]initWithTabBarHeight:50];
@@ -61,14 +73,6 @@
     UINavigationController *navController4 = [[UINavigationController alloc]initWithRootViewController:viewcontroller4];
     
     [_tabBarController setViewControllers:[@[navController1,navController2,navController3,navController4]mutableCopy]];
-    
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
-    if (IOS7_OR_LATER) {
-        //        [[UINavigationBar appearance]setBackgroundImage:[UIImage imageNamed:@"MyNavigationBar1"] forBarMetrics:UIBarMetricsDefault];
-        [[UINavigationBar appearance] setBarTintColor:HEX_RGB(0x409be4)];
-        [[UINavigationBar appearance]setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,[UIFont boldSystemFontOfSize:20],UITextAttributeFont,@0.0,UITextAttributeTextShadowOffset, nil]];
-    }
-#endif
 
 }
 
@@ -76,11 +80,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self initStyle];
     // Override point for customization after application launch.
-    [self initTabBarController];
-    [self addController:_tabBarController];
     [self addThirthPart];
-    self.window.rootViewController = _tabBarController;
+    [self showLoginViewController];
+
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
@@ -209,8 +213,6 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-
-
 -(void)showTabView;{
     [_tabBarController showTabBarAnimated:NO];
 }
@@ -222,6 +224,21 @@
 
 -(void)hideTabView;{
     [_tabBarController hideTabBarAnimated:NO];
+}
+
+-(void)showLoginViewController{
+    _tabBarController = nil;
+    if (!_loginViewController) {
+        _loginViewController = [[LoginViewController alloc]init];
+    }
+    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:_loginViewController];
+    self.window.rootViewController = navController;
+}
+
+-(void)showTabViewController;{
+    [self initTabBarController];
+    [self addController:_tabBarController];
+    self.window.rootViewController = _tabBarController;
 }
 
 @end

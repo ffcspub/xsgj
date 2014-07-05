@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "580A3F7F78FF45008B886D9C"
+               BlueprintIdentifier = "2FFDCF469DE8448CA69B71F6"
                BuildableName = "libPods-BlockInjection.a"
                BlueprintName = "Pods-BlockInjection"
                ReferencedContainer = "container:Pods.xcodeproj">

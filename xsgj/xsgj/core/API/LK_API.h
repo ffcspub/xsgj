@@ -12,9 +12,11 @@
 
 @interface LK_APIUtil : NSObject
 
-+(void)postHttpRequest:(LK_HttpBaseRequest *)request apiPath:(NSString *)path Success:(void (^)(LK_HttpBaseResponse *response))response fail:(void (^)(NSString *description))fail class:(Class)responseClass;
++(void)postHttpRequest:(LK_HttpBaseRequest *)request apiPath:(NSString *)path Success:(void (^)(LK_HttpBaseResponse *))sucess fail:(void (^)(BOOL NotReachable,NSString *descript))fail class:(Class)responseClass;
+
 
 +(void)getHttpRequest:(LK_HttpBaseRequest *)request apiPath:(NSString *)path Success:(void (^)(LK_HttpBaseResponse *))sucess fail:(void (^)(BOOL NotReachable,NSString *))fail class:(Class)responseClass;
+
 
 +(void)cancelAllHttpRequestByApiPath:(NSString *)path;
 

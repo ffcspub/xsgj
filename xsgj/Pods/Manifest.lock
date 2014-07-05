@@ -7,6 +7,7 @@ PODS:
   - FMDB/common (2.3)
   - FMDB/standard (2.3):
     - FMDB/common
+  - IQKeyboardManager (3.0.5)
   - JSONKit (1.5pre)
   - LKDBHelper (HEAD based on 1.4):
     - FMDB
@@ -19,11 +20,13 @@ PODS:
     - SDWebImage/Core
   - SDWebImage/Core (HEAD based on 3.6)
   - SVPullToRefresh (0.4.1)
+  - UIAlertView-Blocks (1.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 1.3.2)
   - AKTabBarController
   - BlockInjection
+  - IQKeyboardManager
   - JSONKit
   - LKDBHelper (HEAD)
   - MBProgressHUD (~> 0.8)
@@ -33,12 +36,14 @@ DEPENDENCIES:
   - Reachability
   - SDWebImage (HEAD)
   - SVPullToRefresh
+  - UIAlertView-Blocks (~> 1.0)
 
 SPEC CHECKSUMS:
   AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
   AKTabBarController: 16978bd1b5385719f89f9a47827303d23278c69e
   BlockInjection: 8431720d7cf9bb3e6bbafe2cfd4c809a58e3d211
   FMDB: 31ec26773c7f7b7890a6038235a1f2bbd933a7cb
+  IQKeyboardManager: 89009bd8df979ad116a9c9326875ecf4c000fef0
   JSONKit: efef3bbd3372ff33f96b9c6f34cf4fe18e74ab69
   LKDBHelper: b337d5cdfba9d0b78e74992e1ca8bdc8b9fc7928
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
@@ -48,5 +53,6 @@ SPEC CHECKSUMS:
   Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
   SDWebImage: c6989652c1cdf27cbdf3f56957e2030f825af5bc
   SVPullToRefresh: d5161ebc833a38b465364412e5e307ca80bbb190
+  UIAlertView-Blocks: f3271e84372beb97aea115cd1fb26ae66457f12f
 
 COCOAPODS: 0.33.1

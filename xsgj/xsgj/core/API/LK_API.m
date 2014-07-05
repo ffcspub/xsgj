@@ -33,7 +33,7 @@
 
 @implementation LK_APIUtil
 
-+(void)postHttpRequest:(LK_HttpBaseRequest *)request apiPath:(NSString *)path Success:(void (^)(LK_HttpBaseResponse *))sucess fail:(void (^)(NSString *))fail class:(Class)responseClass{
++(void)postHttpRequest:(LK_HttpBaseRequest *)request apiPath:(NSString *)path Success:(void (^)(LK_HttpBaseResponse *))sucess fail:(void (^)(BOOL NotReachable,NSString *descript))fail class:(Class)responseClass{
     if (!responseClass) {
         responseClass = [LK_HttpBaseResponse class];
     }
@@ -70,11 +70,11 @@
                 NSObject *object = [dict objectByClass:responseClass];
                 sucess((LK_HttpBaseResponse*)object);
             }else{
-                fail(@"服务器异常");
+                fail(NO,@"网络不给力");
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        fail(error.localizedDescription);
+        fail(client.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable,@"网络不给力");
     }];
 }
 

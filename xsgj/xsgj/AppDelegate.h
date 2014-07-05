@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class AKTabBarController;
+@class LoginViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -20,6 +21,8 @@
 
 @property (strong, nonatomic) AKTabBarController *tabBarController;
 
+@property (strong, nonatomic) LoginViewController *loginViewController;
+
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
@@ -28,5 +31,9 @@
 -(void)hideTabView;
 
 -(void)selectedTabView:(NSInteger)index;
+
+-(void)showLoginViewController;
+
+-(void)showTabViewController;
 
 @end

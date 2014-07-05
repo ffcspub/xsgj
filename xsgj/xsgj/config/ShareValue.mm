@@ -8,6 +8,13 @@
 
 #import "ShareValue.h"
 
+#define SET_NOREMBER @"SET_NOREMBER"
+#define SET_NOAUTO @"SET_NOAUTO"
+#define SET_COREPCODE @"SET_COREPCODE"
+#define SET_USERNAME @"SET_USERNAME"
+#define SET_USERPASS @"SET_USERPASS"
+#define SET_NOSHOWPASS @"SET_NOSHOWPASS"
+
 static ShareValue *_shareValue;
 
 
@@ -19,6 +26,54 @@ static ShareValue *_shareValue;
         _shareValue = [[ShareValue alloc]init];
     });
     return _shareValue;
+}
+
+-(void)setNoRemberFlag:(BOOL)noRemberFlag{
+    [[NSUserDefaults standardUserDefaults]setBool:noRemberFlag forKey:SET_NOREMBER];
+}
+
+-(BOOL)noRemberFlag{
+   return [[NSUserDefaults standardUserDefaults]boolForKey:SET_NOREMBER];
+}
+
+-(void)setNoAutoFlag:(BOOL)noAutoFlag{
+    [[NSUserDefaults standardUserDefaults]setBool:noAutoFlag forKey:SET_NOAUTO];
+}
+
+-(BOOL)noAutoFlag{
+    return [[NSUserDefaults standardUserDefaults]boolForKey:SET_NOAUTO];
+}
+
+-(BOOL)noShowPwd{
+    return [[NSUserDefaults standardUserDefaults]boolForKey:SET_NOSHOWPASS];
+}
+
+-(void)setNoShowPwd:(BOOL)noShowPwd{
+    [[NSUserDefaults standardUserDefaults]setBool:noShowPwd forKey:SET_NOSHOWPASS];
+}
+
+-(void)setCorpCode:(NSString *)corpCode{
+    [[NSUserDefaults standardUserDefaults]setObject:corpCode forKey:SET_COREPCODE];
+}
+
+-(NSString *)corpCode{
+    return [[NSUserDefaults standardUserDefaults]stringForKey:SET_COREPCODE];
+}
+
+-(void)setUserName:(NSString *)userName{
+    [[NSUserDefaults standardUserDefaults]setObject:userName forKey:SET_USERNAME];
+}
+
+-(NSString *)userName{
+    return [[NSUserDefaults standardUserDefaults]stringForKey:SET_USERNAME];
+}
+
+-(void)setUserPass:(NSString *)userPass{
+    [[NSUserDefaults standardUserDefaults]setObject:userPass forKey:SET_USERPASS];
+}
+
+-(NSString *)userPass{
+    return [[NSUserDefaults standardUserDefaults]stringForKey:SET_USERPASS];
 }
 
 

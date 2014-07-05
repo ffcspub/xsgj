@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-IQKeyboardManager.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-JSONKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -69,6 +74,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-UIAlertView-Blocks.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -77,72 +87,82 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>09763B8269DA411AA1E07D3A</key>
+		<key>09A536A9987849DD8599E38E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>21194528318943DA9E7C6B24</key>
+		<key>1319830A67804F98BF8444F9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3A8141251CF844178E9C35EF</key>
+		<key>1B48C1C1230D442588B84D58</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5422C9BE04754692A6E6D68A</key>
+		<key>2FFDCF469DE8448CA69B71F6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>580A3F7F78FF45008B886D9C</key>
+		<key>30D8CF122CEF4C63B3BD0C4B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>87060F3380A041B088C4FFBE</key>
+		<key>411EAABED1B746019CBC7C2A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8B7FC26DA7234D3EBDF381D4</key>
+		<key>536C31CBFAF24381BEC79CD9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>944CE76A915A4135A7DDED2B</key>
+		<key>69E6C2D352874B57A3EACBA2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>995F61A7CE6A4C23BCACB063</key>
+		<key>7C7E1A3D5753410C91AA2D65</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9FCB05E76222441BB0F55D36</key>
+		<key>CEB4A946C367433887167090</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AECCC2615B1945339F641D2D</key>
+		<key>D58EE8FCB9FF4938AF5B1119</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BF3723C0D068450696C73118</key>
+		<key>DEB749A28C7C4F4BA35C72B4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DB8A64138C7D483EBCAA5E16</key>
+		<key>E283108E7F814630A06DF90A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F7EF1F26B68843C18DFA543E</key>
+		<key>E49512C4DF1A4134A05B2AFE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F883738F256A49559D043694</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FD650509BEEE444A84282EB1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

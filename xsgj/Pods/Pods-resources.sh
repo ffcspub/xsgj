@@ -42,6 +42,7 @@ install_resource()
   esac
 }
 install_resource "AKTabBarController/AKTabBarController/AKTabBarController.bundle"
+install_resource "IQKeyboardManager/KeyboardTextFieldDemo/IQKeyBoardManager/IQKeyboardManager.bundle"
 install_resource "NSDate+TimeAgo/NSDateTimeAgo.bundle"
 
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

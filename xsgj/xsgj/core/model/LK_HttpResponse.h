@@ -8,11 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@interface LK_HttpBaseMessage : NSObject
+
+@property(nonatomic,strong) NSString *messagecode;
+@property(nonatomic,strong) NSString *messagecontent;
+
+@end
+
 @interface LK_HttpBaseResponse : NSObject
 
-@property(nonatomic,assign) NSInteger returnCode;
-@property(nonatomic,assign) NSInteger errorCode;
-@property(nonatomic,strong) NSString *msg;
+@property(nonatomic,strong) LK_HttpBaseMessage *message;
 
 @end
 
