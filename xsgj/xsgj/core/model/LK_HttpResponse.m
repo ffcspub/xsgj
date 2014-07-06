@@ -11,11 +11,11 @@
 @implementation LK_HttpBaseResponse
 
 @end
-
-@implementation LK_BasePageRespson
-
-
-@end
+//
+//@implementation LK_BasePageRespson
+//
+//
+//@end
 
 @implementation LK_HttpBasePageResponse
 

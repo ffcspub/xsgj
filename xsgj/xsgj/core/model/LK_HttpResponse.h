@@ -21,18 +21,16 @@
 
 @end
 
-@interface LK_BasePageRespson : NSObject
-
-@property(nonatomic,strong) NSMutableArray *list;
-@property(nonatomic,assign) BOOL isLastPage;
-
-
-@end
+//@interface LK_BasePageRespson : NSObject
+//
+//@property(nonatomic,strong) NSMutableArray *data;
+//
+//
+//@end
 
 @interface LK_HttpBasePageResponse : LK_HttpBaseResponse
 
-@property(nonatomic,strong) NSNumber *uptimestamp;
-@property(nonatomic,strong) LK_BasePageRespson *result;
+@property(nonatomic,strong) NSMutableArray *data;
 
 @end
 

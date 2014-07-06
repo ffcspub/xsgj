@@ -14,11 +14,7 @@
 
 @interface LK_HttpBasePageRequest : LK_HttpBaseRequest
 
-@property(nonatomic,strong) NSString *orderField;
-@property(nonatomic,strong) NSString *orderDirection;//[ASC,DESC]
-@property(nonatomic,assign) NSInteger numPerPage;
-@property(nonatomic,assign) NSInteger pageNum;
-@property(nonatomic,strong) NSNumber *updatetimestamp;
-@property(nonatomic,strong) NSNumber *endtimestamp;
+@property(nonatomic,assign) NSInteger rows;
+@property(nonatomic,assign) NSInteger page;
 
 @end

@@ -18,8 +18,7 @@
 -(id)init{
     self = [super init];
     if (self) {
-        _numPerPage = 20;
-        _pageNum = 1;
+        
     }
     return self;
 }
