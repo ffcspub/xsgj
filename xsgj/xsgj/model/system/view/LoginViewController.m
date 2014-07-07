@@ -102,7 +102,7 @@
 -(void)loginRequest{
     MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在登录" toView:self.view];
     [hud showAnimated:YES whileExecutingBlock:^{
-        [UserAPI loginByCorpcode:_tf_companycode.text username:_tf_username.text password:_tf_pwd.text success:^(UserInfo *userinfo) {
+        [UserAPI loginByCorpcode:_tf_companycode.text username:_tf_username.text password:_tf_pwd.text success:^(BNUserInfo *userinfo) {
             [hud removeFromSuperview];
             [self showLoginViewController];
         } fail:^(BOOL notReachable, NSString *desciption) {

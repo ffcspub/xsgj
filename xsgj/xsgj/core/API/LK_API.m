@@ -37,7 +37,14 @@
     if (!responseClass) {
         responseClass = [LK_HttpBaseResponse class];
     }
-    NSDictionary *dict = request.lkDictionary;
+    NSDictionary *mdict = request.lkDictionary;
+    NSMutableDictionary *tdict = [NSMutableDictionary dictionary];
+    for (NSString *key in mdict.allKeys) {
+        NSObject *object = [mdict objectForKey:key];
+        [tdict setObject:object forKey:[key uppercaseString]];
+    }
+    NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:[tdict JSONString],@"data", nil];
+    
 //    path = [NSString stringWithFormat:@"%@%@",BASE_SERVERLURL,path];
     AFHTTPClient *client = LK_APIUtil.client;
 //    NSMutableURLRequest *urlRequest = [client requestWithMethod:@"POST" path:path parameters:dict];
@@ -59,7 +66,7 @@
 //    }];
 //    [operation start];
    
-    client.parameterEncoding = AFJSONParameterEncoding;
+//    client.parameterEncoding = AFJSONParameterEncoding;
     [client postPath:path parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if(responseObject){
             NSData *responseData = (NSData *)responseObject;

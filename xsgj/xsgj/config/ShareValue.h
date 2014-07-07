@@ -12,7 +12,7 @@
 
 #define TABLEVERION 1.1
 
-#define DEFINE_SUCCESSCODE @"1"
+#define DEFINE_SUCCESSCODE @"00000000"
 
 @interface ShareValue : NSObject
 

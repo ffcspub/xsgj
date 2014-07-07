@@ -16,6 +16,8 @@
 #import "XZGLViewController.h"
 #import "LoginViewController.h"
 
+#import "SystemAPI.h"
+
 @implementation AppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -23,10 +25,17 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize tabBarController = _tabBarController;
 
+-(void)test{
+    [SystemAPI loginByCorpcode:@"zlbzb" username:@"linwei" password:@"123456" success:^(BNUserInfo *userinfo) {
+        
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        
+    }];
+}
+
 -(void)initStyle{
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
     if (IOS7_OR_LATER) {
-        //        [[UINavigationBar appearance]setBackgroundImage:[UIImage imageNamed:@"MyNavigationBar1"] forBarMetrics:UIBarMetricsDefault];
         [[UINavigationBar appearance] setBarTintColor:HEX_RGB(0x409be4)];
         [[UINavigationBar appearance]setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,[UIFont boldSystemFontOfSize:20],UITextAttributeFont,@0.0,UITextAttributeTextShadowOffset, nil]];
     }
@@ -34,6 +43,7 @@
 }
 
 -(void)addThirthPart{
+    [self test];
     [MAMapServices sharedServices].apiKey =@"9dfdf1c3299afea34b2c97c45010afaa";
 }
 
@@ -84,7 +94,6 @@
     // Override point for customization after application launch.
     [self addThirthPart];
     [self showLoginViewController];
-
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
