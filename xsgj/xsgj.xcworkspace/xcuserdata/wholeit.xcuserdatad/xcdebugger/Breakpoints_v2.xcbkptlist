@@ -215,22 +215,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "xsgj/model/system/manager/SystemAPI.m"
-            timestampString = "426447061.521173"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "+updateConfigSuccess:fail:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "xsgj/core/Utils/LK_NSDictionary2Object.m"
             timestampString = "426444894.712264"
             startingColumnNumber = "9223372036854775807"
@@ -247,42 +231,42 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "xsgj/model/system/manager/SystemAPI.m"
-            timestampString = "426447061.521173"
+            filePath = "xsgj/core/API/LK_API.m"
+            timestampString = "426468872.11303"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "+loginByCorpcode:username:password:success:fail:"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "+getHttpRequest:apiPath:Success:fail:class:"
             landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "+[SystemAPI loginByCorpcode:username:password:success:fail:]"
+                  symbolName = "+[LK_APIUtil getHttpRequest:apiPath:Success:fail:class:]"
                   moduleName = "xsgj"
-                  urlString = "file:///Users/wholeit/work/ios/xsgjspace/xsgj/xsgj/model/system/manager/SystemAPI.m"
-                  timestampString = "426445710.422741"
+                  urlString = "file:///Users/wholeit/work/ios/xsgjspace/xsgj/xsgj/core/API/LK_API.m"
+                  timestampString = "426468518.917532"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "26"
-                  endingLineNumber = "26"
-                  offsetFromSymbolStart = "550">
+                  startingLineNumber = "120"
+                  endingLineNumber = "120"
+                  offsetFromSymbolStart = "555">
                </Location>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__60+[SystemAPI loginByCorpcode:username:password:success:fail:]_block_invoke"
+                  symbolName = "__56+[LK_APIUtil getHttpRequest:apiPath:Success:fail:class:]_block_invoke"
                   moduleName = "xsgj"
-                  urlString = "file:///Users/wholeit/work/ios/xsgjspace/xsgj/xsgj/model/system/manager/SystemAPI.m"
-                  timestampString = "426445710.422978"
+                  urlString = "file:///Users/wholeit/work/ios/xsgjspace/xsgj/xsgj/core/API/LK_API.m"
+                  timestampString = "426468518.917759"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "26"
-                  endingLineNumber = "26"
-                  offsetFromSymbolStart = "52">
+                  startingLineNumber = "120"
+                  endingLineNumber = "120"
+                  offsetFromSymbolStart = "83">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -293,13 +277,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "xsgj/model/system/manager/SystemAPI.m"
-            timestampString = "426447061.521173"
+            filePath = "xsgj/core/API/LK_API.m"
+            timestampString = "426468872.11303"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "+loginByCorpcode:username:password:success:fail:"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "+getHttpRequest:apiPath:Success:fail:class:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -310,122 +294,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "xsgj/core/API/LK_API.m"
-            timestampString = "426447440.121709"
+            timestampString = "426468872.11303"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "+postHttpRequest:apiPath:Success:fail:class:"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
+            landmarkName = "+getHttpRequest:apiPath:Success:fail:class:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "xsgj/model/system/manager/SystemAPI.m"
-            timestampString = "426447061.521173"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "+loginByCorpcode:username:password:success:fail:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "xsgj/model/system/manager/SystemAPI.m"
-            timestampString = "426447061.521173"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "+updateConfigSuccess:fail:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "xsgj/model/system/manager/SystemAPI.m"
-            timestampString = "426447061.521173"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "+updateConfigSuccess:fail:"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "+[SystemAPI updateConfigSuccess:fail:]"
-                  moduleName = "xsgj"
-                  urlString = "file:///Users/wholeit/work/ios/xsgjspace/xsgj/xsgj/model/system/manager/SystemAPI.m"
-                  timestampString = "426447440.540251"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "44"
-                  endingLineNumber = "44"
-                  offsetFromSymbolStart = "295">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__38+[SystemAPI updateConfigSuccess:fail:]_block_invoke"
-                  moduleName = "xsgj"
-                  urlString = "file:///Users/wholeit/work/ios/xsgjspace/xsgj/xsgj/model/system/manager/SystemAPI.m"
-                  timestampString = "426447440.540479"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "44"
-                  endingLineNumber = "44"
-                  offsetFromSymbolStart = "52">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "xsgj/core/API/LK_API.m"
-            timestampString = "426447440.121709"
+            timestampString = "426468872.11303"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "+postHttpRequest:apiPath:Success:fail:class:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "xsgj/model/system/manager/SystemAPI.m"
-            timestampString = "426447061.521173"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "+updateConfigSuccess:fail:"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "+getHttpRequest:apiPath:Success:fail:class:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -436,28 +326,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "xsgj/core/API/LK_API.m"
-            timestampString = "426447181.648929"
+            timestampString = "426468872.11303"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "+postHttpRequest:apiPath:Success:fail:class:"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "+getHttpRequest:apiPath:Success:fail:class:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "xsgj/core/API/LK_API.m"
-            timestampString = "426447440.121709"
+            filePath = "xsgj/model/system/manager/SystemHttpResponse.m"
+            timestampString = "426469420.717618"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "+postHttpRequest:apiPath:Success:fail:class:"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "-saveCacheDB"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "xsgj/model/system/manager/SystemHttpResponse.m"
+            timestampString = "426469457.134656"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
+            landmarkName = "-saveCacheDB"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -11,6 +11,7 @@
 #import <JSONKit.h>
 #import "LK_NSDictionary2Object.h"
 #import "ServerConfig.h"
+#import "NSString+URL.h"
 
 #define TIMEOUT_DEFAULT 30
 
@@ -33,16 +34,16 @@
 
 @implementation LK_APIUtil
 
++(NSString*)stringCreateJsonWithObject:(id)obj
+{
+    return [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:obj options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
+}
+
 +(void)postHttpRequest:(LK_HttpBaseRequest *)request apiPath:(NSString *)path Success:(void (^)(LK_HttpBaseResponse *))sucess fail:(void (^)(BOOL NotReachable,NSString *descript))fail class:(Class)responseClass{
     if (!responseClass) {
         responseClass = [LK_HttpBaseResponse class];
     }
-    NSDictionary *mdict = request.lkDictionary;
-    NSMutableDictionary *tdict = [NSMutableDictionary dictionary];
-    for (NSString *key in mdict.allKeys) {
-        NSObject *object = [mdict objectForKey:key];
-        [tdict setObject:object forKey:[key uppercaseString]];
-    }
+    NSDictionary *tdict = request.lkDictionary;
     NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:[tdict JSONString],@"data", nil];
     
 //    path = [NSString stringWithFormat:@"%@%@",BASE_SERVERLURL,path];
@@ -89,21 +90,47 @@
     if (!responseClass) {
         responseClass = [LK_HttpBaseResponse class];
     }
+    NSDictionary *tdict = request.lkDictionary;
+    NSString *paramString = [LK_APIUtil stringCreateJsonWithObject:tdict ];
+    
+    path = [NSString stringWithFormat:@"%@?data=%@",path,[paramString URLEncodedString]];
     AFHTTPClient *client = LK_APIUtil.client;
-    [client getPath:path parameters:request.lkDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    //    NSMutableURLRequest *urlRequest = [client requestWithMethod:@"POST" path:path parameters:dict];
+    //    urlRequest.timeoutInterval = 10;j
+    //
+    //    AFJSONRequestOperation *operation =
+    //    [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+    //        NSString *responseString = JSON;
+    //        NSLog(@"%@",responseString);
+    //        NSDictionary *dict = [responseString objectFromJSONString];
+    //        if (dict) {
+    //            NSObject *object = [dict objectByClass:responseClass];
+    //            sucess((LK_HttpBaseResponse*)object);
+    //        }else{
+    //            fail(@"服务器异常");
+    //        }
+    //    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+    //        fail(@"服务器异常");
+    //    }];
+    //    [operation start];
+    
+    //    client.parameterEncoding = AFJSONParameterEncoding;
+
+    [client getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if(responseObject){
             NSData *responseData = (NSData *)responseObject;
             NSString *responseString = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",responseString);
             NSDictionary *dict = [responseString objectFromJSONString];
             if (dict) {
                 NSObject *object = [dict objectByClass:responseClass];
                 sucess((LK_HttpBaseResponse*)object);
             }else{
-                fail(client.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable,@"服务器异常");
+                fail(NO,@"网络不给力");
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        fail(client.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable,error.localizedDescription);
+        fail(client.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable,@"网络不给力");
     }];
 }
 

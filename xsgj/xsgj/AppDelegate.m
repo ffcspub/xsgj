@@ -27,6 +27,11 @@
 
 -(void)test{
     [SystemAPI loginByCorpcode:@"zlbzb" username:@"linwei" password:@"123456" success:^(BNUserInfo *userinfo) {
+        [SystemAPI updateConfigSuccess:^{
+            
+        } fail:^(BOOL notReachable, NSString *desciption) {
+            
+        }];
         [SystemAPI updateConfigSuccess:nil fail:nil];
     } fail:^(BOOL notReachable, NSString *desciption) {
         

@@ -149,6 +149,7 @@
 		DFCEEB031969887700E0DD6F /* TripDetailBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCEEB021969887700E0DD6F /* TripDetailBean.m */; };
 		DFCEEB041969887700E0DD6F /* TripDetailBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCEEB021969887700E0DD6F /* TripDetailBean.m */; };
 		DFCEEB07196B0AFE00E0DD6F /* BNMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCEEB06196B0AFE00E0DD6F /* BNMessage.m */; };
+		DFCEEB0A196B601800E0DD6F /* NSString+URL.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCEEB09196B601800E0DD6F /* NSString+URL.m */; };
 		DFF8D452196794E30002F973 /* MyNavigationBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF8D451196794E30002F973 /* MyNavigationBar@2x.png */; };
 		DFF8D5231967D4D40002F973 /* bg_BtnLogin_disable2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF8D4591967D4D40002F973 /* bg_BtnLogin_disable2@2x.png */; };
 		DFF8D5241967D4D40002F973 /* bg_BtnLogin_disable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF8D45A1967D4D40002F973 /* bg_BtnLogin_disable@2x.png */; };
@@ -606,6 +607,8 @@
 		DFCEEB021969887700E0DD6F /* TripDetailBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TripDetailBean.m; sourceTree = "<group>"; };
 		DFCEEB05196B0AFE00E0DD6F /* BNMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNMessage.h; sourceTree = "<group>"; };
 		DFCEEB06196B0AFE00E0DD6F /* BNMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNMessage.m; sourceTree = "<group>"; };
+		DFCEEB08196B601800E0DD6F /* NSString+URL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URL.h"; sourceTree = "<group>"; };
+		DFCEEB09196B601800E0DD6F /* NSString+URL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URL.m"; sourceTree = "<group>"; };
 		DFF8D451196794E30002F973 /* MyNavigationBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MyNavigationBar@2x.png"; sourceTree = "<group>"; };
 		DFF8D4591967D4D40002F973 /* bg_BtnLogin_disable2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_BtnLogin_disable2@2x.png"; sourceTree = "<group>"; };
 		DFF8D45A1967D4D40002F973 /* bg_BtnLogin_disable@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_BtnLogin_disable@2x.png"; sourceTree = "<group>"; };
@@ -1389,6 +1392,8 @@
 		DF36B5281965BF900064C48D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				DFCEEB08196B601800E0DD6F /* NSString+URL.h */,
+				DFCEEB09196B601800E0DD6F /* NSString+URL.m */,
 				DF36B5291965BF900064C48D /* LK_EasySignal */,
 				DF36B5331965BF900064C48D /* LK_NSDictionary2Object.h */,
 				DF36B5341965BF900064C48D /* LK_NSDictionary2Object.m */,
@@ -2208,6 +2213,7 @@
 				DFCEEAEF19692F8F00E0DD6F /* XZGLHttpRequest.m in Sources */,
 				04FD388B196AA75800C42C39 /* BNDisplayShape.m in Sources */,
 				DF36B56E1965BF900064C48D /* LKSignal.m in Sources */,
+				DFCEEB0A196B601800E0DD6F /* NSString+URL.m in Sources */,
 				DFCEEAF319692FA100E0DD6F /* XZGLHttpResponse.m in Sources */,
 				DFCEEAE519692F0700E0DD6F /* SystemHttpRequest.m in Sources */,
 				DFCEEAD419692D7C00E0DD6F /* LoginViewController.m in Sources */,
