@@ -7,17 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface LK_HttpBaseMessage : NSObject
-
-@property(nonatomic,strong) NSString *messagecode;
-@property(nonatomic,strong) NSString *messagecontent;
-
-@end
+#import "BNMessage.h"
 
 @interface LK_HttpBaseResponse : NSObject
 
-@property(nonatomic,strong) LK_HttpBaseMessage *message;
+@property(nonatomic,strong) BNMessage *MESSAGE;
 
 @end
 

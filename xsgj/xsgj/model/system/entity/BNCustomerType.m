@@ -10,4 +10,10 @@
 
 @implementation BNCustomerType
 
+//表名
++(NSString *)getTableName
+{
+    return [NSString stringWithFormat:@"t_%d_BNCustomerType",[ShareValue shareInstance].userInfo.USER_ID];
+}
+
 @end

@@ -15,7 +15,7 @@
 // 类别父PID
 @property (nonatomic,assign)    int CLASS_PID;
 // 类别名称
-@property (nonatomic,weak)      NSString* CLASS_NAME;
+@property (nonatomic,strong)      NSString* CLASS_NAME;
 // 类别排序
 @property (nonatomic,assign)    int ORDER_NO;
 

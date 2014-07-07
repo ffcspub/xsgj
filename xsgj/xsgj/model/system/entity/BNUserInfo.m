@@ -7,8 +7,16 @@
 //
 
 #import "BNUserInfo.h"
+#import <LKDBHelper.h>
 
 @implementation BNUserInfo
+
+//表名
++(NSString *)getTableName
+{
+    return [NSString stringWithFormat:@"t_BNUserInfo"];
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:

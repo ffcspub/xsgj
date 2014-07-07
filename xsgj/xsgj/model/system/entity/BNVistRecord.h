@@ -11,7 +11,7 @@
 @interface BNVistRecord : NSObject
 
 // 拜访uuid
-@property (nonatomic,weak)      NSString* VISIT_NO;
+@property (nonatomic,strong)      NSString* VISIT_NO;
 /**
  * 客户ID
  */
@@ -20,12 +20,12 @@
 /**
  * 客户姓名
  */
-@property (nonatomic,weak)      NSString* CUST_NAME;
+@property (nonatomic,strong)      NSString* CUST_NAME;
 
 /**
  * 拜访时间
  */
-@property (nonatomic,weak)      NSString* BEGIN_TIME;
+@property (nonatomic,strong)      NSString* BEGIN_TIME;
 
 /**
  * 起始纬度
@@ -40,7 +40,7 @@
 /**
  * 起始地址
  */
-@property (nonatomic,weak)      NSString* BEGIN_POS;
+@property (nonatomic,strong)      NSString* BEGIN_POS;
 
 /**
  * 纠偏起始纬度
@@ -55,13 +55,13 @@
 /**
  * 纠偏起始地址
  */
-@property (nonatomic,weak)      NSString* BEGIN_POS2;
+@property (nonatomic,strong)      NSString* BEGIN_POS2;
 
 
 /**
  * 结束时间
  */
-@property (nonatomic,weak)      NSString* END_TIME;
+@property (nonatomic,strong)      NSString* END_TIME;
 
 /**
  * 结束纬度
@@ -76,7 +76,7 @@
 /**
  * 结束位置
  */
-@property (nonatomic,weak)      NSString* END_POS;
+@property (nonatomic,strong)      NSString* END_POS;
 
 /**
  * 纠偏结束纬度
@@ -91,19 +91,19 @@
 /**
  * 纠偏结束地址
  */
-@property (nonatomic,weak)      NSString* END_POS2;
+@property (nonatomic,strong)      NSString* END_POS2;
 
 @property (nonatomic,assign)    int  VISIT_TYPE;
 
-@property (nonatomic,weak)      NSString* VISIT_CONDITION_CODE;
+@property (nonatomic,strong)      NSString* VISIT_CONDITION_CODE;
 
-@property (nonatomic,weak)      NSString* VISIT_CONDITION_NAME;
+@property (nonatomic,strong)      NSString* VISIT_CONDITION_NAME;
 
-@property (nonatomic,weak)      NSString* VISIT_DATE;
+@property (nonatomic,strong)      NSString* VISIT_DATE;
 
 @property (nonatomic,assign)    int  SYNC_STATE;
 /** 登录时返回的SESSION_ID */
-@property (nonatomic,weak)      NSString* SESSION_ID;
+@property (nonatomic,strong)      NSString* SESSION_ID;
 /** 企业标识 */
 @property (nonatomic,assign)    int  CORP_ID;
 /** 部门标识 */
@@ -111,5 +111,5 @@
 /** 用户标识 */
 @property (nonatomic,assign)    int  USER_ID;
 /** 用户数据权限 */
-@property (nonatomic,weak)      NSString* USER_AUTH;
+@property (nonatomic,strong)      NSString* USER_AUTH;
 @end

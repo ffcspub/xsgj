@@ -11,11 +11,12 @@
 #import "SystemHttpRequest.h"
 #import "SystemHttpResponse.h"
 #import "CRSA.h"
-
-#define URL_USERLOGIN @"loginCheck.shtml"
+#import "ServerConfig.h"
 
 
 @implementation SystemAPI
+
+
 
 +(void)loginByCorpcode:(NSString *)corpcode username:(NSString *)username password:(NSString *)password  success:(void(^)(BNUserInfo *userinfo))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;{
     NSString *rsapassword = [[CRSA shareInstance]encryptByRsa:password withKeyType:KeyTypePublic];
@@ -23,17 +24,37 @@
     request.CORP_CODE = corpcode;
     request.USER_NAME = username;
     request.USER_PASS = rsapassword;
-    [LK_APIUtil postHttpRequest:request apiPath:URL_USERLOGIN Success:^(LK_HttpBaseResponse *response) {
-    
-        if ([DEFINE_SUCCESSCODE isEqual:response.message.messagecode]) {
+    [LK_APIUtil postHttpRequest:request apiPath:URL_LOGIN Success:^(LK_HttpBaseResponse *response) {
+        if ([DEFINE_SUCCESSCODE isEqual:response.MESSAGE.MESSAGECODE]) {
             UserLoginHttpResponse *tResponse = (UserLoginHttpResponse *)response;
+            [ShareValue shareInstance].userInfo = tResponse.USERINFO;
+            [tResponse saveCacheDB];
             success(tResponse.USERINFO);
         }else{
-            fail(NO,response.message.messagecontent);
+            fail(NO,response.MESSAGE.MESSAGECONTENT);
         }
     } fail:^(BOOL NotReachable, NSString *descript) {
         fail(NotReachable,descript);
     } class:[UserLoginHttpResponse class]];
+}
+
++(void)updateConfigSuccess:(void(^)())success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    UpdateConfigHttpRequest *request = [[UpdateConfigHttpRequest alloc]init];
+    request.USER_INFO_BEAN = [ShareValue shareInstance].userInfo;
+    [LK_APIUtil postHttpRequest:request apiPath:URL_UPDATE_CONFIG Success:^(LK_HttpBaseResponse *response) {
+        if ([DEFINE_SUCCESSCODE isEqual:response.MESSAGE.MESSAGECODE]) {
+            UpdateConfigHttpResponse *tResponse = (UpdateConfigHttpResponse *)response;
+            [tResponse saveCacheDB];
+            success();
+        }else{
+            fail(NO,response.MESSAGE.MESSAGECONTENT);
+        }
+    } fail:^(BOOL NotReachable, NSString *descript) {
+        fail(NotReachable,descript);
+    } class:[UserLoginHttpResponse class]];
+
+    
+    
 }
 
 @end

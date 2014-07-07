@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BNUserInfo.h"
 
 #define VERSION 1
 
@@ -19,12 +20,14 @@
 
 +(ShareValue *)shareInstance;
 
+@property(nonatomic,strong) BNUserInfo *userInfo;
+
 @property(nonatomic,assign) BOOL noRemberFlag;//记住密码
 @property(nonatomic,assign) BOOL noAutoFlag;//自动登录
 @property(nonatomic,assign) BOOL noShowPwd;//是否显示密码
-@property(nonatomic,strong) NSString *corpCode;//企业编码
-@property(nonatomic,strong) NSString *userName;//用户名
-@property(nonatomic,strong) NSString *userPass;//登录类型
-
+@property(nonatomic,weak) NSString *corpCode;//企业编码
+@property(nonatomic,weak) NSString *userName;//用户名
+@property(nonatomic,weak) NSString *userPass;//登录类型
+@property(nonatomic,weak) NSNumber *userId;//用户编号
 
 @end

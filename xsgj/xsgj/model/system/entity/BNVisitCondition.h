@@ -12,9 +12,9 @@
 /**
  * 拜访情况编码
  */
-@property (nonatomic,weak)      NSString* CONDITION_CODE;
+@property (nonatomic,strong)      NSString* CONDITION_CODE;
 /**
  * 拜访情况值
  */
-@property (nonatomic,weak)      NSString* CONDITION_NAME;
+@property (nonatomic,strong)      NSString* CONDITION_NAME;
 @end

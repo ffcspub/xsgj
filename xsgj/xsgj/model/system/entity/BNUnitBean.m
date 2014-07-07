@@ -10,4 +10,10 @@
 
 @implementation BNUnitBean
 
+//表名
++(NSString *)getTableName
+{
+    return [NSString stringWithFormat:@"t_%d_BNUnitBean",[ShareValue shareInstance].userInfo.USER_ID];
+}
+
 @end

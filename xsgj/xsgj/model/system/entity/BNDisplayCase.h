@@ -10,5 +10,5 @@
 
 @interface BNDisplayCase : NSObject
 @property (nonatomic,assign)    int  CASE_ID;// 情况id
-@property (nonatomic,weak)      NSString* CASE_NAME;// 情况名称
+@property (nonatomic,strong)      NSString* CASE_NAME;// 情况名称
 @end

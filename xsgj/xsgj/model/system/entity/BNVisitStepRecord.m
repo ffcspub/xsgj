@@ -10,4 +10,11 @@
 
 @implementation BNVisitStepRecord
 
+
+//表名
++(NSString *)getTableName
+{
+    return [NSString stringWithFormat:@"t_%d_BNVisitStepRecord",[ShareValue shareInstance].userInfo.USER_ID];
+}
+
 @end

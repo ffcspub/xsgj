@@ -21,3 +21,15 @@
 }
 
 @end
+
+@implementation UpdateConfigHttpRequest
+
+-(id)init{
+    self = [super init];
+    if (self) {
+        _UPDATE_TYPE = 3;
+    }
+    return self;
+}
+
+@end

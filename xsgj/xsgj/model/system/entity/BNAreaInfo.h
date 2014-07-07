@@ -12,7 +12,7 @@
 
 @property (nonatomic,assign)    int AREA_ID;
 @property (nonatomic,assign)    int AREA_PID;
-@property (nonatomic,weak)      NSString* AREA_NAME;
+@property (nonatomic,strong)    NSString* AREA_NAME;
 @property (nonatomic,assign)    int ORDER_NO;
 
 @end

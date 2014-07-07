@@ -340,6 +340,11 @@
                             objc_msgSend(object, selector,tvalue);
                             flag = YES;
                         }
+                        else if ( type[0] == _C_ULNG_LNG)
+                        {
+                            [object setValue:value forKey:key];
+                            flag = YES;
+                        }
                         else if ( type[0] == _C_DBL)
                         {
                             double tvalue = [(NSObject *)value asDouble];
@@ -350,6 +355,15 @@
                             flag = YES;
                         }
                         else if ( type[0] == _C_FLT)
+                        {
+                            double tvalue = [(NSObject *)value asFloat];
+                            NSString *topchar = [[key substringToIndex:1]uppercaseString];
+                            NSString *selectorString = [NSString stringWithFormat:@"set%@:",[key stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:topchar]];
+                            SEL selector = NSSelectorFromString(selectorString);
+                            objc_msgSend(object, selector,tvalue);
+                            flag = YES;
+                        }
+                        else if ( type[0] == _C_LNG_LNG)
                         {
                             double tvalue = [(NSObject *)value asFloat];
                             NSString *topchar = [[key substringToIndex:1]uppercaseString];

@@ -15,28 +15,28 @@
 /**
  * 客户名称
  */
-@property (nonatomic,weak)      NSString* CUST_NAME;
-@property (nonatomic,weak)      NSString* SORT_KEY;
+@property (nonatomic,strong)      NSString* CUST_NAME;
+@property (nonatomic,strong)      NSString* SORT_KEY;
 /**
  * 类型id
  */
 @property (nonatomic,assign)    int TYPE_ID;
-@property (nonatomic,weak)      NSString* TYPE_NAME;
+@property (nonatomic,strong)      NSString* TYPE_NAME;
 /**
  * 区域id
  */
 @property (nonatomic,assign)    int AREA_ID;
 
-@property (nonatomic,weak)      NSString* AREA_NAME;
+@property (nonatomic,strong)      NSString* AREA_NAME;
 
 /**
  * 联系人名称
  */
-@property (nonatomic,weak)      NSString* LINKMAN;
+@property (nonatomic,strong)      NSString* LINKMAN;
 /**
  * 联系电话
  */
-@property (nonatomic,weak)      NSString* TEL;
+@property (nonatomic,strong)      NSString* TEL;
 /**
  * 客户所在位置的纬度
  */
@@ -48,18 +48,18 @@
 /**
  * 联系地址
  */
-@property (nonatomic,weak)      NSString* ADDRESS;
+@property (nonatomic,strong)      NSString* ADDRESS;
 /**
  * 照片地址
  */
-@property (nonatomic,weak)      NSString* PHOTO;
+@property (nonatomic,strong)      NSString* PHOTO;
 /**
  * 备注
  */
-@property (nonatomic,weak)      NSString* REMARK;
+@property (nonatomic,strong)      NSString* REMARK;
 
 /** 登录时返回的SESSION_ID */
-@property (nonatomic,weak)      NSString* SESSION_ID;
+@property (nonatomic,strong)      NSString* SESSION_ID;
 /** 企业标识 */
 @property (nonatomic,assign)    int CORP_ID;
 /** 部门标识 */
@@ -67,7 +67,7 @@
 /** 用户标识 */
 @property (nonatomic,assign)    int USER_ID;
 /** 用户数据权限 */
-@property (nonatomic,weak)      NSString* USER_AUTH;
+@property (nonatomic,strong)      NSString* USER_AUTH;
 // 拜访记录
-@property (nonatomic,weak)      BNVistRecord *VISIT_RECORD;
+@property (nonatomic,strong)      BNVistRecord *VISIT_RECORD;
 @end

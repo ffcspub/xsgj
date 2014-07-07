@@ -13,7 +13,7 @@
 // 产品ID
 @property (nonatomic,assign)    int PROD_ID;
 // 产品单位名称
-@property (nonatomic,weak)      NSString* UNITNAME;
+@property (nonatomic,strong)      NSString* UNITNAME;
 // 产品价格
 @property (nonatomic,assign)    double PROD_PRICE;
 // 单位ID

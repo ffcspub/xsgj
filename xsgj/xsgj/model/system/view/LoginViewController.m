@@ -9,7 +9,7 @@
 #import "LoginViewController.h"
 #import "UIColor+External.h"
 #import "MBProgressHUD+Add.h"
-#import "UserAPI.h"
+#import "SystemAPI.h"
 #import <UIAlertView+Blocks.h>
 #import <IQKeyboardManager.h>
 
@@ -102,7 +102,7 @@
 -(void)loginRequest{
     MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在登录" toView:self.view];
     [hud showAnimated:YES whileExecutingBlock:^{
-        [UserAPI loginByCorpcode:_tf_companycode.text username:_tf_username.text password:_tf_pwd.text success:^(BNUserInfo *userinfo) {
+        [SystemAPI loginByCorpcode:_tf_companycode.text username:_tf_username.text password:_tf_pwd.text success:^(BNUserInfo *userinfo) {
             [hud removeFromSuperview];
             [self showLoginViewController];
         } fail:^(BOOL notReachable, NSString *desciption) {

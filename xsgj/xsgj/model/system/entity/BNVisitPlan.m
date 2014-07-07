@@ -10,4 +10,11 @@
 
 @implementation BNVisitPlan
 
+
+//表名
++(NSString *)getTableName
+{
+    return [NSString stringWithFormat:@"t_%d_BNVisitPlan",[ShareValue shareInstance].userInfo.USER_ID];
+}
+
 @end

@@ -14,5 +14,5 @@
 // 类型父id
 @property (nonatomic,assign)    int TYPE_PID;
 // 类型名
-@property (nonatomic,weak)      NSString* TYPE_NAME;
+@property (nonatomic,strong)      NSString* TYPE_NAME;
 @end

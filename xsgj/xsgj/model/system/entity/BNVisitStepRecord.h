@@ -10,7 +10,7 @@
 
 @interface BNVisitStepRecord : NSObject
 
-@property (nonatomic,weak)      NSString* VISIT_NO;
+@property (nonatomic,strong)      NSString* VISIT_NO;
 @property (nonatomic,assign)    int OPER_MENU;
 @property (nonatomic,assign)    int SYNC_STATE;
 

@@ -14,6 +14,7 @@
 #define SET_USERNAME @"SET_USERNAME"
 #define SET_USERPASS @"SET_USERPASS"
 #define SET_NOSHOWPASS @"SET_NOSHOWPASS"
+#define SET_USERID @"SET_USERID"
 
 static ShareValue *_shareValue;
 
@@ -74,6 +75,14 @@ static ShareValue *_shareValue;
 
 -(NSString *)userPass{
     return [[NSUserDefaults standardUserDefaults]stringForKey:SET_USERPASS];
+}
+
+-(void)setUserId:(NSNumber *)userId{
+    [[NSUserDefaults standardUserDefaults]setObject:userId forKey:SET_USERPASS];
+}
+
+-(NSNumber *)userId{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:SET_USERPASS];
 }
 
 

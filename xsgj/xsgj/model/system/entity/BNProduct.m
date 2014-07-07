@@ -10,4 +10,11 @@
 
 @implementation BNProduct
 
+//表名
++(NSString *)getTableName
+{
+    return [NSString stringWithFormat:@"t_%d_BNProduct",[ShareValue shareInstance].userInfo.USER_ID];
+}
+
+
 @end
