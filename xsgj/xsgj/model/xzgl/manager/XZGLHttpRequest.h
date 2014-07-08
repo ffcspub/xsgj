@@ -11,180 +11,249 @@
 
 @interface SignUpHttpRequest : LK_HttpBaseRequest
 
-@property(nonatomic,strong) NSString *sessionId;//会话id
-@property(nonatomic,strong) NSString *corpId;//企业id
-@property(nonatomic,strong) NSString *deptId;//部门id
-@property(nonatomic,strong) NSString *userAuth;//数据权限
-@property(nonatomic,strong) NSString *userId;//用户id
-@property(nonatomic,strong) NSString *lng;//经度
-@property(nonatomic,strong) NSString *lat;//纬度
-@property(nonatomic,strong) NSString *postion;//地理位置
-@property(nonatomic,strong) NSString *lng2;//纠偏经度
-@property(nonatomic,strong) NSString *lat2;//纠偏纬度
-@property(nonatomic,strong) NSString *postion2;//纠偏位置
-@property(nonatomic,strong) NSString *signFlag;//考勤标志
-@property(nonatomic,strong) NSString *deviceCode;//手机标识码(imei)
-@property(nonatomic,strong) NSString *photo;//上传附件id
-@property(nonatomic,strong) NSString *signTime;//上传时间
+@property(nonatomic,strong) NSString *	SESSION_ID;//	会话ID	String	非空
+@property(nonatomic,assign) int         CORP_ID;//	企业ID	Long	非空
+@property(nonatomic,assign) int         DEPT_ID;//	部门ID	Long	非空
+@property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限	String	非空
+@property(nonatomic,assign) int         USER_ID;//	用户ID	Long 	非空
+@property(nonatomic,assign) float       LNG;//	经度 	Float	非空
+@property(nonatomic,assign) float       LAT;//	纬度 	Float	非空
+@property(nonatomic,strong) NSString *	POSITION;//	地理位置	String	非空
+@property(nonatomic,assign) float       LNG2;//	纠偏经度	Float	可选
+@property(nonatomic,assign) float       LAT2;//	纠偏纬度 	Float	可选
+@property(nonatomic,strong) NSString *	POSITION2;//	纠偏位置 	String	可选
+@property(nonatomic,strong) NSString *	SIGN_FLAG;//	考勤标志	String	非空(i:签到 o:签退)
+@property(nonatomic,strong) NSString *	DEVICE_CODE;//	手机标识码（IMEI）	String	非空
+@property(nonatomic,assign) int         PHOTO;//	上传附件ID	Long	可选
+@property(nonatomic,strong) NSString *	SIGN_TIME;//	上传时间	Date	非空
 
 @end
 
 @interface QueryAttendanceHttpRequest : LK_HttpBasePageRequest
 
-@property(nonatomic,strong) NSString *sessionId;//会话id
-@property(nonatomic,strong) NSString *corpId;//企业id
-@property(nonatomic,strong) NSString *deptId;//部门id
-@property(nonatomic,strong) NSString *userAuth;//数据权限
-@property(nonatomic,strong) NSString *userId;//用户id
-@property(nonatomic,strong) NSString *queryDeptid;//查询部门标识
-@property(nonatomic,strong) NSString *userName;//登录名
-@property(nonatomic,strong) NSString *realName;//姓名
-@property(nonatomic,strong) NSString *mobileno;//手机号码
-@property(nonatomic,strong) NSString *begintime;//上报开始时间
-@property(nonatomic,strong) NSString *endTime;//上报结束时间
-@property(nonatomic,strong) NSString *signId;//考勤标识
-@property(nonatomic,strong) NSString *signFlag;//考勤标志  i:签到 o:签退
+@property(nonatomic,strong) NSString *	SESSION_ID;//	会话ID	String	非空	50
+@property(nonatomic,assign) int         CORP_ID;//	企业ID	Long	非空	20
+@property(nonatomic,assign) int         DEPT_ID;//	部门ID	Long	非空	20
+@property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限	String	非空	1
+@property(nonatomic,assign) int         USER_ID;//	用户ID	Long 	非空	20
+@property(nonatomic,assign) int         QUERY_DEPTID;//	查询部门标识	Long	可选	20
+@property(nonatomic,strong) NSString *	USER_NAME;//	登录名	String	可选	20
+@property(nonatomic,strong) NSString *	REALNAME;//	姓名	String	可选	20
+@property(nonatomic,strong) NSString *	MOBILENO;//	手机号码	String	可选	20
+@property(nonatomic,strong) NSString *	BEGIN_TIME;//	上报开始时间	Date	可选
+@property(nonatomic,strong) NSString *	END_TIME;//	上报结束时间	Date	可选
+@property(nonatomic,assign) int         PAGE;//	第N页	int	可选
+@property(nonatomic,assign) int         ROWS;//	加载行数	int	可选
+@property(nonatomic,strong) NSString *	SIGN_FLAG;//	考勤标志	String	可选	1
 
 @end
 
 @interface DetailAttendanceHttpRequest : LK_HttpBasePageRequest
 
-@property(nonatomic,strong) NSString *sessionId;//会话id
-@property(nonatomic,strong) NSString *corpId;//企业id
-@property(nonatomic,strong) NSString *deptId;//部门id
-@property(nonatomic,strong) NSString *userAuth;//数据权限
-@property(nonatomic,strong) NSString *userId;//用户id
-@property(nonatomic,strong) NSString *queryDeptid;//查询部门标识
-@property(nonatomic,strong) NSString *userName;//登录名
-@property(nonatomic,strong) NSString *realName;//姓名
-@property(nonatomic,strong) NSString *mobileno;//手机号码
-@property(nonatomic,strong) NSString *begintime;//上报开始时间
-@property(nonatomic,strong) NSString *endTime;//上报结束时间
-@property(nonatomic,strong) NSString *signId;//考勤标识
-@property(nonatomic,strong) NSString *signFlag;//考勤标志  i:签到 o:签退
+@property(nonatomic,strong) NSString *	SESSION_ID;//	会话ID
+@property(nonatomic,assign) int         CORP_ID;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限
+@property(nonatomic,assign) int         USER_ID;//	用户ID
+@property(nonatomic,assign) int         QUERY_DEPTID;//	查询部门标识
+@property(nonatomic,strong) NSString *	USER_NAME;//	登录名
+@property(nonatomic,strong) NSString *	REALNAME;//	姓名
+@property(nonatomic,strong) NSString *	MOBILENO;//	手机号码
+@property(nonatomic,strong) NSString *	BEGIN_TIME;//	上报开始时间
+@property(nonatomic,strong) NSString *	END_TIME;//	上报结束时间
+@property(nonatomic,assign) int         SIGN_ID;//	考勤标识
+@property(nonatomic,assign) int         PAGE;//	第N页
+@property(nonatomic,assign) int         ROWS;//	加载行数
+@property(nonatomic,strong) NSString *	SIGN_FLAG;//	考勤标志
 
 @end
 
 @interface ApplyLeaveHttpRequest : LK_HttpBaseRequest
 
-@property(nonatomic,strong) NSString *corpId;//企业id
-@property(nonatomic,strong) NSString *userId;//用户id
-@property(nonatomic,strong) NSString *typeId;//请假类型
-@property(nonatomic,strong) NSString *title;//请假标题
-@property(nonatomic,strong) NSString *remark;//请假说明
-@property(nonatomic,strong) NSString *applyTime;//申请时间
-@property(nonatomic,strong) NSString *beginTime;//开始时间
-@property(nonatomic,strong) NSString *endTime;//结束时间
+@property(nonatomic,assign) int         CORP_ID	;//	企业ID
+@property(nonatomic,assign) int         USER_ID	;//	用户ID
+@property(nonatomic,assign) int         TYPE_ID	;//	请假类型
+@property(nonatomic,strong) NSString *	TITLE	;//	请假标题
+@property(nonatomic,strong) NSString *	REMARK	;//	请假说明
+@property(nonatomic,strong) NSString *	APPLY_TIME	;//	申请时间
+@property(nonatomic,strong) NSString *	BEGIN_TIME	;//	开始时间
+@property(nonatomic,strong) NSString *	END_TIME	;//	结束时间
 
 @end
 
 @interface QueryLeaveHttpRequest : LK_HttpBasePageRequest
 
-@property(nonatomic,strong) NSString *sessionId;//会话id
-@property(nonatomic,strong) NSString *corpId;//企业id
-@property(nonatomic,strong) NSString *deptId;//部门id
-@property(nonatomic,strong) NSString *userAuth;//数据权限
-@property(nonatomic,strong) NSString *userId;//用户id
-@property(nonatomic,strong) NSString *typeId;//请假类型
-@property(nonatomic,strong) NSString *userName;//用户名
-@property(nonatomic,strong) NSString *mobileno;//手机号码
-@property(nonatomic,strong) NSString *approveState;//审批状态
-@property(nonatomic,strong) NSString *beginTime;//申请时间（开始时间）
-@property(nonatomic,strong) NSString *endTime;//申请时间（结束时间）
-@property(nonatomic,strong) NSString *approveUser;//审批人
+@property(nonatomic,strong) NSString *	SESSION_ID	;//	会话ID
+@property(nonatomic,assign) int         CORP_ID	;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID	;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
+@property(nonatomic,assign) int         USER_ID	;//	用户ID
+@property(nonatomic,strong) NSString *	TYPE_ID	;//	请假类型
+@property(nonatomic,strong) NSString *	USER_NAME	;//	用户名
+@property(nonatomic,strong) NSString *	MOBILENO	;//	手机号码
+@property(nonatomic,strong) NSString *	APPROVE_STATE	;//	审批状态
+@property(nonatomic,strong) NSString *	BEGIN_TIME	;//	申请时间（开始时间）
+@property(nonatomic,strong) NSString *	END_TIME	;//	申请时间（结束时间）
+@property(nonatomic,assign) int         PAGE	;//	第N页
+@property(nonatomic,assign) int         ROWS	;//	加载行数
+@property(nonatomic,strong) NSString *	APPROVE_USER	;//	审批人
 
 @end
 
 @interface QueryLeaveDetailHttpRequest : LK_HttpBaseRequest
 
-@property(nonatomic,strong) NSString *sessionId;//会话id
-@property(nonatomic,strong) NSString *corpId;//企业id
-@property(nonatomic,strong) NSString *deptId;//部门id
-@property(nonatomic,strong) NSString *userAuth;//数据权限
-@property(nonatomic,strong) NSString *userId;//用户id
-@property(nonatomic,strong) NSString *leaveId;//调休id
-@property(nonatomic,strong) NSString *typeId;//请假类型
-@property(nonatomic,strong) NSString *userName;//用户名
-@property(nonatomic,strong) NSString *mobileno;//手机号码
-@property(nonatomic,strong) NSString *approveState;//审批状态（0:未审批 1:已通过 2:未通过）
-@property(nonatomic,strong) NSString *beginTime;//申请时间(开始时间)
-@property(nonatomic,strong) NSString *endTime;//申请时间(结束时间)
-@property(nonatomic,strong) NSString *approveUser;//审批人
+@property(nonatomic,strong) NSString *	SESSION_ID;//	会话ID
+@property(nonatomic,assign) int         CORP_ID;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限
+@property(nonatomic,assign) int         USER_ID;//	用户ID
+@property(nonatomic,strong) NSString *	LEAVE_ID;//	调休ID
+@property(nonatomic,strong) NSString *	TYPE_ID;//	请假类型
+@property(nonatomic,strong) NSString *	USER_NAME;//	用户名
+@property(nonatomic,strong) NSString *	MOBILENO;//	手机号码
+@property(nonatomic,strong) NSString *	APPROVE_STATE;//	审批状态(0:未审批 1:已通过 2:未通过)
+@property(nonatomic,strong) NSString *	BEGIN_TIME;//	申请时间（开始时间）
+@property(nonatomic,strong) NSString *	END_TIME;//	申请时间（结束时间）
+@property(nonatomic,assign) int         PAGE;//	第N页
+@property(nonatomic,assign) int         ROWS;//	加载行数
+@property(nonatomic,strong) NSString *	APPROVE_USER;//	审批人
 
 @end
 
 @interface ApprovalLeaveHttpRequest : LK_HttpBaseRequest
 
-@property(nonatomic,strong) NSString *leaveId;//调休id
-@property(nonatomic,strong) NSString *approveState;//审批状态
-@property(nonatomic,strong) NSString *approveTime;//审批时间
-@property(nonatomic,strong) NSString *corpId;//企业id
-@property(nonatomic,strong) NSString *userId;//用户id
-@property(nonatomic,strong) NSString *approveUser;//审批人
-@property(nonatomic,strong) NSString *approveRemark;//审批结果说明
+@property(nonatomic,assign) int         LEAVE_ID;//	调休id
+@property(nonatomic,strong) NSString *	APPROVE_STATE;//	审批状态(0:未审批 1:已通过 2:未通过)
+@property(nonatomic,strong) NSString *	APPROVE_TIME;//	审批时间
+@property(nonatomic,strong) NSString *	CORP_ID;//	企业ID
+@property(nonatomic,strong) NSString *	USER_ID;//	用户ID
+@property(nonatomic,strong) NSString *	APPROVE_USER;//	审批人
+@property(nonatomic,strong) NSString *	APPROVE_REMARK;//	审批结果说明
 
 @end
 
 @interface ApplyTripHttpRequest : LK_HttpBaseRequest
 
-@property(nonatomic,strong) NSString *corpId;//企业标识
-@property(nonatomic,strong) NSString *userId;//用户标识
-@property(nonatomic,strong) NSString *title;//主题
-@property(nonatomic,strong) NSString *beginTime;//出差开始时间
-@property(nonatomic,strong) NSString *endTime;//出差结束时间
-@property(nonatomic,strong) NSString *tripForm;//出差始发地
-@property(nonatomic,strong) NSString *tripTo;//出差目的地
-@property(nonatomic,strong) NSString *remark;//出差说明
-@property(nonatomic,strong) NSString *approveTime;//申请时间
-@property(nonatomic,strong) NSString *approveUser;//审批人
-
+@property(nonatomic,assign) int         CORP_ID	;//	企业标识
+@property(nonatomic,assign) int         USER_ID	;//	用户标识
+@property(nonatomic,strong) NSString *	TITLE	;//	主题
+@property(nonatomic,strong) NSString *	BEGIN_TIME	;//	出差开始时间
+@property(nonatomic,strong) NSString *	END_TIME	;//	出差结束时间
+@property(nonatomic,strong) NSString *	TRIP_FROM	;//	出差始发地
+@property(nonatomic,strong) NSString *	TRIP_TO	;//	出差目的地
+@property(nonatomic,strong) NSString *	REMARK	;//	出差说明
+@property(nonatomic,strong) NSString *	APPROVE_TIME	;//	申请时间
+@property(nonatomic,strong) NSString *	APPROVE_USER	;//	审批人
 @end
 
 @interface ApproveTripHttpRequst : LK_HttpBaseRequest
 
-@property(nonatomic,strong) NSString *tripId;//出差标识
-@property(nonatomic,strong) NSString *corpId;//企业标识
-@property(nonatomic,strong) NSString *userId;//用户标识
-@property(nonatomic,strong) NSString *approveState;//审批状态 0未审批 1:已通过 2:未通过
-@property(nonatomic,strong) NSString *approveRemark;//审批描述
-@property(nonatomic,strong) NSString *approveTime;//审批时间
+@property(nonatomic,assign) int         TRIP_ID	;//	出差标识
+@property(nonatomic,assign) int         CORP_ID	;//	企业标识
+@property(nonatomic,assign) int         USER_ID	;//	用户标识
+@property(nonatomic,strong) NSString *	APPROVE_STATE	;//	审批状态
+@property(nonatomic,strong) NSString *	APPROVE_REMARK	;//	审批描述
+@property(nonatomic,strong) NSString *	APPROVE_TIME	;//	审批时间
 
 @end
 
 @interface QueryTripHttpRequest : LK_HttpBasePageRequest
 
-@property(nonatomic,strong) NSString *tripId;//出差示识
-@property(nonatomic,strong) NSString *corpId;//企业标识
-@property(nonatomic,strong) NSString *userId;//用户标识
-@property(nonatomic,strong) NSString *title;//主题
-@property(nonatomic,strong) NSString *beginTime;//出差开始时间
-@property(nonatomic,strong) NSString *endTime;//出差结束时间
-@property(nonatomic,strong) NSString *tripFrom;//出差始发地
-@property(nonatomic,strong) NSString *tripTo;//出差目的地
-@property(nonatomic,strong) NSString *applyTime;//申请时间
-@property(nonatomic,strong) NSString *approveUser;//审批人
-@property(nonatomic,strong) NSString *approveState;//审批状态 0:未审批1:已通过  2:未通过
-@property(nonatomic,strong) NSString *approveTime;//审批时间
+@property(nonatomic,assign) int         TRIP_ID	;//	出差标识
+@property(nonatomic,assign) int         CORP_ID	;//	企业标识
+@property(nonatomic,assign) int         USER_ID	;//	用户标识
+@property(nonatomic,strong) NSString *	TITLE	;//	主题
+@property(nonatomic,strong) NSString *	BEGIN_TIME	;//	出差开始时间
+@property(nonatomic,strong) NSString *	END_TIME	;//	出差结束时间
+@property(nonatomic,strong) NSString *	TRIP_FROM	;//	出差始发地
+@property(nonatomic,strong) NSString *	TRIP_TO	;//	出差目的地
+@property(nonatomic,strong) NSString *	APPLY_TIME	;//	申请时间
+@property(nonatomic,strong) NSString *	APPROVE_USER	;//	审批人
+@property(nonatomic,assign) int         PAGE	;//	第N页
+@property(nonatomic,assign) int         ROWS	;//	加载行数
+@property(nonatomic,strong) NSString *	APPROVE_STATE	;//	审批状态0:未审批 1:已通过 2:未通过
+@property(nonatomic,strong) NSString *	APPROVE_TIME	;//	审批时间
 
 @end
 
 @interface QueryTripDetailHttpRequest : LK_HttpBaseRequest
 
-@property(nonatomic,strong) NSString *tripId;//出差标识
+@property(nonatomic,assign) int TRIP_ID;//出差标识
 
 @end
 
 @interface WorkReportHttpRequest : LK_HttpBaseRequest
 
-@property(nonatomic,strong) NSString *sessionId;//会话id
-@property(nonatomic,strong) NSString *corpId;//企业id
-@property(nonatomic,strong) NSString *deptId;//部门id
-@property(nonatomic,strong) NSString *userAuth;//数据权限
-@property(nonatomic,strong) NSString *userId;//用户id
-@property(nonatomic,strong) NSString *typeId;//类型
-@property(nonatomic,strong) NSString *content;//内容
-@property(nonatomic,strong) NSString *committime;//上报时间
+@property(nonatomic,strong) NSString *	SESSION_ID	;//	会话ID
+@property(nonatomic,assign) int         CORP_ID	;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID	;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
+@property(nonatomic,assign) int         USER_ID	;//	用户ID
+@property(nonatomic,strong) NSString *	TYPE_ID	;//	类型
+@property(nonatomic,strong) NSString *	CONTENT	;//	内容
+@property(nonatomic,strong) NSString *	COMMITTIME	;//	上报时间
 
 @end
+
+@interface AddAdviceHttpRequest : LK_HttpBaseRequest
+
+@property(nonatomic,strong) NSString *	SESSION_ID	;//	会话ID
+@property(nonatomic,assign) int         CORP_ID	;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID	;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
+@property(nonatomic,assign) int         USER_ID	;//	用户ID
+@property(nonatomic,strong) NSString *	CONTENT	;//	上报内容
+@property(nonatomic,strong) NSString *	COMMITTIME	;//	上报时间
+
+@end
+
+@interface QueryAdviceHttpRequest : LK_HttpBaseRequest
+
+@property(nonatomic,strong) NSString *	SESSION_ID	;//	会话ID
+@property(nonatomic,assign) int         CORP_ID	;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID	;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
+@property(nonatomic,assign) int         USER_ID	;//	用户ID
+@property(nonatomic,assign) int         QUERY_DEPTID	;//	查询部门标识
+@property(nonatomic,strong) NSString *	USER_NAME	;//	登录名
+@property(nonatomic,strong) NSString *	REALNAME	;//	姓名
+@property(nonatomic,strong) NSString *	MOBILENO	;//	手机号码
+@property(nonatomic,strong) NSString *	BEGIN_TIME	;//	上报开始时间
+@property(nonatomic,strong) NSString *	END_TIME	;//	上报结束时间
+
+@end
+
+@interface QueryDetailAdviceHttpRequest : LK_HttpBaseRequest
+
+@property(nonatomic,strong) NSString *	SESSION_ID	;//	会话ID
+@property(nonatomic,assign) int         CORP_ID	;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID	;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
+@property(nonatomic,assign) int         USER_ID	;//	用户ID
+@property(nonatomic,assign) int         QUERY_DEPTID	;//	查询部门标识
+@property(nonatomic,strong) NSString *	USER_NAME	;//	登录名
+@property(nonatomic,strong) NSString *	REALNAME	;//	姓名
+@property(nonatomic,strong) NSString *	MOBILENO	;//	手机号码
+@property(nonatomic,strong) NSString *	BEGIN_TIME	;//	上报开始时间
+@property(nonatomic,strong) NSString *	END_TIME	;//	上报结束时间
+
+@end
+
+@interface QuerySaleTaskHttpRequest : LK_HttpBaseRequest
+
+@property(nonatomic,strong) NSString *	SESSION_ID	;//	会话ID
+@property(nonatomic,assign) int         CORP_ID	;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID	;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
+@property(nonatomic,assign) int         USER_ID	;//	用户ID
+@property(nonatomic,assign) int         QUERY_DEPTID	;//	查询部门标识
+@property(nonatomic,strong) NSString *	USER_NAME	;//	登录名
+@property(nonatomic,strong) NSString *	REALNAME	;//	姓名
+@property(nonatomic,strong) NSString *	MOBILENO	;//	手机号码
+@property(nonatomic,strong) NSString *	BEGIN_MONTH	;//	查询起始月份
+@property(nonatomic,strong) NSString *	END_MONTH	;//	查询终止月份
+
+@end
+
 
 

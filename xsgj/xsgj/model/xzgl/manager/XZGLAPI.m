@@ -7,10 +7,15 @@
 //
 
 #import "XZGLAPI.h"
+#import "XZGLHttpRequest.h"
+#import "XZGLHttpResponse.h"
 
 @implementation XZGLAPI
 
 +(void)signUPByLng:(float)lng lat:(float)lat postion:(NSString *)postion lng2:(NSNumber *)lng2 lat2:(NSNumber *)lat2 postion2:(NSString *)postion2 signflag:(NSString*)signflag photoid:(NSNumber *)photo;{
+    
+    SignUpHttpRequest *request = [[SignUpHttpRequest alloc]init];
+    
     
 }
 

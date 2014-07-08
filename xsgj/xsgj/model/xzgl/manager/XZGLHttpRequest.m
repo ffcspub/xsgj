@@ -55,3 +55,12 @@
 @implementation WorkReportHttpRequest
 
 @end
+
+@implementation AddAdviceHttpRequest
+
+@end
+
+@implementation QueryAdviceHttpRequest
+
+@end
+

@@ -63,6 +63,9 @@
 		04FD3892196AA75800C42C39 /* BNVisitPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FD3881196AA75800C42C39 /* BNVisitPlan.m */; };
 		04FD3893196AA75800C42C39 /* BNVisitStepRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FD3883196AA75800C42C39 /* BNVisitStepRecord.m */; };
 		04FD3894196AA75800C42C39 /* BNVistRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FD3885196AA75800C42C39 /* BNVistRecord.m */; };
+		DF127F31196C4B2F00B9EB4E /* AdviceInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DF127F30196C4B2F00B9EB4E /* AdviceInfoBean.m */; };
+		DF127F34196C4BFD00B9EB4E /* AdviceDetailBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DF127F33196C4BFD00B9EB4E /* AdviceDetailBean.m */; };
+		DF127F37196C4D3600B9EB4E /* SaleTaskInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DF127F36196C4D3600B9EB4E /* SaleTaskInfoBean.m */; };
 		DF13AF8F1965C076005A957C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF13AF8E1965C076005A957C /* QuartzCore.framework */; };
 		DF13AF911965C07C005A957C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF13AF901965C07C005A957C /* Security.framework */; };
 		DF13AF931965C083005A957C /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DF13AF921965C083005A957C /* libstdc++.6.0.9.dylib */; };
@@ -516,6 +519,12 @@
 		04FD3885196AA75800C42C39 /* BNVistRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNVistRecord.m; sourceTree = "<group>"; };
 		8F73448094CF40BAB99CCE46 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		9912467346C7467399D9CFB7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF127F2F196C4B2F00B9EB4E /* AdviceInfoBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdviceInfoBean.h; sourceTree = "<group>"; };
+		DF127F30196C4B2F00B9EB4E /* AdviceInfoBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdviceInfoBean.m; sourceTree = "<group>"; };
+		DF127F32196C4BFD00B9EB4E /* AdviceDetailBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdviceDetailBean.h; sourceTree = "<group>"; };
+		DF127F33196C4BFD00B9EB4E /* AdviceDetailBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdviceDetailBean.m; sourceTree = "<group>"; };
+		DF127F35196C4D3600B9EB4E /* SaleTaskInfoBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaleTaskInfoBean.h; sourceTree = "<group>"; };
+		DF127F36196C4D3600B9EB4E /* SaleTaskInfoBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaleTaskInfoBean.m; sourceTree = "<group>"; };
 		DF13AF8E1965C076005A957C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DF13AF901965C07C005A957C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		DF13AF921965C083005A957C /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
@@ -1508,6 +1517,12 @@
 				DFCEEAFE1969846100E0DD6F /* TripInfoBean.m */,
 				DFCEEB011969887700E0DD6F /* TripDetailBean.h */,
 				DFCEEB021969887700E0DD6F /* TripDetailBean.m */,
+				DF127F2F196C4B2F00B9EB4E /* AdviceInfoBean.h */,
+				DF127F30196C4B2F00B9EB4E /* AdviceInfoBean.m */,
+				DF127F32196C4BFD00B9EB4E /* AdviceDetailBean.h */,
+				DF127F33196C4BFD00B9EB4E /* AdviceDetailBean.m */,
+				DF127F35196C4D3600B9EB4E /* SaleTaskInfoBean.h */,
+				DF127F36196C4D3600B9EB4E /* SaleTaskInfoBean.m */,
 			);
 			path = entity;
 			sourceTree = "<group>";
@@ -2204,6 +2219,7 @@
 			files = (
 				04EFF6911966477E00FF79BE /* KHGLViewController.m in Sources */,
 				04EFF64719663C8800FF79BE /* MJPhotoToolbar.m in Sources */,
+				DF127F34196C4BFD00B9EB4E /* AdviceDetailBean.m in Sources */,
 				04FD3892196AA75800C42C39 /* BNVisitPlan.m in Sources */,
 				04FD3893196AA75800C42C39 /* BNVisitStepRecord.m in Sources */,
 				DF36B5721965BF900064C48D /* UIControl+LKSignal.m in Sources */,
@@ -2220,7 +2236,9 @@
 				04EFF64219663C8800FF79BE /* MJPhoto.m in Sources */,
 				DF36B48A1965B5BF0064C48D /* AppDelegate.m in Sources */,
 				04FD3894196AA75800C42C39 /* BNVistRecord.m in Sources */,
+				DF127F31196C4B2F00B9EB4E /* AdviceInfoBean.m in Sources */,
 				04EFF64519663C8800FF79BE /* MJPhotoLoadingView.m in Sources */,
+				DF127F37196C4D3600B9EB4E /* SaleTaskInfoBean.m in Sources */,
 				DFCEEAE319692F0700E0DD6F /* SystemAPI.m in Sources */,
 				04EFF64419663C8800FF79BE /* MJPhotoBrowser.m in Sources */,
 				DFCEEB07196B0AFE00E0DD6F /* BNMessage.m in Sources */,
