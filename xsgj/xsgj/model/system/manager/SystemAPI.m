@@ -12,6 +12,7 @@
 #import "SystemHttpResponse.h"
 #import "CRSA.h"
 #import "ServerConfig.h"
+#import "NSObject+EasyCopy.h"
 
 
 @implementation SystemAPI
@@ -38,15 +39,23 @@
     } class:[UserLoginHttpResponse class]];
 }
 
-+(void)updateConfigSuccess:(void(^)())success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
++(void)updateConfigSuccess:(void(^)())Success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
     UpdateConfigHttpRequest *request = [[UpdateConfigHttpRequest alloc]init];
-    request.USER_INFO_BEAN = [ShareValue shareInstance].userInfo;
-    request.USER_INFO_BEAN.LAST_UPDATE_TIME = @"0";
+    BNUserInfo *userInfo = [[BNUserInfo alloc]init];
+    [[ShareValue shareInstance].userInfo easyDeepCopy:userInfo];
+    request.USER_INFO_BEAN = userInfo;
+    NSString *lastupdatetime = [[NSUserDefaults standardUserDefaults]valueForKey:[NSString stringWithFormat:@"LASTUPDATE_%D",[ShareValue shareInstance].userInfo.USER_ID]];
+    if (!lastupdatetime) {
+        lastupdatetime = @"0";
+    }
+    request.USER_INFO_BEAN.LAST_UPDATE_TIME = lastupdatetime;
     [LK_APIUtil getHttpRequest:request apiPath:URL_UPDATE_CONFIG Success:^(LK_HttpBaseResponse *response) {
         if ([DEFINE_SUCCESSCODE isEqual:response.MESSAGE.MESSAGECODE]) {
             UpdateConfigHttpResponse *tResponse = (UpdateConfigHttpResponse *)response;
             [tResponse saveCacheDB];
-//            success();
+            NSString *updatetime = [ShareValue shareInstance].userInfo.LAST_UPDATE_TIME ;
+            [[NSUserDefaults standardUserDefaults]setObject:updatetime forKey:[NSString stringWithFormat:@"LASTUPDATE_%D",[ShareValue shareInstance].userInfo.USER_ID]];
+            Success();
         }else{
             fail(NO,response.MESSAGE.MESSAGECONTENT);
         }

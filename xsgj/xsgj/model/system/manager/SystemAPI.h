@@ -11,8 +11,10 @@
 
 @interface SystemAPI : NSObject
 
+//登录
 +(void)loginByCorpcode:(NSString *)corpcode username:(NSString *)username password:(NSString *)password  success:(void(^)(BNUserInfo *userinfo))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
+//更新配置
 +(void)updateConfigSuccess:(void(^)())success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 @end

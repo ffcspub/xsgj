@@ -32,7 +32,6 @@
         } fail:^(BOOL notReachable, NSString *desciption) {
             
         }];
-        [SystemAPI updateConfigSuccess:nil fail:nil];
     } fail:^(BOOL notReachable, NSString *desciption) {
         
     }];
@@ -99,7 +98,7 @@
     [self initStyle];
     // Override point for customization after application launch.
     [self addThirthPart];
-    [self showLoginViewController];
+//    [self showLoginViewController];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+//考勤记录
 @interface SigninfoBean : NSObject
 
 @property(nonatomic,strong) NSString *deptName;//部门名称
