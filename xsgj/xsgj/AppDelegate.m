@@ -121,7 +121,7 @@
     [self initStyle];
     // Override point for customization after application launch.
     [self addThirthPart];
-//    [self showLoginViewController];
+    [self showLoginViewController];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
