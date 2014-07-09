@@ -10,37 +10,132 @@
 
 @implementation SignUpHttpRequest
 
+-(id)init{
+    self = [super init];
+    if (self) {
+        _SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
+        _CORP_ID = [ShareValue shareInstance].userInfo.CORP_ID;
+        _DEPT_ID = [ShareValue shareInstance].userInfo.DEPT_ID;
+        _USER_AUTH = [ShareValue shareInstance].userInfo.USER_AUTH;
+        _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+    }
+    return self;
+}
+
 @end
 
 @implementation QueryAttendanceHttpRequest
+
+-(id)init{
+    self = [super init];
+    if (self) {
+        _SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
+        _CORP_ID = [ShareValue shareInstance].userInfo.CORP_ID;
+        _DEPT_ID = [ShareValue shareInstance].userInfo.DEPT_ID;
+        _USER_AUTH = [ShareValue shareInstance].userInfo.USER_AUTH;
+        _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+    }
+    return self;
+}
 
 @end
 
 @implementation DetailAttendanceHttpRequest
 
+-(id)init{
+    self = [super init];
+    if (self) {
+        _SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
+        _CORP_ID = [ShareValue shareInstance].userInfo.CORP_ID;
+        _DEPT_ID = [ShareValue shareInstance].userInfo.DEPT_ID;
+        _USER_AUTH = [ShareValue shareInstance].userInfo.USER_AUTH;
+        _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+    }
+    return self;
+}
+
 @end
 
 @implementation ApplyLeaveHttpRequest
+
+-(id)init{
+    self = [super init];
+    if (self) {
+        _CORP_ID = [ShareValue shareInstance].userInfo.CORP_ID;
+        _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+    }
+    return self;
+}
 
 @end
 
 @implementation QueryLeaveHttpRequest
 
+-(id)init{
+    self = [super init];
+    if (self) {
+        _SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
+        _CORP_ID = [ShareValue shareInstance].userInfo.CORP_ID;
+        _DEPT_ID = [ShareValue shareInstance].userInfo.DEPT_ID;
+        _USER_AUTH = [ShareValue shareInstance].userInfo.USER_AUTH;
+        _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+    }
+    return self;
+}
+
 @end
 
 @implementation QueryLeaveDetailHttpRequest
+
+-(id)init{
+    self = [super init];
+    if (self) {
+        _SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
+        _CORP_ID = [ShareValue shareInstance].userInfo.CORP_ID;
+        _DEPT_ID = [ShareValue shareInstance].userInfo.DEPT_ID;
+        _USER_AUTH = [ShareValue shareInstance].userInfo.USER_AUTH;
+        _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+    }
+    return self;
+}
 
 @end
 
 @implementation ApprovalLeaveHttpRequest
 
+-(id)init{
+    self = [super init];
+    if (self) {
+        _APPROVE_USER = [ShareValue shareInstance].userInfo.USER_ID;
+    }
+    return self;
+}
 @end
 
 @implementation ApplyTripHttpRequest
 
+-(id)init{
+    self = [super init];
+    if (self) {
+        _CORP_ID = [ShareValue shareInstance].userInfo.CORP_ID;
+        _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+    }
+    return self;
+}
+
 @end
 
 @implementation ApproveTripHttpRequst
+
+-(id)init{
+    self = [super init];
+    if (self) {
+        _CORP_ID = [ShareValue shareInstance].userInfo.CORP_ID;
+        _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+        
+    }
+    return self;
+}
 
 @end
 

@@ -16,7 +16,8 @@
 
 @end
 
-@interface QueryAttendanceHttpReponse : LK_HttpBaseResponse
+@interface QueryAttendanceHttpReponse : LK_HttpBasePageResponse
+
 
 @end
 

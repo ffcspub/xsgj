@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "xsgj/model/system/manager/SystemAPI.m"
-            timestampString = "426420830.5963"
+            timestampString = "426504347.14351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
             landmarkName = "+loginByCorpcode:username:password:success:fail:"
             landmarkType = "5">
          </BreakpointContent>
@@ -136,13 +136,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "xsgj/model/system/manager/SystemAPI.m"
-            timestampString = "426420830.5963"
+            timestampString = "426504347.14351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
             landmarkName = "+loginByCorpcode:username:password:success:fail:"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "+[SystemAPI loginByCorpcode:username:password:success:fail:]"
+                  moduleName = "xsgj"
+                  urlString = "file://localhost/Users/mac/ios/xsgj/xsgj/xsgj/model/system/manager/SystemAPI.m"
+                  timestampString = "426504045.407969"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27"
+                  offsetFromSymbolStart = "550">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__60+[SystemAPI loginByCorpcode:username:password:success:fail:]_block_invoke"
+                  moduleName = "xsgj"
+                  urlString = "file://localhost/Users/mac/ios/xsgj/xsgj/xsgj/model/system/manager/SystemAPI.m"
+                  timestampString = "426504045.408455"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -152,11 +182,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "xsgj/model/system/manager/SystemAPI.m"
-            timestampString = "426420830.5963"
+            timestampString = "426504347.14351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "+loginByCorpcode:username:password:success:fail:"
             landmarkType = "5">
          </BreakpointContent>
@@ -376,11 +406,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "xsgj/core/API/LK_API.m"
-            timestampString = "426420272.516705"
+            timestampString = "426564802.785173"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
             landmarkName = "+postHttpRequest:apiPath:Success:fail:class:"
             landmarkType = "5">
          </BreakpointContent>
@@ -392,7 +422,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "xsgj/model/system/manager/SystemAPI.m"
-            timestampString = "426420830.5963"
+            timestampString = "426504347.14351"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "+loginByCorpcode:username:password:success:fail:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "xsgj/model/system/manager/SystemAPI.m"
+            timestampString = "426504347.14351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "29"
@@ -407,14 +453,152 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "xsgj/model/system/manager/SystemAPI.m"
-            timestampString = "426420855.89488"
+            filePath = "xsgj/AppDelegate.m"
+            timestampString = "426498351.564991"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "+loginByCorpcode:username:password:success:fail:"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "-test"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[AppDelegate test]"
+                  moduleName = "xsgj"
+                  urlString = "file://localhost/Users/mac/ios/xsgj/xsgj/xsgj/AppDelegate.m"
+                  timestampString = "426499935.840913"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "66">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__19-[AppDelegate test]_block_invoke"
+                  moduleName = "xsgj"
+                  urlString = "file://localhost/Users/mac/ios/xsgj/xsgj/xsgj/AppDelegate.m"
+                  timestampString = "426499935.841253"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "75">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "xsgj/AppDelegate.m"
+            timestampString = "426498360.044047"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "-test"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__19-[AppDelegate test]_block_invoke"
+                  moduleName = "xsgj"
+                  urlString = "file://localhost/Users/mac/ios/xsgj/xsgj/xsgj/AppDelegate.m"
+                  timestampString = "426502072.946182"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "81">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__19-[AppDelegate test]_block_invoke_2"
+                  moduleName = "xsgj"
+                  urlString = "file://localhost/Users/mac/ios/xsgj/xsgj/xsgj/AppDelegate.m"
+                  timestampString = "426502072.946469"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "15">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "xsgj/AppDelegate.m"
+            timestampString = "426502072.596819"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "-test"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "xsgj/model/system/entity/BNUserInfo.h"
+            timestampString = "426503992.262916"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "LAST_UPDATE_TIME"
+            landmarkType = "19">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BNUserInfo LAST_UPDATE_TIME]"
+                  moduleName = "xsgj"
+                  urlString = "file://localhost/Users/mac/ios/xsgj/xsgj/xsgj/model/system/entity/BNUserInfo.h"
+                  timestampString = "426503992.307895"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BNUserInfo setLAST_UPDATE_TIME:]"
+                  moduleName = "xsgj"
+                  urlString = "file://localhost/Users/mac/ios/xsgj/xsgj/xsgj/model/system/entity/BNUserInfo.h"
+                  timestampString = "426503992.308269"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "31">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

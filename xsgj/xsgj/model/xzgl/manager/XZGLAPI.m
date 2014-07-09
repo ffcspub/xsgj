@@ -9,12 +9,28 @@
 #import "XZGLAPI.h"
 #import "XZGLHttpRequest.h"
 #import "XZGLHttpResponse.h"
+#import "ServerConfig.h"
 
 @implementation XZGLAPI
 
-+(void)signUPByLng:(float)lng lat:(float)lat postion:(NSString *)postion lng2:(NSNumber *)lng2 lat2:(NSNumber *)lat2 postion2:(NSString *)postion2 signflag:(NSString*)signflag photoid:(NSNumber *)photo;{
+/**
+ *  签到/签退
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)signupByRequest:(SignUpHttpRequest *)request success:(void(^)(SignUpHttpReponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;{
     
-    SignUpHttpRequest *request = [[SignUpHttpRequest alloc]init];
+    [LK_APIUtil getHttpRequest:request apiPath:URL_signUp Success:^(LK_HttpBaseResponse *response) {
+        if ([DEFINE_SUCCESSCODE isEqual:response.MESSAGE.MESSAGECODE]) {
+            
+        }else{
+            
+        }
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[SignUpHttpReponse class]];
     
     
 }

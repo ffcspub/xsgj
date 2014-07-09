@@ -124,7 +124,12 @@
             NSDictionary *dict = [responseString objectFromJSONString];
             if (dict) {
                 NSObject *object = [dict objectByClass:responseClass];
-                sucess((LK_HttpBaseResponse*)object);
+                LK_HttpBaseResponse * response = (LK_HttpBaseResponse *) object;
+                if ([DEFINE_SUCCESSCODE isEqual:response.MESSAGE.MESSAGECODE]) {
+                    sucess((LK_HttpBaseResponse*)object);
+                }else{
+                   fail(NO,response.MESSAGE.MESSAGECONTENT);
+                }
             }else{
                 fail(NO,@"网络不给力");
             }

@@ -125,9 +125,9 @@
 @property(nonatomic,assign) int         LEAVE_ID;//	调休id
 @property(nonatomic,strong) NSString *	APPROVE_STATE;//	审批状态(0:未审批 1:已通过 2:未通过)
 @property(nonatomic,strong) NSString *	APPROVE_TIME;//	审批时间
-@property(nonatomic,strong) NSString *	CORP_ID;//	企业ID
-@property(nonatomic,strong) NSString *	USER_ID;//	用户ID
-@property(nonatomic,strong) NSString *	APPROVE_USER;//	审批人
+@property(nonatomic,assign) int         CORP_ID;//	企业ID
+@property(nonatomic,assign) int         USER_ID;//	用户ID
+@property(nonatomic,assign) int         APPROVE_USER;//	审批人
 @property(nonatomic,strong) NSString *	APPROVE_REMARK;//	审批结果说明
 
 @end
