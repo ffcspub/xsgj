@@ -449,12 +449,12 @@
             if ( type[0] == _C_INT || type[0] == _C_UINT || type[0] == _C_BOOL || type[0] == _C_SHT || type[0] == _C_BFLD)
             {
                 NSNumber *number = (NSNumber *)value;
-                [dict setObject:[number stringValue] forKey:propertyName];
+                [dict setObject:number forKey:propertyName];
             }
-            else if ( type[0] == _C_ULNG || type[0] == _C_LNG || type[0] == _C_ULNG || type[0] == _C_LNG_LNG )
+            else if ( type[0] == _C_ULNG || type[0] == _C_LNG || type[0] == _C_ULNG || type[0] == _C_LNG_LNG || type[0] == _C_ULNG_LNG || type[0] == _C_FLT)
             {
                 NSNumber *number = (NSNumber *)value;
-                [dict setObject:[number stringValue] forKey:propertyName];
+                [dict setObject:number forKey:propertyName];
             }
         }
         

@@ -18,6 +18,10 @@
 
 #import "SystemAPI.h"
 
+#import "XZGLAPI.h"
+#import "XZGLHttpRequest.h"
+#import "XZGLHttpResponse.h"
+
 @implementation AppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -26,15 +30,34 @@
 @synthesize tabBarController = _tabBarController;
 
 -(void)test{
-    [SystemAPI loginByCorpcode:@"zlbzb" username:@"linwei" password:@"123456" success:^(BNUserInfo *userinfo) {
-        [SystemAPI updateConfigSuccess:^{
-            
-        } fail:^(BOOL notReachable, NSString *desciption) {
-            
-        }];
+    
+//    [SystemAPI loginByCorpcode:@"zlbzb" username:@"linwei" password:@"123456" success:^(BNUserInfo *userinfo) {
+//        [SystemAPI updateConfigSuccess:^{
+//            
+//        } fail:^(BOOL notReachable, NSString *desciption) {
+//            
+//        }];
+//    } fail:^(BOOL notReachable, NSString *desciption) {
+//        
+//    }];
+
+//    QueryAttendanceHttpRequest *request = [[QueryAttendanceHttpRequest alloc]init];
+//    [XZGLAPI queryAttendanceByRequest:request success:^(QueryAttendanceHttpReponse *response) {
+//        NSLog(@"%d",response.DATA.count );
+//    } fail:^(BOOL notReachable, NSString *desciption) {
+//        
+//    }];
+    
+    SignUpHttpRequest *request = [[SignUpHttpRequest alloc]init];
+    request.LNG = 323232;
+    request.LAT = 234353;
+    request.POSITION = @"测试地址";
+    [XZGLAPI signupByRequest:request success:^(SignUpHttpReponse *response) {
+        NSLog(@"%@,%@",response.MESSAGE.MESSAGECODE,response.MESSAGE.MESSAGECONTENT);
     } fail:^(BOOL notReachable, NSString *desciption) {
         
     }];
+//
     
 }
 

@@ -24,7 +24,7 @@
 
 @interface LK_HttpBasePageResponse : LK_HttpBaseResponse
 
-@property(nonatomic,strong) NSMutableArray *data;
+@property(nonatomic,strong) NSMutableArray *DATA;
 
 @end
 

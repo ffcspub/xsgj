@@ -25,9 +25,10 @@
     request.CORP_CODE = corpcode;
     request.USER_NAME = username;
     request.USER_PASS = rsapassword;
-    [LK_APIUtil postHttpRequest:request apiPath:URL_LOGIN Success:^(LK_HttpBaseResponse *response) {
+    [LK_APIUtil getHttpRequest:request apiPath:URL_LOGIN Success:^(LK_HttpBaseResponse *response) {
         if ([DEFINE_SUCCESSCODE isEqual:response.MESSAGE.MESSAGECODE]) {
             UserLoginHttpResponse *tResponse = (UserLoginHttpResponse *)response;
+            [ShareValue shareInstance].userId = [NSNumber numberWithInt:tResponse.USERINFO.USER_ID];
             [ShareValue shareInstance].userInfo = tResponse.USERINFO;
             [tResponse saveCacheDB];
             success(tResponse.USERINFO);
@@ -44,17 +45,16 @@
     BNUserInfo *userInfo = [[BNUserInfo alloc]init];
     [[ShareValue shareInstance].userInfo easyDeepCopy:userInfo];
     request.USER_INFO_BEAN = userInfo;
-    NSString *lastupdatetime = [[NSUserDefaults standardUserDefaults]valueForKey:[NSString stringWithFormat:@"LASTUPDATE_%D",[ShareValue shareInstance].userInfo.USER_ID]];
+    NSNumber *lastupdatetime = [[NSUserDefaults standardUserDefaults]valueForKey:[NSString stringWithFormat:@"LASTUPDATE_%D",[ShareValue shareInstance].userInfo.USER_ID]];
     if (!lastupdatetime) {
-        lastupdatetime = @"0";
+        lastupdatetime = @0;
     }
-    request.USER_INFO_BEAN.LAST_UPDATE_TIME = lastupdatetime;
+    request.USER_INFO_BEAN.LAST_UPDATE_TIME = [lastupdatetime unsignedLongLongValue];
     [LK_APIUtil getHttpRequest:request apiPath:URL_UPDATE_CONFIG Success:^(LK_HttpBaseResponse *response) {
         if ([DEFINE_SUCCESSCODE isEqual:response.MESSAGE.MESSAGECODE]) {
             UpdateConfigHttpResponse *tResponse = (UpdateConfigHttpResponse *)response;
             [tResponse saveCacheDB];
-            NSString *updatetime = [ShareValue shareInstance].userInfo.LAST_UPDATE_TIME ;
-            [[NSUserDefaults standardUserDefaults]setObject:updatetime forKey:[NSString stringWithFormat:@"LASTUPDATE_%D",[ShareValue shareInstance].userInfo.USER_ID]];
+            [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithUnsignedLongLong:[ShareValue shareInstance].userInfo.LAST_UPDATE_TIME] forKey:[NSString stringWithFormat:@"LASTUPDATE_%D",[ShareValue shareInstance].userInfo.USER_ID]];
             Success();
         }else{
             fail(NO,response.MESSAGE.MESSAGECONTENT);

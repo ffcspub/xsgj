@@ -30,6 +30,7 @@
 
 +(void)dbInit{
     LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
+    [helper createTableWithModelClass:[BNUserInfo class]];
     [helper createTableWithModelClass:[BNAreaInfo class]];
     [helper createTableWithModelClass:[BNAssetType class]];
     [helper createTableWithModelClass:[BNCustomerInfo class]];
@@ -41,7 +42,6 @@
     [helper createTableWithModelClass:[BNProduct class]];
     [helper createTableWithModelClass:[BNProductType class]];
     [helper createTableWithModelClass:[BNUnitBean class]];
-    [helper createTableWithModelClass:[BNUserInfo class]];
     [helper createTableWithModelClass:[BNVisitCondition class]];
     [helper createTableWithModelClass:[BNVisitPlan class]];
     [helper createTableWithModelClass:[BNVisitStepRecord class]];

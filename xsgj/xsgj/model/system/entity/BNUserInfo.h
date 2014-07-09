@@ -48,6 +48,6 @@
 // 角色名称
 @property (nonatomic,strong) NSString* ROLE_NAME;
 // 上次更新时间
-@property (nonatomic,strong) NSString* LAST_UPDATE_TIME;
+@property (nonatomic,assign) unsigned  long long LAST_UPDATE_TIME;
 
 @end

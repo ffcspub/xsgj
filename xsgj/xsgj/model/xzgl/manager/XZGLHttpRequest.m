@@ -7,6 +7,7 @@
 //
 
 #import "XZGLHttpRequest.h"
+#import <NSDate+Helper.h>
 
 @implementation SignUpHttpRequest
 
@@ -18,6 +19,9 @@
         _DEPT_ID = [ShareValue shareInstance].userInfo.DEPT_ID;
         _USER_AUTH = [ShareValue shareInstance].userInfo.USER_AUTH;
         _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+        _SIGN_FLAG = @"i";
+        _DEVICE_CODE = [OpenUDID value];
+        _SIGN_TIME = [NSDate stringFromDate:[NSDate date] withFormat:@"yyyy-MM-dd HH:mm:ss"];
     }
     return self;
 }

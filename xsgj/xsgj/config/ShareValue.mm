@@ -16,6 +16,8 @@
 #define SET_NOSHOWPASS @"SET_NOSHOWPASS"
 #define SET_USERID @"SET_USERID"
 
+#import <LKDBHelper.h>
+
 static ShareValue *_shareValue;
 
 
@@ -78,11 +80,26 @@ static ShareValue *_shareValue;
 }
 
 -(void)setUserId:(NSNumber *)userId{
-    [[NSUserDefaults standardUserDefaults]setObject:userId forKey:SET_USERPASS];
+    [[NSUserDefaults standardUserDefaults]setObject:userId forKey:SET_USERID];
 }
 
 -(NSNumber *)userId{
-    return [[NSUserDefaults standardUserDefaults]objectForKey:SET_USERPASS];
+    return [[NSUserDefaults standardUserDefaults]objectForKey:SET_USERID];
+}
+
+-(BNUserInfo *)userInfo{
+    if (_userInfo) {
+        return _userInfo;
+    }
+    if (self.userId) {
+        NSArray *array = [BNUserInfo searchSingleWithWhere:nil orderBy:nil];
+        NSString *userid = [NSString stringWithFormat:@"USER_ID=%d",[self.userId integerValue] ];
+        BNUserInfo *userinfo = [BNUserInfo searchSingleWithWhere:userid orderBy:nil];
+        if (userinfo) {
+            _userInfo = userinfo;
+        }
+    }
+    return _userInfo;
 }
 
 

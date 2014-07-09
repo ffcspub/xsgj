@@ -19,13 +19,13 @@
 @property(nonatomic,assign) float       LNG;//	经度 	Float	非空
 @property(nonatomic,assign) float       LAT;//	纬度 	Float	非空
 @property(nonatomic,strong) NSString *	POSITION;//	地理位置	String	非空
-@property(nonatomic,assign) float       LNG2;//	纠偏经度	Float	可选
-@property(nonatomic,assign) float       LAT2;//	纠偏纬度 	Float	可选
+@property(nonatomic,strong) NSNumber *  LNG2;//	纠偏经度	Float	可选
+@property(nonatomic,strong) NSNumber *  LAT2;//	纠偏纬度 	Float	可选
 @property(nonatomic,strong) NSString *	POSITION2;//	纠偏位置 	String	可选
 @property(nonatomic,strong) NSString *	SIGN_FLAG;//	考勤标志	String	非空(i:签到 o:签退)
 @property(nonatomic,strong) NSString *	DEVICE_CODE;//	手机标识码（IMEI）	String	非空
-@property(nonatomic,assign) int         PHOTO;//	上传附件ID	Long	可选
-@property(nonatomic,strong) NSString *	SIGN_TIME;//	上传时间	Date	非空
+@property(nonatomic,strong) NSNumber *  PHOTO;//	上传附件ID	Long	可选
+@property(nonatomic,strong) NSString *  SIGN_TIME;//	上传时间	Date 非空
 
 @end
 
@@ -36,14 +36,12 @@
 @property(nonatomic,assign) int         DEPT_ID;//	部门ID	Long	非空	20
 @property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限	String	非空	1
 @property(nonatomic,assign) int         USER_ID;//	用户ID	Long 	非空	20
-@property(nonatomic,assign) int         QUERY_DEPTID;//	查询部门标识	Long	可选	20
+@property(nonatomic,strong) NSNumber *  QUERY_DEPTID;//	查询部门标识	Long	可选	20
 @property(nonatomic,strong) NSString *	USER_NAME;//	登录名	String	可选	20
 @property(nonatomic,strong) NSString *	REALNAME;//	姓名	String	可选	20
 @property(nonatomic,strong) NSString *	MOBILENO;//	手机号码	String	可选	20
 @property(nonatomic,strong) NSString *	BEGIN_TIME;//	上报开始时间	Date	可选
-@property(nonatomic,strong) NSString *	END_TIME;//	上报结束时间	Date	可选
-@property(nonatomic,assign) int         PAGE;//	第N页	int	可选
-@property(nonatomic,assign) int         ROWS;//	加载行数	int	可选
+@property(nonatomic,strong) NSString *	END_TIME;//	上报结束时间Date可选
 @property(nonatomic,strong) NSString *	SIGN_FLAG;//	考勤标志	String	可选	1
 
 @end
@@ -55,16 +53,14 @@
 @property(nonatomic,assign) int         DEPT_ID;//	部门ID
 @property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限
 @property(nonatomic,assign) int         USER_ID;//	用户ID
-@property(nonatomic,assign) int         QUERY_DEPTID;//	查询部门标识
+@property(nonatomic,strong) NSNumber *  QUERY_DEPTID;//	查询部门标识
 @property(nonatomic,strong) NSString *	USER_NAME;//	登录名
 @property(nonatomic,strong) NSString *	REALNAME;//	姓名
 @property(nonatomic,strong) NSString *	MOBILENO;//	手机号码
 @property(nonatomic,strong) NSString *	BEGIN_TIME;//	上报开始时间
 @property(nonatomic,strong) NSString *	END_TIME;//	上报结束时间
-@property(nonatomic,assign) int         SIGN_ID;//	考勤标识
-@property(nonatomic,assign) int         PAGE;//	第N页
-@property(nonatomic,assign) int         ROWS;//	加载行数
-@property(nonatomic,strong) NSString *	SIGN_FLAG;//	考勤标志
+@property(nonatomic,assign) NSNumber *  SIGN_ID;//	考勤标识
+@property(nonatomic,strong) NSString *	SIGN_FLAG;//考勤标志
 
 @end
 

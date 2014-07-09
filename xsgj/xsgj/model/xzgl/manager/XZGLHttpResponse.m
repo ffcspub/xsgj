@@ -17,7 +17,7 @@
 
 @implementation QueryAttendanceHttpReponse
 
-+(Class)__dataClass{
++(Class)__DATAClass{
     return [SigninfoBean class];
 }
 
@@ -25,7 +25,7 @@
 
 @implementation DetailAttendanceHttpResponse
 
-+(Class)__dataClass{
++(Class)__DATAClass{
     return [SignDetailBean class];
 }
 
@@ -49,7 +49,7 @@
 
 @implementation QueryTripHttpResponse
 
-+(Class)__dataClass{
++(Class)__DATAClass{
     return [TripInfoBean class];
 }
 
