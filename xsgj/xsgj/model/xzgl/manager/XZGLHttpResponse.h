@@ -25,7 +25,7 @@
 
 @end
 
-@interface ApplyLeaveHttpResonse : LK_HttpBaseResponse
+@interface ApplyLeaveHttpResponse : LK_HttpBaseResponse
 
 @end
 
@@ -49,6 +49,10 @@
 
 @end
 
+@interface ApproveTripHttpResponse : LK_HttpBaseResponse
+
+@end
+
 @interface QueryTripHttpResponse : LK_HttpBasePageResponse
 
 @end
@@ -62,4 +66,21 @@
 @interface WorkReportHttpResponse : LK_HttpBaseResponse
 
 @end
+
+@interface AddAdviceHttpResponse : LK_HttpBaseResponse
+
+@end
+
+@interface QueryAdviceHttpResponse : LK_HttpBasePageResponse
+
+@end
+
+@interface QueryDetailAdviceHttpResponse : LK_HttpBasePageResponse
+
+@end
+
+@interface QuerySaleTaskHttpResponse : LK_HttpBasePageResponse
+
+@end
+
 

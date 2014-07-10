@@ -57,6 +57,8 @@
 #define URL_insertWorkInfo @"workReport/insertWorkInfo.shtml" // 工作上报
 #define URL_work_type @"workReport/work_type.shtml"// 工作上报类型
 #define URL_addAdvice @"advice/addAdvice.shtml"// 意见上报
+#define URL_queryAdvice @"advice/queryAdvice.shtml"// 查询意见上报
+#define URL_queryDetailAdvice @"advice/queryDetailAdvice.shtml"// 查询意见上报详细
 #define URL_allTypeinfo @"customerinfo/allTypeinfo.shtml"// 客户类型
 #define URL_addCustomerCommit @"customerinfo/addCustomerCommit.shtml"// 新增客户上报
 #define URL_customerDetail @"customerinfo/customerDetail.shtml"// 客户查询

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04C1AEFE196EAB3E000A326F /* KHGLAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AEFD196EAB3E000A326F /* KHGLAPI.m */; };
+		04C1AF01196EABB1000A326F /* KHGLHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AF00196EABB1000A326F /* KHGLHttpRequest.m */; };
+		04C1AF04196EABC1000A326F /* KHGLHttpResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AF03196EABC1000A326F /* KHGLHttpResponse.m */; };
 		04EFF63C19663C8800FF79BE /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04EFF61519663C8800FF79BE /* AMap.bundle */; };
 		04EFF63D19663C8800FF79BE /* AMapSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EFF61619663C8800FF79BE /* AMapSearchKit.framework */; };
 		04EFF63E19663C8800FF79BE /* LXActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EFF61919663C8800FF79BE /* LXActionSheet.m */; };
@@ -346,6 +349,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04C1AEFC196EAB3E000A326F /* KHGLAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHGLAPI.h; sourceTree = SOURCE_ROOT; };
+		04C1AEFD196EAB3E000A326F /* KHGLAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHGLAPI.m; sourceTree = SOURCE_ROOT; };
+		04C1AEFF196EABB1000A326F /* KHGLHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHGLHttpRequest.h; sourceTree = SOURCE_ROOT; };
+		04C1AF00196EABB1000A326F /* KHGLHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHGLHttpRequest.m; sourceTree = SOURCE_ROOT; };
+		04C1AF02196EABC1000A326F /* KHGLHttpResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHGLHttpResponse.h; sourceTree = SOURCE_ROOT; };
+		04C1AF03196EABC1000A326F /* KHGLHttpResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHGLHttpResponse.m; sourceTree = SOURCE_ROOT; };
 		04EFF61519663C8800FF79BE /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AMap.bundle; sourceTree = "<group>"; };
 		04EFF61619663C8800FF79BE /* AMapSearchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AMapSearchKit.framework; sourceTree = "<group>"; };
 		04EFF61819663C8800FF79BE /* LXActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXActionSheet.h; sourceTree = "<group>"; };
@@ -950,6 +959,12 @@
 		04EFF66C1966441400FF79BE /* manager */ = {
 			isa = PBXGroup;
 			children = (
+				04C1AEFC196EAB3E000A326F /* KHGLAPI.h */,
+				04C1AEFD196EAB3E000A326F /* KHGLAPI.m */,
+				04C1AEFF196EABB1000A326F /* KHGLHttpRequest.h */,
+				04C1AF00196EABB1000A326F /* KHGLHttpRequest.m */,
+				04C1AF02196EABC1000A326F /* KHGLHttpResponse.h */,
+				04C1AF03196EABC1000A326F /* KHGLHttpResponse.m */,
 			);
 			path = manager;
 			sourceTree = "<group>";
@@ -2247,15 +2262,18 @@
 				04FD380A196A3A4200C42C39 /* NSData+Base64.m in Sources */,
 				DF36B57A1965BF900064C48D /* UIImage+External.m in Sources */,
 				04FD3867196AA74B00C42C39 /* BNUserInfo.m in Sources */,
+				04C1AF04196EABC1000A326F /* KHGLHttpResponse.m in Sources */,
 				04FD380C196A3A4200C42C39 /* CRSA.m in Sources */,
 				DF36B56C1965BF900064C48D /* LK_HttpResponse.m in Sources */,
 				04FD3886196AA75800C42C39 /* BNAreaInfo.m in Sources */,
 				DFCEEAF71969385E00E0DD6F /* SignDetailBean.m in Sources */,
 				04EFF64A19663C8800FF79BE /* UIImageView+MJWebCache.m in Sources */,
 				04FD3889196AA75800C42C39 /* BNCustomerType.m in Sources */,
+				04C1AEFE196EAB3E000A326F /* KHGLAPI.m in Sources */,
 				04EFF6871966446A00FF79BE /* XTGLViewController.m in Sources */,
 				DF36B4861965B5BF0064C48D /* main.m in Sources */,
 				04EFF64D19663C8800FF79BE /* TPKeyboardAvoidingScrollView.m in Sources */,
+				04C1AF01196EABB1000A326F /* KHGLHttpRequest.m in Sources */,
 				04FD388C196AA75800C42C39 /* BNDisplayType.m in Sources */,
 				04FD388E196AA75800C42C39 /* BNProduct.m in Sources */,
 				DFCEEAFF1969846100E0DD6F /* TripInfoBean.m in Sources */,
