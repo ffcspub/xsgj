@@ -10,6 +10,9 @@
 #import "SigninfoBean.h"
 #import "SignDetailBean.h"
 #import "TripInfoBean.h"
+#import "AdviceInfoBean.h"
+#import "AdviceDetailBean.h"
+#import "SaleTaskInfoBean.h"
 
 @implementation SignUpHttpReponse
 
@@ -31,7 +34,11 @@
 
 @end
 
-@implementation ApplyLeaveHttpResonse
+@implementation ApplyLeaveHttpResponse
+
+@end
+
+@implementation ApprovalLeaveHttpResponse
 
 @end
 
@@ -44,6 +51,11 @@
 @end
 
 @implementation ApplyTripHttpResponse
+
+@end
+
+@implementation ApproveTripHttpResponse
+
 
 @end
 
@@ -60,8 +72,35 @@
 
 @end
 
-
 @implementation WorkReportHttpResponse
+
+@end
+
+@implementation AddAdviceHttpResponse
+
+@end
+
+@implementation QueryAdviceHttpResponse
+
++(Class)__DATAClass{
+    return [AdviceInfoBean class];
+}
+
+@end
+
+@implementation QueryDetailAdviceHttpResponse
+
++(Class)__DATAClass{
+    return [AdviceDetailBean class];
+}
+
+@end
+
+@implementation QuerySaleTaskHttpResponse
+
++(Class)__DATAClass{
+    return [SaleTaskInfoBean class];
+}
 
 
 @end

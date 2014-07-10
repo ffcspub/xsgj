@@ -57,8 +57,11 @@
 #define URL_insertWorkInfo @"workReport/insertWorkInfo.shtml" // 工作上报
 #define URL_work_type @"workReport/work_type.shtml"// 工作上报类型
 #define URL_addAdvice @"advice/addAdvice.shtml"// 意见上报
+#define URL_queryAdvice @"advice/queryAdvice.shtml"// 查询意见上报
+#define URL_queryDetailAdvice @"advice/queryDetailAdvice.shtml"// 查询意见上报详细
 #define URL_allTypeinfo @"customerinfo/allTypeinfo.shtml"// 客户类型
 #define URL_addCustomerCommit @"customerinfo/addCustomerCommit.shtml"// 新增客户上报
+#define URL_queryCustomer @"customerinfo/customerQuery.shtml"// 客户查询
 #define URL_customerDetail @"customerinfo/customerDetail.shtml"// 客户查询
 #define URL_querySaleTask @"saletask/querySaleTask.shtml"// 销售任务(拜访目标)
 #define URL_queryVisitRecord @"visit/queryVisitRecord.shtml"// 拜访记录
@@ -77,6 +80,7 @@
 #define URL_queryAttendance @"sign/queryAttendance.shtml"// 考勤查询
 #define URL_detailAttendance @"sign/detailAttendance.shtml"// 考勤查询(包含详情）
 #define URL_planVisit @"visit/planVisit.shtml"// 计划拜访-获取路线
+#define URL_updateVisitPlans @"visit/updateVisitPlans.shtml"//更新拜访规划
 #define URL_customerInfoGatherr @"visit/tempVisit.shtml"// 客户信息采集
 #define URL_queryVisitStates @"visit/queryVisitStates.shtml"// 获取拜访状态
 #define URL_recordVisit @"visit/recordVisit.shtml"// 离开登记

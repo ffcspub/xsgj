@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04C1AEFE196EAB3E000A326F /* KHGLAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AEFD196EAB3E000A326F /* KHGLAPI.m */; };
+		04C1AF01196EABB1000A326F /* KHGLHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AF00196EABB1000A326F /* KHGLHttpRequest.m */; };
+		04C1AF04196EABC1000A326F /* KHGLHttpResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AF03196EABC1000A326F /* KHGLHttpResponse.m */; };
 		04EFF63C19663C8800FF79BE /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04EFF61519663C8800FF79BE /* AMap.bundle */; };
 		04EFF63D19663C8800FF79BE /* AMapSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EFF61619663C8800FF79BE /* AMapSearchKit.framework */; };
 		04EFF63E19663C8800FF79BE /* LXActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EFF61919663C8800FF79BE /* LXActionSheet.m */; };
@@ -63,6 +66,13 @@
 		04FD3892196AA75800C42C39 /* BNVisitPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FD3881196AA75800C42C39 /* BNVisitPlan.m */; };
 		04FD3893196AA75800C42C39 /* BNVisitStepRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FD3883196AA75800C42C39 /* BNVisitStepRecord.m */; };
 		04FD3894196AA75800C42C39 /* BNVistRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FD3885196AA75800C42C39 /* BNVistRecord.m */; };
+		DF0C4DEC196ED96D0001CB62 /* CustTypeBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0C4DEB196ED96D0001CB62 /* CustTypeBean.m */; };
+		DF0C4DEF196EE13B0001CB62 /* CustInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0C4DEE196EE13B0001CB62 /* CustInfoBean.m */; };
+		DF0C4DF2196EFA430001CB62 /* CustDetailBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0C4DF1196EFA430001CB62 /* CustDetailBean.m */; };
+		DF0C4DF5196EFC620001CB62 /* VisistRecordVO.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0C4DF4196EFC620001CB62 /* VisistRecordVO.m */; };
+		DF0C4DF8196F02230001CB62 /* PlanVisitConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0C4DF7196F02230001CB62 /* PlanVisitConfig.m */; };
+		DF0C4DFB196F02870001CB62 /* CustomerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0C4DFA196F02870001CB62 /* CustomerInfo.m */; };
+		DF0C4DFE196F05580001CB62 /* VisitPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0C4DFD196F05580001CB62 /* VisitPlan.m */; };
 		DF127F31196C4B2F00B9EB4E /* AdviceInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DF127F30196C4B2F00B9EB4E /* AdviceInfoBean.m */; };
 		DF127F34196C4BFD00B9EB4E /* AdviceDetailBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DF127F33196C4BFD00B9EB4E /* AdviceDetailBean.m */; };
 		DF127F37196C4D3600B9EB4E /* SaleTaskInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DF127F36196C4D3600B9EB4E /* SaleTaskInfoBean.m */; };
@@ -346,6 +356,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04C1AEFC196EAB3E000A326F /* KHGLAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHGLAPI.h; sourceTree = SOURCE_ROOT; };
+		04C1AEFD196EAB3E000A326F /* KHGLAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHGLAPI.m; sourceTree = SOURCE_ROOT; };
+		04C1AEFF196EABB1000A326F /* KHGLHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHGLHttpRequest.h; sourceTree = SOURCE_ROOT; };
+		04C1AF00196EABB1000A326F /* KHGLHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHGLHttpRequest.m; sourceTree = SOURCE_ROOT; };
+		04C1AF02196EABC1000A326F /* KHGLHttpResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHGLHttpResponse.h; sourceTree = SOURCE_ROOT; };
+		04C1AF03196EABC1000A326F /* KHGLHttpResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHGLHttpResponse.m; sourceTree = SOURCE_ROOT; };
 		04EFF61519663C8800FF79BE /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AMap.bundle; sourceTree = "<group>"; };
 		04EFF61619663C8800FF79BE /* AMapSearchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AMapSearchKit.framework; sourceTree = "<group>"; };
 		04EFF61819663C8800FF79BE /* LXActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXActionSheet.h; sourceTree = "<group>"; };
@@ -519,6 +535,20 @@
 		04FD3885196AA75800C42C39 /* BNVistRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNVistRecord.m; sourceTree = "<group>"; };
 		8F73448094CF40BAB99CCE46 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		9912467346C7467399D9CFB7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF0C4DEA196ED96D0001CB62 /* CustTypeBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustTypeBean.h; sourceTree = "<group>"; };
+		DF0C4DEB196ED96D0001CB62 /* CustTypeBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustTypeBean.m; sourceTree = "<group>"; };
+		DF0C4DED196EE13B0001CB62 /* CustInfoBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustInfoBean.h; sourceTree = "<group>"; };
+		DF0C4DEE196EE13B0001CB62 /* CustInfoBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustInfoBean.m; sourceTree = "<group>"; };
+		DF0C4DF0196EFA430001CB62 /* CustDetailBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustDetailBean.h; sourceTree = "<group>"; };
+		DF0C4DF1196EFA430001CB62 /* CustDetailBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustDetailBean.m; sourceTree = "<group>"; };
+		DF0C4DF3196EFC620001CB62 /* VisistRecordVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisistRecordVO.h; sourceTree = "<group>"; };
+		DF0C4DF4196EFC620001CB62 /* VisistRecordVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisistRecordVO.m; sourceTree = "<group>"; };
+		DF0C4DF6196F02230001CB62 /* PlanVisitConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlanVisitConfig.h; sourceTree = "<group>"; };
+		DF0C4DF7196F02230001CB62 /* PlanVisitConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlanVisitConfig.m; sourceTree = "<group>"; };
+		DF0C4DF9196F02870001CB62 /* CustomerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerInfo.h; sourceTree = "<group>"; };
+		DF0C4DFA196F02870001CB62 /* CustomerInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerInfo.m; sourceTree = "<group>"; };
+		DF0C4DFC196F05580001CB62 /* VisitPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisitPlan.h; sourceTree = "<group>"; };
+		DF0C4DFD196F05580001CB62 /* VisitPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisitPlan.m; sourceTree = "<group>"; };
 		DF127F2F196C4B2F00B9EB4E /* AdviceInfoBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdviceInfoBean.h; sourceTree = "<group>"; };
 		DF127F30196C4B2F00B9EB4E /* AdviceInfoBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdviceInfoBean.m; sourceTree = "<group>"; };
 		DF127F32196C4BFD00B9EB4E /* AdviceDetailBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdviceDetailBean.h; sourceTree = "<group>"; };
@@ -943,6 +973,20 @@
 		04EFF66B1966441400FF79BE /* entity */ = {
 			isa = PBXGroup;
 			children = (
+				DF0C4DEA196ED96D0001CB62 /* CustTypeBean.h */,
+				DF0C4DEB196ED96D0001CB62 /* CustTypeBean.m */,
+				DF0C4DED196EE13B0001CB62 /* CustInfoBean.h */,
+				DF0C4DEE196EE13B0001CB62 /* CustInfoBean.m */,
+				DF0C4DF0196EFA430001CB62 /* CustDetailBean.h */,
+				DF0C4DF1196EFA430001CB62 /* CustDetailBean.m */,
+				DF0C4DF3196EFC620001CB62 /* VisistRecordVO.h */,
+				DF0C4DF4196EFC620001CB62 /* VisistRecordVO.m */,
+				DF0C4DF6196F02230001CB62 /* PlanVisitConfig.h */,
+				DF0C4DF7196F02230001CB62 /* PlanVisitConfig.m */,
+				DF0C4DF9196F02870001CB62 /* CustomerInfo.h */,
+				DF0C4DFA196F02870001CB62 /* CustomerInfo.m */,
+				DF0C4DFC196F05580001CB62 /* VisitPlan.h */,
+				DF0C4DFD196F05580001CB62 /* VisitPlan.m */,
 			);
 			path = entity;
 			sourceTree = "<group>";
@@ -950,6 +994,12 @@
 		04EFF66C1966441400FF79BE /* manager */ = {
 			isa = PBXGroup;
 			children = (
+				04C1AEFC196EAB3E000A326F /* KHGLAPI.h */,
+				04C1AEFD196EAB3E000A326F /* KHGLAPI.m */,
+				04C1AEFF196EABB1000A326F /* KHGLHttpRequest.h */,
+				04C1AF00196EABB1000A326F /* KHGLHttpRequest.m */,
+				04C1AF02196EABC1000A326F /* KHGLHttpResponse.h */,
+				04C1AF03196EABC1000A326F /* KHGLHttpResponse.m */,
 			);
 			path = manager;
 			sourceTree = "<group>";
@@ -2224,6 +2274,7 @@
 				04FD3893196AA75800C42C39 /* BNVisitStepRecord.m in Sources */,
 				DF36B5721965BF900064C48D /* UIControl+LKSignal.m in Sources */,
 				04FD3887196AA75800C42C39 /* BNAssetType.m in Sources */,
+				DF0C4DF2196EFA430001CB62 /* CustDetailBean.m in Sources */,
 				04FD3891196AA75800C42C39 /* BNVisitCondition.m in Sources */,
 				04EFF64919663C8800FF79BE /* SDWebImageManager+MJ.m in Sources */,
 				DFCEEAEF19692F8F00E0DD6F /* XZGLHttpRequest.m in Sources */,
@@ -2246,16 +2297,21 @@
 				DF36B5701965BF900064C48D /* UI+LKSignal.m in Sources */,
 				04FD380A196A3A4200C42C39 /* NSData+Base64.m in Sources */,
 				DF36B57A1965BF900064C48D /* UIImage+External.m in Sources */,
+				DF0C4DF8196F02230001CB62 /* PlanVisitConfig.m in Sources */,
 				04FD3867196AA74B00C42C39 /* BNUserInfo.m in Sources */,
+				04C1AF04196EABC1000A326F /* KHGLHttpResponse.m in Sources */,
 				04FD380C196A3A4200C42C39 /* CRSA.m in Sources */,
 				DF36B56C1965BF900064C48D /* LK_HttpResponse.m in Sources */,
 				04FD3886196AA75800C42C39 /* BNAreaInfo.m in Sources */,
+				DF0C4DF5196EFC620001CB62 /* VisistRecordVO.m in Sources */,
 				DFCEEAF71969385E00E0DD6F /* SignDetailBean.m in Sources */,
 				04EFF64A19663C8800FF79BE /* UIImageView+MJWebCache.m in Sources */,
 				04FD3889196AA75800C42C39 /* BNCustomerType.m in Sources */,
+				04C1AEFE196EAB3E000A326F /* KHGLAPI.m in Sources */,
 				04EFF6871966446A00FF79BE /* XTGLViewController.m in Sources */,
 				DF36B4861965B5BF0064C48D /* main.m in Sources */,
 				04EFF64D19663C8800FF79BE /* TPKeyboardAvoidingScrollView.m in Sources */,
+				04C1AF01196EABB1000A326F /* KHGLHttpRequest.m in Sources */,
 				04FD388C196AA75800C42C39 /* BNDisplayType.m in Sources */,
 				04FD388E196AA75800C42C39 /* BNProduct.m in Sources */,
 				DFCEEAFF1969846100E0DD6F /* TripInfoBean.m in Sources */,
@@ -2267,6 +2323,7 @@
 				04FD388D196AA75800C42C39 /* BNMobileMenu.m in Sources */,
 				DFCEEADB19692DCF00E0DD6F /* SigninfoBean.m in Sources */,
 				DFCEEAEB19692F3600E0DD6F /* XZGLAPI.m in Sources */,
+				DF0C4DFE196F05580001CB62 /* VisitPlan.m in Sources */,
 				DF36B5681965BF900064C48D /* LK_API.m in Sources */,
 				04EFF63E19663C8800FF79BE /* LXActionSheet.m in Sources */,
 				04FD388A196AA75800C42C39 /* BNDisplayCase.m in Sources */,
@@ -2278,11 +2335,14 @@
 				04EFF6821966445800FF79BE /* OtherViewController.m in Sources */,
 				04FD388F196AA75800C42C39 /* BNProductType.m in Sources */,
 				DF36B5781965BF900064C48D /* NSObject+EasyCopy.m in Sources */,
+				DF0C4DEC196ED96D0001CB62 /* CustTypeBean.m in Sources */,
 				04EFF68C1966447B00FF79BE /* XZGLViewController.m in Sources */,
 				04EFF64C19663C8800FF79BE /* SIAlertView.m in Sources */,
 				04EFF64F19663C8800FF79BE /* UIColor+External.m in Sources */,
+				DF0C4DFB196F02870001CB62 /* CustomerInfo.m in Sources */,
 				04EFF65019663C8800FF79BE /* UINavigationBar+BarItem.m in Sources */,
 				DF36B48D1965B5C00064C48D /* xsgj.xcdatamodeld in Sources */,
+				DF0C4DEF196EE13B0001CB62 /* CustInfoBean.m in Sources */,
 				DFCEEAE719692F0700E0DD6F /* SystemHttpResponse.m in Sources */,
 				DFCEEAFB19693FD500E0DD6F /* LeaveInfoBean.m in Sources */,
 				DF36B5641965BF900064C48D /* ShareValue.mm in Sources */,
