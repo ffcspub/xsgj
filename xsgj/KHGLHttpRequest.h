@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "LK_HttpRequest.h"
-#import "VisitPlan.h"
+
 
 @interface AllTypeHttpRequest : LK_HttpBasePageRequest
 
@@ -135,3 +135,4 @@
 @property(nonatomic,strong) NSArray  *	VISIT_PLANS;//	拜访计划
 
 @end
+

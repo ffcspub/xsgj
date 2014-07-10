@@ -125,5 +125,4 @@
     } class:[UpdateVisitPlansHttpResponse class]];
 }
 
-
 @end

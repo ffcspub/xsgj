@@ -47,4 +47,3 @@
 @property(nonatomic,strong) NSArray *VISIT_RECORDS;
 
 @end
-
