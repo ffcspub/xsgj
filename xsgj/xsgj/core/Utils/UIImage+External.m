@@ -100,15 +100,15 @@
         radio = verticalRadio < horizontalRadio ? verticalRadio : horizontalRadio;
     }
     
-    width = width*radio;
-    height = height*radio;
+    width = (int)width*radio;
+    height = (int)height*radio;
     
-    int xPos = (size.width - width)/2;
-    int yPos = (size.height-height)/2;
+    int xPos = 0;//(size.width - width)/2;
+    int yPos = 0;//(size.height-height)/2;
     
     // 创建一个bitmap的context
     // 并把它设置成为当前正在使用的context
-    UIGraphicsBeginImageContext(size);
+    UIGraphicsBeginImageContext(CGSizeMake(width, height));
     
     // 绘制改变大小的图片
     [self drawInRect:CGRectMake(xPos, yPos, width, height)];

@@ -23,6 +23,8 @@
 #import "BNDisplayShape.h"
 #import "BNDisplayType.h"
 
+#import "LK_NSDictionary2Object.h"
+
 #import <LKDBHelper.h>
 
 @implementation UserLoginHttpResponse
@@ -121,11 +123,32 @@
     return [BNDisplayShape class];
 }
 
+-(void)saveDefaultMobileMenus{
+    NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"menu_config" ofType:@"json"];
+	NSData* data = [NSData dataWithContentsOfFile:jsonPath];
+	NSArray *array =  [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    for (NSDictionary *dict in array) {
+        BNMobileMenu *menu = [[BNMobileMenu alloc]init];
+        menu.MENU_ID = [[dict objectForKey:@"id"] integerValue];
+        menu.ICON = [dict objectForKey:@"icon"];
+        if([[dict objectForKey:@"leftShow"] isEqual:@"true"]){
+            menu.STATE = 1;
+        }
+        menu.MENU_NAME = [dict objectForKey:@"name"];
+        menu.PARENT_ID = [[dict objectForKey:@"parentId"]integerValue];
+        BOOL flag = [menu saveToDB];
+    }
+    
+    int count = [BNMobileMenu rowCountWithWhere:nil];
+    NSLog(@"mobileMenu num:%d",count);
+}
+
 -(void)saveCacheDB{
     if (_MENU_UPDATE_STATE == 1) {
         [BNMobileMenu deleteWithWhere:nil];
+        [self saveDefaultMobileMenus];
         for (BNMobileMenu *bean in _MOBILE_MENUS) {
-            [bean saveToDB];
+            [bean save];
         }
     }
     if (_PRODUCT_TYPE_UPDATE_STATE == 1) {

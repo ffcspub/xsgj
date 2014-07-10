@@ -27,11 +27,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self showLeftBarButtonItemWithImage:@"btn_back" target:self action:@selector(backAction)];
+    UIButton *button = [self defaultBackButtonWithTitle:@"返回"];
+    [button addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    [self showLeftBarButtonItemWithImage:@"btn_back" target:self action:@selector(backAction)];
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
     if (IOS7_OR_LATER) {
          [self.navigationController.navigationBar setTranslucent:NO];
         self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.extendedLayoutIncludesOpaqueBars = NO;
+        self.modalPresentationCapturesStatusBarAppearance = NO;
+        self.automaticallyAdjustsScrollViewInsets = YES;
         //        self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1];
     }
 #endif
@@ -71,6 +77,17 @@
 
 -(void)backAction{
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(UIButton *)defaultBackButtonWithTitle:(NSString *)title{
+    UIImage *image = [[UIImage imageNamed:@"Bg_BtnBack&BtnExit-nor"]resizableImageWithCapInsets:UIEdgeInsetsMake(5, 15, 5, 5)];
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 70, 35)];
+    [btn setBackgroundImage:image forState:UIControlStateNormal];
+    
+    btn.titleEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 0);
+    [btn setTitle:title forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    return btn;
 }
 
 - (UIButton *)titleButton{
