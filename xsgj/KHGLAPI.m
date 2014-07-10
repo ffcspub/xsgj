@@ -7,6 +7,7 @@
 //
 
 #import "KHGLAPI.h"
+<<<<<<< HEAD
 #import "LK_API.h"
 #import "ServerConfig.h"
 
@@ -126,4 +127,9 @@
 }
 
 
+=======
+
+@implementation KHGLAPI
+
+>>>>>>> de114e4ff721da211b17de3b55ff0f0094a9752a
 @end

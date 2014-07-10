@@ -84,6 +84,18 @@
  *  @param fail    失败返回结果
  */
 +(void)updateVisitPlansByRequest:(UpdateVisitPlansHttpRequest *)request success:(void(^)(UpdateVisitPlansHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+=======
+
+@interface KHGLAPI : NSObject
+
++(void)allTypeInfoByRequest:(AllTypeHttpRequest *)request success:(void(^)(QueryDetailAdviceHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_querySaleTask Success:^(LK_HttpBaseResponse *response) {
+        success((QueryDetailAdviceHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[QueryDetailAdviceHttpResponse class]];
+}
+>>>>>>> de114e4ff721da211b17de3b55ff0f0094a9752a
 
 
 @end

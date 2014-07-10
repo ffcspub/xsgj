@@ -7,6 +7,7 @@
 //
 
 #import "KHGLHttpResponse.h"
+<<<<<<< HEAD
 #import "CustTypeBean.h"
 #import "CustInfoBean.h"
 #import "CustDetailBean.h"
@@ -70,3 +71,9 @@
 }
 
 @end
+=======
+
+@implementation KHGLHttpResponse
+
+@end
+>>>>>>> de114e4ff721da211b17de3b55ff0f0094a9752a

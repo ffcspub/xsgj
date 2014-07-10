@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+<<<<<<< HEAD
 #import "LK_HttpResponse.h"
 
 
@@ -48,3 +49,9 @@
 
 @end
 
+=======
+
+@interface KHGLHttpResponse : NSObject
+
+@end
+>>>>>>> de114e4ff721da211b17de3b55ff0f0094a9752a

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "LK_HttpRequest.h"
-#import "VisitPlan.h"
+
 
 @interface AllTypeHttpRequest : LK_HttpBasePageRequest
 
@@ -133,5 +133,11 @@
 @property(nonatomic,strong) NSString *	PLAN_DATE;//	计划拜访日期
 @property(nonatomic,strong) NSString *	WEEKDAY;//	星期几
 @property(nonatomic,strong) NSArray  *	VISIT_PLANS;//	拜访计划
+=======
+
+@interface AllTypeHttpRequest : LK_HttpBasePageRequest
+
+
+>>>>>>> de114e4ff721da211b17de3b55ff0f0094a9752a
 
 @end
