@@ -103,14 +103,26 @@
     MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在登录" toView:self.view];
     [hud showAnimated:YES whileExecutingBlock:^{
         [SystemAPI loginByCorpcode:_tf_companycode.text username:_tf_username.text password:_tf_pwd.text success:^(BNUserInfo *userinfo) {
-            [hud removeFromSuperview];
-            [self showLoginViewController];
+            dispatch_async(dispatch_get_main_queue() , ^{
+                MBProgressHUD *mhud = [[MBProgressHUD alloc]initWithWindow:ShareAppDelegate.window ];
+                mhud.labelText = @"正在更新配置...";
+                [mhud showAnimated:YES whileExecutingBlock:^{
+                    [SystemAPI updateConfigSuccess:^{
+                        [self showTabViewController];
+                        [mhud removeFromSuperview];
+                    } fail:^(BOOL notReachable, NSString *desciption) {
+                        [mhud removeFromSuperview];
+                        [MBProgressHUD showError:desciption toView:self.view];
+                    }];
+                }];
+                [mhud show:YES];
+            });
         } fail:^(BOOL notReachable, NSString *desciption) {
             if (notReachable) {
                 if ([[ShareValue shareInstance].corpCode isEqual:_tf_companycode.text] && [[ShareValue shareInstance].userName isEqual:_tf_username.text] && [[ShareValue shareInstance].userPass isEqual:_tf_pwd.text]) {
                     RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:@"取消" action:nil];
                     RIButtonItem *sureItem = [RIButtonItem itemWithLabel:@"确定" action:^{
-                        [self showLoginViewController];
+                        [self showTabViewController];
                     }];
                     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前网络不佳，是否进入离线模式？" cancelButtonItem: cancelItem otherButtonItems:sureItem, nil];
                     [alert show];
@@ -125,7 +137,7 @@
     
 }
 
--(void)showLoginViewController{
+-(void)showTabViewController{
     if (![ShareValue shareInstance].noRemberFlag) {
         [ShareValue shareInstance].corpCode = _tf_companycode.text;
         [ShareValue shareInstance].userName = _tf_username.text;

@@ -11,7 +11,7 @@
 
 #define VERSION 1
 
-#define TABLEVERION 1.1
+#define TABLEVERION 1.3
 
 #define DEFINE_SUCCESSCODE @"00000000"
 

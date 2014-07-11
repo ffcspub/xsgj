@@ -31,6 +31,9 @@
     if (IOS7_OR_LATER) {
         [self.navigationController.navigationBar setTranslucent:NO];
         self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.extendedLayoutIncludesOpaqueBars = NO;
+        self.modalPresentationCapturesStatusBarAppearance = NO;
+        self.automaticallyAdjustsScrollViewInsets = YES;
     }
 #endif
 	// Do any additional setup after loading the view.
@@ -44,11 +47,11 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
-    if (IOS7_OR_LATER) {
-        self.navigationController.navigationBar.translucent = YES;
-    }
-#endif
+//#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+//    if (IOS7_OR_LATER) {
+//        self.navigationController.navigationBar.translucent = YES;
+//    }
+//#endif
     [((AppDelegate *)[UIApplication sharedApplication].delegate) showTabView];
     [super viewWillAppear:animated];
 }

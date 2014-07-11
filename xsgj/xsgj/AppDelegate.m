@@ -23,6 +23,11 @@
 #import "XZGLHttpResponse.h"
 #import "SignDetailBean.h"
 
+#import "TopMenuViewController.h"
+#import <LKDBHelper.h>
+#import "BNMobileMenu.h"
+#import <MBProgressHUD.h>
+
 @implementation AppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -32,19 +37,17 @@
 
 -(void)test{
     
-    [SystemAPI loginByCorpcode:@"zlbzb" username:@"linwei" password:@"123456" success:^(BNUserInfo *userinfo) {
-        [SystemAPI updateConfigSuccess:^{
-            
-        } fail:^(BOOL notReachable, NSString *desciption) {
-            
-        }];
-    } fail:^(BOOL notReachable, NSString *desciption) {
-        
-    }];
+//    [SystemAPI loginByCorpcode:@"zlbzb" username:@"linwei" password:@"123456" success:^(BNUserInfo *userinfo) {
+//        [SystemAPI updateConfigSuccess:^{
+//            
+//        } fail:^(BOOL notReachable, NSString *desciption) {
+//            
+//        }];
+//    } fail:^(BOOL notReachable, NSString *desciption) {
+//        
+//    }];
     
-    ApplyLeaveHttpRequest *request = [[ApplyLeaveHttpRequest alloc]init];
-    
-    
+//    ApplyLeaveHttpRequest *request = [[ApplyLeaveHttpRequest alloc]init];
 //    DetailAttendanceHttpRequest *request = [[DetailAttendanceHttpRequest alloc]init];
 //    [XZGLAPI detailAttendanceByRequest:request success:^(DetailAttendanceHttpResponse *response) {
 //        for (SignDetailBean *infoBean in response.DATA) {
@@ -82,6 +85,8 @@
 -(void)initStyle{
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
     if (IOS7_OR_LATER) {
+        
+//        [[UINavigationBar appearance]setBackgroundImage:[UIImage imageNamed:@"MyNavigationBar1"] forBarMetrics:UIBarMetricsDefault];
         [[UINavigationBar appearance] setBarTintColor:HEX_RGB(0x409be4)];
         [[UINavigationBar appearance]setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,[UIFont boldSystemFontOfSize:20],UITextAttributeFont,@0.0,UITextAttributeTextShadowOffset, nil]];
     }
@@ -112,24 +117,20 @@
     [_tabBarController setTabInnerStrokeColor:[UIColor clearColor]];
     [_tabBarController setTopEdgeColor:[UIColor clearColor]];
     [_tabBarController setMinimumHeightToDisplayTitle:50];
+    
 }
 
 -(void)addController:(AKTabBarController *)tabBarController{
-    XZGLViewController *viewcontroller1 = [[XZGLViewController alloc]init];
     
-    KHGLViewController *viewcontroller2 = [[KHGLViewController alloc]init];
-    
-    XTGLViewController *viewcontroller3 = [[XTGLViewController alloc]init];
-    
-    OtherViewController *viewcontroller4 = [[OtherViewController alloc]init];
-    
-    UINavigationController *navController1 = [[UINavigationController alloc]initWithRootViewController:viewcontroller1];
-    UINavigationController *navController2 = [[UINavigationController alloc]initWithRootViewController:viewcontroller2];
-    UINavigationController *navController3 = [[UINavigationController alloc]initWithRootViewController:viewcontroller3];
-    UINavigationController *navController4 = [[UINavigationController alloc]initWithRootViewController:viewcontroller4];
-    
-    [_tabBarController setViewControllers:[@[navController1,navController2,navController3,navController4]mutableCopy]];
-
+    NSArray *array = [BNMobileMenu searchWithWhere:[NSString stringWithFormat:@"PARENT_ID=%D and STATE=1",-1] orderBy:nil offset:0 count:10];
+    NSMutableArray *navs = [NSMutableArray array];
+    for (BNMobileMenu *menu in array) {
+        TopMenuViewController *vlc = [[TopMenuViewController alloc]init];
+        vlc.menu = menu;
+        UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:vlc];
+        [navs addObject:navController];
+    }
+    [_tabBarController setViewControllers:navs];
 }
 
 
