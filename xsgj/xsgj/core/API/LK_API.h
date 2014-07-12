@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "LK_HttpRequest.h"
 #import "LK_HttpResponse.h"
+#import <AFHTTPClient.h>
 
 @interface LK_APIUtil : NSObject
 
@@ -17,6 +18,7 @@
 
 +(void)getHttpRequest:(LK_HttpBaseRequest *)request apiPath:(NSString *)path Success:(void (^)(LK_HttpBaseResponse *))sucess fail:(void (^)(BOOL NotReachable,NSString *))fail class:(Class)responseClass;
 
++(AFHTTPClient *)getHttpRequest:(LK_HttpBaseRequest *)request basePath:(NSString *)basePath apiPath:(NSString *)path Success:(void (^)(LK_HttpBaseResponse *))sucess fail:(void (^)(BOOL NotReachable,NSString *descript))fail class:(Class)responseClass;
 
 +(void)cancelAllHttpRequestByApiPath:(NSString *)path;
 

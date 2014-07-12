@@ -95,27 +95,6 @@
     
     path = [NSString stringWithFormat:@"%@?data=%@",path,[paramString URLEncodedString]];
     AFHTTPClient *client = LK_APIUtil.client;
-    //    NSMutableURLRequest *urlRequest = [client requestWithMethod:@"POST" path:path parameters:dict];
-    //    urlRequest.timeoutInterval = 10;j
-    //
-    //    AFJSONRequestOperation *operation =
-    //    [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-    //        NSString *responseString = JSON;
-    //        NSLog(@"%@",responseString);
-    //        NSDictionary *dict = [responseString objectFromJSONString];
-    //        if (dict) {
-    //            NSObject *object = [dict objectByClass:responseClass];
-    //            sucess((LK_HttpBaseResponse*)object);
-    //        }else{
-    //            fail(@"服务器异常");
-    //        }
-    //    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-    //        fail(@"服务器异常");
-    //    }];
-    //    [operation start];
-    
-    //    client.parameterEncoding = AFJSONParameterEncoding;
-
     [client getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if(responseObject){
             NSData *responseData = (NSData *)responseObject;
@@ -137,6 +116,39 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         fail(client.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable,@"网络不给力");
     }];
+}
+
++(AFHTTPClient *)getHttpRequest:(LK_HttpBaseRequest *)request basePath:(NSString *)basePath apiPath:(NSString *)path Success:(void (^)(LK_HttpBaseResponse *))sucess fail:(void (^)(BOOL NotReachable,NSString *descript))fail class:(Class)responseClass{
+    if (!responseClass) {
+        responseClass = [LK_HttpBaseResponse class];
+    }
+    NSDictionary *tdict = request.lkDictionary;
+    NSString *paramString = [LK_APIUtil stringCreateJsonWithObject:tdict ];
+    
+    path = [NSString stringWithFormat:@"%@?data=%@",path,[paramString URLEncodedString]];
+    AFHTTPClient *client =  [[AFHTTPClient alloc]initWithBaseURL:[NSURL URLWithString:basePath]];
+    [client getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if(responseObject){
+            NSData *responseData = (NSData *)responseObject;
+            NSString *responseString = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",responseString);
+            NSDictionary *dict = [responseString objectFromJSONString];
+            if (dict) {
+                NSObject *object = [dict objectByClass:responseClass];
+                LK_HttpBaseResponse * response = (LK_HttpBaseResponse *) object;
+                if ([DEFINE_SUCCESSCODE isEqual:response.MESSAGE.MESSAGECODE]) {
+                    sucess((LK_HttpBaseResponse*)object);
+                }else{
+                    fail(NO,response.MESSAGE.MESSAGECONTENT);
+                }
+            }else{
+                fail(NO,@"网络不给力");
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        fail(client.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable,@"网络不给力");
+    }];
+    return client;
 }
 
 +(void)cancelAllHttpRequestByApiPath:(NSString *)path;{

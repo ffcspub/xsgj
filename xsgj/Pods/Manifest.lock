@@ -12,6 +12,7 @@ PODS:
   - LKDBHelper (HEAD based on 1.4):
     - FMDB
   - MBProgressHUD (0.8)
+  - NSData+Base64 (1.0.0)
   - NSDate+Helper (1.0.0)
   - NSDate+TimeAgo (1.0.3)
   - OpenUDID (1.0.0)
@@ -30,6 +31,7 @@ DEPENDENCIES:
   - JSONKit
   - LKDBHelper (HEAD)
   - MBProgressHUD (~> 0.8)
+  - NSData+Base64 (~> 1.0.0)
   - NSDate+Helper
   - NSDate+TimeAgo
   - OpenUDID
@@ -47,6 +49,7 @@ SPEC CHECKSUMS:
   JSONKit: efef3bbd3372ff33f96b9c6f34cf4fe18e74ab69
   LKDBHelper: b337d5cdfba9d0b78e74992e1ca8bdc8b9fc7928
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
+  NSData+Base64: aae92a2e3f0bd88b29fe6093551ded3f5c062548
   NSDate+Helper: ebde22e90dc7ae5e9b49179a0c32e550f7a9cd57
   NSDate+TimeAgo: f3533e0198fab05b716368b19f8c2185d53d6f3b
   OpenUDID: 5a23b7477755efc2d7871b57aa79ba3089c40b74

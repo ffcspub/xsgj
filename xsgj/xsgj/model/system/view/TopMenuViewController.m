@@ -94,7 +94,7 @@
     for (UIView *view in views) {
         [view removeFromSuperview];
     }
-    CGFloat BEGINY = 10;
+    CGFloat BEGINY = 30;
     CGFloat BEGINX = 10;
     CGFloat WIDTHSPACE = (self.scrollView.frame.size.width - 20)/DEFINE_COLNUMER;
     NSArray *menus = [BNMobileMenu searchWithWhere:[NSString stringWithFormat:@"PARENT_ID=%D and STATE=1",_menu.MENU_ID] orderBy:@"ORDER_NO" offset:0 count:100];

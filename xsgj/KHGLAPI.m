@@ -9,6 +9,8 @@
 #import "KHGLAPI.h"
 #import "LK_API.h"
 #import "ServerConfig.h"
+#import <NSData+Base64.h>
+
 
 @implementation KHGLAPI
 
@@ -124,5 +126,218 @@
         fail(NotReachable,desciption);
     } class:[UpdateVisitPlansHttpResponse class]];
 }
+
+
+/**
+ *  活动上报接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)commitActivityByRequest:(ActivityCommitHttpRequest *)request success:(void(^)(ActivityCommitHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_ACTIVITY_COMMIT_URL Success:^(LK_HttpBaseResponse *response) {
+        success((ActivityCommitHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[ActivityCommitHttpResponse class]];
+}
+
+
+/**
+ *  竞品上报接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)insertCompeteByRequest:(InsertCompeteHttpRequest *)request success:(void(^)(InsertCompeteHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_insertCompete Success:^(LK_HttpBaseResponse *response) {
+        success((InsertCompeteHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[InsertCompeteHttpResponse class]];
+}
+
+/**
+ *  订单上报接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)commitOrderByRequest:(OrderCommitHttpRequest *)request success:(void(^)(OrderCommitHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    
+    [LK_APIUtil getHttpRequest:request apiPath:URL_ORDER_COMMIT Success:^(LK_HttpBaseResponse *response) {
+        success((OrderCommitHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[OrderCommitHttpResponse class]];
+}
+
+
+/**
+ *  订单查询接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)queryOrderByRequest:(OrderQueryHttpRequest *)request success:(void(^)(OrderQueryHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_QUERY_ORDERS Success:^(LK_HttpBaseResponse *response) {
+        success((OrderQueryHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[OrderQueryHttpResponse class]];
+
+}
+
+
+/**
+ *  订单详情查询接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)queryOrderDetailByRequest:(OrderDetailHttpRequest *)request success:(void(^)(OrderDetailHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    
+    [LK_APIUtil getHttpRequest:request apiPath:URL_ORDER_DETAIL Success:^(LK_HttpBaseResponse *response) {
+        success((OrderDetailHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[OrderDetailHttpResponse class]];
+}
+
+/**
+ *  退单查询接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)queryOrderBackByRequest:(QueryOrderBackHttpRequest *)request success:(void(^)(QueryOrderBackHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    
+    [LK_APIUtil getHttpRequest:request apiPath:URL_QUERY_ORDER_BACK Success:^(LK_HttpBaseResponse *response) {
+        success((QueryOrderBackHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[QueryOrderBackHttpResponse class]];
+}
+
+/**
+ *  退单详情查询接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)queryOrderBackDetailByRequest:(QueryOrderBackDetailHttpRequest *)request success:(void(^)(QueryOrderBackDetailHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_ORDER_BACK_DETAIL Success:^(LK_HttpBaseResponse *response) {
+        success((QueryOrderBackDetailHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[QueryOrderBackDetailHttpResponse class]];
+
+}
+
+
+/**
+ *  库存上传接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)commitStockByRequest:(StockCommitHttpRequest *)request  success:(void(^)(StockCommitHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_STOCK_COMMIT Success:^(LK_HttpBaseResponse *response) {
+        success((StockCommitHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[StockCommitHttpResponse class]];
+}
+
+
+/**
+ *  店招拍照上传接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)storeCameraCommitByRequest:(StoreCameraCommitHttpRequest *)request  success:(void(^)(StoreCameraCommitHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_storeCameraCommit Success:^(LK_HttpBaseResponse *response) {
+        success((StoreCameraCommitHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[StoreCameraCommitHttpResponse class]];
+}
+
+
+/**
+ *  陈列拍照上传接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)displayCameraCommitByRequest:(DisplayCameraCommitHttpRequest *)request success:(void(^)(DisplayCameraCommitHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_displayCameraCommit Success:^(LK_HttpBaseResponse *response) {
+        success((DisplayCameraCommitHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[DisplayCameraCommitHttpResponse class]];
+}
+
+/**
+ *  陈列生动上报接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)insertDisplayVividByRequest:(InsertDisplayVividHttpRequest *)request success:(void(^)(InsertDisplayVividHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_displayCameraCommit Success:^(LK_HttpBaseResponse *response) {
+        success((InsertDisplayVividHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[InsertDisplayVividHttpResponse class]];
+}
+
+/**
+ *  陈列费用上报接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)insertDisplayCostByRequest:(InsertDisplayCostHttpRequest *)request success:(void(^)(InsertDisplayCostHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_displayCameraCommit Success:^(LK_HttpBaseResponse *response) {
+        success((InsertDisplayCostHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[InsertDisplayCostHttpResponse class]];
+}
+
+/**
+ *  照片上传接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)uploadPhotoByFileName:(NSString *)fileName data:(NSData *)data success:(void(^)(NSString *fileId))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    UploadPhotoHttpRequest *request = [[UploadPhotoHttpRequest alloc]init];
+    request.FILE_NAME = fileName;
+    request.DATA = [data base64EncodedString];
+    [LK_APIUtil getHttpRequest:request basePath:UPLOAD_PIC_URL apiPath:URL_uploadPhoto Success:^(LK_HttpBaseResponse *response) {
+        UploadPhotoHttpRequest *tRequest = (UploadPhotoHttpRequest *)response;
+        success(tRequest.DATA);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[UploadPhotoHttpRequest class]];
+}
+
+
 
 @end

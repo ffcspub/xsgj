@@ -7,6 +7,9 @@
 //
 
 #import "KHGLHttpRequest.h"
+#import "OrderItemBean.h"
+#import "OrderBackDetailBean.h"
+#import "StockCommitBean.h"
 
 @implementation AllTypeHttpRequest
 
@@ -44,4 +47,67 @@
 @implementation UpdateVisitPlansHttpRequest
 
 @end
+
+
+@implementation ActivityCommitHttpRequest
+
+@end
+
+@implementation OrderCommitHttpRequest
+
++(Class)__DATAClass{
+    return [OrderItemBean class];
+}
+
+@end
+
+@implementation OrderQueryHttpRequest
+
+@end
+
+@implementation OrderDetailHttpRequest
+
++(Class)__DATAClass{
+    return [OrderBackDetailBean class];
+}
+
+@end
+
+@implementation InsertOrderBackHttpRequest
+
+@end
+
+@implementation QueryOrderBackHttpRequest
+
+@end
+
+@implementation QueryOrderBackDetailHttpRequest
+
+
+@end
+
+@implementation StockCommitHttpRequest
+
++(Class)__DATAClass{
+    return [StockCommitBean class];
+}
+
+@end
+
+@implementation DisplayCameraCommitHttpRequest
+
+@end
+
+@implementation InsertDisplayVividHttpRequest
+
+@end
+
+@implementation InsertDisplayCostHttpRequest
+
+@end
+
+@implementation UploadPhotoHttpRequest
+
+@end
+
 

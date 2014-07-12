@@ -80,7 +80,7 @@
 }
 
 -(UIButton *)defaultBackButtonWithTitle:(NSString *)title{
-    UIImage *image = [[UIImage imageNamed:@"Bg_BtnBack&BtnExit-nor"]resizableImageWithCapInsets:UIEdgeInsetsMake(5, 15, 5, 5)];
+    UIImage *image = [[UIImage imageNamed:@"Bg_BtnBack&BtnExit-nor"]resizableImageWithCapInsets:UIEdgeInsetsMake(5, 17, 5, 5)];
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 70, 35)];
     [btn setBackgroundImage:image forState:UIControlStateNormal];
     

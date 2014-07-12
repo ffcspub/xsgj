@@ -10,10 +10,6 @@
 #import <AKTabBarController.h>
 #import <MAMapKit/MAMapKit.h>
 #import "UIColor+External.h"
-#import "KHGLViewController.h"
-#import "OtherViewController.h"
-#import "XTGLViewController.h"
-#import "XZGLViewController.h"
 #import "LoginViewController.h"
 
 #import "SystemAPI.h"

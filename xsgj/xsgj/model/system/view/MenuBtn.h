@@ -10,8 +10,19 @@
 
 @class BNMobileMenu;
 
-@interface MenuBtn : UIButton
+@interface MenuButton : UIButton
 
 @property(nonatomic,strong) BNMobileMenu *menu;
+
+@end
+
+@interface MenuBtn : UIView{
+    MenuButton *_btn;
+    UILabel *_lable;
+}
+
+@property(nonatomic,strong) BNMobileMenu *menu;
+
+- (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
 
 @end

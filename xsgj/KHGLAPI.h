@@ -85,4 +85,108 @@
  */
 +(void)updateVisitPlansByRequest:(UpdateVisitPlansHttpRequest *)request success:(void(^)(UpdateVisitPlansHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
+/**
+ *  活动上报接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)commitActivityByRequest:(ActivityCommitHttpRequest *)request success:(void(^)(ActivityCommitHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
+ *  竞品上报接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)insertCompeteByRequest:(InsertCompeteHttpRequest *)request success:(void(^)(InsertCompeteHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+
+/**
+ *  订单上报接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)commitOrderByRequest:(OrderCommitHttpRequest *)request success:(void(^)(OrderCommitHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+
+/**
+ *  订单查询接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)queryOrderByRequest:(OrderQueryHttpRequest *)request success:(void(^)(OrderQueryHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
+ *  订单详情查询接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)queryOrderDetailByRequest:(OrderDetailHttpRequest *)request success:(void(^)(OrderDetailHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
+ *  退单查询接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)queryOrderBackByRequest:(QueryOrderBackHttpRequest *)request success:(void(^)(QueryOrderBackHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
+ *  退单详情查询接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)queryOrderBackDetailByRequest:(QueryOrderBackDetailHttpRequest *)request success:(void(^)(QueryOrderBackDetailHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
+ *  店招拍照上传接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)storeCameraCommitByRequest:(StoreCameraCommitHttpRequest *)request  success:(void(^)(StoreCameraCommitHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
+ *  陈列拍照上传接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)displayCameraCommitByRequest:(DisplayCameraCommitHttpRequest *)request success:(void(^)(DisplayCameraCommitHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
+ *  陈列生动上报接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)insertDisplayVividByRequest:(InsertDisplayVividHttpRequest *)request success:(void(^)(InsertDisplayVividHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+
+/**
+ *  照片上传接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)uploadPhotoByFileName:(NSString *)fileName data:(NSData *)data success:(void(^)(NSString *fileId))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+
+
 @end;

@@ -47,3 +47,64 @@
 @property(nonatomic,strong) NSArray *VISIT_RECORDS;
 
 @end
+
+
+@interface ActivityCommitHttpResponse : LK_HttpBaseResponse
+
+@end
+
+@interface InsertCompeteHttpResponse : LK_HttpBaseResponse
+
+@end
+
+@interface OrderCommitHttpResponse : LK_HttpBaseResponse
+
+@end
+
+@interface OrderQueryHttpResponse : LK_HttpBasePageResponse
+
+@end
+
+@interface OrderDetailHttpResponse : LK_HttpBasePageResponse
+
+@end
+
+@interface InsertOrderBackHttpResponse : LK_HttpBaseResponse
+
+@end
+
+@interface QueryOrderBackHttpResponse : LK_HttpBasePageResponse
+
+@end
+
+@interface QueryOrderBackDetailHttpResponse : LK_HttpBasePageResponse
+
+@end
+
+@interface StockCommitHttpResponse : LK_HttpBaseResponse
+
+@end
+
+@interface StoreCameraCommitHttpResponse : LK_HttpBaseResponse
+
+@end
+
+@interface DisplayCameraCommitHttpResponse : LK_HttpBaseResponse
+
+@end
+
+@interface InsertDisplayVividHttpResponse : LK_HttpBaseResponse
+
+@end
+
+@interface InsertDisplayCostHttpResponse : LK_HttpBaseResponse
+
+@end
+
+@interface UploadPhotoHttpResponse : LK_HttpBaseResponse
+
+@property(nonatomic,strong) NSString *FILE_ID;//照片标识
+
+@end
+
+
