@@ -92,7 +92,6 @@ static ShareValue *_shareValue;
         return _userInfo;
     }
     if (self.userId) {
-        NSArray *array = [BNUserInfo searchSingleWithWhere:nil orderBy:nil];
         NSString *userid = [NSString stringWithFormat:@"USER_ID=%d",[self.userId integerValue] ];
         BNUserInfo *userinfo = [BNUserInfo searchSingleWithWhere:userid orderBy:nil];
         if (userinfo) {

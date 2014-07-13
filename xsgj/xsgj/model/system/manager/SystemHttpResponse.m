@@ -134,9 +134,13 @@
         if([[dict objectForKey:@"leftShow"] isEqual:@"true"]){
             menu.STATE = 1;
         }
+        NSString *CONTROLLER_NAME = [dict objectForKey:@"childClass"];
+        if (CONTROLLER_NAME ) {
+            menu.CONTROLLER_NAME = CONTROLLER_NAME;
+        }
         menu.MENU_NAME = [dict objectForKey:@"name"];
         menu.PARENT_ID = [[dict objectForKey:@"parentId"]integerValue];
-        BOOL flag = [menu saveToDB];
+        [menu saveToDB];
     }
     
     int count = [BNMobileMenu rowCountWithWhere:nil];

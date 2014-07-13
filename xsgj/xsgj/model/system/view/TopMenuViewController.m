@@ -94,7 +94,7 @@
     for (UIView *view in views) {
         [view removeFromSuperview];
     }
-    CGFloat BEGINY = 30;
+    CGFloat BEGINY = 10;
     CGFloat BEGINX = 10;
     CGFloat WIDTHSPACE = (self.scrollView.frame.size.width - 20)/DEFINE_COLNUMER;
     NSArray *menus = [BNMobileMenu searchWithWhere:[NSString stringWithFormat:@"PARENT_ID=%D and STATE=1",_menu.MENU_ID] orderBy:@"ORDER_NO" offset:0 count:100];
@@ -107,7 +107,7 @@
         BEGINX += WIDTHSPACE;
         i++;
         if (i%3 == 0) {
-            BEGINY += WIDTHSPACE + 10;
+            BEGINY += WIDTHSPACE;
             BEGINX = 10;
         }
     }
@@ -117,6 +117,11 @@
 -(void)menuBtnChooseAction:(id)sender{
     MenuBtn *btn = (MenuBtn *)sender;
     BNMobileMenu *tmenu = btn.menu;
+    NSString *CONTROLLER_NAME = tmenu.CONTROLLER_NAME;
+    if (CONTROLLER_NAME.length > 0) {
+        
+        return;
+    }
     int count = [BNMobileMenu rowCountWithWhere:[NSString stringWithFormat:@"PARENT_ID=%D and STATE=1",tmenu.MENU_ID]];
     if (count > 0) {
         NextMenuViewController *vlc = [[NextMenuViewController alloc]init];

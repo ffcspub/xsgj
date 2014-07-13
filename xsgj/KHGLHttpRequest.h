@@ -353,7 +353,6 @@
 @property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
 @property(nonatomic,assign) int	USER_ID	;//	用户ID
 @property(nonatomic,assign) int	CUST_ID	;//	客户标识
-@property(nonatomic,strong) NSString *	CUST_ID	;//	客户标识
 @property(nonatomic,strong) NSString *	SHAPE_ID	;//	形式id
 @property(nonatomic,strong) NSString *	COST	;//	费用
 @property(nonatomic,strong) NSString *	COMMITTIME	;//	上报时间

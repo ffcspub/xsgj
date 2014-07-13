@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -9,6 +9,7 @@
                 <outlet property="btn_auto" destination="dtN-EW-Alv" id="hHs-nN-mzz"/>
                 <outlet property="btn_login" destination="s9u-cN-OEI" id="sJF-iP-xCM"/>
                 <outlet property="btn_rember" destination="JU9-um-pVU" id="UPZ-xP-68h"/>
+                <outlet property="lb_tel" destination="Imw-kW-hvI" id="zWn-W1-0sM"/>
                 <outlet property="tf_companycode" destination="53z-6X-7jN" id="FeD-O7-6ER"/>
                 <outlet property="tf_pwd" destination="vaU-kd-wLi" id="b88-ZX-WaA"/>
                 <outlet property="tf_username" destination="2sb-Ra-VAa" id="bws-Gd-8Lv"/>
@@ -107,6 +108,13 @@
                         <action selector="loginAction:" destination="-1" eventType="touchUpInside" id="fLQ-QP-9tm"/>
                     </connections>
                 </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Imw-kW-hvI" customClass="TTTAttributedLabel">
+                    <rect key="frame" x="0.0" y="514" width="320" height="34"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.93725496530532837" green="0.93725496530532837" blue="0.95686280727386475" alpha="1" colorSpace="deviceRGB"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

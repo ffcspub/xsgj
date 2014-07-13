@@ -13,7 +13,9 @@
 #import <UIAlertView+Blocks.h>
 #import <IQKeyboardManager.h>
 
-@interface LoginViewController ()
+@interface LoginViewController ()<TTTAttributedLabelDelegate>{
+    UIWebView *_webView;
+}
 
 @property (weak, nonatomic) IBOutlet UIView *viewContain;
 
@@ -62,9 +64,32 @@
         _tf_username.text = [ShareValue shareInstance].userName;
         _tf_pwd.text = [ShareValue shareInstance].userPass;
     }
-    
+    NSMutableAttributedString *hintString1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"客服电话：%@",@"0591-83518200" ]];
+    [hintString1 addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor blueColor] CGColor] range:NSMakeRange(5,hintString1.length - 5)];
+    [hintString1 addAttribute:(id)kCTUnderlineStyleAttributeName value:(id)[NSNumber numberWithInt:kCTUnderlineStyleDouble] range:NSMakeRange(5,hintString1.length - 5)];
+    [hintString1 addAttribute:(id)kCTUnderlineColorAttributeName value:(id)[UIColor blueColor].CGColor range:NSMakeRange(5,hintString1.length - 5)];
+   
+    _lb_tel.text = hintString1;
+    _lb_tel.delegate = self;
+    [_lb_tel addLinkToURL:[NSURL URLWithString:@"tel:0591-83518200"] withRange:NSMakeRange(5,hintString1.length - 5)];
+//     [_lb_tel addLinkToPhoneNumber:@"0591-83518200"  withRange:NSMakeRange(5,hintString1.length - 5)];
 //    [((UIScrollView *)self.view) setScrollEnabled:NO];
+    
+    
 }
+
+
+#pragma mark - TTTAttributedLabelDelegate
+
+- (void)attributedLabel:(__unused TTTAttributedLabel *)label
+   didSelectLinkWithURL:(NSURL *)url {
+    if (!_webView) {
+        _webView =[[UIWebView alloc] init];
+        [self.view addSubview:_webView];
+    }
+    [_webView loadRequest:[NSURLRequest requestWithURL:url]];
+}
+
 
 -(NSString *)title{
     return @"登录";
@@ -107,13 +132,21 @@
                 MBProgressHUD *mhud = [[MBProgressHUD alloc]initWithWindow:ShareAppDelegate.window ];
                 mhud.labelText = @"正在更新配置...";
                 [mhud showAnimated:YES whileExecutingBlock:^{
-                    [SystemAPI updateConfigSuccess:^{
-                        [self showTabViewController];
-                        [mhud removeFromSuperview];
-                    } fail:^(BOOL notReachable, NSString *desciption) {
-                        [mhud removeFromSuperview];
-                        [MBProgressHUD showError:desciption toView:self.view];
-                    }];
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                        [SystemAPI updateConfigSuccess:^{
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self showTabViewController];
+                                [mhud removeFromSuperview];
+                            });
+                        } fail:^(BOOL notReachable, NSString *desciption) {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [mhud removeFromSuperview];
+                                [MBProgressHUD showError:desciption toView:self.view];
+                            });
+                        }];
+
+                    });
+                    
                 }];
                 [mhud show:YES];
             });

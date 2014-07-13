@@ -106,6 +106,11 @@
 
 @implementation InsertOrderBackHttpResponse
 
+
+@end
+
+@implementation QueryOrderBackHttpResponse
+
 +(Class)__DATAClass{
     return [QueryOrderBackInfoBean class];
 }

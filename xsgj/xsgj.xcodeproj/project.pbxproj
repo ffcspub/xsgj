@@ -14,35 +14,6 @@
 		046FFD4C196FB90500DF8C46 /* MenuBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 046FFD4B196FB90500DF8C46 /* MenuBtn.m */; };
 		046FFD4E196FBEE300DF8C46 /* menu_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD4D196FBEE300DF8C46 /* menu_config.json */; };
 		046FFD5C196FEAEE00DF8C46 /* MyNavigationBar1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD5B196FEAEE00DF8C46 /* MyNavigationBar1@2x.png */; };
-		046FFD7B196FF09000DF8C46 /* icon_about.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD5E196FF09000DF8C46 /* icon_about.png */; };
-		046FFD7C196FF09000DF8C46 /* icon_addcustomercommit.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD5F196FF09000DF8C46 /* icon_addcustomercommit.png */; };
-		046FFD7D196FF09000DF8C46 /* icon_addressbook.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD60196FF09000DF8C46 /* icon_addressbook.png */; };
-		046FFD7E196FF09000DF8C46 /* icon_advicereport.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD61196FF09000DF8C46 /* icon_advicereport.png */; };
-		046FFD7F196FF09000DF8C46 /* icon_announcement.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD62196FF09000DF8C46 /* icon_announcement.png */; };
-		046FFD80196FF09000DF8C46 /* icon_applylevel.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD63196FF09000DF8C46 /* icon_applylevel.png */; };
-		046FFD81196FF09000DF8C46 /* icon_applytrip.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD64196FF09000DF8C46 /* icon_applytrip.png */; };
-		046FFD82196FF09000DF8C46 /* icon_approval.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD65196FF09000DF8C46 /* icon_approval.png */; };
-		046FFD83196FF09000DF8C46 /* icon_attendance.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD66196FF09000DF8C46 /* icon_attendance.png */; };
-		046FFD84196FF09000DF8C46 /* icon_changepwd.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD67196FF09000DF8C46 /* icon_changepwd.png */; };
-		046FFD85196FF09000DF8C46 /* icon_customerquery.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD68196FF09000DF8C46 /* icon_customerquery.png */; };
-		046FFD86196FF09000DF8C46 /* icon_flowcount.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD69196FF09000DF8C46 /* icon_flowcount.png */; };
-		046FFD87196FF09000DF8C46 /* icon_levelapproval.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD6A196FF09000DF8C46 /* icon_levelapproval.png */; };
-		046FFD88196FF09000DF8C46 /* icon_offlineinfo.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD6B196FF09000DF8C46 /* icon_offlineinfo.png */; };
-		046FFD89196FF09000DF8C46 /* icon_orderquery.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD6C196FF09000DF8C46 /* icon_orderquery.png */; };
-		046FFD8A196FF09000DF8C46 /* icon_planvisit.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD6D196FF09000DF8C46 /* icon_planvisit.png */; };
-		046FFD8B196FF09000DF8C46 /* icon_queryattendance.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD6E196FF09000DF8C46 /* icon_queryattendance.png */; };
-		046FFD8C196FF09000DF8C46 /* icon_querylevel.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD6F196FF09000DF8C46 /* icon_querylevel.png */; };
-		046FFD8D196FF09000DF8C46 /* icon_querytrip.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD70196FF09000DF8C46 /* icon_querytrip.png */; };
-		046FFD8E196FF09000DF8C46 /* icon_returnitemquery.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD71196FF09000DF8C46 /* icon_returnitemquery.png */; };
-		046FFD8F196FF09000DF8C46 /* icon_signin.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD72196FF09000DF8C46 /* icon_signin.png */; };
-		046FFD90196FF09000DF8C46 /* icon_signout.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD73196FF09000DF8C46 /* icon_signout.png */; };
-		046FFD91196FF09000DF8C46 /* icon_tempvisit.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD74196FF09000DF8C46 /* icon_tempvisit.png */; };
-		046FFD92196FF09000DF8C46 /* icon_trip.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD75196FF09000DF8C46 /* icon_trip.png */; };
-		046FFD93196FF09000DF8C46 /* icon_tripapproval.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD76196FF09000DF8C46 /* icon_tripapproval.png */; };
-		046FFD94196FF09000DF8C46 /* icon_updateversion.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD77196FF09000DF8C46 /* icon_updateversion.png */; };
-		046FFD95196FF09000DF8C46 /* icon_visirecord.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD78196FF09000DF8C46 /* icon_visirecord.png */; };
-		046FFD96196FF09000DF8C46 /* icon_visitarget.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD79196FF09000DF8C46 /* icon_visitarget.png */; };
-		046FFD97196FF09000DF8C46 /* icon_work_report.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD7A196FF09000DF8C46 /* icon_work_report.png */; };
 		04C1AEFE196EAB3E000A326F /* KHGLAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AEFD196EAB3E000A326F /* KHGLAPI.m */; };
 		04C1AF01196EABB1000A326F /* KHGLHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AF00196EABB1000A326F /* KHGLHttpRequest.m */; };
 		04C1AF04196EABC1000A326F /* KHGLHttpResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AF03196EABC1000A326F /* KHGLHttpResponse.m */; };
@@ -119,6 +90,36 @@
 		DF17587419712EB50091DAC3 /* NoticeDetailBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DF17587319712EB50091DAC3 /* NoticeDetailBean.m */; };
 		DF17587719712F660091DAC3 /* NoticeAttmentBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DF17587619712F660091DAC3 /* NoticeAttmentBean.m */; };
 		DF17587A197130810091DAC3 /* NoticeTypeBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DF175879197130810091DAC3 /* NoticeTypeBean.m */; };
+		DF17587C197289D30091DAC3 /* Default@R4.png in Resources */ = {isa = PBXBuildFile; fileRef = DF17587B197289D30091DAC3 /* Default@R4.png */; };
+		DF17589A1972E1BF0091DAC3 /* icon_about@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF17587D1972E1BF0091DAC3 /* icon_about@2x.png */; };
+		DF17589B1972E1BF0091DAC3 /* icon_addcustomercommit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF17587E1972E1BF0091DAC3 /* icon_addcustomercommit@2x.png */; };
+		DF17589C1972E1BF0091DAC3 /* icon_addressbook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF17587F1972E1BF0091DAC3 /* icon_addressbook@2x.png */; };
+		DF17589D1972E1BF0091DAC3 /* icon_advicereport@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758801972E1BF0091DAC3 /* icon_advicereport@2x.png */; };
+		DF17589E1972E1BF0091DAC3 /* icon_announcement@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758811972E1BF0091DAC3 /* icon_announcement@2x.png */; };
+		DF17589F1972E1BF0091DAC3 /* icon_applylevel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758821972E1BF0091DAC3 /* icon_applylevel@2x.png */; };
+		DF1758A01972E1BF0091DAC3 /* icon_applytrip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758831972E1BF0091DAC3 /* icon_applytrip@2x.png */; };
+		DF1758A11972E1BF0091DAC3 /* icon_approval@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758841972E1BF0091DAC3 /* icon_approval@2x.png */; };
+		DF1758A21972E1BF0091DAC3 /* icon_attendance@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758851972E1BF0091DAC3 /* icon_attendance@2x.png */; };
+		DF1758A31972E1BF0091DAC3 /* icon_changepwd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758861972E1BF0091DAC3 /* icon_changepwd@2x.png */; };
+		DF1758A41972E1BF0091DAC3 /* icon_customerquery@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758871972E1BF0091DAC3 /* icon_customerquery@2x.png */; };
+		DF1758A51972E1BF0091DAC3 /* icon_flowcount@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758881972E1BF0091DAC3 /* icon_flowcount@2x.png */; };
+		DF1758A61972E1BF0091DAC3 /* icon_levelapproval@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758891972E1BF0091DAC3 /* icon_levelapproval@2x.png */; };
+		DF1758A71972E1BF0091DAC3 /* icon_offlineinfo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF17588A1972E1BF0091DAC3 /* icon_offlineinfo@2x.png */; };
+		DF1758A81972E1BF0091DAC3 /* icon_orderquery@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF17588B1972E1BF0091DAC3 /* icon_orderquery@2x.png */; };
+		DF1758A91972E1BF0091DAC3 /* icon_planvisit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF17588C1972E1BF0091DAC3 /* icon_planvisit@2x.png */; };
+		DF1758AA1972E1BF0091DAC3 /* icon_queryattendance@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF17588D1972E1BF0091DAC3 /* icon_queryattendance@2x.png */; };
+		DF1758AB1972E1BF0091DAC3 /* icon_querylevel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF17588E1972E1BF0091DAC3 /* icon_querylevel@2x.png */; };
+		DF1758AC1972E1BF0091DAC3 /* icon_querytrip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF17588F1972E1BF0091DAC3 /* icon_querytrip@2x.png */; };
+		DF1758AD1972E1BF0091DAC3 /* icon_returnitemquery@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758901972E1BF0091DAC3 /* icon_returnitemquery@2x.png */; };
+		DF1758AE1972E1BF0091DAC3 /* icon_signin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758911972E1BF0091DAC3 /* icon_signin@2x.png */; };
+		DF1758AF1972E1BF0091DAC3 /* icon_signout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758921972E1BF0091DAC3 /* icon_signout@2x.png */; };
+		DF1758B01972E1BF0091DAC3 /* icon_tempvisit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758931972E1BF0091DAC3 /* icon_tempvisit@2x.png */; };
+		DF1758B11972E1BF0091DAC3 /* icon_trip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758941972E1BF0091DAC3 /* icon_trip@2x.png */; };
+		DF1758B21972E1BF0091DAC3 /* icon_tripapproval@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758951972E1BF0091DAC3 /* icon_tripapproval@2x.png */; };
+		DF1758B31972E1BF0091DAC3 /* icon_updateversion@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758961972E1BF0091DAC3 /* icon_updateversion@2x.png */; };
+		DF1758B41972E1BF0091DAC3 /* icon_visirecord@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758971972E1BF0091DAC3 /* icon_visirecord@2x.png */; };
+		DF1758B51972E1BF0091DAC3 /* icon_visitarget@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758981972E1BF0091DAC3 /* icon_visitarget@2x.png */; };
+		DF1758B61972E1BF0091DAC3 /* icon_work_report@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758991972E1BF0091DAC3 /* icon_work_report@2x.png */; };
 		DF197FAE19671641000CBB44 /* BgMainMenu_Nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF197FA019671641000CBB44 /* BgMainMenu_Nor@2x.png */; };
 		DF197FAF19671641000CBB44 /* BgMainMenu_Selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF197FA119671641000CBB44 /* BgMainMenu_Selected@2x.png */; };
 		DF197FB019671641000CBB44 /* icon日常工作_工作汇报@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF197FA219671641000CBB44 /* icon日常工作_工作汇报@2x.png */; };
@@ -414,35 +415,6 @@
 		046FFD4B196FB90500DF8C46 /* MenuBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuBtn.m; sourceTree = "<group>"; };
 		046FFD4D196FBEE300DF8C46 /* menu_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu_config.json; sourceTree = "<group>"; };
 		046FFD5B196FEAEE00DF8C46 /* MyNavigationBar1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MyNavigationBar1@2x.png"; sourceTree = "<group>"; };
-		046FFD5E196FF09000DF8C46 /* icon_about.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_about.png; sourceTree = "<group>"; };
-		046FFD5F196FF09000DF8C46 /* icon_addcustomercommit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_addcustomercommit.png; sourceTree = "<group>"; };
-		046FFD60196FF09000DF8C46 /* icon_addressbook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_addressbook.png; sourceTree = "<group>"; };
-		046FFD61196FF09000DF8C46 /* icon_advicereport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_advicereport.png; sourceTree = "<group>"; };
-		046FFD62196FF09000DF8C46 /* icon_announcement.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_announcement.png; sourceTree = "<group>"; };
-		046FFD63196FF09000DF8C46 /* icon_applylevel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_applylevel.png; sourceTree = "<group>"; };
-		046FFD64196FF09000DF8C46 /* icon_applytrip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_applytrip.png; sourceTree = "<group>"; };
-		046FFD65196FF09000DF8C46 /* icon_approval.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_approval.png; sourceTree = "<group>"; };
-		046FFD66196FF09000DF8C46 /* icon_attendance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_attendance.png; sourceTree = "<group>"; };
-		046FFD67196FF09000DF8C46 /* icon_changepwd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_changepwd.png; sourceTree = "<group>"; };
-		046FFD68196FF09000DF8C46 /* icon_customerquery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_customerquery.png; sourceTree = "<group>"; };
-		046FFD69196FF09000DF8C46 /* icon_flowcount.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_flowcount.png; sourceTree = "<group>"; };
-		046FFD6A196FF09000DF8C46 /* icon_levelapproval.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_levelapproval.png; sourceTree = "<group>"; };
-		046FFD6B196FF09000DF8C46 /* icon_offlineinfo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_offlineinfo.png; sourceTree = "<group>"; };
-		046FFD6C196FF09000DF8C46 /* icon_orderquery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_orderquery.png; sourceTree = "<group>"; };
-		046FFD6D196FF09000DF8C46 /* icon_planvisit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_planvisit.png; sourceTree = "<group>"; };
-		046FFD6E196FF09000DF8C46 /* icon_queryattendance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_queryattendance.png; sourceTree = "<group>"; };
-		046FFD6F196FF09000DF8C46 /* icon_querylevel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_querylevel.png; sourceTree = "<group>"; };
-		046FFD70196FF09000DF8C46 /* icon_querytrip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_querytrip.png; sourceTree = "<group>"; };
-		046FFD71196FF09000DF8C46 /* icon_returnitemquery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_returnitemquery.png; sourceTree = "<group>"; };
-		046FFD72196FF09000DF8C46 /* icon_signin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_signin.png; sourceTree = "<group>"; };
-		046FFD73196FF09000DF8C46 /* icon_signout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_signout.png; sourceTree = "<group>"; };
-		046FFD74196FF09000DF8C46 /* icon_tempvisit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_tempvisit.png; sourceTree = "<group>"; };
-		046FFD75196FF09000DF8C46 /* icon_trip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_trip.png; sourceTree = "<group>"; };
-		046FFD76196FF09000DF8C46 /* icon_tripapproval.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_tripapproval.png; sourceTree = "<group>"; };
-		046FFD77196FF09000DF8C46 /* icon_updateversion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_updateversion.png; sourceTree = "<group>"; };
-		046FFD78196FF09000DF8C46 /* icon_visirecord.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_visirecord.png; sourceTree = "<group>"; };
-		046FFD79196FF09000DF8C46 /* icon_visitarget.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_visitarget.png; sourceTree = "<group>"; };
-		046FFD7A196FF09000DF8C46 /* icon_work_report.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_work_report.png; sourceTree = "<group>"; };
 		04C1AEFC196EAB3E000A326F /* KHGLAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHGLAPI.h; sourceTree = SOURCE_ROOT; };
 		04C1AEFD196EAB3E000A326F /* KHGLAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHGLAPI.m; sourceTree = SOURCE_ROOT; };
 		04C1AEFF196EABB1000A326F /* KHGLHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHGLHttpRequest.h; sourceTree = SOURCE_ROOT; };
@@ -654,6 +626,36 @@
 		DF17587619712F660091DAC3 /* NoticeAttmentBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeAttmentBean.m; sourceTree = "<group>"; };
 		DF175878197130810091DAC3 /* NoticeTypeBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeTypeBean.h; sourceTree = "<group>"; };
 		DF175879197130810091DAC3 /* NoticeTypeBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeTypeBean.m; sourceTree = "<group>"; };
+		DF17587B197289D30091DAC3 /* Default@R4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@R4.png"; sourceTree = "<group>"; };
+		DF17587D1972E1BF0091DAC3 /* icon_about@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_about@2x.png"; sourceTree = "<group>"; };
+		DF17587E1972E1BF0091DAC3 /* icon_addcustomercommit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_addcustomercommit@2x.png"; sourceTree = "<group>"; };
+		DF17587F1972E1BF0091DAC3 /* icon_addressbook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_addressbook@2x.png"; sourceTree = "<group>"; };
+		DF1758801972E1BF0091DAC3 /* icon_advicereport@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_advicereport@2x.png"; sourceTree = "<group>"; };
+		DF1758811972E1BF0091DAC3 /* icon_announcement@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_announcement@2x.png"; sourceTree = "<group>"; };
+		DF1758821972E1BF0091DAC3 /* icon_applylevel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_applylevel@2x.png"; sourceTree = "<group>"; };
+		DF1758831972E1BF0091DAC3 /* icon_applytrip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_applytrip@2x.png"; sourceTree = "<group>"; };
+		DF1758841972E1BF0091DAC3 /* icon_approval@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_approval@2x.png"; sourceTree = "<group>"; };
+		DF1758851972E1BF0091DAC3 /* icon_attendance@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_attendance@2x.png"; sourceTree = "<group>"; };
+		DF1758861972E1BF0091DAC3 /* icon_changepwd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_changepwd@2x.png"; sourceTree = "<group>"; };
+		DF1758871972E1BF0091DAC3 /* icon_customerquery@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_customerquery@2x.png"; sourceTree = "<group>"; };
+		DF1758881972E1BF0091DAC3 /* icon_flowcount@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_flowcount@2x.png"; sourceTree = "<group>"; };
+		DF1758891972E1BF0091DAC3 /* icon_levelapproval@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_levelapproval@2x.png"; sourceTree = "<group>"; };
+		DF17588A1972E1BF0091DAC3 /* icon_offlineinfo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_offlineinfo@2x.png"; sourceTree = "<group>"; };
+		DF17588B1972E1BF0091DAC3 /* icon_orderquery@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_orderquery@2x.png"; sourceTree = "<group>"; };
+		DF17588C1972E1BF0091DAC3 /* icon_planvisit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_planvisit@2x.png"; sourceTree = "<group>"; };
+		DF17588D1972E1BF0091DAC3 /* icon_queryattendance@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_queryattendance@2x.png"; sourceTree = "<group>"; };
+		DF17588E1972E1BF0091DAC3 /* icon_querylevel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_querylevel@2x.png"; sourceTree = "<group>"; };
+		DF17588F1972E1BF0091DAC3 /* icon_querytrip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_querytrip@2x.png"; sourceTree = "<group>"; };
+		DF1758901972E1BF0091DAC3 /* icon_returnitemquery@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_returnitemquery@2x.png"; sourceTree = "<group>"; };
+		DF1758911972E1BF0091DAC3 /* icon_signin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_signin@2x.png"; sourceTree = "<group>"; };
+		DF1758921972E1BF0091DAC3 /* icon_signout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_signout@2x.png"; sourceTree = "<group>"; };
+		DF1758931972E1BF0091DAC3 /* icon_tempvisit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tempvisit@2x.png"; sourceTree = "<group>"; };
+		DF1758941972E1BF0091DAC3 /* icon_trip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_trip@2x.png"; sourceTree = "<group>"; };
+		DF1758951972E1BF0091DAC3 /* icon_tripapproval@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tripapproval@2x.png"; sourceTree = "<group>"; };
+		DF1758961972E1BF0091DAC3 /* icon_updateversion@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_updateversion@2x.png"; sourceTree = "<group>"; };
+		DF1758971972E1BF0091DAC3 /* icon_visirecord@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_visirecord@2x.png"; sourceTree = "<group>"; };
+		DF1758981972E1BF0091DAC3 /* icon_visitarget@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_visitarget@2x.png"; sourceTree = "<group>"; };
+		DF1758991972E1BF0091DAC3 /* icon_work_report@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_work_report@2x.png"; sourceTree = "<group>"; };
 		DF197FA019671641000CBB44 /* BgMainMenu_Nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BgMainMenu_Nor@2x.png"; sourceTree = "<group>"; };
 		DF197FA119671641000CBB44 /* BgMainMenu_Selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BgMainMenu_Selected@2x.png"; sourceTree = "<group>"; };
 		DF197FA219671641000CBB44 /* icon日常工作_工作汇报@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon日常工作_工作汇报@2x.png"; sourceTree = "<group>"; };
@@ -982,35 +984,35 @@
 		046FFD5D196FF09000DF8C46 /* icon */ = {
 			isa = PBXGroup;
 			children = (
-				046FFD5E196FF09000DF8C46 /* icon_about.png */,
-				046FFD5F196FF09000DF8C46 /* icon_addcustomercommit.png */,
-				046FFD60196FF09000DF8C46 /* icon_addressbook.png */,
-				046FFD61196FF09000DF8C46 /* icon_advicereport.png */,
-				046FFD62196FF09000DF8C46 /* icon_announcement.png */,
-				046FFD63196FF09000DF8C46 /* icon_applylevel.png */,
-				046FFD64196FF09000DF8C46 /* icon_applytrip.png */,
-				046FFD65196FF09000DF8C46 /* icon_approval.png */,
-				046FFD66196FF09000DF8C46 /* icon_attendance.png */,
-				046FFD67196FF09000DF8C46 /* icon_changepwd.png */,
-				046FFD68196FF09000DF8C46 /* icon_customerquery.png */,
-				046FFD69196FF09000DF8C46 /* icon_flowcount.png */,
-				046FFD6A196FF09000DF8C46 /* icon_levelapproval.png */,
-				046FFD6B196FF09000DF8C46 /* icon_offlineinfo.png */,
-				046FFD6C196FF09000DF8C46 /* icon_orderquery.png */,
-				046FFD6D196FF09000DF8C46 /* icon_planvisit.png */,
-				046FFD6E196FF09000DF8C46 /* icon_queryattendance.png */,
-				046FFD6F196FF09000DF8C46 /* icon_querylevel.png */,
-				046FFD70196FF09000DF8C46 /* icon_querytrip.png */,
-				046FFD71196FF09000DF8C46 /* icon_returnitemquery.png */,
-				046FFD72196FF09000DF8C46 /* icon_signin.png */,
-				046FFD73196FF09000DF8C46 /* icon_signout.png */,
-				046FFD74196FF09000DF8C46 /* icon_tempvisit.png */,
-				046FFD75196FF09000DF8C46 /* icon_trip.png */,
-				046FFD76196FF09000DF8C46 /* icon_tripapproval.png */,
-				046FFD77196FF09000DF8C46 /* icon_updateversion.png */,
-				046FFD78196FF09000DF8C46 /* icon_visirecord.png */,
-				046FFD79196FF09000DF8C46 /* icon_visitarget.png */,
-				046FFD7A196FF09000DF8C46 /* icon_work_report.png */,
+				DF17587D1972E1BF0091DAC3 /* icon_about@2x.png */,
+				DF17587E1972E1BF0091DAC3 /* icon_addcustomercommit@2x.png */,
+				DF17587F1972E1BF0091DAC3 /* icon_addressbook@2x.png */,
+				DF1758801972E1BF0091DAC3 /* icon_advicereport@2x.png */,
+				DF1758811972E1BF0091DAC3 /* icon_announcement@2x.png */,
+				DF1758821972E1BF0091DAC3 /* icon_applylevel@2x.png */,
+				DF1758831972E1BF0091DAC3 /* icon_applytrip@2x.png */,
+				DF1758841972E1BF0091DAC3 /* icon_approval@2x.png */,
+				DF1758851972E1BF0091DAC3 /* icon_attendance@2x.png */,
+				DF1758861972E1BF0091DAC3 /* icon_changepwd@2x.png */,
+				DF1758871972E1BF0091DAC3 /* icon_customerquery@2x.png */,
+				DF1758881972E1BF0091DAC3 /* icon_flowcount@2x.png */,
+				DF1758891972E1BF0091DAC3 /* icon_levelapproval@2x.png */,
+				DF17588A1972E1BF0091DAC3 /* icon_offlineinfo@2x.png */,
+				DF17588B1972E1BF0091DAC3 /* icon_orderquery@2x.png */,
+				DF17588C1972E1BF0091DAC3 /* icon_planvisit@2x.png */,
+				DF17588D1972E1BF0091DAC3 /* icon_queryattendance@2x.png */,
+				DF17588E1972E1BF0091DAC3 /* icon_querylevel@2x.png */,
+				DF17588F1972E1BF0091DAC3 /* icon_querytrip@2x.png */,
+				DF1758901972E1BF0091DAC3 /* icon_returnitemquery@2x.png */,
+				DF1758911972E1BF0091DAC3 /* icon_signin@2x.png */,
+				DF1758921972E1BF0091DAC3 /* icon_signout@2x.png */,
+				DF1758931972E1BF0091DAC3 /* icon_tempvisit@2x.png */,
+				DF1758941972E1BF0091DAC3 /* icon_trip@2x.png */,
+				DF1758951972E1BF0091DAC3 /* icon_tripapproval@2x.png */,
+				DF1758961972E1BF0091DAC3 /* icon_updateversion@2x.png */,
+				DF1758971972E1BF0091DAC3 /* icon_visirecord@2x.png */,
+				DF1758981972E1BF0091DAC3 /* icon_visitarget@2x.png */,
+				DF1758991972E1BF0091DAC3 /* icon_work_report@2x.png */,
 			);
 			path = icon;
 			sourceTree = "<group>";
@@ -1654,6 +1656,7 @@
 		DF866310197032AB00ABF2B5 /* 启动画面 */ = {
 			isa = PBXGroup;
 			children = (
+				DF17587B197289D30091DAC3 /* Default@R4.png */,
 				DF866311197032AB00ABF2B5 /* Default.png */,
 				DF866312197032AB00ABF2B5 /* Default@2x.png */,
 				DF866313197032AB00ABF2B5 /* icon.png */,
@@ -2202,7 +2205,6 @@
 				DFF8D5301967D4D40002F973 /* NameBg@2x.png in Resources */,
 				DFF8D5801967D4D40002F973 /* tableCtrlBtnIcon_sms-press@2x.png in Resources */,
 				DFF8D57A1967D4D40002F973 /* tableCtrlBtnIcon_add-press@2x.png in Resources */,
-				046FFD91196FF09000DF8C46 /* icon_tempvisit.png in Resources */,
 				DFF8D59A1967D4D40002F973 /* icon我要考勤_调休查询@2x.png in Resources */,
 				DFF8D5971967D4D40002F973 /* icon我要考勤_考勤查询@2x.png in Resources */,
 				DFF8D5371967D4D40002F973 /* press2@2x.png in Resources */,
@@ -2211,6 +2213,7 @@
 				DFF8D53B1967D4D40002F973 /* table_main_n@2x.png in Resources */,
 				DF197FBA19671641000CBB44 /* MenuIcon_UserManager_Selected@2x.png in Resources */,
 				DFF8D59E1967D4D40002F973 /* btnPhoto_press@2x.png in Resources */,
+				DF17589C1972E1BF0091DAC3 /* icon_addressbook@2x.png in Resources */,
 				DFF8D54A1967D4D40002F973 /* 下拉@2x.png in Resources */,
 				DFF8D5BA1967D4D40002F973 /* TextBox_selected@2x.png in Resources */,
 				DFF8D5CB1967D4D40002F973 /* bg_TitleBar@2x.png in Resources */,
@@ -2221,20 +2224,23 @@
 				DFF8D5C41967D4D40002F973 /* Bg_BtnBack&BtnExit-nor@2x.png in Resources */,
 				DFF8D5951967D4D40002F973 /* icon我要出差_出差查询@2x.png in Resources */,
 				DFF8D5BE1967D4D40002F973 /* icon系统管理_企业通讯录@2x.png in Resources */,
-				046FFD85196FF09000DF8C46 /* icon_customerquery.png in Resources */,
 				DFF8D5331967D4D40002F973 /* part2@2x.png in Resources */,
 				DFF8D57E1967D4D40002F973 /* tableCtrlBtnIcon_phone-press@2x.png in Resources */,
 				DFF8D5BC1967D4D40002F973 /* icon_update@2x.png in Resources */,
+				DF1758A11972E1BF0091DAC3 /* icon_approval@2x.png in Resources */,
 				DFF8D58C1967D4D40002F973 /* icon客户管理_临时拜访@2x.png in Resources */,
 				DFF8D5C71967D4D40002F973 /* bg_BtnLogin_press@2x.png in Resources */,
+				DF1758A51972E1BF0091DAC3 /* icon_flowcount@2x.png in Resources */,
 				DFF8D5B41967D4D40002F973 /* CommonBtn_press@2x.png in Resources */,
 				DFF8D56D1967D4D40002F973 /* CommonBtn_press@2x.png in Resources */,
 				DFF8D5731967D4D40002F973 /* tableCtrlBtnIcon_next-nor@2x.png in Resources */,
 				DFF8D5921967D4D40002F973 /* icon客户管理_退货查询@2x.png in Resources */,
 				DFF8D55B1967D4D40002F973 /* 弹窗btn-LeftPress@2x.png in Resources */,
 				DFF8D54C1967D4D40002F973 /* 弹窗btn-LeftPress@2x.png in Resources */,
+				DF1758B41972E1BF0091DAC3 /* icon_visirecord@2x.png in Resources */,
 				DFF8D58D1967D4D40002F973 /* icon客户管理_我的客户@2x.png in Resources */,
 				DFF8D5A01967D4D40002F973 /* Photo外框@2x.png in Resources */,
+				DF1758A71972E1BF0091DAC3 /* icon_offlineinfo@2x.png in Resources */,
 				DFF8D5CA1967D4D40002F973 /* Bg_ListBox@2x.png in Resources */,
 				DFF8D5341967D4D40002F973 /* part3-nor@2x.png in Resources */,
 				DFF8D5D41967D4D40002F973 /* TextBox_selected@2x.png in Resources */,
@@ -2247,7 +2253,6 @@
 				DF866318197032AB00ABF2B5 /* icon@2x.png in Resources */,
 				DF197FBB19671641000CBB44 /* MenuIcon_UserManager_unSelected@2x.png in Resources */,
 				DFF8D5871967D4D40002F973 /* Photo外框Part2@2x.png in Resources */,
-				046FFD7E196FF09000DF8C46 /* icon_advicereport.png in Resources */,
 				DFF8D57D1967D4D40002F973 /* tableCtrlBtnIcon_phone-nor@2x.png in Resources */,
 				DFF8D5BF1967D4D40002F973 /* icon系统管理_修改密码@2x.png in Resources */,
 				DFF8D5541967D4D40002F973 /* tableCtrlBtnIcon_calendar-nor@2x.png in Resources */,
@@ -2255,12 +2260,11 @@
 				DFF8D452196794E30002F973 /* MyNavigationBar@2x.png in Resources */,
 				04EFF64119663C8800FF79BE /* MBProgressHUD.bundle in Resources */,
 				DFF8D5681967D4D40002F973 /* statebtnicon_finish@2x.png in Resources */,
-				046FFD94196FF09000DF8C46 /* icon_updateversion.png in Resources */,
 				DFF8D5851967D4D40002F973 /* defaultPhoto@2x.png in Resources */,
 				DFF8D56B1967D4D40002F973 /* CheckBox_unSelected@2x.png in Resources */,
 				DFF8D53C1967D4D40002F973 /* table_main_s@2x.png in Resources */,
+				DF1758AB1972E1BF0091DAC3 /* icon_querylevel@2x.png in Resources */,
 				DFF8D5B51967D4D40002F973 /* CommonBtnClean_nor .png in Resources */,
-				046FFD93196FF09000DF8C46 /* icon_tripapproval.png in Resources */,
 				DFF8D5AE1967D4D40002F973 /* icon流量统计_下行@2x.png in Resources */,
 				DFF8D52F1967D4D40002F973 /* dropbox@2x.png in Resources */,
 				DFF8D5C31967D4D40002F973 /* icon系统管理_系统更新@2x.png in Resources */,
@@ -2269,26 +2273,23 @@
 				DFF8D57C1967D4D40002F973 /* tablectrlbtnicon_jian_press@2x.png in Resources */,
 				DF197FBF1967192B000CBB44 /* tabbar-green@2x.png in Resources */,
 				DF197FBE1967192B000CBB44 /* tabbar-black@2x.png in Resources */,
+				DF1758AF1972E1BF0091DAC3 /* icon_signout@2x.png in Resources */,
 				DFF8D5631967D4D40002F973 /* btnPhoto_press@2x.png in Resources */,
 				DF197FB919671641000CBB44 /* MenuIcon_SysManager_unSelected@2x.png in Resources */,
 				DFF8D5AF1967D4D40002F973 /* bgNo1@2x.png in Resources */,
 				DFF8D5771967D4D40002F973 /* tableCtrlBtnIcon_edit-nor@2x.png in Resources */,
-				046FFD7C196FF09000DF8C46 /* icon_addcustomercommit.png in Resources */,
 				DFF8D5391967D4D40002F973 /* selected@2x.png in Resources */,
 				DFF8D5581967D4D40002F973 /* 树状图-折叠@2x.png in Resources */,
 				DFF8D5251967D4D40002F973 /* bgNo1@2x.png in Resources */,
 				DFF8D5791967D4D40002F973 /* tableCtrlBtnIcon_add-nor@2x.png in Resources */,
-				046FFD86196FF09000DF8C46 /* icon_flowcount.png in Resources */,
+				DF17589E1972E1BF0091DAC3 /* icon_announcement@2x.png in Resources */,
 				046FFD17196F969600DF8C46 /* TopMenuViewController.xib in Resources */,
-				046FFD7D196FF09000DF8C46 /* icon_addressbook.png in Resources */,
 				DFF8D55A1967D4D40002F973 /* 弹窗btn-LeftNor@2x.png in Resources */,
 				DFF8D52C1967D4D40002F973 /* CommonBtn_press@2x.png in Resources */,
-				046FFD97196FF09000DF8C46 /* icon_work_report.png in Resources */,
 				DFF8D5AD1967D4D40002F973 /* icon流量统计_上行@2x.png in Resources */,
 				DF36B4841965B5BF0064C48D /* InfoPlist.strings in Resources */,
 				DF197FB719671641000CBB44 /* MenuIcon_Routine_unSelected@2x.png in Resources */,
 				DFF8D52E1967D4D40002F973 /* CommonBtnClean_press@2x.png in Resources */,
-				046FFD87196FF09000DF8C46 /* icon_levelapproval.png in Resources */,
 				DF197FAF19671641000CBB44 /* BgMainMenu_Selected@2x.png in Resources */,
 				DFF8D5261967D4D40002F973 /* bgNo1_s@2x.png in Resources */,
 				DFF8D5C11967D4D40002F973 /* icon系统管理_流量统计@2x.png in Resources */,
@@ -2296,20 +2297,22 @@
 				DFF8D5701967D4D40002F973 /* dropbox@2x.png in Resources */,
 				DFF8D59B1967D4D40002F973 /* icon我要考勤_调休申请@2x.png in Resources */,
 				DFF8D5641967D4D40002F973 /* defaultPhoto@2x.png in Resources */,
+				DF1758AE1972E1BF0091DAC3 /* icon_signin@2x.png in Resources */,
 				DF197FB119671641000CBB44 /* icon日常工作_我要出差@2x.png in Resources */,
 				DFF8D5C91967D4D40002F973 /* Bg_footBar_Press@2x.png in Resources */,
 				DFF8D5D31967D4D40002F973 /* logo_Company@2x.png in Resources */,
-				046FFD88196FF09000DF8C46 /* icon_offlineinfo.png in Resources */,
 				DFF8D5AC1967D4D40002F973 /* stateicon_wait@2x.png in Resources */,
 				DFF8D5751967D4D40002F973 /* tableCtrlBtnIcon_delete-nor@2x.png in Resources */,
 				DFF8D5441967D4D40002F973 /* table_textBox_Selected@2x.png in Resources */,
+				DF1758A61972E1BF0091DAC3 /* icon_levelapproval@2x.png in Resources */,
 				DF36B48F1965B5C00064C48D /* Images.xcassets in Resources */,
 				DFF8D5401967D4D40002F973 /* table_part2_s@2x.png in Resources */,
 				DFF8D5B91967D4D40002F973 /* tableCtrlBtnIcon_phone-press@2x.png in Resources */,
-				046FFD89196FF09000DF8C46 /* icon_orderquery.png in Resources */,
+				DF1758B11972E1BF0091DAC3 /* icon_trip@2x.png in Resources */,
+				DF1758B01972E1BF0091DAC3 /* icon_tempvisit@2x.png in Resources */,
 				DF866315197032AB00ABF2B5 /* Default.png in Resources */,
+				DF1758A81972E1BF0091DAC3 /* icon_orderquery@2x.png in Resources */,
 				DFF8D5D8196819680002F973 /* CheckBox1_unSelected@2x.png in Resources */,
-				046FFD81196FF09000DF8C46 /* icon_applytrip.png in Resources */,
 				DFF8D53E1967D4D40002F973 /* table_part1_s@2x.png in Resources */,
 				DFF8D5231967D4D40002F973 /* bg_BtnLogin_disable2@2x.png in Resources */,
 				DFF8D5281967D4D40002F973 /* CheckBox_Selected@2x.png in Resources */,
@@ -2321,31 +2324,32 @@
 				04FD3862196A3F6A00C42C39 /* LICENSE in Resources */,
 				DFF8D5561967D4D40002F973 /* 查询弹窗背板@2x.png in Resources */,
 				DFF8D5831967D4D40002F973 /* btnPhoto_nor@2x.png in Resources */,
-				046FFD8F196FF09000DF8C46 /* icon_signin.png in Resources */,
-				046FFD8A196FF09000DF8C46 /* icon_planvisit.png in Resources */,
 				DFF8D53A1967D4D40002F973 /* table_main@2x.png in Resources */,
 				DFF8D5351967D4D40002F973 /* part3-press@2x.png in Resources */,
+				DF1758A01972E1BF0091DAC3 /* icon_applytrip@2x.png in Resources */,
+				DF17587C197289D30091DAC3 /* Default@R4.png in Resources */,
 				DFF8D5781967D4D40002F973 /* tableCtrlBtnIcon_edit-press@2x.png in Resources */,
 				DFF8D55C1967D4D40002F973 /* 弹窗btn-RightNor@2x.png in Resources */,
 				DFF8D5B21967D4D40002F973 /* CheckBox_unSelected@2x.png in Resources */,
 				DFF8D5321967D4D40002F973 /* part1@2x.png in Resources */,
 				DFF8D5B81967D4D40002F973 /* tableCtrlBtnIcon_phone-nor@2x.png in Resources */,
-				046FFD8B196FF09000DF8C46 /* icon_queryattendance.png in Resources */,
-				046FFD7B196FF09000DF8C46 /* icon_about.png in Resources */,
 				DFF8D5BB1967D4D40002F973 /* TextBox_Unselected@2x.png in Resources */,
 				DFF8D5BD1967D4D40002F973 /* icon系统管理_企业公告@2x.png in Resources */,
+				DF17589D1972E1BF0091DAC3 /* icon_advicereport@2x.png in Resources */,
 				DFF8D5531967D4D40002F973 /* 查询弹窗背板@2x.png in Resources */,
 				DFF8D5891967D4D40002F973 /* tableCtrlBtnIcon_map-press@2x.png in Resources */,
 				DF197FB219671641000CBB44 /* icon日常工作_我要审批@2x.png in Resources */,
 				DFF8D5A21967D4D40002F973 /* tableCtrlBtnIcon_map-nor@2x.png in Resources */,
 				DFF8D5A91967D4D40002F973 /* 110x110副本@2x.png in Resources */,
-				046FFD8D196FF09000DF8C46 /* icon_querytrip.png in Resources */,
 				DFF8D5421967D4D40002F973 /* table_part3_s@2x.png in Resources */,
 				DFF8D5D11967D4D40002F973 /* icon_PassWord@2x.png in Resources */,
 				DFF8D5991967D4D40002F973 /* icon我要考勤_考勤签退@2x.png in Resources */,
+				DF17589A1972E1BF0091DAC3 /* icon_about@2x.png in Resources */,
 				DFF8D5291967D4D40002F973 /* CheckBox_unSelected@2x.png in Resources */,
 				04EFF64319663C8800FF79BE /* MJPhotoBrowser.bundle in Resources */,
+				DF1758B31972E1BF0091DAC3 /* icon_updateversion@2x.png in Resources */,
 				DFF8D5A81967D4D40002F973 /* tablectrlbtnicon_nopass@2x.png in Resources */,
+				DF1758AC1972E1BF0091DAC3 /* icon_querytrip@2x.png in Resources */,
 				DFF8D5861967D4D40002F973 /* Photo外框@2x.png in Resources */,
 				DFF8D5361967D4D40002F973 /* part4@2x.png in Resources */,
 				DFF8D5C51967D4D40002F973 /* Bg_BtnBack&BtnExit-press@2x.png in Resources */,
@@ -2356,20 +2360,16 @@
 				DFF8D5501967D4D40002F973 /* 弹窗主体内容区@2x.png in Resources */,
 				DFF8D53D1967D4D40002F973 /* table_part1@2x.png in Resources */,
 				DFF8D5451967D4D40002F973 /* tableCtrlBtnIcon_next_nor@2x.png in Resources */,
-				046FFD8C196FF09000DF8C46 /* icon_querylevel.png in Resources */,
 				DFF8D5A71967D4D40002F973 /* statebtnicon_wait@2x.png in Resources */,
 				DF197FB819671641000CBB44 /* MenuIcon_SysManager_Selected@2x.png in Resources */,
 				DFF8D5821967D4D40002F973 /* btnPhoto_disable@2x.png in Resources */,
-				046FFD95196FF09000DF8C46 /* icon_visirecord.png in Resources */,
 				DFF8D58F1967D4D40002F973 /* icon客户管理_新增客户@2x.png in Resources */,
 				046FFD49196FB88F00DF8C46 /* NextMenuViewController.xib in Resources */,
 				DFF8D5881967D4D40002F973 /* tableCtrlBtnIcon_map-nor@2x.png in Resources */,
 				DFF8D5B71967D4D40002F973 /* NameBg@2x.png in Resources */,
-				046FFD7F196FF09000DF8C46 /* icon_announcement.png in Resources */,
 				DFF8D5D21967D4D40002F973 /* icon_UserName@2x.png in Resources */,
 				DFF8D5D7196819680002F973 /* CheckBox1_Selected@2x.png in Resources */,
 				DFF8D5601967D4D40002F973 /* 弹窗主体内容区@2x.png in Resources */,
-				046FFD92196FF09000DF8C46 /* icon_trip.png in Resources */,
 				DFF8D52B1967D4D40002F973 /* CommonBtn_nor@2x.png in Resources */,
 				DFF8D58E1967D4D40002F973 /* icon客户管理_拜访记录@2x.png in Resources */,
 				DFF8D5961967D4D40002F973 /* icon我要出差_出差申请@2x.png in Resources */,
@@ -2378,11 +2378,15 @@
 				DFF8D52A1967D4D40002F973 /* CommonBtn_disable@2x.png in Resources */,
 				DFF8D54B1967D4D40002F973 /* 弹窗btn-LeftNor@2x.png in Resources */,
 				DFF8D5521967D4D40002F973 /* 日期选择控件背板_s@2x.png in Resources */,
+				DF1758A41972E1BF0091DAC3 /* icon_customerquery@2x.png in Resources */,
 				DF197FAE19671641000CBB44 /* BgMainMenu_Nor@2x.png in Resources */,
 				DFF8D5271967D4D40002F973 /* bgNo2@2x.png in Resources */,
 				DFF8D56C1967D4D40002F973 /* CommonBtn_nor@2x.png in Resources */,
 				DFF8D5B61967D4D40002F973 /* CommonBtnClean_press@2x.png in Resources */,
+				DF1758B21972E1BF0091DAC3 /* icon_tripapproval@2x.png in Resources */,
+				DF17589B1972E1BF0091DAC3 /* icon_addcustomercommit@2x.png in Resources */,
 				DFF8D5431967D4D40002F973 /* table_textBox@2x.png in Resources */,
+				DF1758B61972E1BF0091DAC3 /* icon_work_report@2x.png in Resources */,
 				DF197FB019671641000CBB44 /* icon日常工作_工作汇报@2x.png in Resources */,
 				DFF8D5A51967D4D40002F973 /* tableCtrlBtnIcon_refresh-press@2x.png in Resources */,
 				DFF8D5D01967D4D40002F973 /* icon_CompanyNum@2x.png in Resources */,
@@ -2390,31 +2394,33 @@
 				DFF8D59D1967D4D40002F973 /* btnPhoto_nor@2x.png in Resources */,
 				DFF8D5811967D4D40002F973 /* icon_Search@2x.png in Resources */,
 				DFF8D5AB1967D4D40002F973 /* stateicon_pass@2x.png in Resources */,
+				DF1758AD1972E1BF0091DAC3 /* icon_returnitemquery@2x.png in Resources */,
 				DFF8D5471967D4D40002F973 /* TextBox_selected@2x.png in Resources */,
+				DF1758A21972E1BF0091DAC3 /* icon_attendance@2x.png in Resources */,
 				DFF8D5A11967D4D40002F973 /* Photo外框Part2@2x.png in Resources */,
 				DFF8D5591967D4D40002F973 /* 树状图-虚线@2x.png in Resources */,
 				DFF8D5511967D4D40002F973 /* 日期选择控件背板@2x.png in Resources */,
-				046FFD82196FF09000DF8C46 /* icon_approval.png in Resources */,
+				DF1758A91972E1BF0091DAC3 /* icon_planvisit@2x.png in Resources */,
 				DFF8D5491967D4D40002F973 /* 下拉-点击态@2x.png in Resources */,
 				DFF8D5621967D4D40002F973 /* btnPhoto_nor@2x.png in Resources */,
 				DFF8D54E1967D4D40002F973 /* 弹窗btn-RightPress@2x.png in Resources */,
+				DF1758AA1972E1BF0091DAC3 /* icon_queryattendance@2x.png in Resources */,
 				DFF8D56A1967D4D40002F973 /* CheckBox_Selected@2x.png in Resources */,
 				DFF8D5A41967D4D40002F973 /* tableCtrlBtnIcon_refresh-nor@2x.png in Resources */,
 				DFF8D5651967D4D40002F973 /* Photo_addPhoto@2x.png in Resources */,
+				DF1758B51972E1BF0091DAC3 /* icon_visitarget@2x.png in Resources */,
 				DFF8D58A1967D4D40002F973 /* tableCtrlBtnIcon_refresh-nor@2x.png in Resources */,
 				DFF8D5C61967D4D40002F973 /* bg_BtnLogin_nor@2x.png in Resources */,
 				04EFF64B19663C8800FF79BE /* SIAlertView.bundle in Resources */,
 				DFF8D54F1967D4D40002F973 /* 弹窗title@2x.png in Resources */,
 				DFF8D58B1967D4D40002F973 /* tableCtrlBtnIcon_refresh-press@2x.png in Resources */,
-				046FFD96196FF09000DF8C46 /* icon_visitarget.png in Resources */,
 				DFF8D5481967D4D40002F973 /* TextBox_Unselected@2x.png in Resources */,
-				046FFD84196FF09000DF8C46 /* icon_changepwd.png in Resources */,
 				DFF8D5901967D4D40002F973 /* icon客户管理_计划拜访@2x.png in Resources */,
 				DFF8D56E1967D4D40002F973 /* CommonBtnClean_nor .png in Resources */,
 				046FFD4E196FBEE300DF8C46 /* menu_config.json in Resources */,
-				046FFD90196FF09000DF8C46 /* icon_signout.png in Resources */,
+				DF1758A31972E1BF0091DAC3 /* icon_changepwd@2x.png in Resources */,
 				DFF8D5761967D4D40002F973 /* tableCtrlBtnIcon_delete-press@2x.png in Resources */,
-				046FFD8E196FF09000DF8C46 /* icon_returnitemquery.png in Resources */,
+				DF17589F1972E1BF0091DAC3 /* icon_applylevel@2x.png in Resources */,
 				DFF8D5711967D4D40002F973 /* icon_over@2x.png in Resources */,
 				046FFD5C196FEAEE00DF8C46 /* MyNavigationBar1@2x.png in Resources */,
 				DFF8D5B01967D4D40002F973 /* bgNo2@2x.png in Resources */,
@@ -2428,13 +2434,11 @@
 				DFF8D57F1967D4D40002F973 /* tableCtrlBtnIcon_sms-nor@2x.png in Resources */,
 				DFF8D5C21967D4D40002F973 /* icon系统管理_离线消息@2x.png in Resources */,
 				DFF8D5A61967D4D40002F973 /* statebtnicon_pass@2x.png in Resources */,
-				046FFD83196FF09000DF8C46 /* icon_attendance.png in Resources */,
 				DFF8D5311967D4D40002F973 /* normal@2x.png in Resources */,
 				DFF8D5B31967D4D40002F973 /* CommonBtn_nor@2x.png in Resources */,
 				DFF8D5911967D4D40002F973 /* icon客户管理_订货查询@2x.png in Resources */,
 				DFF8D52D1967D4D40002F973 /* CommonBtnClean_nor@2x.png in Resources */,
 				DFF8D59C1967D4D40002F973 /* btnPhoto_disable@2x.png in Resources */,
-				046FFD80196FF09000DF8C46 /* icon_applylevel.png in Resources */,
 				DFF8D5461967D4D40002F973 /* tableCtrlBtnIcon_next_press@2x.png in Resources */,
 				DFF8D5551967D4D40002F973 /* tableCtrlBtnIcon_calendar-press@2x.png in Resources */,
 				DFF8D5CF1967D4D40002F973 /* Di_ListBox@2x.png in Resources */,
@@ -2755,7 +2759,7 @@
 					"$(PROJECT_DIR)/xsgj/ext/crypt/openssl/include",
 				);
 				INFOPLIST_FILE = "xsgj/xsgj-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/xsgj/ext/crypt/openssl",
@@ -2798,7 +2802,7 @@
 					"$(PROJECT_DIR)/xsgj/ext/crypt/openssl/include",
 				);
 				INFOPLIST_FILE = "xsgj/xsgj-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/xsgj/ext/crypt/openssl",

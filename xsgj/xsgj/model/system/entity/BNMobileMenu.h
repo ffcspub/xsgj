@@ -14,6 +14,8 @@
 @property (nonatomic,assign)  int MENU_ID;
 // 菜单编码,与手机端的menu_Id对应
 @property (nonatomic,assign)  int MENU_CODE;
+
+@property (nonatomic,strong) NSString *CONTROLLER_NAME;
 //菜单图标
 @property (nonatomic,strong)  NSString *ICON;
 // 菜单名称

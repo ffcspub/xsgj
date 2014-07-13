@@ -21,6 +21,7 @@ PODS:
     - SDWebImage/Core
   - SDWebImage/Core (HEAD based on 3.6)
   - SVPullToRefresh (0.4.1)
+  - TTTAttributedLabel (1.10.1)
   - UIAlertView-Blocks (1.0)
 
 DEPENDENCIES:
@@ -38,6 +39,7 @@ DEPENDENCIES:
   - Reachability
   - SDWebImage (HEAD)
   - SVPullToRefresh
+  - TTTAttributedLabel (~> 1.10.1)
   - UIAlertView-Blocks (~> 1.0)
 
 SPEC CHECKSUMS:
@@ -56,6 +58,7 @@ SPEC CHECKSUMS:
   Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
   SDWebImage: c6989652c1cdf27cbdf3f56957e2030f825af5bc
   SVPullToRefresh: d5161ebc833a38b465364412e5e307ca80bbb190
+  TTTAttributedLabel: 94bb04f1e005616002dd2cee0262a0082e533627
   UIAlertView-Blocks: f3271e84372beb97aea115cd1fb26ae66457f12f
 
 COCOAPODS: 0.33.1

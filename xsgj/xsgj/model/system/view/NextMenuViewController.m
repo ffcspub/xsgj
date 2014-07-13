@@ -115,6 +115,11 @@
 -(void)menuBtnChooseAction:(id)sender{
     MenuBtn *btn = (MenuBtn *)sender;
     BNMobileMenu *tmenu = btn.menu;
+    NSString *CONTROLLER_NAME = tmenu.CONTROLLER_NAME;
+    if (CONTROLLER_NAME.length > 0) {
+        
+        return;
+    }
     int count = [BNMobileMenu rowCountWithWhere:[NSString stringWithFormat:@"PARENT_ID=%D and STATE=1",tmenu.MENU_ID]];
     if (count > 0) {
         NextMenuViewController *vlc = [[NextMenuViewController alloc]init];

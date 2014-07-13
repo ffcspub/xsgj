@@ -115,6 +115,12 @@
 #define COCOAPODS_VERSION_MINOR_SVPullToRefresh 4
 #define COCOAPODS_VERSION_PATCH_SVPullToRefresh 1
 
+// TTTAttributedLabel
+#define COCOAPODS_POD_AVAILABLE_TTTAttributedLabel
+#define COCOAPODS_VERSION_MAJOR_TTTAttributedLabel 1
+#define COCOAPODS_VERSION_MINOR_TTTAttributedLabel 10
+#define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 1
+
 // UIAlertView-Blocks
 #define COCOAPODS_POD_AVAILABLE_UIAlertView_Blocks
 #define COCOAPODS_VERSION_MAJOR_UIAlertView_Blocks 1

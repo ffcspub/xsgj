@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <TTTAttributedLabel.h>
 
 @interface LoginViewController : UIViewController
 
@@ -21,5 +22,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *btn_auto;
 
 @property (weak, nonatomic) IBOutlet UIButton *btn_login;
+
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *lb_tel;
+
 
 @end
