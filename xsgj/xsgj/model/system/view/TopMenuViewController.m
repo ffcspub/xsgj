@@ -119,7 +119,14 @@
     BNMobileMenu *tmenu = btn.menu;
     NSString *CONTROLLER_NAME = tmenu.CONTROLLER_NAME;
     if (CONTROLLER_NAME.length > 0) {
-        
+        Class class = NSClassFromString(CONTROLLER_NAME);
+        if (class) {
+            if ([class isSubclassOfClass:[UIViewController class]]) {
+                UIViewController *vlc = [[class alloc]init];
+                vlc.title = tmenu.MENU_NAME;
+                [self.navigationController pushViewController:vlc animated:YES];
+            }
+        }
         return;
     }
     int count = [BNMobileMenu rowCountWithWhere:[NSString stringWithFormat:@"PARENT_ID=%D and STATE=1",tmenu.MENU_ID]];

@@ -8,6 +8,7 @@
 
 #import "HideTabViewController.h"
 #import "AppDelegate.h"
+#import "UIColor+External.h"
 
 @interface HideTabViewController ()
 
@@ -38,7 +39,6 @@
         self.extendedLayoutIncludesOpaqueBars = NO;
         self.modalPresentationCapturesStatusBarAppearance = NO;
         self.automaticallyAdjustsScrollViewInsets = YES;
-        //        self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1];
     }
 #endif
 //    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1],UITextAttributeTextColor,[UIFont systemFontOfSize:18],UITextAttributeFont, nil];
@@ -64,16 +64,16 @@
     [((AppDelegate *)[UIApplication sharedApplication].delegate) hideTabView];
 }
 
--(void)setTitle:(NSString *)title{
-    [super setTitle:title];
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitle:title forState:UIControlStateHighlighted];
-    [button setTitleColor:[UIColor darkTextColor] forState:UIControlStateHighlighted];
-    [button setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
-    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
-    self.navigationItem.titleView = button;
-}
+//-(void)setTitle:(NSString *)title{
+//    [super setTitle:title];
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [button setTitle:title forState:UIControlStateNormal];
+//    [button setTitle:title forState:UIControlStateHighlighted];
+//    [button setTitleColor:[UIColor darkTextColor] forState:UIControlStateHighlighted];
+//    [button setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
+//    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
+//    self.navigationItem.titleView = button;
+//}
 
 -(void)backAction{
     [self.navigationController popViewControllerAnimated:YES];

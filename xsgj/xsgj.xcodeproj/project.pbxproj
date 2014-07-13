@@ -120,6 +120,8 @@
 		DF1758B41972E1BF0091DAC3 /* icon_visirecord@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758971972E1BF0091DAC3 /* icon_visirecord@2x.png */; };
 		DF1758B51972E1BF0091DAC3 /* icon_visitarget@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758981972E1BF0091DAC3 /* icon_visitarget@2x.png */; };
 		DF1758B61972E1BF0091DAC3 /* icon_work_report@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF1758991972E1BF0091DAC3 /* icon_work_report@2x.png */; };
+		DF1758BA1972EA820091DAC3 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1758B81972EA820091DAC3 /* SignInViewController.m */; };
+		DF1758BB1972EA820091DAC3 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF1758B91972EA820091DAC3 /* SignInViewController.xib */; };
 		DF197FAE19671641000CBB44 /* BgMainMenu_Nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF197FA019671641000CBB44 /* BgMainMenu_Nor@2x.png */; };
 		DF197FAF19671641000CBB44 /* BgMainMenu_Selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF197FA119671641000CBB44 /* BgMainMenu_Selected@2x.png */; };
 		DF197FB019671641000CBB44 /* icon日常工作_工作汇报@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF197FA219671641000CBB44 /* icon日常工作_工作汇报@2x.png */; };
@@ -656,6 +658,9 @@
 		DF1758971972E1BF0091DAC3 /* icon_visirecord@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_visirecord@2x.png"; sourceTree = "<group>"; };
 		DF1758981972E1BF0091DAC3 /* icon_visitarget@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_visitarget@2x.png"; sourceTree = "<group>"; };
 		DF1758991972E1BF0091DAC3 /* icon_work_report@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_work_report@2x.png"; sourceTree = "<group>"; };
+		DF1758B71972EA820091DAC3 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = SOURCE_ROOT; };
+		DF1758B81972EA820091DAC3 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = SOURCE_ROOT; };
+		DF1758B91972EA820091DAC3 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = SOURCE_ROOT; };
 		DF197FA019671641000CBB44 /* BgMainMenu_Nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BgMainMenu_Nor@2x.png"; sourceTree = "<group>"; };
 		DF197FA119671641000CBB44 /* BgMainMenu_Selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BgMainMenu_Selected@2x.png"; sourceTree = "<group>"; };
 		DF197FA219671641000CBB44 /* icon日常工作_工作汇报@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon日常工作_工作汇报@2x.png"; sourceTree = "<group>"; };
@@ -1250,6 +1255,9 @@
 		04EFF6751966441400FF79BE /* view */ = {
 			isa = PBXGroup;
 			children = (
+				DF1758B71972EA820091DAC3 /* SignInViewController.h */,
+				DF1758B81972EA820091DAC3 /* SignInViewController.m */,
+				DF1758B91972EA820091DAC3 /* SignInViewController.xib */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -2207,6 +2215,7 @@
 				DFF8D57A1967D4D40002F973 /* tableCtrlBtnIcon_add-press@2x.png in Resources */,
 				DFF8D59A1967D4D40002F973 /* icon我要考勤_调休查询@2x.png in Resources */,
 				DFF8D5971967D4D40002F973 /* icon我要考勤_考勤查询@2x.png in Resources */,
+				DF1758BB1972EA820091DAC3 /* SignInViewController.xib in Resources */,
 				DFF8D5371967D4D40002F973 /* press2@2x.png in Resources */,
 				DF197FB419671641000CBB44 /* MenuIcon_More_Selected@2x.png in Resources */,
 				DFF8D5611967D4D40002F973 /* btnPhoto_disable@2x.png in Resources */,
@@ -2527,6 +2536,7 @@
 				04EFF64419663C8800FF79BE /* MJPhotoBrowser.m in Sources */,
 				DFCEEB07196B0AFE00E0DD6F /* BNMessage.m in Sources */,
 				DF175862197121DC0091DAC3 /* XTGLAPI.m in Sources */,
+				DF1758BA1972EA820091DAC3 /* SignInViewController.m in Sources */,
 				DFCEEB031969887700E0DD6F /* TripDetailBean.m in Sources */,
 				DF36B5701965BF900064C48D /* UI+LKSignal.m in Sources */,
 				04FD380A196A3A4200C42C39 /* NSData+Base64.m in Sources */,
