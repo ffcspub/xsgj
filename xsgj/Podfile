@@ -1,4 +1,6 @@
 platform :ios, '5.0'
+pod "RATreeView", "~> 0.2.2"
+pod 'IBActionSheet', '~> 0.0.1'
 pod 'TTTAttributedLabel', '~> 1.10.1'
 pod 'NSData+Base64', '~> 1.0.0'
 pod 'IQKeyboardManager'
