@@ -12,6 +12,7 @@
 #import "SystemAPI.h"
 #import <UIAlertView+Blocks.h>
 #import <IQKeyboardManager.h>
+#import "SIAlertView.h"
 
 @interface LoginViewController ()<TTTAttributedLabelDelegate>{
     UIWebView *_webView;
@@ -157,11 +158,11 @@
         } fail:^(BOOL notReachable, NSString *desciption) {
             if (notReachable) {
                 if ([[ShareValue shareInstance].corpCode isEqual:_tf_companycode.text] && [[ShareValue shareInstance].userName isEqual:_tf_username.text] && [[ShareValue shareInstance].userPass isEqual:_tf_pwd.text]) {
-                    RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:@"取消" action:nil];
-                    RIButtonItem *sureItem = [RIButtonItem itemWithLabel:@"确定" action:^{
+                    SIAlertView *alert = [[SIAlertView alloc]initWithTitle:@"提示" message:@"当前网络不佳，是否进入离线模式？" cancelButtonTitle:@"取消" cancelHandler:^(SIAlertView *alertView) {
+                        
+                    } destructiveButtonTitle:@"确定" destructiveHandler:^(SIAlertView *alertView) {
                         [self showTabViewController];
                     }];
-                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前网络不佳，是否进入离线模式？" cancelButtonItem: cancelItem otherButtonItems:sureItem, nil];
                     [alert show];
                 }else{
                     [MBProgressHUD showError:desciption toView:self.view];

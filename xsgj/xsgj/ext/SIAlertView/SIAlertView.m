@@ -201,6 +201,19 @@ static SIAlertView *__si_alert_current_view;
 	return self;
 }
 
+- (id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle cancelHandler:(SIAlertViewHandler)cancelHandler destructiveButtonTitle:(NSString *) destructiveButtonTitle destructiveHandler:(SIAlertViewHandler)destructiveHandler{
+    self = [self initWithTitle:title andMessage:message];
+    if (self) {
+        [self addButtonWithTitle:cancelButtonTitle type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+            cancelHandler(alertView);
+        }];
+        [self addButtonWithTitle:destructiveButtonTitle type:SIAlertViewButtonTypeDestructive handler:^(SIAlertView *alertView) {
+            destructiveHandler(alertView);
+        }];
+    }
+    return self;
+}
+
 #pragma mark - Class methods
 
 + (NSMutableArray *)sharedQueue
