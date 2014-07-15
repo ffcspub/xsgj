@@ -33,48 +33,6 @@
 
 -(void)test{
     
-//    [SystemAPI loginByCorpcode:@"zlbzb" username:@"linwei" password:@"123456" success:^(BNUserInfo *userinfo) {
-//        [SystemAPI updateConfigSuccess:^{
-//            
-//        } fail:^(BOOL notReachable, NSString *desciption) {
-//            
-//        }];
-//    } fail:^(BOOL notReachable, NSString *desciption) {
-//        
-//    }];
-    
-//    ApplyLeaveHttpRequest *request = [[ApplyLeaveHttpRequest alloc]init];
-//    DetailAttendanceHttpRequest *request = [[DetailAttendanceHttpRequest alloc]init];
-//    [XZGLAPI detailAttendanceByRequest:request success:^(DetailAttendanceHttpResponse *response) {
-//        for (SignDetailBean *infoBean in response.DATA) {
-//            NSLog(@"%@,%@",infoBean.DEPT_NAME,infoBean.USER_NAME );
-//        }
-//    } fail:^(BOOL notReachable, NSString *desciption) {
-//        
-//    }];
-    
-
-//    QueryAttendanceHttpRequest *request = [[QueryAttendanceHttpRequest alloc]init];
-//    [XZGLAPI queryAttendanceByRequest:request success:^(QueryAttendanceHttpReponse *response) {
-//        
-//        for (SigninfoBean *infoBean in response.DATA) {
-//            NSLog(@"%@,%@",infoBean.DEPT_NAME,infoBean.USER_NAME );
-//        }
-//        
-//    } fail:^(BOOL notReachable, NSString *desciption) {
-//        
-//    }];
-    
-//    SignUpHttpRequest *request = [[SignUpHttpRequest alloc]init];
-//    request.LNG = 323232;
-//    request.LAT = 234353;
-//    request.POSITION = @"测试地址";
-//    [XZGLAPI signupByRequest:request success:^(SignUpHttpReponse *response) {
-//        NSLog(@"%@,%@",response.MESSAGE.MESSAGECODE,response.MESSAGE.MESSAGECONTENT);
-//    } fail:^(BOOL notReachable, NSString *desciption) {
-//        
-//    }];
-//
     
 }
 

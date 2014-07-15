@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DF36B4731965B5BF0064C48D"
-               BuildableName = "xsgj.app"
-               BlueprintName = "xsgj"
+               BlueprintIdentifier = "043B4C9E197503DC000C5A29"
+               BuildableName = "xsgj copy.app"
+               BlueprintName = "xsgj copy"
                ReferencedContainer = "container:xsgj.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,23 +28,13 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DF36B4931965B5C00064C48D"
-               BuildableName = "xsgjTests.xctest"
-               BlueprintName = "xsgjTests"
-               ReferencedContainer = "container:xsgj.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DF36B4731965B5BF0064C48D"
-            BuildableName = "xsgj.app"
-            BlueprintName = "xsgj"
+            BlueprintIdentifier = "043B4C9E197503DC000C5A29"
+            BuildableName = "xsgj copy.app"
+            BlueprintName = "xsgj copy"
             ReferencedContainer = "container:xsgj.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -61,9 +51,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DF36B4731965B5BF0064C48D"
-            BuildableName = "xsgj.app"
-            BlueprintName = "xsgj"
+            BlueprintIdentifier = "043B4C9E197503DC000C5A29"
+            BuildableName = "xsgj copy.app"
+            BlueprintName = "xsgj copy"
             ReferencedContainer = "container:xsgj.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -79,9 +69,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DF36B4731965B5BF0064C48D"
-            BuildableName = "xsgj.app"
-            BlueprintName = "xsgj"
+            BlueprintIdentifier = "043B4C9E197503DC000C5A29"
+            BuildableName = "xsgj copy.app"
+            BlueprintName = "xsgj copy"
             ReferencedContainer = "container:xsgj.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

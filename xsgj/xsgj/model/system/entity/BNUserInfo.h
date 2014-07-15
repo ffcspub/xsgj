@@ -50,4 +50,6 @@
 // 上次更新时间
 @property (nonatomic,assign) unsigned  long long LAST_UPDATE_TIME;
 
++(BNUserInfo *)loadcacheByUserId:(int)userid;
+
 @end

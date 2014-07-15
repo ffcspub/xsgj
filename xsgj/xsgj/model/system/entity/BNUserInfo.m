@@ -43,4 +43,11 @@
             _CORP_CODE,_CORP_ID,_CORP_NAME,_DEPT_ID,_DEPT_NAME,_LAST_UPDATE_TIME,_LEADER_ID,_LEADER_NAME,_MOBILENO,_REALNAME,_ROLE_ID,_ROLE_NAME,_SESSION_ID,_USER_AUTH,_USER_ID,_USER_NAME
             ];
 }
+
++(BNUserInfo *)loadcacheByUserId:(int)userid{
+    NSString *usersql = [NSString stringWithFormat:@"USER_ID=%d",userid ];
+    BNUserInfo *userinfo = [BNUserInfo searchSingleWithWhere:usersql orderBy:nil];
+    return userinfo;
+}
+
 @end

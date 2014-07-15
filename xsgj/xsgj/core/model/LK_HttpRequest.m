@@ -7,8 +7,6 @@
 //
 
 #import "LK_HttpRequest.h"
-#import <OpenUDID.h>
-
 @implementation LK_HttpBaseRequest
 
 @end

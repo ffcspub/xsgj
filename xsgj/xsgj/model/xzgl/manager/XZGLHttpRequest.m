@@ -8,6 +8,7 @@
 
 #import "XZGLHttpRequest.h"
 #import <NSDate+Helper.h>
+#import <OpenUDID.h>
 
 @implementation SignUpHttpRequest
 

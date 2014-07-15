@@ -8,6 +8,116 @@
 
 /* Begin PBXBuildFile section */
 		0401E0D71973D0B900DABC62 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0401E0D61973D0B900DABC62 /* Default-568h@2x.png */; };
+		043B4E1619752374000C5A29 /* CustDetailBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277C919741F3900D84376 /* CustDetailBean.h */; };
+		043B4E1719752374000C5A29 /* CustDetailBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277CA19741F3900D84376 /* CustDetailBean.m */; };
+		043B4E1819752374000C5A29 /* CustInfoBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277CB19741F3900D84376 /* CustInfoBean.h */; };
+		043B4E1919752374000C5A29 /* CustInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277CC19741F3900D84376 /* CustInfoBean.m */; };
+		043B4E1A19752374000C5A29 /* CustomerInfo.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277CD19741F3900D84376 /* CustomerInfo.h */; };
+		043B4E1B19752374000C5A29 /* CustomerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277CE19741F3900D84376 /* CustomerInfo.m */; };
+		043B4E1C19752374000C5A29 /* CustTypeBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277CF19741F3900D84376 /* CustTypeBean.h */; };
+		043B4E1D19752374000C5A29 /* CustTypeBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277D019741F3900D84376 /* CustTypeBean.m */; };
+		043B4E1E19752374000C5A29 /* OrderBackDetailBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277D119741F3900D84376 /* OrderBackDetailBean.h */; };
+		043B4E1F19752374000C5A29 /* OrderBackDetailBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277D219741F3900D84376 /* OrderBackDetailBean.m */; };
+		043B4E2019752374000C5A29 /* OrderDetailBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277D319741F3900D84376 /* OrderDetailBean.h */; };
+		043B4E2119752374000C5A29 /* OrderDetailBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277D419741F3900D84376 /* OrderDetailBean.m */; };
+		043B4E2219752374000C5A29 /* OrderInfoBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277D519741F3900D84376 /* OrderInfoBean.h */; };
+		043B4E2319752374000C5A29 /* OrderInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277D619741F3900D84376 /* OrderInfoBean.m */; };
+		043B4E2419752374000C5A29 /* OrderItemBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277D719741F3900D84376 /* OrderItemBean.h */; };
+		043B4E2519752374000C5A29 /* OrderItemBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277D819741F3900D84376 /* OrderItemBean.m */; };
+		043B4E2619752374000C5A29 /* PlanVisitConfig.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277D919741F3900D84376 /* PlanVisitConfig.h */; };
+		043B4E2719752374000C5A29 /* PlanVisitConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277DA19741F3900D84376 /* PlanVisitConfig.m */; };
+		043B4E2819752374000C5A29 /* QueryOrderBackDetailInfoBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277DB19741F3900D84376 /* QueryOrderBackDetailInfoBean.h */; };
+		043B4E2919752374000C5A29 /* QueryOrderBackDetailInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277DC19741F3900D84376 /* QueryOrderBackDetailInfoBean.m */; };
+		043B4E2A19752374000C5A29 /* QueryOrderBackInfoBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277DD19741F3900D84376 /* QueryOrderBackInfoBean.h */; };
+		043B4E2B19752375000C5A29 /* QueryOrderBackInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277DE19741F3900D84376 /* QueryOrderBackInfoBean.m */; };
+		043B4E2C19752375000C5A29 /* StockCommitBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277DF19741F3900D84376 /* StockCommitBean.h */; };
+		043B4E2D19752375000C5A29 /* StockCommitBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277E019741F3900D84376 /* StockCommitBean.m */; };
+		043B4E2E19752375000C5A29 /* VisistRecordVO.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277E119741F3900D84376 /* VisistRecordVO.h */; };
+		043B4E2F19752375000C5A29 /* VisistRecordVO.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277E219741F3900D84376 /* VisistRecordVO.m */; };
+		043B4E3019752375000C5A29 /* VisitPlan.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277E319741F3A00D84376 /* VisitPlan.h */; };
+		043B4E3119752375000C5A29 /* VisitPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277E419741F3A00D84376 /* VisitPlan.m */; };
+		043B4E3219752383000C5A29 /* BNAreaInfo.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277F319741F3A00D84376 /* BNAreaInfo.h */; };
+		043B4E3319752383000C5A29 /* BNAreaInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277F419741F3A00D84376 /* BNAreaInfo.m */; };
+		043B4E3419752383000C5A29 /* BNAssetType.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277F519741F3A00D84376 /* BNAssetType.h */; };
+		043B4E3519752383000C5A29 /* BNAssetType.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277F619741F3A00D84376 /* BNAssetType.m */; };
+		043B4E3619752383000C5A29 /* BNCustomerInfo.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277F719741F3A00D84376 /* BNCustomerInfo.h */; };
+		043B4E3719752383000C5A29 /* BNCustomerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277F819741F3A00D84376 /* BNCustomerInfo.m */; };
+		043B4E3819752383000C5A29 /* BNCustomerType.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277F919741F3A00D84376 /* BNCustomerType.h */; };
+		043B4E3919752383000C5A29 /* BNCustomerType.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277FA19741F3A00D84376 /* BNCustomerType.m */; };
+		043B4E3A19752383000C5A29 /* BNDisplayCase.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277FB19741F3A00D84376 /* BNDisplayCase.h */; };
+		043B4E3B19752383000C5A29 /* BNDisplayCase.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277FC19741F3A00D84376 /* BNDisplayCase.m */; };
+		043B4E3C19752383000C5A29 /* BNDisplayShape.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277FD19741F3A00D84376 /* BNDisplayShape.h */; };
+		043B4E3D19752383000C5A29 /* BNDisplayShape.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277FE19741F3A00D84376 /* BNDisplayShape.m */; };
+		043B4E3E19752383000C5A29 /* BNDisplayType.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA277FF19741F3A00D84376 /* BNDisplayType.h */; };
+		043B4E3F19752383000C5A29 /* BNDisplayType.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780019741F3A00D84376 /* BNDisplayType.m */; };
+		043B4E4019752383000C5A29 /* BNMessage.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780119741F3A00D84376 /* BNMessage.h */; };
+		043B4E4119752383000C5A29 /* BNMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780219741F3A00D84376 /* BNMessage.m */; };
+		043B4E4219752383000C5A29 /* BNMobileMenu.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780319741F3A00D84376 /* BNMobileMenu.h */; };
+		043B4E4319752383000C5A29 /* BNMobileMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780419741F3A00D84376 /* BNMobileMenu.m */; };
+		043B4E4419752383000C5A29 /* BNProduct.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780519741F3A00D84376 /* BNProduct.h */; };
+		043B4E4519752383000C5A29 /* BNProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780619741F3A00D84376 /* BNProduct.m */; };
+		043B4E4619752383000C5A29 /* BNProductType.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780719741F3A00D84376 /* BNProductType.h */; };
+		043B4E4719752383000C5A29 /* BNProductType.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780819741F3A00D84376 /* BNProductType.m */; };
+		043B4E4819752383000C5A29 /* BNUnitBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780919741F3A00D84376 /* BNUnitBean.h */; };
+		043B4E4919752383000C5A29 /* BNUnitBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780A19741F3A00D84376 /* BNUnitBean.m */; };
+		043B4E4A19752383000C5A29 /* BNUserInfo.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780B19741F3A00D84376 /* BNUserInfo.h */; };
+		043B4E4B19752383000C5A29 /* BNUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780C19741F3A00D84376 /* BNUserInfo.m */; };
+		043B4E4C19752383000C5A29 /* BNVisitCondition.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780D19741F3A00D84376 /* BNVisitCondition.h */; };
+		043B4E4D19752383000C5A29 /* BNVisitCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780E19741F3A00D84376 /* BNVisitCondition.m */; };
+		043B4E4E19752383000C5A29 /* BNVisitPlan.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2780F19741F3A00D84376 /* BNVisitPlan.h */; };
+		043B4E4F19752383000C5A29 /* BNVisitPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2781019741F3A00D84376 /* BNVisitPlan.m */; };
+		043B4E5019752383000C5A29 /* BNVisitStepRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2781119741F3A00D84376 /* BNVisitStepRecord.h */; };
+		043B4E5119752383000C5A29 /* BNVisitStepRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2781219741F3A00D84376 /* BNVisitStepRecord.m */; };
+		043B4E5219752383000C5A29 /* BNVistRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2781319741F3A00D84376 /* BNVistRecord.h */; };
+		043B4E5319752383000C5A29 /* BNVistRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2781419741F3A00D84376 /* BNVistRecord.m */; };
+		043B4E541975239D000C5A29 /* ContactBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2782A19741F3A00D84376 /* ContactBean.h */; };
+		043B4E551975239D000C5A29 /* ContactBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2782B19741F3A00D84376 /* ContactBean.m */; };
+		043B4E561975239D000C5A29 /* DeptInfoBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2782C19741F3A00D84376 /* DeptInfoBean.h */; };
+		043B4E571975239D000C5A29 /* DeptInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2782D19741F3A00D84376 /* DeptInfoBean.m */; };
+		043B4E581975239D000C5A29 /* NoticeAttmentBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2782E19741F3A00D84376 /* NoticeAttmentBean.h */; };
+		043B4E591975239D000C5A29 /* NoticeAttmentBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2782F19741F3A00D84376 /* NoticeAttmentBean.m */; };
+		043B4E5A1975239D000C5A29 /* NoticeDetailBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2783019741F3A00D84376 /* NoticeDetailBean.h */; };
+		043B4E5B1975239D000C5A29 /* NoticeDetailBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2783119741F3A00D84376 /* NoticeDetailBean.m */; };
+		043B4E5C1975239D000C5A29 /* NoticeInfoBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2783219741F3A00D84376 /* NoticeInfoBean.h */; };
+		043B4E5D1975239D000C5A29 /* NoticeInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2783319741F3A00D84376 /* NoticeInfoBean.m */; };
+		043B4E5E1975239D000C5A29 /* NoticeTypeBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2783419741F3A00D84376 /* NoticeTypeBean.h */; };
+		043B4E5F1975239D000C5A29 /* NoticeTypeBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2783519741F3A00D84376 /* NoticeTypeBean.m */; };
+		043B4E601975239D000C5A29 /* XTGLAPI.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2783719741F3A00D84376 /* XTGLAPI.h */; };
+		043B4E611975239D000C5A29 /* XTGLAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2783819741F3A00D84376 /* XTGLAPI.m */; };
+		043B4E621975239D000C5A29 /* XTGLHttpRequest.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2783919741F3A00D84376 /* XTGLHttpRequest.h */; };
+		043B4E631975239D000C5A29 /* XTGLHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2783A19741F3A00D84376 /* XTGLHttpRequest.m */; };
+		043B4E641975239D000C5A29 /* XTGLHttpResponse.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2783B19741F3A00D84376 /* XTGLHttpResponse.h */; };
+		043B4E651975239D000C5A29 /* XTGLHttpResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2783C19741F3A00D84376 /* XTGLHttpResponse.m */; };
+		043B4E661975239D000C5A29 /* AdviceDetailBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784019741F3A00D84376 /* AdviceDetailBean.h */; };
+		043B4E671975239D000C5A29 /* AdviceDetailBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784119741F3A00D84376 /* AdviceDetailBean.m */; };
+		043B4E681975239D000C5A29 /* AdviceInfoBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784219741F3A00D84376 /* AdviceInfoBean.h */; };
+		043B4E691975239D000C5A29 /* AdviceInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784319741F3A00D84376 /* AdviceInfoBean.m */; };
+		043B4E6A1975239D000C5A29 /* LeaveInfoBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784419741F3A00D84376 /* LeaveInfoBean.h */; };
+		043B4E6B1975239D000C5A29 /* LeaveInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784519741F3A00D84376 /* LeaveInfoBean.m */; };
+		043B4E6C1975239D000C5A29 /* SaleTaskInfoBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784619741F3A00D84376 /* SaleTaskInfoBean.h */; };
+		043B4E6D1975239D000C5A29 /* SaleTaskInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784719741F3A00D84376 /* SaleTaskInfoBean.m */; };
+		043B4E6E1975239D000C5A29 /* SignDetailBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784819741F3A00D84376 /* SignDetailBean.h */; };
+		043B4E6F1975239D000C5A29 /* SignDetailBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784919741F3A00D84376 /* SignDetailBean.m */; };
+		043B4E701975239D000C5A29 /* SigninfoBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784A19741F3A00D84376 /* SigninfoBean.h */; };
+		043B4E711975239D000C5A29 /* SigninfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784B19741F3A00D84376 /* SigninfoBean.m */; };
+		043B4E721975239D000C5A29 /* TripDetailBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784C19741F3A00D84376 /* TripDetailBean.h */; };
+		043B4E731975239D000C5A29 /* TripDetailBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784D19741F3A00D84376 /* TripDetailBean.m */; };
+		043B4E741975239D000C5A29 /* TripInfoBean.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784E19741F3A00D84376 /* TripInfoBean.h */; };
+		043B4E751975239D000C5A29 /* TripInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2784F19741F3A00D84376 /* TripInfoBean.m */; };
+		043B4E761975239D000C5A29 /* XZGLAPI.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2785119741F3A00D84376 /* XZGLAPI.h */; };
+		043B4E771975239D000C5A29 /* XZGLAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2785219741F3A00D84376 /* XZGLAPI.m */; };
+		043B4E781975239D000C5A29 /* XZGLHttpRequest.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2785319741F3A00D84376 /* XZGLHttpRequest.h */; };
+		043B4E791975239D000C5A29 /* XZGLHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2785419741F3A00D84376 /* XZGLHttpRequest.m */; };
+		043B4E7A1975239D000C5A29 /* XZGLHttpResponse.h in Sources */ = {isa = PBXBuildFile; fileRef = DFA2785519741F3A00D84376 /* XZGLHttpResponse.h */; };
+		043B4E7B1975239D000C5A29 /* XZGLHttpResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2785619741F3A00D84376 /* XZGLHttpResponse.m */; };
+		043B4E7C197523EB000C5A29 /* SystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2781719741F3A00D84376 /* SystemAPI.m */; };
+		043B4E7D197523F0000C5A29 /* SystemHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2781919741F3A00D84376 /* SystemHttpRequest.m */; };
+		043B4E7E197523F2000C5A29 /* SystemHttpResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2781B19741F3A00D84376 /* SystemHttpResponse.m */; };
+		043B4E7F1975240D000C5A29 /* KHGLAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277E719741F3A00D84376 /* KHGLAPI.m */; };
+		043B4E8019752410000C5A29 /* KHGLHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277E919741F3A00D84376 /* KHGLHttpRequest.m */; };
+		043B4E8119752412000C5A29 /* KHGLHttpResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA277EB19741F3A00D84376 /* KHGLHttpResponse.m */; };
+		043B4E8219752540000C5A29 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04FD3860196A3F6A00C42C39 /* libcrypto.a */; };
+		043B4E8319752542000C5A29 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04FD3861196A3F6A00C42C39 /* libssl.a */; };
 		046FFD4E196FBEE300DF8C46 /* menu_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD4D196FBEE300DF8C46 /* menu_config.json */; };
 		046FFD5C196FEAEE00DF8C46 /* MyNavigationBar1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FFD5B196FEAEE00DF8C46 /* MyNavigationBar1@2x.png */; };
 		04EFF63C19663C8800FF79BE /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04EFF61519663C8800FF79BE /* AMap.bundle */; };
@@ -397,6 +507,7 @@
 
 /* Begin PBXFileReference section */
 		0401E0D61973D0B900DABC62 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		043B4E0F197503DC000C5A29 /* xsgj copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "xsgj copy-Info.plist"; path = "/Users/mac/ios/xsgj/xsgj/xsgj copy-Info.plist"; sourceTree = "<absolute>"; };
 		046FFD4D196FBEE300DF8C46 /* menu_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu_config.json; sourceTree = "<group>"; };
 		046FFD5B196FEAEE00DF8C46 /* MyNavigationBar1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MyNavigationBar1@2x.png"; sourceTree = "<group>"; };
 		04EFF61519663C8800FF79BE /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AMap.bundle; sourceTree = "<group>"; };
@@ -969,6 +1080,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF36B4961965B5C00064C48D /* XCTest.framework in Frameworks */,
+				043B4E8219752540000C5A29 /* libcrypto.a in Frameworks */,
+				043B4E8319752542000C5A29 /* libssl.a in Frameworks */,
 				DF36B4991965B5C00064C48D /* CoreData.framework in Frameworks */,
 				DF36B4981965B5C00064C48D /* UIKit.framework in Frameworks */,
 				DF36B4971965B5C00064C48D /* Foundation.framework in Frameworks */,
@@ -1303,6 +1416,7 @@
 				DF36B4761965B5BF0064C48D /* Frameworks */,
 				DF36B4751965B5BF0064C48D /* Products */,
 				8F73448094CF40BAB99CCE46 /* Pods.xcconfig */,
+				043B4E0F197503DC000C5A29 /* xsgj copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2155,6 +2269,8 @@
 				DF36B4901965B5C00064C48D /* Sources */,
 				DF36B4911965B5C00064C48D /* Frameworks */,
 				DF36B4921965B5C00064C48D /* Resources */,
+				043B4E1319752173000C5A29 /* Copy Pods Resources */,
+				043B4E141975219D000C5A29 /* Check Pods Manifest.lock */,
 			);
 			buildRules = (
 			);
@@ -2461,6 +2577,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		043B4E1319752173000C5A29 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"";
+			showEnvVarsInLog = 0;
+		};
+		043B4E141975219D000C5A29 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\ncat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\nexit 1\nfi";
+			showEnvVarsInLog = 0;
+		};
 		30012AC5B1EC4170A800431C /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2603,6 +2749,114 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				043B4E541975239D000C5A29 /* ContactBean.h in Sources */,
+				043B4E551975239D000C5A29 /* ContactBean.m in Sources */,
+				043B4E561975239D000C5A29 /* DeptInfoBean.h in Sources */,
+				043B4E571975239D000C5A29 /* DeptInfoBean.m in Sources */,
+				043B4E581975239D000C5A29 /* NoticeAttmentBean.h in Sources */,
+				043B4E591975239D000C5A29 /* NoticeAttmentBean.m in Sources */,
+				043B4E7F1975240D000C5A29 /* KHGLAPI.m in Sources */,
+				043B4E5A1975239D000C5A29 /* NoticeDetailBean.h in Sources */,
+				043B4E5B1975239D000C5A29 /* NoticeDetailBean.m in Sources */,
+				043B4E5C1975239D000C5A29 /* NoticeInfoBean.h in Sources */,
+				043B4E5D1975239D000C5A29 /* NoticeInfoBean.m in Sources */,
+				043B4E5E1975239D000C5A29 /* NoticeTypeBean.h in Sources */,
+				043B4E5F1975239D000C5A29 /* NoticeTypeBean.m in Sources */,
+				043B4E7D197523F0000C5A29 /* SystemHttpRequest.m in Sources */,
+				043B4E601975239D000C5A29 /* XTGLAPI.h in Sources */,
+				043B4E611975239D000C5A29 /* XTGLAPI.m in Sources */,
+				043B4E621975239D000C5A29 /* XTGLHttpRequest.h in Sources */,
+				043B4E631975239D000C5A29 /* XTGLHttpRequest.m in Sources */,
+				043B4E641975239D000C5A29 /* XTGLHttpResponse.h in Sources */,
+				043B4E651975239D000C5A29 /* XTGLHttpResponse.m in Sources */,
+				043B4E661975239D000C5A29 /* AdviceDetailBean.h in Sources */,
+				043B4E671975239D000C5A29 /* AdviceDetailBean.m in Sources */,
+				043B4E681975239D000C5A29 /* AdviceInfoBean.h in Sources */,
+				043B4E691975239D000C5A29 /* AdviceInfoBean.m in Sources */,
+				043B4E6A1975239D000C5A29 /* LeaveInfoBean.h in Sources */,
+				043B4E6B1975239D000C5A29 /* LeaveInfoBean.m in Sources */,
+				043B4E6C1975239D000C5A29 /* SaleTaskInfoBean.h in Sources */,
+				043B4E6D1975239D000C5A29 /* SaleTaskInfoBean.m in Sources */,
+				043B4E6E1975239D000C5A29 /* SignDetailBean.h in Sources */,
+				043B4E6F1975239D000C5A29 /* SignDetailBean.m in Sources */,
+				043B4E7E197523F2000C5A29 /* SystemHttpResponse.m in Sources */,
+				043B4E701975239D000C5A29 /* SigninfoBean.h in Sources */,
+				043B4E711975239D000C5A29 /* SigninfoBean.m in Sources */,
+				043B4E721975239D000C5A29 /* TripDetailBean.h in Sources */,
+				043B4E8119752412000C5A29 /* KHGLHttpResponse.m in Sources */,
+				043B4E731975239D000C5A29 /* TripDetailBean.m in Sources */,
+				043B4E741975239D000C5A29 /* TripInfoBean.h in Sources */,
+				043B4E751975239D000C5A29 /* TripInfoBean.m in Sources */,
+				043B4E761975239D000C5A29 /* XZGLAPI.h in Sources */,
+				043B4E771975239D000C5A29 /* XZGLAPI.m in Sources */,
+				043B4E781975239D000C5A29 /* XZGLHttpRequest.h in Sources */,
+				043B4E791975239D000C5A29 /* XZGLHttpRequest.m in Sources */,
+				043B4E7A1975239D000C5A29 /* XZGLHttpResponse.h in Sources */,
+				043B4E7B1975239D000C5A29 /* XZGLHttpResponse.m in Sources */,
+				043B4E3219752383000C5A29 /* BNAreaInfo.h in Sources */,
+				043B4E3319752383000C5A29 /* BNAreaInfo.m in Sources */,
+				043B4E3419752383000C5A29 /* BNAssetType.h in Sources */,
+				043B4E3519752383000C5A29 /* BNAssetType.m in Sources */,
+				043B4E3619752383000C5A29 /* BNCustomerInfo.h in Sources */,
+				043B4E3719752383000C5A29 /* BNCustomerInfo.m in Sources */,
+				043B4E3819752383000C5A29 /* BNCustomerType.h in Sources */,
+				043B4E8019752410000C5A29 /* KHGLHttpRequest.m in Sources */,
+				043B4E3919752383000C5A29 /* BNCustomerType.m in Sources */,
+				043B4E3A19752383000C5A29 /* BNDisplayCase.h in Sources */,
+				043B4E3B19752383000C5A29 /* BNDisplayCase.m in Sources */,
+				043B4E3C19752383000C5A29 /* BNDisplayShape.h in Sources */,
+				043B4E3D19752383000C5A29 /* BNDisplayShape.m in Sources */,
+				043B4E3E19752383000C5A29 /* BNDisplayType.h in Sources */,
+				043B4E3F19752383000C5A29 /* BNDisplayType.m in Sources */,
+				043B4E4019752383000C5A29 /* BNMessage.h in Sources */,
+				043B4E4119752383000C5A29 /* BNMessage.m in Sources */,
+				043B4E4219752383000C5A29 /* BNMobileMenu.h in Sources */,
+				043B4E4319752383000C5A29 /* BNMobileMenu.m in Sources */,
+				043B4E4419752383000C5A29 /* BNProduct.h in Sources */,
+				043B4E4519752383000C5A29 /* BNProduct.m in Sources */,
+				043B4E4619752383000C5A29 /* BNProductType.h in Sources */,
+				043B4E4719752383000C5A29 /* BNProductType.m in Sources */,
+				043B4E4819752383000C5A29 /* BNUnitBean.h in Sources */,
+				043B4E4919752383000C5A29 /* BNUnitBean.m in Sources */,
+				043B4E4A19752383000C5A29 /* BNUserInfo.h in Sources */,
+				043B4E4B19752383000C5A29 /* BNUserInfo.m in Sources */,
+				043B4E4C19752383000C5A29 /* BNVisitCondition.h in Sources */,
+				043B4E4D19752383000C5A29 /* BNVisitCondition.m in Sources */,
+				043B4E4E19752383000C5A29 /* BNVisitPlan.h in Sources */,
+				043B4E4F19752383000C5A29 /* BNVisitPlan.m in Sources */,
+				043B4E5019752383000C5A29 /* BNVisitStepRecord.h in Sources */,
+				043B4E5119752383000C5A29 /* BNVisitStepRecord.m in Sources */,
+				043B4E5219752383000C5A29 /* BNVistRecord.h in Sources */,
+				043B4E5319752383000C5A29 /* BNVistRecord.m in Sources */,
+				043B4E1619752374000C5A29 /* CustDetailBean.h in Sources */,
+				043B4E1719752374000C5A29 /* CustDetailBean.m in Sources */,
+				043B4E1819752374000C5A29 /* CustInfoBean.h in Sources */,
+				043B4E1919752374000C5A29 /* CustInfoBean.m in Sources */,
+				043B4E1A19752374000C5A29 /* CustomerInfo.h in Sources */,
+				043B4E1B19752374000C5A29 /* CustomerInfo.m in Sources */,
+				043B4E1C19752374000C5A29 /* CustTypeBean.h in Sources */,
+				043B4E1D19752374000C5A29 /* CustTypeBean.m in Sources */,
+				043B4E1E19752374000C5A29 /* OrderBackDetailBean.h in Sources */,
+				043B4E1F19752374000C5A29 /* OrderBackDetailBean.m in Sources */,
+				043B4E2019752374000C5A29 /* OrderDetailBean.h in Sources */,
+				043B4E7C197523EB000C5A29 /* SystemAPI.m in Sources */,
+				043B4E2119752374000C5A29 /* OrderDetailBean.m in Sources */,
+				043B4E2219752374000C5A29 /* OrderInfoBean.h in Sources */,
+				043B4E2319752374000C5A29 /* OrderInfoBean.m in Sources */,
+				043B4E2419752374000C5A29 /* OrderItemBean.h in Sources */,
+				043B4E2519752374000C5A29 /* OrderItemBean.m in Sources */,
+				043B4E2619752374000C5A29 /* PlanVisitConfig.h in Sources */,
+				043B4E2719752374000C5A29 /* PlanVisitConfig.m in Sources */,
+				043B4E2819752374000C5A29 /* QueryOrderBackDetailInfoBean.h in Sources */,
+				043B4E2919752374000C5A29 /* QueryOrderBackDetailInfoBean.m in Sources */,
+				043B4E2A19752374000C5A29 /* QueryOrderBackInfoBean.h in Sources */,
+				043B4E2B19752375000C5A29 /* QueryOrderBackInfoBean.m in Sources */,
+				043B4E2C19752375000C5A29 /* StockCommitBean.h in Sources */,
+				043B4E2D19752375000C5A29 /* StockCommitBean.m in Sources */,
+				043B4E2E19752375000C5A29 /* VisistRecordVO.h in Sources */,
+				043B4E2F19752375000C5A29 /* VisistRecordVO.m in Sources */,
+				043B4E3019752375000C5A29 /* VisitPlan.h in Sources */,
+				043B4E3119752375000C5A29 /* VisitPlan.m in Sources */,
 				DF36B5771965BF900064C48D /* LK_NSDictionary2Object.m in Sources */,
 				DF36B4A31965B5C00064C48D /* xsgjTests.m in Sources */,
 				DF36B5651965BF900064C48D /* ShareValue.mm in Sources */,
@@ -2748,6 +3002,7 @@
 					"\"${PODS_ROOT}/Headers/OpenUDID\"",
 					"\"${PODS_ROOT}/Headers/Reachability\"",
 					"\"${PODS_ROOT}/Headers/SDWebImage\"",
+					"\"${PODS_ROOT}/Headers/NSData+Base64\"",
 					"\"${PODS_ROOT}/Headers/SVPullToRefresh\"",
 					"\"${PODS_ROOT}/Headers/UIAlertView-Blocks\"",
 					"$(PROJECT_DIR)/xsgj/ext/crypt/openssl/include",
@@ -2791,6 +3046,7 @@
 					"\"${PODS_ROOT}/Headers/OpenUDID\"",
 					"\"${PODS_ROOT}/Headers/Reachability\"",
 					"\"${PODS_ROOT}/Headers/SDWebImage\"",
+					"\"${PODS_ROOT}/Headers/NSData+Base64\"",
 					"\"${PODS_ROOT}/Headers/SVPullToRefresh\"",
 					"\"${PODS_ROOT}/Headers/UIAlertView-Blocks\"",
 					"$(PROJECT_DIR)/xsgj/ext/crypt/openssl/include",
@@ -2809,7 +3065,7 @@
 		DF36B4AA1965B5C00064C48D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ARCHS = armv7;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/xsgj.app/xsgj";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -2824,7 +3080,6 @@
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
 					"\"${PODS_ROOT}/Headers\"",
 					"\"${PODS_ROOT}/Headers/AFNetworking\"",
 					"\"${PODS_ROOT}/Headers/AKTabBarController\"",
@@ -2836,9 +3091,34 @@
 					"\"${PODS_ROOT}/Headers/NSDate+TimeAgo\"",
 					"\"${PODS_ROOT}/Headers/OpenUDID\"",
 					"\"${PODS_ROOT}/Headers/Reachability\"",
+					"\"${PODS_ROOT}/Headers/NSData+Base64\"",
+					"$(PROJECT_DIR)/xsgj/ext/crypt/openssl/include",
 				);
 				INFOPLIST_FILE = "xsgjTests/xsgjTests-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/xsgj/ext/crypt/openssl",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					ImageIO,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+				);
+				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -2848,7 +3128,7 @@
 		DF36B4AB1965B5C00064C48D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ARCHS = armv7;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/xsgj.app/xsgj";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -2859,7 +3139,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "xsgj/xsgj-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
 					"\"${PODS_ROOT}/Headers\"",
 					"\"${PODS_ROOT}/Headers/AFNetworking\"",
 					"\"${PODS_ROOT}/Headers/AKTabBarController\"",
@@ -2871,9 +3150,34 @@
 					"\"${PODS_ROOT}/Headers/NSDate+TimeAgo\"",
 					"\"${PODS_ROOT}/Headers/OpenUDID\"",
 					"\"${PODS_ROOT}/Headers/Reachability\"",
+					"\"${PODS_ROOT}/Headers/NSData+Base64\"",
+					"$(PROJECT_DIR)/xsgj/ext/crypt/openssl/include",
 				);
 				INFOPLIST_FILE = "xsgjTests/xsgjTests-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/xsgj/ext/crypt/openssl",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					ImageIO,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+				);
+				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;

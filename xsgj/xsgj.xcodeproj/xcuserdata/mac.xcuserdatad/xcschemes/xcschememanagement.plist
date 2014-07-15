@@ -4,10 +4,10 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Copy of xsgj.xcscheme</key>
+		<key>xsgj copy.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>21</integer>
 		</dict>
 		<key>xsgj.xcscheme</key>
 		<dict>
@@ -17,6 +17,16 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>043B4C9A1975036F000C5A29</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>043B4C9E197503DC000C5A29</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>DF36B4731965B5BF0064C48D</key>
 		<dict>
 			<key>primary</key>
