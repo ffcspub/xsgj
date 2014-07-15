@@ -210,6 +210,7 @@ static NSDateFormatter *_displayFormatter = nil;
 }
 
 - (NSString *)stringWithFormat:(NSString *)format {
+    [[self class] initializeStatics];
 	[_displayFormatter setDateFormat:format];
 	NSString *timestamp_str = [_displayFormatter stringFromDate:self];
 	return timestamp_str;

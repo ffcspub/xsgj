@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HideTabViewController.h"
 
-@interface VisitPlansViewController : UIViewController
+@interface VisitPlansViewController : HideTabViewController
+
+@property (weak, nonatomic) IBOutlet UIScrollView *sv_tab;
+
+@property (weak, nonatomic) IBOutlet UIScrollView *sv_content;
+
 
 @end

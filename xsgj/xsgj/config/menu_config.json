@@ -42,7 +42,7 @@
  {"id":"21","name":"退货查询","icon":"icon_returnitemquery","parentId":"1","childClass":"customer.visitContent.returnItem.ReturnItemQuery","leftShow":"true", "rightShow":"true"},
  {"id":"22","name":"新增客户","icon":"icon_addcustomercommit","parentId":"1","childClass":"customer.customerInfo.AddcustomerCommitActivity","leftShow":"true", "rightShow":"true"},
  {"id":"23","name":"我的客户","icon":"icon_customerquery","parentId":"1","childClass":"customer.customerInfo.CustomerQueryActivity","leftShow":"true", "rightShow":"true"},
- {"id":"51","name":"拜访规划","icon":"icon_customerquery","parentId":"1","childClass":"customer.visit.VisitConfig","leftShow":"true", "rightShow":"true", "rightText":"操作"},
+ {"id":"51","name":"拜访规划","icon":"icon_customerquery","parentId":"1","childClass":"VisitPlansViewController","leftShow":"true", "rightShow":"true", "rightText":"操作"},
  {"id":"30","name":"企业公告","icon":"icon_announcement","parentId":"2","childClass":"system.message.Announcement","leftShow":"true", "rightShow":"true"},
  {"id":"24","name":"企业通讯录","icon":"icon_addressbook","parentId":"2","childClass":"system.corpInfo.AddressBook","leftShow":"true", "rightShow":"true"},
  {"id":"25","name":"修改密码","icon":"icon_changepwd","parentId":"2","childClass":"core.login.PasswordActivity","leftShow":"true", "rightShow":"true"},
