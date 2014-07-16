@@ -38,6 +38,7 @@
 //测试登录界面接口
 - (void)testLoginByCorpcode
 {
+    NSRunLoop* runLoop = [NSRunLoop currentRunLoop];
     //界面发起登录请求
     [SystemAPI loginByCorpcode:@"zlbzb" username:@"linwei" password:@"123456" success:^(BNUserInfo *userinfo) {
         //成功后更新配置文件
@@ -46,10 +47,12 @@
         }];
     } fail:^(BOOL notReachable, NSString *desciption) {
     }];
+    [runLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:20]];
 }
 
 //测试考勤详情接口
 -(void)testDetailAttendance{
+    NSRunLoop* runLoop = [NSRunLoop currentRunLoop];
 //    ApplyLeaveHttpRequest *request = [[ApplyLeaveHttpRequest alloc]init];
     DetailAttendanceHttpRequest *request = [[DetailAttendanceHttpRequest alloc]init];
     [XZGLAPI detailAttendanceByRequest:request success:^(DetailAttendanceHttpResponse *response) {
@@ -59,6 +62,7 @@
     } fail:^(BOOL notReachable, NSString *desciption) {
    
     }];
+    [runLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:20]];
 }
 
 @end
