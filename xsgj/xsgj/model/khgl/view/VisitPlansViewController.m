@@ -12,6 +12,7 @@
 #import "UIColor+External.h"
 #import "CustomerInfo.h"
 #import "VisitPlan.h"
+#import "KHGLAPI.h"
 
 @interface PlanCell : UITableViewCell{
     UILabel *lb_customeName;
@@ -87,6 +88,7 @@
     [self initDatas];
     [self initTab];
     [self initContent];
+    [self loadPlayVisitRecords];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -157,6 +159,16 @@
 }
 
 
+-(void)loadPlayVisitRecords{
+    QueryPlanVisitConfigsHttpRequest *request = [[QueryPlanVisitConfigsHttpRequest alloc]init];
+    NSDate *beginDate = _dataArray.firstObject;
+    request.PLAN_DATE = [beginDate stringWithFormat:@"yyyy-MM-dd"];
+    [KHGLAPI queryPlanVisiConfigsByRequest:request success:^(QueryPlanVisitConfigsHttpResponse *response) {
+        
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        
+    }];
+}
 
 #pragma mark - Action
 
