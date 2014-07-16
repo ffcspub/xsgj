@@ -12,6 +12,6 @@
 
 @property(nonatomic,strong) NSString *PLAN_DATE;//计划拜访日期
 
-@property(nonatomic,strong) NSArray *VISIT_PLAN;//拜访计划
+@property(nonatomic,strong) NSArray *VISIT_PLANS;//拜访计划
 
 @end

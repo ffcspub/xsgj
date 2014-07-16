@@ -13,6 +13,10 @@
 #import "CustomerInfo.h"
 #import "VisitPlan.h"
 #import "KHGLAPI.h"
+#import "PlanVisitConfig.h"
+#import "MBProgressHUD+Add.h"
+#import "KxMenu.h"
+#import <IBActionSheet.h>
 
 @interface PlanCell : UITableViewCell{
     UILabel *lb_customeName;
@@ -20,7 +24,7 @@
     UILabel *lb_state;
 }
 
-@property(nonatomic,strong) VisitPlan *plan;
+@property(nonatomic,strong) CustomerInfo *customer;
 
 +(CGFloat)height;
 
@@ -50,23 +54,24 @@
     return self;
 }
 
--(void)setPlan:(VisitPlan *)plan{
-    _plan = plan;
-    lb_customeName.text = plan.CUST_NAME;
-    lb_linkman.text = plan.LINKMAN;
-    lb_state.text = [plan stateName];
+-(void)setCustomer:(CustomerInfo *)customer{
+    _customer = customer;
+    lb_customeName.text = customer.CUST_NAME;
+    lb_linkman.text = customer.ADDRESS;
+    lb_state.text = [customer stateName];
 }
 
 @end
 
 
-@interface VisitPlansViewController ()<UITableViewDataSource,UITableViewDelegate>{
+@interface VisitPlansViewController ()<UITableViewDataSource,UITableViewDelegate,IBActionSheetDelegate>{
     NSMutableArray *_dataButtons;
     NSMutableArray *_contentTableViews;
     UIView *_lightLine;
     NSMutableArray *_dateArray;
     int _index;
     NSMutableArray *_dataArray;
+    IBActionSheet *_sheet;
 }
 
 @end
@@ -85,10 +90,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initDatas];
-    [self initTab];
-    [self initContent];
-    [self loadPlayVisitRecords];
+    UIButton *rightButton = [self defaultRightButtonWithTitle:@"操作"];
+    [rightButton addTarget:self action:@selector(showMenus:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [self loadPlanVisits];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -98,17 +103,65 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark -function
 
-#pragma mark -initView
-//明天开始的七天
--(void)initDatas{
-    _dateArray = [[NSMutableArray alloc]init];
-    _dataArray = [[NSMutableArray alloc]init];
-    for (int i= 0; i< 7; i ++) {
-        [_dateArray addObject:[NSDate getNextDate:i]];
-        [_dataArray addObject:[NSMutableArray array]];
+-(void)showMenus:(UIButton *)sender{
+    if (_sheet) {
+        [_sheet dismissAnimated:NO];
+    }
+   _sheet =  [[IBActionSheet alloc]initWithTitle:@"操作" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"添加" otherButtonTitles:@"删除",nil];
+    _sheet.shouldCancelOnTouch = YES;
+    [_sheet showInView:self.view];
+    
+}
+
+#pragma mark -IBActionSheetDelegate
+-(void)actionSheet:(IBActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex;{
+    if (buttonIndex == 0) {
+        
+    }else if(buttonIndex == 1){
+        
     }
 }
+
+#pragma mark -initView
+
+-(void)loadPlanVisits{
+    MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在加载" toView:self.view];
+    QueryPlanVisitConfigsHttpRequest *request = [[QueryPlanVisitConfigsHttpRequest alloc]init];
+    request.PLAN_DATE = [[NSDate date] stringWithFormat:@"yyyy-MM-dd"];
+    [KHGLAPI queryPlanVisiConfigsByRequest:request success:^(QueryPlanVisitConfigsHttpResponse *response) {
+        NSArray *array =  response.PLAN_VISIT_CONFIGS;
+        _dateArray = [[NSMutableArray alloc]init];
+        _dataArray = [[NSMutableArray alloc]init];
+        for (PlanVisitConfig *visitConfig in array) {
+            [_dateArray addObject:[NSDate dateFromString:visitConfig.PLAN_DATE withFormat:@"yyyy-MM-dd"]];
+            if (!visitConfig.VISIT_PLANS) {
+                [_dataArray addObject:[NSArray array]];
+            }else{
+               [_dataArray addObject:visitConfig.VISIT_PLANS];
+            }
+            
+        }
+        [self initTab];
+        [self initContent];
+//        [self loadPlayVisitRecords];
+        [hud removeFromSuperview];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        [hud removeFromSuperview];
+        [MBProgressHUD showError:@"网络不给力" toView:self.view];
+    }];
+}
+
+////明天开始的七天
+//-(void)initDatas{
+//    _dateArray = [[NSMutableArray alloc]init];
+//    _dataArray = [[NSMutableArray alloc]init];
+//    for (int i= 0; i< 7; i ++) {
+//        [_dateArray addObject:[NSDate getNextDate:i]];
+//        [_dataArray addObject:[NSMutableArray array]];
+//    }
+//}
 
 //创建tab
 -(void)initTab{
@@ -254,7 +307,7 @@
             cell = [[PlanCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:PLANCELL];
             cell.contentView.layer.masksToBounds = YES;
         }
-        cell.plan = [array objectAtIndex:indexPath.row];
+        cell.customer = [array objectAtIndex:indexPath.row];
         return cell;
     }
     return nil;

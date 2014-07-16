@@ -84,6 +84,7 @@
 #define URL_customerInfoGatherr @"visit/tempVisit.shtml"// 客户信息采集
 #define URL_queryVisitStates @"visit/queryVisitStates.shtml"// 获取拜访状态
 #define URL_recordVisit @"visit/recordVisit.shtml"// 离开登记
+#define URL_queryPlanVisitConfigs @"visit/queryPlanVisitConfigs.shtml"//查询拜访规划接口
 #define URL_getCustomerTypes @"visit/getCustomerTypes.shtml"// 获取客户类型
 #define URL_getDeptInfos @"visit/getDeptInfos.shtml"// 获取部门树
 #define URL_getTempCustomerInfos @"visit/getTempCustomerInfos.shtml"// 获取客户列表

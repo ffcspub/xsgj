@@ -11,6 +11,9 @@
 #import "BNCustomerType.h"
 #import "BNAreaInfo.h"
 #import <LKDBHelper.h>
+#import "OAChineseToPinyin.h"
+
+
 
 @protocol SelectInfoCellDelegate;
 
@@ -308,7 +311,7 @@
     UILabel *lb_address;
     UIImageView *iv_select;
 }
-@property(nonatomic,strong) BNCustomerInfo *customerInfo;
+@property(nonatomic,strong) CustomerInfo *customerInfo;
 @property(nonatomic,assign) BOOL isSelected;
 
 +(CGFloat)height;
@@ -339,7 +342,7 @@
     return self;
 }
 
--(void)setCustomerInfo:(BNCustomerInfo *)customerInfo{
+-(void)setCustomerInfo:(CustomerInfo *)customerInfo{
     _customerInfo = customerInfo;
     lb_name.text = _customerInfo.CUST_NAME;
     lb_address.text = _customerInfo.ADDRESS;
@@ -366,7 +369,8 @@
     UITableView *_tv_area;
     
     NSMutableArray *_allCustomers;
-    NSMutableArray *_showingCustomers;
+    NSMutableArray *_showingCustomersArrays;
+    NSMutableArray *_filterCustomers;
 }
 
 @end
@@ -385,6 +389,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _showingCustomersArrays = [[NSMutableArray alloc]init];
+    _allCustomers = [[NSMutableArray alloc]init];
+    _filterCustomers = [[NSMutableArray alloc]init];
+    CGRect rect = _tableView.frame;
+    rect.origin.y -= _sb_search.frame.size.height;
+    rect.size.height += _sb_search.frame.size.height;
+    _tv_customerType = [[UITableView alloc]initWithFrame:rect];
+    _tv_area = [[UITableView alloc]initWithFrame:rect];
+    _tv_customerType.hidden = YES;
+    _tv_area.hidden = YES;
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -394,39 +408,151 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - function
+
+
+- (BOOL)searchResult:(NSString *)contactName searchText:(NSString *)searchT{
+    NSComparisonResult result = [contactName compare:searchT options:NSCaseInsensitiveSearch
+                                               range:NSMakeRange(0, searchT.length)];
+    if (result == NSOrderedSame)
+        return YES;
+    else
+        return NO;
+}
+
+-(void)searchCustomer{
+    NSString *sectionName;
+    [_showingCustomersArrays removeAllObjects];
+    for (int i = 0; i < 27; i++) [_showingCustomersArrays addObject:[NSMutableArray array]];
+    for (CustomerInfo  *customerInfo in _filterCustomers)
+    {
+        if([self searchResult:customerInfo.CUST_NAME searchText:@"曾"])
+            sectionName = @"Z";
+        else if([self searchResult:customerInfo.CUST_NAME searchText:@"解"])
+            sectionName = @"X";
+        else if([self searchResult:customerInfo.CUST_NAME searchText:@"仇"])
+            sectionName = @"Q";
+        else if([self searchResult:customerInfo.CUST_NAME searchText:@"朴"])
+            sectionName = @"P";
+        else if([self searchResult:customerInfo.CUST_NAME searchText:@"查"])
+            sectionName = @"Z";
+        else if([self searchResult:customerInfo.CUST_NAME searchText:@"能"])
+            sectionName = @"N";
+        else if([self searchResult:customerInfo.CUST_NAME searchText:@"乐"])
+            sectionName = @"Y";
+        else if([self searchResult:customerInfo.CUST_NAME searchText:@"单"])
+            sectionName = @"S";
+        else
+            sectionName = [NSString stringWithFormat:@"%c",[OAChineseToPinyin sortSectionTitle:customerInfo.CUST_NAME]];
+        //        [self.contactNameDic setObject:string forKey:sectionName];
+        NSUInteger firstLetter = [ALPHA rangeOfString:[sectionName substringToIndex:1]].location;
+        if (firstLetter != NSNotFound) [[_showingCustomersArrays objectAtIndex:firstLetter] addObject:customerInfo];
+    }
+    [_tableView reloadData];
+}
+
+
 #pragma mark - UITabelViewDelegate
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return nil;
-    } else {
-        return [[NSArray arrayWithObject:UITableViewIndexSearch] arrayByAddingObjectsFromArray:
-                [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles]];
+    if(tableView == _tableView)
+    {
+        NSMutableArray *indices = [NSMutableArray arrayWithObject:UITableViewIndexSearch];
+        for (int i = 0; i < 27; i++)
+            if ([[_showingCustomersArrays objectAtIndex:i] count])
+                [indices addObject:[[ALPHA substringFromIndex:i] substringToIndex:1]];
+        return indices;
     }
+    else
+        return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return 0;
-    } else {
-        if (title == UITableViewIndexSearch) {
+    if(tableView == _tableView)
+    {
+        if (title == UITableViewIndexSearch)
+        {
             [tableView scrollRectToVisible:self.searchDisplayController.searchBar.frame animated:NO];
             return -1;
-        } else {
-            return [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index-1];
         }
+        return [ALPHA rangeOfString:title].location;
     }
+    else
+        return -1;
+    
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if(tableView == _tableView)
+    {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 22)];
+        view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_setion_bg.png"]];
+        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(20, 3, view.frame.size.width - 20 * 2, 16)];
+        title.backgroundColor = [UIColor clearColor];
+        title.font = [UIFont systemFontOfSize:16];
+        title.textColor = [UIColor darkGrayColor];
+        title.text = [[_showingCustomersArrays objectAtIndex:section] count] ? [[[UILocalizedIndexedCollation currentCollation] sectionTitles] objectAtIndex:section] : nil;
+        [view addSubview:title];
+        return view;
+    }
+    else
+        return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if(tableView == _tableView)
+        return [[_showingCustomersArrays objectAtIndex:section] count] ? tableView.sectionHeaderHeight : 0;
+    else
+        return 0.0f;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	if (tableView == self.searchDisplayController.searchResultsTableView) {
+    if(tableView == _tableView)
+        return [_showingCustomersArrays count];
+    else
         return 1;
-	} else {
-//        return [_listContent count];
-    }
-    return 1;
 }
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if(tableView == _tableView)
+        return [[_showingCustomersArrays objectAtIndex:section] count];
+   
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == _tableView) {
+        static NSString *cellIdentifier = @"CUSTOMECELL";
+        CustomerSelectCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell) {
+            cell = [[CustomerSelectCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        }
+        NSArray *array = [_showingCustomersArrays objectAtIndex:indexPath.section];
+        CustomerInfo *customer = [array objectAtIndex:indexPath.row];
+        cell.customerInfo = customer;
+    }
+    return nil;
+}
+
+
+
+- (IBAction)typeAction:(id)sender {
+    
+    
+}
+
+- (IBAction)areaAction:(id)sender {
+    
+}
+
+
+
 
 @end

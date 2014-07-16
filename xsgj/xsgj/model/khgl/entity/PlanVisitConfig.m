@@ -11,7 +11,7 @@
 
 @implementation PlanVisitConfig
 
-+(Class)__VISIT_PLANClass{
++(Class)__VISIT_PLANSClass{
     return [CustomerInfo class];
 }
 

@@ -40,6 +40,7 @@
     self.transparentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds))];
     self.transparentView.backgroundColor = [UIColor blackColor];
     self.transparentView.alpha = 0.0f;
+    self.transparentView.userInteractionEnabled = YES;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeFromView)];
     tap.numberOfTapsRequired = 1;
@@ -481,12 +482,22 @@
     }
 }
 
+-(void)dismissAnimated:(BOOL)animated{
+    if (!animated) {
+        [self.transparentView removeFromSuperview];
+        [self removeFromSuperview];
+        self.visible = NO;
+    } else {
+        [self removeFromView];
+    }
+}
+
 - (void)showInView:(UIView *)theView {
     
     [theView addSubview:self];
     [theView insertSubview:self.transparentView belowSubview:self];
     
-    CGRect theScreenRect = [UIScreen mainScreen].bounds;
+    CGRect theScreenRect = theView.bounds;
     
     float height;
     float x;

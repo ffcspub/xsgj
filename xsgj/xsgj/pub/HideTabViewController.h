@@ -12,4 +12,6 @@
 
 - (UIButton *)titleButton;
 
+-(UIButton *)defaultRightButtonWithTitle:(NSString *)title;
+
 @end

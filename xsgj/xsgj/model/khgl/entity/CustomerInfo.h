@@ -21,7 +21,9 @@
 @property(nonatomic,strong) NSString *	ADDRESS	;//	地址
 @property(nonatomic,strong) NSString *	PHOTO	;//	照片id
 @property(nonatomic,strong) NSString *	REMARK	;//	备注
-@property(nonatomic,strong) NSString *	CHECK_STATE	;//	审核状态
+@property(nonatomic,assign) int	CHECK_STATE	;//	审核状态
 @property(nonatomic,strong) NSString *	CHECK_REMARK	;//	审核备注
+
+-(NSString *)stateName;
 
 @end
