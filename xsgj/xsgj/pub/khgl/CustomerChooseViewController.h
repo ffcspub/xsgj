@@ -30,12 +30,14 @@
 @property (nonatomic) NSInteger savedScopeButtonIndex;
 @property (nonatomic) BOOL searchWasActive;
 
+@property(nonatomic,assign) id<CustomerChooseDelegate> chooseDelegate;
+
 @end
 
 @protocol CustomerChooseDelegate <NSObject>
 
 @required
 
--(void)chooseCustomer:(CustomerInfo *)customerInfo;
+-(void)chooseCustomer:(NSArray *)customers;
 
 @end

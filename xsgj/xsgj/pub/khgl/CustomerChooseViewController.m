@@ -17,7 +17,6 @@
 #import "KHGLHttpResponse.h"
 #import <MBProgressHUD.h>
 #import "UIColor+External.h"
-#import "CustInfoBean.h"
 
 @protocol SelectInfoCellDelegate;
 
@@ -59,16 +58,20 @@
         [btn_last addTarget:self action:@selector(lastChooseAction) forControlEvents:UIControlEventTouchUpInside];
         [btn_last setImage:[UIImage imageNamed:@"action_bar_back"] forState:UIControlStateNormal];
         btn_firstSelected = [[UIButton alloc]initWithFrame:CGRectMake(62, 0, 72, 44)];
+        [btn_firstSelected setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [btn_firstSelected addTarget:self action:@selector(lastChooseAction) forControlEvents:UIControlEventTouchUpInside];
         line1 = [[UIView alloc]initWithFrame:CGRectMake(56, 0, 1, 44)];
-        line1.backgroundColor = [UIColor lightGrayColor];
+        line1.backgroundColor = HEX_RGB(0xe7e7e7);
         btn_secondSelected = [[UIButton alloc]initWithFrame:CGRectMake(142, 0, 72, 44)];
-        breakLine1 = [[UIImageView alloc]initWithFrame:CGRectMake(126, 0, 40, 44)];
+        [btn_secondSelected setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        breakLine1 = [[UIImageView alloc]initWithFrame:CGRectMake(126, 0, 20, 44)];
         breakLine1.image = [UIImage imageNamed:@"file_path_icon"];
-        breakLine2 = [[UIImageView alloc]initWithFrame:CGRectMake(207, 0, 72, 44)];
+        breakLine1.contentMode = UIViewContentModeCenter;
+        breakLine2 = [[UIImageView alloc]initWithFrame:CGRectMake(207, 0, 22, 44)];
         breakLine2.image = [UIImage imageNamed:@"file_path_icon"];
+        breakLine2.contentMode = UIViewContentModeCenter;
         line2 = [[UIView alloc]initWithFrame:CGRectMake(260, 0, 1, 44)];
-        line2.backgroundColor = [UIColor lightGrayColor];
+        line2.backgroundColor = HEX_RGB(0xe7e7e7);
         btn_sure = [[UIButton alloc]initWithFrame:CGRectMake(260, 0, 60, 44)];
         [btn_sure setImage:[UIImage imageNamed:@"icon_done"] forState:UIControlStateNormal];
         [btn_sure addTarget:self action:@selector(sureAction) forControlEvents:UIControlEventTouchUpInside];
@@ -80,6 +83,7 @@
         [self.contentView addSubview:breakLine2];
         [self.contentView addSubview:line2];
         [self.contentView addSubview:btn_sure];
+        self.backgroundColor = [UIColor whiteColor];
     }
     return self;
 }
@@ -136,6 +140,7 @@
     UIButton *btn_select;
     UILabel *lb_name;
     UIImageView *iv_next;
+    UIView *line;
 }
 
 @property(nonatomic,strong) BNCustomerType *type;
@@ -173,10 +178,13 @@
         lb_name.textColor = [UIColor darkTextColor];
         [self.contentView addSubview:lb_name];
         iv_next = [[UIImageView alloc]initWithFrame:CGRectMake(280, 0, 30, 44)];
-        iv_next.image = [UIImage imageNamed:@"tableCtrlBtnIcon_next-press.png"];
+        iv_next.contentMode = UIViewContentModeCenter;
+        iv_next.image = [UIImage imageNamed:@"tableCtrlBtnIcon_next_nor"];
         iv_next.hidden = YES;
         [self.contentView addSubview:iv_next];
-        
+        line = [[UIView alloc]initWithFrame:CGRectMake(0, [TypeSelectCell height] - 1, self.frame.size.width, 1)];
+        line.backgroundColor = HEX_RGB(0xe7e7e7);
+        [self.contentView addSubview:line];
     }
     return self;
 }
@@ -198,7 +206,7 @@
 
 -(void)setIsSelected:(BOOL)isSelected{
     _isSelected = isSelected;
-    if (_isSelected) {
+    if (!_isSelected) {
         [btn_select setImage:[UIImage imageNamed:@"checkbox_unselected"] forState:UIControlStateNormal];
         [btn_select setImage:[UIImage imageNamed:@"checkbox_selected"] forState:UIControlStateHighlighted];
     }else{
@@ -226,6 +234,7 @@
     UIButton *btn_select;
     UILabel *lb_name;
     UIImageView *iv_next;
+    UIView *line;
 }
 
 @property(nonatomic,strong) BNAreaInfo *area;
@@ -263,10 +272,13 @@
         lb_name.textColor = [UIColor darkTextColor];
         [self.contentView addSubview:lb_name];
         iv_next = [[UIImageView alloc]initWithFrame:CGRectMake(280, 0, 30, 44)];
-        iv_next.image = [UIImage imageNamed:@"tableCtrlBtnIcon_next-press.png"];
+        iv_next.contentMode = UIViewContentModeCenter;
+        iv_next.image = [UIImage imageNamed:@"tableCtrlBtnIcon_next_nor"];
         iv_next.hidden = YES;
         [self.contentView addSubview:iv_next];
-        
+        line = [[UIView alloc]initWithFrame:CGRectMake(0, [TypeSelectCell height] - 1, self.frame.size.width, 1)];
+        line.backgroundColor = HEX_RGB(0xe7e7e7);
+        [self.contentView addSubview:line];
     }
     return self;
 }
@@ -288,7 +300,7 @@
 
 -(void)setIsSelected:(BOOL)isSelected{
     _isSelected = isSelected;
-    if (_isSelected) {
+    if (!_isSelected) {
         [btn_select setImage:[UIImage imageNamed:@"checkbox_unselected"] forState:UIControlStateNormal];
         [btn_select setImage:[UIImage imageNamed:@"checkbox_selected"] forState:UIControlStateHighlighted];
     }else{
@@ -415,7 +427,7 @@
         lb_name = [[UILabel alloc]init];
         lb_name.font = [UIFont systemFontOfSize:16];
         lb_name.textColor = [UIColor whiteColor];
-        lb_name.backgroundColor = COLOR_GRAY;
+        lb_name.backgroundColor = MCOLOR_GRAY;
         lb_name.layer.cornerRadius = 6;
         lb_name.frame = CGRectMake(0, 5, size.width, size.height-5);
         lb_name.textAlignment = UITextAlignmentCenter;
@@ -446,7 +458,7 @@
 
 @end
 
-@interface CustomerChooseViewController ()<UITableViewDataSource,UITableViewDelegate,CustomerTagViewDelegate>{
+@interface CustomerChooseViewController ()<UITableViewDataSource,UITableViewDelegate,CustomerTagViewDelegate,SelectInfoCellDelegate,CustomerChooseDelegate,TypeSelectCellDelegate>{
     UITableView *_tv_customerType;
     UITableView *_tv_area;
     
@@ -455,6 +467,21 @@
     NSMutableArray *_filterCustomers;
     
     NSMutableArray *_selectedCustomers;
+    
+    NSMutableArray *_customerTypeArray;
+    NSMutableArray *_areaArray;
+    
+    int AREA_PID;
+    int TYPE_PID;
+    
+    BNAreaInfo *_selectedAreaInfo;
+    BNCustomerType *_selectedCustomerType;
+    
+    NSString *_firstAreaName;
+    NSString *_secondAreaName;
+    
+    NSString *_firstTypeName;
+    NSString *_secondTypeName;
 }
 
 @end
@@ -492,7 +519,11 @@
     rect.origin.y -= _sb_search.frame.size.height;
     rect.size.height += _sb_search.frame.size.height;
     _tv_customerType = [[UITableView alloc]initWithFrame:rect];
+    _tv_customerType.backgroundColor = RGBA(0, 0, 0, 0.5);
+    _tv_customerType.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tv_area = [[UITableView alloc]initWithFrame:rect];
+    _tv_area.backgroundColor = RGBA(0, 0, 0, 0.5);
+    _tv_area.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tv_customerType.hidden = YES;
     _tv_area.hidden = YES;
     _tv_area.delegate = self;
@@ -502,7 +533,11 @@
     [_btn_sure configBlueStyle];
     [self.view addSubview:_tv_area];
     [self.view addSubview:_tv_customerType];
+    [_btn_type addTarget:self action:@selector(typeChooseAction) forControlEvents:UIControlEventTouchUpInside];
+    [_btn_area addTarget:self action:@selector(areaChooseAction) forControlEvents:UIControlEventTouchUpInside];
     [self loadCustomer];
+    [self loadCustomerTypes];
+    [self loadAreas];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -513,6 +548,102 @@
 }
 
 #pragma mark - function
+
+-(void)loadCustomerTypes{
+    if (!_customerTypeArray) {
+        _customerTypeArray = [NSMutableArray array];
+    }
+    [_customerTypeArray removeAllObjects];
+    if (TYPE_PID == 0) {
+        BNCustomerType *allType = [[BNCustomerType alloc]init];
+        allType.TYPE_ID = -1;
+        allType.TYPE_NAME = @"选择全部";
+        allType.TYPE_PID = -1;
+        [_customerTypeArray addObject:allType];
+    }
+    
+    NSArray *result  = [BNCustomerType searchWithWhere:[NSString stringWithFormat:@"TYPE_PID=%d",TYPE_PID] orderBy:@"ORDER_NO" offset:0 count:100];
+    [_customerTypeArray addObjectsFromArray:result];
+    [_tv_customerType reloadData];
+}
+
+-(void)loadAreas{
+    if (!_areaArray) {
+        _areaArray = [NSMutableArray array];
+    }
+    [_areaArray removeAllObjects];
+    if (AREA_PID == 0) {
+        BNAreaInfo *allArea = [[BNAreaInfo alloc]init];
+        allArea.AREA_ID = -1;
+        allArea.AREA_PID = -1;
+        allArea.AREA_NAME = @"选择全部";
+        [_areaArray addObject:allArea];
+    }
+    NSArray *temp = [BNAreaInfo searchWithWhere:[NSString stringWithFormat:@"AREA_PID=%d",AREA_PID] orderBy:@"ORDER_NO" offset:0 count:100];
+    [_areaArray addObjectsFromArray:temp];
+    [_tv_area reloadData];
+}
+
+-(void)typeChooseAction{
+    if (_tv_area.hidden == NO) {
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect rect = _tableView.frame;
+            rect.size.height = 0;
+            _tv_area.frame = rect;
+        } completion:^(BOOL finished) {
+            _tv_area.hidden = YES;
+        }];
+        return;
+    }
+    if (_tv_customerType.hidden == YES) {
+        _tv_customerType.hidden = NO;
+        CGRect rect = _tableView.frame;
+        rect.size.height = 0;
+        _tv_customerType.frame = rect;
+        [UIView animateWithDuration:0.5 animations:^{
+            _tv_customerType.frame = _tableView.frame;
+        }];
+    }else{
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect rect = _tableView.frame;
+            rect.size.height = 0;
+            _tv_customerType.frame = rect;
+        } completion:^(BOOL finished) {
+            _tv_customerType.hidden = YES;
+        }];
+    }
+}
+
+-(void)areaChooseAction{
+    if (_tv_customerType.hidden == NO) {
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect rect = _tableView.frame;
+            rect.size.height = 0;
+            _tv_customerType.frame = rect;
+        } completion:^(BOOL finished) {
+            _tv_customerType.hidden = YES;
+        }];
+        return;
+    }
+    
+    if (_tv_area.hidden == YES) {
+        _tv_area.hidden = NO;
+        CGRect rect = _tableView.frame;
+        rect.size.height = 0;
+        _tv_area.frame = rect;
+        [UIView animateWithDuration:0.5 animations:^{
+            _tv_area.frame = _tableView.frame;
+        }];
+    }else{
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect rect = _tableView.frame;
+            rect.size.height = 0;
+            _tv_area.frame = rect;
+        } completion:^(BOOL finished) {
+            _tv_area.hidden = YES;
+        }];
+    }
+}
 
 -(void)reloadScollerView{
     NSArray *array = [_sv_customers subviews];
@@ -535,6 +666,11 @@
 
 -(void)filterCustomer:(NSString *)searchText{
     [_filterCustomers removeAllObjects];
+    if (searchText.length == 0) {
+        [_filterCustomers addObjectsFromArray:_allCustomers];
+        [self searchCustomer];
+        return;
+    }
     int length = [searchText length];
     BOOL isHZ = NO;
     for (int i=0; i<length; i++) {
@@ -545,7 +681,7 @@
             isHZ = YES;
         }
     }
-    for (CustInfoBean *info in _allCustomers) {
+    for (BNCustomerInfo *info in _allCustomers) {
         if (isHZ){
             NSComparisonResult result = [info.CUST_NAME compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
             if (result == NSOrderedSame)
@@ -564,16 +700,22 @@
 }
 
 -(void)loadCustomer{
+    [_allCustomers removeAllObjects];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    CustomerQueryHttpRequest *requst = [[CustomerQueryHttpRequest alloc]init];
-    [KHGLAPI customerQueryByRequest:requst success:^(CustomerQueryHttpResponse *response) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [_allCustomers addObjectsFromArray:response.DATA];
-        [_filterCustomers addObjectsFromArray:response.DATA];
-        [self searchCustomer];
-    } fail:^(BOOL notReachable, NSString *desciption) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    }];
+    NSString *sql = @"";
+    if (_selectedCustomerType) {
+        sql = [sql stringByAppendingFormat:@"TYPE_ID=%d",_selectedCustomerType.TYPE_ID];
+    }
+    if (_selectedAreaInfo) {
+        if (sql.length > 0) {
+            sql = [sql stringByAppendingFormat:@" and "];
+        }
+        sql = [sql stringByAppendingFormat:@"AREA_ID=%d",_selectedAreaInfo.AREA_ID];
+    }
+    NSArray *costomers = [BNCustomerInfo searchWithWhere:sql orderBy:@"CUST_NAME" offset:0 count:1000];
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [_allCustomers addObjectsFromArray:costomers];
+    [self filterCustomer:_sb_search.text];
 }
 
 - (BOOL)searchResult:(NSString *)contactName searchText:(NSString *)searchT{
@@ -676,9 +818,18 @@
     if (tableView == _tableView) {
         return [CustomerSelectCell height];
     }else if(tableView == _tv_area){
-        return [AreaSelectCell height];
+        if (indexPath.section == 0) {
+            return [AreaSelectCell height];
+        }else{
+            return [SelectInfoCell height];
+        }
+        
     }else{
-        return [TypeSelectCell height];
+        if (indexPath.section == 0) {
+            return [TypeSelectCell height];
+        }else{
+            return [SelectInfoCell height];
+        }
     }
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -686,7 +837,7 @@
     if(tableView == _tableView)
         return [_showingCustomersArrays count];
     else
-        return 1;
+        return 2;
 }
 
 
@@ -694,6 +845,18 @@
 {
     if(tableView == _tableView)
         return [[_showingCustomersArrays objectAtIndex:section] count];
+    if (tableView == _tv_customerType) {
+        if (section == 0) {
+            return [_customerTypeArray count];
+        }
+        return 1;
+    }
+    if (tableView == _tv_area) {
+        if (section == 0) {
+            return [_areaArray count];
+        }
+        return 1;
+    }
     return 0;
 }
 
@@ -716,6 +879,79 @@
         }
         return cell;
     }
+    if (tableView == _tv_customerType) {
+        if (indexPath.section == 0) {
+            static NSString *cellIdentifier = @"CUTOMERTYPECELL";
+            TypeSelectCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell) {
+                cell = [[TypeSelectCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.delegate = self;
+            }
+            BNCustomerType *type = [_customerTypeArray objectAtIndex:indexPath.row];
+            int count = [BNCustomerType rowCountWithWhere:[NSString stringWithFormat:@"TYPE_PID=%d",type.TYPE_ID]];
+            if (count > 0) {
+                cell.hasNext = YES;
+            }else{
+                cell.hasNext = NO;
+            }
+            if (_selectedCustomerType!=nil && _selectedCustomerType == type) {
+                cell.isSelected = YES;
+            }else{
+                cell.isSelected = NO;
+            }
+            cell.type = type;
+            return cell;
+        }else{
+            static NSString *cellIdentifier = @"CHOOSECELL";
+            SelectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell) {
+                cell = [[SelectInfoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.delegate = self;
+            }
+            cell.secondSelected = _secondTypeName;
+            cell.firstSelected = _firstTypeName;
+            return cell;
+        }
+    }
+    if (tableView == _tv_area) {
+        if (indexPath.section == 0) {
+            static NSString *cellIdentifier = @"AREACELL";
+            AreaSelectCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell) {
+                cell = [[AreaSelectCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.delegate = self;
+            }
+            BNAreaInfo *area = [_areaArray objectAtIndex:indexPath.row];
+            int count = [BNAreaInfo rowCountWithWhere:[NSString stringWithFormat:@"AREA_PID=%d",area.AREA_ID]];
+            if (count > 0) {
+                cell.hasNext = YES;
+            }else{
+                cell.hasNext = NO;
+            }
+            if (_selectedAreaInfo!=nil && _selectedAreaInfo == area) {
+                cell.isSelected = YES;
+            }else{
+                cell.isSelected = NO;
+            }
+            
+            cell.area = area;
+            return cell;
+        }else{
+            static NSString *cellIdentifier = @"CHOOSECELL";
+            SelectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell) {
+                cell = [[SelectInfoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.delegate = self;
+            }
+            cell.secondSelected = _secondAreaName;
+            cell.firstSelected = _firstAreaName;
+            return cell;
+        }
+    }
     return nil;
 }
 
@@ -730,7 +966,39 @@
         }
         [_tableView reloadData];
         [self reloadScollerView];
+    }else if(tableView == _tv_area){
+        if (indexPath.section == 0) {
+            BNAreaInfo *area = [_areaArray objectAtIndex:indexPath.row];
+            int count = [BNAreaInfo rowCountWithWhere:[NSString stringWithFormat:@"AREA_PID=%d",area.AREA_ID]];
+            if (count > 0) {
+                AREA_PID = area.AREA_ID;
+                if (area.AREA_PID == 0) {
+                    _firstAreaName = area.AREA_NAME;
+                    _secondAreaName = nil;
+                }else{
+                    _secondAreaName = area.AREA_NAME;
+                }
+                [self loadAreas];
+            }
+            
+        }
+    }else if(tableView == _tv_customerType){
+        if (indexPath.section == 0) {
+            BNCustomerType *type = [_customerTypeArray objectAtIndex:indexPath.row];
+            int count = [BNCustomerType rowCountWithWhere:[NSString stringWithFormat:@"TYPE_PID=%d",type.TYPE_ID]];
+            if (count > 0) {
+                TYPE_PID = type.TYPE_ID;
+                if (type.TYPE_PID == 0) {
+                    _firstTypeName = type.TYPE_NAME;
+                    _secondTypeName = nil;
+                }else{
+                    _secondTypeName = type.TYPE_NAME;
+                }
+                [self loadCustomerTypes];
+            }
+        }
     }
+    
 }
 
 #pragma mark -
@@ -825,6 +1093,94 @@
     [_selectedCustomers removeObject:customerTagView.customer];
     [_tableView reloadData];
     [self reloadScollerView];
+}
+
+#pragma mark - SelectInfoCellDelegate
+-(void)lastAction:(SelectInfoCell *)cell{
+    if (_tv_customerType.hidden == NO) {
+        if (TYPE_PID != 0) {
+            if (_secondTypeName) {
+                _secondTypeName = nil;
+            }else if (_firstTypeName){
+                _firstTypeName = nil;
+            }
+            BNCustomerType *type = [BNCustomerType searchSingleWithWhere:[NSString stringWithFormat:@"TYPE_ID=%d",TYPE_PID] orderBy:nil];
+            TYPE_PID = type.TYPE_PID;
+            [self loadCustomerTypes];
+        }
+    }else{
+        if (AREA_PID != 0) {
+            if (_secondAreaName) {
+                _secondAreaName = nil;
+            }else if(_firstAreaName){
+                _firstAreaName = nil;
+            }
+            BNAreaInfo *area = [BNAreaInfo searchSingleWithWhere:[NSString stringWithFormat:@"AREA_ID=%d",AREA_PID] orderBy:nil];
+            AREA_PID = area.AREA_PID;
+            [self loadAreas];
+        }
+    }
+}
+
+-(void)sureAction:(SelectInfoCell *)cell{
+    if (_tv_area.hidden == NO) {
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect rect = _tableView.frame;
+            rect.size.height = 0;
+            _tv_area.frame = rect;
+        } completion:^(BOOL finished) {
+            _tv_area.hidden = YES;
+        }];
+    }
+    if (_tv_customerType.hidden == NO) {
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect rect = _tableView.frame;
+            rect.size.height = 0;
+            _tv_customerType.frame = rect;
+        } completion:^(BOOL finished) {
+            _tv_customerType.hidden = YES;
+        }];
+    }
+    if (!_selectedAreaInfo || _selectedAreaInfo.AREA_ID == -1) {
+        [_btn_area setTitle:@"区域" forState:UIControlStateNormal];
+    }else{
+        [_btn_area setTitle:_selectedAreaInfo.AREA_NAME forState:UIControlStateNormal];
+    }
+    if (!_selectedCustomerType || _selectedCustomerType.TYPE_ID == -1) {
+        [_btn_type setTitle:@"客户类型" forState:UIControlStateNormal];
+    }else{
+        [_btn_type setTitle:_selectedCustomerType.TYPE_NAME forState:UIControlStateNormal];
+    }
+    
+    [self loadCustomer];
+}
+
+#pragma mark - AreaSelectCellDelegate
+-(void)selectedAreaSelectCell:(AreaSelectCell *)cell{
+    if (_selectedAreaInfo.AREA_ID == -1 || _selectedAreaInfo == cell.area) {
+        _selectedAreaInfo = nil;
+    }else{
+        _selectedAreaInfo = cell.area;
+    }
+    [_tv_area reloadData];
+}
+
+#pragma mark - TypeSelectCellDelegate
+-(void)selectedTypeSelectCell:(TypeSelectCell *)cell{
+    if (_selectedCustomerType.TYPE_ID == -1 ||  _selectedCustomerType == cell.type ) {
+        _selectedCustomerType = nil;
+    }else{
+        _selectedCustomerType = cell.type;
+    }
+    [_tv_customerType reloadData];
+}
+
+#pragma mark - Action
+- (IBAction)sureBtnClick:(id)sender {
+    if (_chooseDelegate) {
+        [_chooseDelegate chooseCustomer:_selectedCustomers];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

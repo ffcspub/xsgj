@@ -29,6 +29,8 @@
 
 @property (nonatomic,strong)      NSString* AREA_NAME;
 
+@property (nonatomic,assign)    int ORDER_NO;
+
 /**
  * 联系人名称
  */

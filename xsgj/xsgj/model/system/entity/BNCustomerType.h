@@ -13,6 +13,8 @@
 @property (nonatomic,assign)    int TYPE_ID;
 // 类型父id
 @property (nonatomic,assign)    int TYPE_PID;
+//排序
+@property (nonatomic,assign)    int ORDER_NO;
 // 类型名
 @property (nonatomic,strong)      NSString* TYPE_NAME;
 @end

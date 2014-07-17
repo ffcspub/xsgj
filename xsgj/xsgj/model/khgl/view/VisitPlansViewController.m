@@ -49,11 +49,11 @@
         lb_state = [[UILabel alloc]initWithFrame:CGRectMake(250, 5, 60, 20)];
         lb_state.textAlignment = UITextAlignmentRight;
         lb_state.font = [UIFont systemFontOfSize:12];
-        lb_state.textColor = COLOR_BLUE;
+        lb_state.textColor = MCOLOR_BLUE;
         lb_otherstate = [[UILabel alloc]initWithFrame:CGRectMake(250, 30, 60, 15)];
         lb_otherstate.textAlignment = UITextAlignmentRight;
         lb_otherstate.font = [UIFont systemFontOfSize:12];
-        lb_otherstate.textColor = COLOR_GRAY;
+        lb_otherstate.textColor = MCOLOR_GRAY;
         
         [self.contentView addSubview:lb_customeName];
         [self.contentView addSubview:lb_linkman];
@@ -69,17 +69,17 @@
     lb_linkman.text = customer.ADDRESS;
     lb_state.text = [customer stateName];
     if (customer.CHECK_STATE == 0) {
-        lb_state.textColor = COLOR_BLUE;
+        lb_state.textColor = MCOLOR_BLUE;
         lb_otherstate.hidden = YES;
     }else if (customer.CHECK_STATE == 1){
-        lb_state.textColor = COLOR_GREEN;
+        lb_state.textColor = MCOLOR_GREEN;
         lb_otherstate.hidden = YES;
     }else if (customer.CHECK_STATE == 2){
-        lb_state.textColor = COLOR_RED;
+        lb_state.textColor = MCOLOR_RED;
         lb_otherstate.hidden = YES;
     }else if (customer.CHECK_STATE == 3){
         lb_state.text = @"通过";
-        lb_state.textColor = COLOR_BLUE;
+        lb_state.textColor = MCOLOR_BLUE;
         lb_otherstate.hidden = NO;
         lb_otherstate.text = [customer stateName];
     }
