@@ -63,7 +63,7 @@
     [button setTitle:title forState:UIControlStateHighlighted];
     [button setTitleColor:[UIColor darkTextColor] forState:UIControlStateHighlighted];
     [button setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
-    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
+    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
     self.navigationItem.titleView = button;
 }
 

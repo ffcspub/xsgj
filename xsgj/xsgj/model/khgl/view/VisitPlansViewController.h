@@ -15,5 +15,6 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *sv_content;
 
+@property (weak, nonatomic) IBOutlet UIButton *btn_submit;
 
 @end

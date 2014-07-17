@@ -15,13 +15,14 @@
 #import "KHGLAPI.h"
 #import "PlanVisitConfig.h"
 #import "MBProgressHUD+Add.h"
-#import "KxMenu.h"
 #import <IBActionSheet.h>
+#import "CustomerChooseViewController.h"
 
 @interface PlanCell : UITableViewCell{
     UILabel *lb_customeName;
     UILabel *lb_linkman;
     UILabel *lb_state;
+    UILabel *lb_otherstate;
 }
 
 @property(nonatomic,strong) CustomerInfo *customer;
@@ -45,11 +46,19 @@
         lb_linkman = [[UILabel alloc]initWithFrame:CGRectMake(10, 30, 250, 15)];
         lb_linkman.font = [UIFont systemFontOfSize:12];
         lb_linkman.textColor = [UIColor grayColor];
-        lb_state = [[UILabel alloc]initWithFrame:CGRectMake(230, 2, 80, 20)];
+        lb_state = [[UILabel alloc]initWithFrame:CGRectMake(250, 5, 60, 20)];
+        lb_state.textAlignment = UITextAlignmentRight;
         lb_state.font = [UIFont systemFontOfSize:12];
-        lb_state.textColor = HEX_RGB(0x409be4);
+        lb_state.textColor = COLOR_BLUE;
+        lb_otherstate = [[UILabel alloc]initWithFrame:CGRectMake(250, 30, 60, 15)];
+        lb_otherstate.textAlignment = UITextAlignmentRight;
+        lb_otherstate.font = [UIFont systemFontOfSize:12];
+        lb_otherstate.textColor = COLOR_GRAY;
+        
         [self.contentView addSubview:lb_customeName];
         [self.contentView addSubview:lb_linkman];
+        [self.contentView addSubview:lb_state];
+        [self.contentView addSubview:lb_otherstate];
     }
     return self;
 }
@@ -59,6 +68,21 @@
     lb_customeName.text = customer.CUST_NAME;
     lb_linkman.text = customer.ADDRESS;
     lb_state.text = [customer stateName];
+    if (customer.CHECK_STATE == 0) {
+        lb_state.textColor = COLOR_BLUE;
+        lb_otherstate.hidden = YES;
+    }else if (customer.CHECK_STATE == 1){
+        lb_state.textColor = COLOR_GREEN;
+        lb_otherstate.hidden = YES;
+    }else if (customer.CHECK_STATE == 2){
+        lb_state.textColor = COLOR_RED;
+        lb_otherstate.hidden = YES;
+    }else if (customer.CHECK_STATE == 3){
+        lb_state.text = @"通过";
+        lb_state.textColor = COLOR_BLUE;
+        lb_otherstate.hidden = NO;
+        lb_otherstate.text = [customer stateName];
+    }
 }
 
 @end
@@ -93,6 +117,7 @@
     UIButton *rightButton = [self defaultRightButtonWithTitle:@"操作"];
     [rightButton addTarget:self action:@selector(showMenus:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [_btn_submit configBlueStyle];
     [self loadPlanVisits];
     // Do any additional setup after loading the view from its nib.
 }
@@ -118,7 +143,8 @@
 #pragma mark -IBActionSheetDelegate
 -(void)actionSheet:(IBActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex;{
     if (buttonIndex == 0) {
-        
+        CustomerChooseViewController *vcl = [[CustomerChooseViewController alloc]init];
+        [self.navigationController pushViewController:vcl animated:YES];
     }else if(buttonIndex == 1){
         
     }
@@ -127,10 +153,11 @@
 #pragma mark -initView
 
 -(void)loadPlanVisits{
-    MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在加载" toView:self.view];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     QueryPlanVisitConfigsHttpRequest *request = [[QueryPlanVisitConfigsHttpRequest alloc]init];
-    request.PLAN_DATE = [[NSDate date] stringWithFormat:@"yyyy-MM-dd"];
+    request.PLAN_DATE = [[NSDate getNextDate:1] stringWithFormat:@"yyyy-MM-dd"];
     [KHGLAPI queryPlanVisiConfigsByRequest:request success:^(QueryPlanVisitConfigsHttpResponse *response) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         NSArray *array =  response.PLAN_VISIT_CONFIGS;
         _dateArray = [[NSMutableArray alloc]init];
         _dataArray = [[NSMutableArray alloc]init];
@@ -146,9 +173,8 @@
         [self initTab];
         [self initContent];
 //        [self loadPlayVisitRecords];
-        [hud removeFromSuperview];
     } fail:^(BOOL notReachable, NSString *desciption) {
-        [hud removeFromSuperview];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showError:@"网络不给力" toView:self.view];
     }];
 }
@@ -166,16 +192,17 @@
 //创建tab
 -(void)initTab{
     _dataButtons = [NSMutableArray array];
-    CGFloat topScorllViewX = 10;
+    CGFloat topScorllViewX = 5;
     int i = 0;
     for (NSDate *date in _dateArray) {
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(topScorllViewX, 0, 80, _sv_tab.frame.size.height)];
         btn.tag = i;
         [btn setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
+        btn.titleLabel.font = [UIFont systemFontOfSize:15];
         [btn setTitle:[date getCnWeek] forState:UIControlStateNormal];
         topScorllViewX += 80;
         if (i < 6) {
-            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(topScorllViewX, 10, 1, _sv_tab.frame.size.height - 20)];
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(topScorllViewX, 5, 1, _sv_tab.frame.size.height - 10)];
             [line setBackgroundColor:[UIColor lightGrayColor]];
             [_sv_tab addSubview:line];
         }
@@ -184,8 +211,8 @@
         i++;
     }
     
-    topScorllViewX += 10;
-    _lightLine = [[UIView alloc]initWithFrame:CGRectMake(10, _sv_tab.frame.size.height - 3, 80, 3)];
+    topScorllViewX += 5;
+    _lightLine = [[UIView alloc]initWithFrame:CGRectMake(5, _sv_tab.frame.size.height - 3, 80, 3)];
     _lightLine.backgroundColor = HEX_RGB(0x409be4);
     [_sv_tab addSubview:_lightLine];
     _sv_tab.contentSize = CGSizeMake(topScorllViewX, _sv_tab.frame.size.height);
@@ -231,7 +258,7 @@
         [_sv_content scrollRectToVisible:CGRectMake(_sv_content.frame.size.width * tag, 0, _sv_content.frame.size.width, _sv_content.frame.size.height) animated:YES];
         [UIView animateWithDuration:0.3 animations:^{
             CGRect rect = _lightLine.frame;
-            rect.origin.x = 10 + 80.0*tag;
+            rect.origin.x = 5 + 80.0*tag;
             _lightLine.frame = rect;
         }];
         _index = tag;
@@ -248,7 +275,7 @@
         [UIView animateWithDuration:0.3 animations:^{
             [_sv_tab scrollRectToVisible:CGRectMake(80*currentPage, 0, _sv_tab.frame.size.width, _sv_tab.frame.size.height) animated:YES];
             CGRect rect = _lightLine.frame;
-            rect.origin.x = 10 + 80.0*currentPage;
+            rect.origin.x = 5 + 80.0*currentPage;
             _lightLine.frame = rect;
         }];
         _index = currentPage;
@@ -281,17 +308,14 @@
         if (!cell) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DATECELL];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 290, 44)];
+            UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 290, 30)];
             lable.backgroundColor = [UIColor clearColor];
             lable.textAlignment = UITextAlignmentLeft;
-            lable.font = [UIFont systemFontOfSize:14];
+            lable.font = [UIFont systemFontOfSize:17];
             lable.tag = 111;
             lable.text = @"11111";
             lable.textColor = [UIColor darkTextColor];
             cell.contentView.layer.masksToBounds = YES;
-//            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 30, 44)];
-//            view.backgroundColor = [UIColor darkTextColor];
-//            [cell.contentView addSubview:view];
             [cell.contentView addSubview:lable];
         }
         UILabel *lable = (UILabel *)[cell.contentView viewWithTag:111];
@@ -317,7 +341,7 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return 44;
+        return 30;
     }else{
         return [PlanCell height];
     }

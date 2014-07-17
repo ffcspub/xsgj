@@ -56,9 +56,7 @@
 #endif
     _viewContain.layer.borderColor = HEX_RGB(0xd3d3d3).CGColor;
     _viewContain.layer.borderWidth = 1.0;
-    [_btn_login setBackgroundImage:[[UIImage imageNamed:@"bg_BtnLogin_nor"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)] forState:UIControlStateNormal];
-    [_btn_login setBackgroundImage:[[UIImage imageNamed:@"bg_BtnLogin_press@2x"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)] forState:UIControlStateHighlighted];
-    
+    [_btn_login configOrgleStyle];
     [self resetBtns];
     
     

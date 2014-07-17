@@ -91,10 +91,9 @@
 }
 
 -(UIButton *)defaultRightButtonWithTitle:(NSString *)title{
-    UIImage *image = [[UIImage imageNamed:@"CommonBtn_nor"]resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 70, 35)];
-    [btn setBackgroundImage:image forState:UIControlStateNormal];
-    btn.titleEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 0);
+    [btn setBackgroundImage:IMG_BTN_BLUE forState:UIControlStateNormal];
+    btn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     [btn setTitle:title forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     return btn;

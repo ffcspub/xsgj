@@ -8,12 +8,30 @@
 
 #import <Foundation/Foundation.h>
 #import "BNUserInfo.h"
+#import "UIColor+External.h"
+#import "UIButton+Style.h"
 
 #define VERSION 1
 
 #define TABLEVERION 1.3
 
 #define DEFINE_SUCCESSCODE @"00000000"
+
+#define COLOR_GREEN HEX_RGB(0x4cd964)
+#define COLOR_BLUE HEX_RGB(0x409BE4)
+#define COLOR_ORGLE HEX_RGB(0xffd599)
+#define COLOR_BLACK HEX_RGB(0x000000)
+#define COLOR_GRAY  HEX_RGB(0x9ba6ae)
+#define COLOR_ORGLE HEX_RGB(0xffd599)
+#define COLOR_RED   HEX_RGB(0xf33D3A)
+
+#define IMG_BTN_BLUE [[UIImage imageNamed:@"CommonBtn_nor"]resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]
+
+#define IMG_BTN_BLUE_S [[UIImage imageNamed:@"CommonBtn_press"]resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]
+
+#define IMG_BTN_ORGLE [[UIImage imageNamed:@"bg_BtnLogin_nor"]resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]
+
+#define IMG_BTN_ORGLE_S [[UIImage imageNamed:@"bg_BtnLogin_press"]resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]
 
 @interface ShareValue : NSObject
 

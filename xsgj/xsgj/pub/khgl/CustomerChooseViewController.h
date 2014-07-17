@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "CustomerInfo.h"
+#import "HideTabViewController.h"
 
 @protocol CustomerChooseDelegate;
 
-@interface CustomerChooseViewController : UIViewController
+@interface CustomerChooseViewController : HideTabViewController<UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *btn_type;
 
@@ -21,9 +22,13 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *sv_customers;
 
+@property (weak, nonatomic) IBOutlet UIButton *btn_sure;
 
-
+@property (nonatomic, copy) NSString *savedSearchTerm;
+@property (nonatomic) NSInteger savedScopeButtonIndex;
+@property (nonatomic) BOOL searchWasActive;
 
 @end
 

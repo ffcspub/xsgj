@@ -12,8 +12,12 @@
 #import "BNAreaInfo.h"
 #import <LKDBHelper.h>
 #import "OAChineseToPinyin.h"
-
-
+#import "KHGLAPI.h"
+#import "KHGLHttpRequest.h"
+#import "KHGLHttpResponse.h"
+#import <MBProgressHUD.h>
+#import "UIColor+External.h"
+#import "CustInfoBean.h"
 
 @protocol SelectInfoCellDelegate;
 
@@ -325,17 +329,19 @@
     self = [super initWithStyle:style
                 reuseIdentifier:reuseIdentifier];
     if (self) {
+        [self setExclusiveTouch:YES];
         lb_name = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 260, 25)];
-        lb_name.font = [UIFont systemFontOfSize:15];
+        lb_name.font = [UIFont systemFontOfSize:17];
         lb_name.backgroundColor = [UIColor clearColor];
         lb_name.textColor = [UIColor darkTextColor];
         [self.contentView addSubview:lb_name];
-        lb_address = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 260, 20)];
-        lb_address.font = [UIFont systemFontOfSize:12];
+        lb_address = [[UILabel alloc]initWithFrame:CGRectMake(10, 30, 260, 20)];
+        lb_address.font = [UIFont systemFontOfSize:15];
         lb_address.textColor = [UIColor clearColor];
         lb_address.textColor = [UIColor lightGrayColor];
         [self.contentView addSubview:lb_address];
-        iv_select = [[UIImageView alloc]initWithFrame:CGRectMake(265, 0, 55, 55)];
+        iv_select = [[UIImageView alloc]initWithFrame:CGRectMake(255, 0, 65, 55)];
+        iv_select.contentMode = UIViewContentModeCenter;
         iv_select.image = [UIImage imageNamed:@"btn_check_off"];
         [self.contentView addSubview:iv_select];
     }
@@ -364,13 +370,91 @@
 @end
 
 
-@interface CustomerChooseViewController (){
+
+@protocol CustomerTagViewDelegate;
+
+@interface CustomerTagView : UIView{
+    UILabel *lb_name;
+    UIButton *btn_del;
+    UIImageView *iv_del;
+}
+
+@property(nonatomic,assign) id<CustomerTagViewDelegate> delegate;
+
++(CGSize)sizeByCustomer:(CustomerInfo *)customer;
+
+@property(nonatomic,strong) CustomerInfo *customer;
+
+@end
+
+@protocol CustomerTagViewDelegate <NSObject>
+
+@required
+
+-(void)customerTagViewOnDelete:(CustomerTagView *)customerTagView;
+
+@end
+
+@implementation CustomerTagView
+
++(CGSize)sizeByCustomer:(CustomerInfo *)customer{
+    NSString *name = customer.CUST_NAME;
+    CGSize size = [name sizeWithFont:[UIFont systemFontOfSize:16]];
+    size.height = 35;
+    size.width += 24;
+    if (size.width < 70) {
+        size.width = 70;
+    }
+    return size;
+}
+
+-(id)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    if (self) {
+        CGSize size = frame.size;
+        lb_name = [[UILabel alloc]init];
+        lb_name.font = [UIFont systemFontOfSize:16];
+        lb_name.textColor = [UIColor whiteColor];
+        lb_name.backgroundColor = COLOR_GRAY;
+        lb_name.layer.cornerRadius = 6;
+        lb_name.frame = CGRectMake(0, 5, size.width, size.height-5);
+        lb_name.textAlignment = UITextAlignmentCenter;
+        btn_del = [[UIButton alloc]init];
+        btn_del.frame = CGRectMake(0,0,size.width,size.height);
+        [btn_del addTarget:self action:@selector(deleteAction) forControlEvents:UIControlEventTouchUpInside];
+        iv_del = [[UIImageView alloc]init];
+        iv_del.frame = CGRectMake(size.width-12, 0, 18, 18);
+        iv_del.image = [UIImage imageNamed:@"del_btn_normal"];
+        [self addSubview:lb_name];
+        [self addSubview:btn_del];
+        [self addSubview:iv_del];
+    }
+    return self;
+}
+
+-(void)deleteAction{
+    if (_delegate) {
+        [_delegate customerTagViewOnDelete:self];
+    }
+}
+
+
+-(void)setCustomer:(CustomerInfo *)customer{
+    _customer = customer;
+    lb_name.text = _customer.CUST_NAME;
+}
+
+@end
+
+@interface CustomerChooseViewController ()<UITableViewDataSource,UITableViewDelegate,CustomerTagViewDelegate>{
     UITableView *_tv_customerType;
     UITableView *_tv_area;
     
     NSMutableArray *_allCustomers;
     NSMutableArray *_showingCustomersArrays;
     NSMutableArray *_filterCustomers;
+    
+    NSMutableArray *_selectedCustomers;
 }
 
 @end
@@ -389,9 +473,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"选择客户";
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+    if (IOS7_OR_LATER) {
+        _tableView.sectionIndexBackgroundColor = [UIColor clearColor];
+    }
+#endif
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
+    if (IOS6_OR_LATER) {
+        _tableView.sectionIndexColor = [UIColor darkGrayColor];
+    }
+#endif
     _showingCustomersArrays = [[NSMutableArray alloc]init];
     _allCustomers = [[NSMutableArray alloc]init];
     _filterCustomers = [[NSMutableArray alloc]init];
+    _selectedCustomers = [[NSMutableArray alloc]init];
     CGRect rect = _tableView.frame;
     rect.origin.y -= _sb_search.frame.size.height;
     rect.size.height += _sb_search.frame.size.height;
@@ -399,6 +495,14 @@
     _tv_area = [[UITableView alloc]initWithFrame:rect];
     _tv_customerType.hidden = YES;
     _tv_area.hidden = YES;
+    _tv_area.delegate = self;
+    _tv_area.dataSource = self;
+    _tv_customerType.delegate = self;
+    _tv_customerType.dataSource = self;
+    [_btn_sure configBlueStyle];
+    [self.view addSubview:_tv_area];
+    [self.view addSubview:_tv_customerType];
+    [self loadCustomer];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -410,6 +514,67 @@
 
 #pragma mark - function
 
+-(void)reloadScollerView{
+    NSArray *array = [_sv_customers subviews];
+    for (UIView *view in array) {
+        [view removeFromSuperview];
+    }
+    _sv_customers.contentSize = CGSizeMake(_sv_customers.frame.size.width, _sv_customers.frame.size.height);
+    CGFloat beginX = 10;
+    for (CustomerInfo *customer in _selectedCustomers) {
+        CGSize size = [CustomerTagView sizeByCustomer:customer];
+        CustomerTagView *tagView = [[CustomerTagView alloc]initWithFrame:CGRectMake(beginX, (_sv_customers.frame.size.height - size.height) /2, size.width, size.height)];
+        beginX += (size.width + 10);
+        tagView.customer = customer;
+        tagView.delegate = self;
+        [_sv_customers addSubview:tagView];
+    }
+    _sv_customers.contentSize = CGSizeMake(beginX, _sv_customers.frame.size.height);
+    [_btn_sure setTitle:[NSString stringWithFormat:@"确定(%d)",_selectedCustomers.count] forState:UIControlStateNormal];
+}
+
+-(void)filterCustomer:(NSString *)searchText{
+    [_filterCustomers removeAllObjects];
+    int length = [searchText length];
+    BOOL isHZ = NO;
+    for (int i=0; i<length; i++) {
+        NSRange range = NSMakeRange(i, 1);
+        NSString *subString = [searchText substringWithRange:range];
+        const char *cString = [subString UTF8String];
+        if (strlen(cString) == 3) {
+            isHZ = YES;
+        }
+    }
+    for (CustInfoBean *info in _allCustomers) {
+        if (isHZ){
+            NSComparisonResult result = [info.CUST_NAME compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
+            if (result == NSOrderedSame)
+            {
+                [_filterCustomers addObject:info];
+            }
+        }else{
+            NSString *pinyin = [OAChineseToPinyin pinyinFromChiniseString:info.CUST_NAME];
+            NSComparisonResult result = [pinyin compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
+            if (result == NSOrderedSame)
+            {
+                [_filterCustomers addObject:info];
+            }        }
+    }
+    [self searchCustomer];
+}
+
+-(void)loadCustomer{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    CustomerQueryHttpRequest *requst = [[CustomerQueryHttpRequest alloc]init];
+    [KHGLAPI customerQueryByRequest:requst success:^(CustomerQueryHttpResponse *response) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [_allCustomers addObjectsFromArray:response.DATA];
+        [_filterCustomers addObjectsFromArray:response.DATA];
+        [self searchCustomer];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    }];
+}
 
 - (BOOL)searchResult:(NSString *)contactName searchText:(NSString *)searchT{
     NSComparisonResult result = [contactName compare:searchT options:NSCaseInsensitiveSearch
@@ -452,16 +617,15 @@
 }
 
 
-#pragma mark - UITabelViewDelegate
+#pragma mark - UITableViewDelegate
+
+
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
     if(tableView == _tableView)
     {
-        NSMutableArray *indices = [NSMutableArray arrayWithObject:UITableViewIndexSearch];
-        for (int i = 0; i < 27; i++)
-            if ([[_showingCustomersArrays objectAtIndex:i] count])
-                [indices addObject:[[ALPHA substringFromIndex:i] substringToIndex:1]];
-        return indices;
+        return [[NSArray arrayWithObject:UITableViewIndexSearch] arrayByAddingObjectsFromArray:
+                [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles]];
     }
     else
         return nil;
@@ -488,7 +652,7 @@
     if(tableView == _tableView)
     {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 22)];
-        view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_setion_bg.png"]];
+        view.backgroundColor = HEX_RGBA(0xd7d7d7, 1);
         UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(20, 3, view.frame.size.width - 20 * 2, 16)];
         title.backgroundColor = [UIColor clearColor];
         title.font = [UIFont systemFontOfSize:16];
@@ -508,7 +672,15 @@
     else
         return 0.0f;
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView == _tableView) {
+        return [CustomerSelectCell height];
+    }else if(tableView == _tv_area){
+        return [AreaSelectCell height];
+    }else{
+        return [TypeSelectCell height];
+    }
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if(tableView == _tableView)
@@ -522,7 +694,6 @@
 {
     if(tableView == _tableView)
         return [[_showingCustomersArrays objectAtIndex:section] count];
-   
     return 0;
 }
 
@@ -533,15 +704,112 @@
         CustomerSelectCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
             cell = [[CustomerSelectCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         NSArray *array = [_showingCustomersArrays objectAtIndex:indexPath.section];
         CustomerInfo *customer = [array objectAtIndex:indexPath.row];
         cell.customerInfo = customer;
+        if ([_selectedCustomers containsObject:customer]) {
+            cell.isSelected = YES;
+        }else{
+            cell.isSelected = NO;
+        }
+        return cell;
     }
     return nil;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView == _tableView) {
+        NSArray *array = [_showingCustomersArrays objectAtIndex:indexPath.section];
+        CustomerInfo *customer = [array objectAtIndex:indexPath.row];
+        if ([_selectedCustomers containsObject:customer]) {
+            [_selectedCustomers removeObject:customer];
+        }else{
+            [_selectedCustomers addObject:customer];
+        }
+        [_tableView reloadData];
+        [self reloadScollerView];
+    }
+}
 
+#pragma mark -
+#pragma mark UISearchBarDelegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText;{
+    [self filterCustomer:searchText];
+    [_tableView reloadData];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)_searchBar
+{
+	[self.searchDisplayController.searchBar setShowsCancelButton:NO];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)_searchBar
+{
+	[self.searchDisplayController setActive:NO animated:YES];
+	[_tableView reloadData];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)_searchBar
+{
+	[self.searchDisplayController setActive:NO animated:YES];
+	[_tableView reloadData];
+}
+
+
+
+#pragma mark -
+#pragma mark ContentFiltering
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    
+    
+	    //const char *cString = [searchText UTF8String];
+    [self filterCustomer:searchText];
+    // 修改无结果的时候显示文字
+    if(_filterCustomers.count < 1)
+    {
+        UITableView *tableview = self.searchDisplayController.searchResultsTableView;
+        for(UIView *subView in tableview.subviews)
+        {
+            if([subView isKindOfClass:[UILabel class]])
+            {
+                UILabel *lb = (UILabel *)subView;
+                lb.text = @"没有找到符合条件的信息";
+                break;
+                
+            }
+        }
+        
+        [tableview reloadData];
+    }
+    
+}
+//#pragma mark -
+//#pragma mark UISearchDisplayControllerDelegate
+//
+//- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+//{
+//    if ([searchString isEqualToString:@""]) {
+//        return NO;
+//    }
+//    
+//    [self filterContentForSearchText:searchString scope:
+//	 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+//    
+//    return YES;
+//}
+//
+//- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
+//{
+//    [self filterContentForSearchText:[self.searchDisplayController.searchBar text] scope:
+//	 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+//    
+//    return YES;
+//}
 
 - (IBAction)typeAction:(id)sender {
     
@@ -552,7 +820,12 @@
     
 }
 
-
+#pragma mark -CustomerTagViewDelegate
+-(void)customerTagViewOnDelete:(CustomerTagView *)customerTagView{
+    [_selectedCustomers removeObject:customerTagView.customer];
+    [_tableView reloadData];
+    [self reloadScollerView];
+}
 
 
 @end

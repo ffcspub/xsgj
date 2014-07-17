@@ -18,7 +18,7 @@
 
 @implementation AllTypeHttpResponse
 
-+(Class)__DATACLASS{
++(Class)__DATAClass{
     return [CustTypeBean class];
 }
 
@@ -31,7 +31,7 @@
 
 @implementation CustomerQueryHttpResponse
 
-+(Class)__DATACLASS{
++(Class)__DATAClass{
     return [CustInfoBean class];
 }
 
@@ -39,7 +39,7 @@
 
 @implementation CustomerDetailHttpResponse
 
-+(Class)__DATACLASS{
++(Class)__DATAClass{
     return [CustDetailBean class];
 }
 
