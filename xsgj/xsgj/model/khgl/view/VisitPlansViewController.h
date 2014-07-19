@@ -17,4 +17,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *btn_submit;
 
+@property (weak, nonatomic) IBOutlet UIView *vi_tool;
+
 @end

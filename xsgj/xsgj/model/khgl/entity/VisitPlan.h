@@ -17,7 +17,6 @@
 @property(nonatomic,strong) NSString *	CHECK_REMARK;//	审批备注
 
 @property(nonatomic,strong) NSString *  CUST_NAME;//
-@property(nonatomic,strong) NSString *  LINKMAN;//
 
 -(NSString *)stateName;
 

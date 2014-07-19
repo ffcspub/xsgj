@@ -402,9 +402,6 @@
     if (class == [NSString class]) {
         return nil;
     }
-    if (class == [NSArray class]) {
-        return nil;
-    }
     if (class == [NSObject class]) {
         return nil;
     }
@@ -437,6 +434,16 @@
                 strncpy( &typeClazz[0], mclazz, size );
             }
             if (typeClazz) {
+                if ([value isKindOfClass:[NSArray class]]) {
+                     NSMutableArray *array =  [NSMutableArray array];
+                    for (NSObject * cValue in (NSArray *)value) {
+                        Class clazz = (Class)[cValue class];
+                        [array addObject:[cValue dictionaryWithClass:clazz]];
+                    }
+                    value = array;
+                    [dict setValue:value forKey:propertyName];
+                    continue;
+                }
                 if (![value isKindOfClass:[NSString class]] && ![value isKindOfClass:[NSNumber class]] ) {
                     value = [(NSObject *)value lkDictionary];
                     if (!value) {
@@ -467,9 +474,6 @@
         return (NSDictionary*) self;
     }
     if ([self isKindOfClass:[NSString class]]) {
-        return nil;
-    }
-    if ([self isKindOfClass:[NSArray class]]) {
         return nil;
     }
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];

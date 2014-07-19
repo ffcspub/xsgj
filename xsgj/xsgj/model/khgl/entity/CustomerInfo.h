@@ -16,8 +16,8 @@
 @property(nonatomic,assign) int         AREA_ID;//	区域id
 @property(nonatomic,strong) NSString *	LINKMAN	;//	联系人
 @property(nonatomic,strong) NSString *	TEL	;//	电话
-@property(nonatomic,strong) NSString *	LAT	;//	纬度
-@property(nonatomic,strong) NSString *	LNG	;//	经度
+@property(nonatomic,strong) NSNumber *	LAT	;//	纬度
+@property(nonatomic,strong) NSNumber *	LNG	;//	经度
 @property(nonatomic,strong) NSString *	ADDRESS	;//	地址
 @property(nonatomic,strong) NSString *	PHOTO	;//	照片id
 @property(nonatomic,strong) NSString *	REMARK	;//	备注

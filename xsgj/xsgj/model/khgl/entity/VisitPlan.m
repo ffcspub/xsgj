@@ -31,4 +31,13 @@
     return name;
 }
 
+-(id)init{
+    self = [super init];
+    if (self) {
+        _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+        _CORP_ID = [ShareValue shareInstance].userInfo.CORP_ID;
+    }
+    return self;
+}
+
 @end

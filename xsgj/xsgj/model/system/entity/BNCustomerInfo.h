@@ -42,11 +42,11 @@
 /**
  * 客户所在位置的纬度
  */
-@property (nonatomic,assign)    double LAT;
+@property (nonatomic,strong)    NSNumber * LAT;
 /**
  * 客户所在位置的经度
  */
-@property (nonatomic,assign)    double LNG;
+@property (nonatomic,strong)    NSNumber * LNG;
 /**
  * 联系地址
  */

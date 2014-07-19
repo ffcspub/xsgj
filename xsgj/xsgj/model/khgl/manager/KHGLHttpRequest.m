@@ -10,6 +10,7 @@
 #import "OrderItemBean.h"
 #import "OrderBackDetailBean.h"
 #import "StockCommitBean.h"
+#import "VisitPlan.h"
 
 @implementation AllTypeHttpRequest
 
@@ -139,6 +140,10 @@
         _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
     }
     return self;
+}
+
++(Class)__VISIT_PLANSClass{
+    return [VisitPlan class];
 }
 
 @end

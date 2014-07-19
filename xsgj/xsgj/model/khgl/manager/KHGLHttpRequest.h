@@ -131,7 +131,7 @@
 @property(nonatomic,assign) int         DEPT_ID;//	部门标识
 @property(nonatomic,strong) NSString *	USER_AUTH;//	用户数据权限
 @property(nonatomic,strong) NSString *	PLAN_DATE;//	计划拜访日期
-@property(nonatomic,strong) NSString *	WEEKDAY;//	星期几
+@property(nonatomic,assign) int         WEEKDAY;//	星期几
 @property(nonatomic,strong) NSMutableArray  *	VISIT_PLANS;//	拜访计划
 
 @end

@@ -17,15 +17,21 @@
 #import "MBProgressHUD+Add.h"
 #import <IBActionSheet.h>
 #import "CustomerChooseViewController.h"
+#import "BNCustomerInfo.h"
+#import "NSObject+EasyCopy.h"
+#import "PlanInfoViewController.h"
 
 @interface PlanCell : UITableViewCell{
     UILabel *lb_customeName;
     UILabel *lb_linkman;
     UILabel *lb_state;
     UILabel *lb_otherstate;
+    UIImageView *iv_delete;
 }
 
 @property(nonatomic,strong) CustomerInfo *customer;
+@property(nonatomic,assign) BOOL deleteModel;
+@property(nonatomic,assign) BOOL isSelected;
 
 +(CGFloat)height;
 
@@ -54,11 +60,15 @@
         lb_otherstate.textAlignment = UITextAlignmentRight;
         lb_otherstate.font = [UIFont systemFontOfSize:12];
         lb_otherstate.textColor = MCOLOR_GRAY;
-        
+        iv_delete = [[UIImageView alloc]initWithFrame:CGRectMake(260, 0, 40, [PlanCell height])];
+        iv_delete.image = [UIImage imageNamed:@"btn_check_off"];
+        iv_delete.contentMode = UIViewContentModeCenter;
+        iv_delete.hidden = YES;
         [self.contentView addSubview:lb_customeName];
         [self.contentView addSubview:lb_linkman];
         [self.contentView addSubview:lb_state];
         [self.contentView addSubview:lb_otherstate];
+        [self.contentView addSubview:iv_delete];
     }
     return self;
 }
@@ -78,17 +88,37 @@
         lb_state.textColor = MCOLOR_RED;
         lb_otherstate.hidden = YES;
     }else if (customer.CHECK_STATE == 3){
-        lb_state.text = @"通过";
+        lb_state.text = @"待审核";
         lb_state.textColor = MCOLOR_BLUE;
         lb_otherstate.hidden = NO;
         lb_otherstate.text = [customer stateName];
     }
 }
 
+-(void)setIsSelected:(BOOL)isSelected{
+    if (isSelected) {
+        [iv_delete setImage:[UIImage imageNamed:@"btn_check_on"]];
+    }else {
+        [iv_delete setImage:[UIImage imageNamed:@"btn_check_off"]];
+    }
+}
+
+-(void)setDeleteModel:(BOOL)deleteModel{
+    if (deleteModel) {
+        iv_delete.hidden = NO;
+        lb_otherstate.hidden = YES;
+        lb_state.hidden = YES;
+    }else{
+        iv_delete.hidden = YES;
+        lb_otherstate.hidden = NO;
+        lb_state.hidden = NO;
+    }
+}
+
 @end
 
 
-@interface VisitPlansViewController ()<UITableViewDataSource,UITableViewDelegate,IBActionSheetDelegate>{
+@interface VisitPlansViewController ()<UITableViewDataSource,UITableViewDelegate,IBActionSheetDelegate,CustomerChooseDelegate>{
     NSMutableArray *_dataButtons;
     NSMutableArray *_contentTableViews;
     UIView *_lightLine;
@@ -96,6 +126,8 @@
     int _index;
     NSMutableArray *_dataArray;
     IBActionSheet *_sheet;
+    NSMutableDictionary *_waitingDeleteDict;
+    NSMutableArray *_selectedArray;
 }
 
 @end
@@ -144,9 +176,13 @@
 -(void)actionSheet:(IBActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex;{
     if (buttonIndex == 0) {
         CustomerChooseViewController *vcl = [[CustomerChooseViewController alloc]init];
+        vcl.chooseDelegate = self;
         [self.navigationController pushViewController:vcl animated:YES];
     }else if(buttonIndex == 1){
-        
+        [_waitingDeleteDict setObject:@1 forKey:[NSNumber numberWithInt:_index]];
+        [self hideOrShowTool];
+        UITableView *tableView = [_contentTableViews objectAtIndex:_index];
+        [tableView reloadData];
     }
 }
 
@@ -157,10 +193,13 @@
     QueryPlanVisitConfigsHttpRequest *request = [[QueryPlanVisitConfigsHttpRequest alloc]init];
     request.PLAN_DATE = [[NSDate getNextDate:1] stringWithFormat:@"yyyy-MM-dd"];
     [KHGLAPI queryPlanVisiConfigsByRequest:request success:^(QueryPlanVisitConfigsHttpResponse *response) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSArray *array =  response.PLAN_VISIT_CONFIGS;
         _dateArray = [[NSMutableArray alloc]init];
         _dataArray = [[NSMutableArray alloc]init];
+        _waitingDeleteDict = [[NSMutableDictionary alloc]init];
+        _selectedArray = [[NSMutableArray alloc]init];
+        int i = 0;
         for (PlanVisitConfig *visitConfig in array) {
             [_dateArray addObject:[NSDate dateFromString:visitConfig.PLAN_DATE withFormat:@"yyyy-MM-dd"]];
             if (!visitConfig.VISIT_PLANS) {
@@ -168,10 +207,13 @@
             }else{
                [_dataArray addObject:visitConfig.VISIT_PLANS];
             }
-            
+            [_waitingDeleteDict setObject:@0 forKey:[NSNumber numberWithInt:i]];
+            [_selectedArray addObject:[NSMutableArray array]];
+            i++;
         }
         [self initTab];
         [self initContent];
+        [self selectPage:_index];
 //        [self loadPlayVisitRecords];
     } fail:^(BOOL notReachable, NSString *desciption) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -192,6 +234,11 @@
 //创建tab
 -(void)initTab{
     _dataButtons = [NSMutableArray array];
+    for (UIView *view in _sv_tab.subviews) {
+        [view removeFromSuperview];
+    }
+    _sv_tab.contentSize = _sv_tab.frame.size;
+    
     CGFloat topScorllViewX = 5;
     int i = 0;
     for (NSDate *date in _dateArray) {
@@ -219,11 +266,22 @@
 }
 
 -(void)initContent{
-    _contentTableViews = [NSMutableArray array];
+    
+    NSArray *array = _sv_content.subviews;
+    for (UIView *view in array) {
+        [view removeFromSuperview];
+    }
+    _sv_content.contentSize = _sv_content.frame.size;
+    if (!_contentTableViews) {
+        _contentTableViews = [NSMutableArray array];
+    }else{
+        [_contentTableViews removeAllObjects];
+    }
     [_sv_content setPagingEnabled:YES];
+    
     CGFloat contentScorllViewX = 0;
-    int i = 0;
-    for (NSDate *date in _dateArray) {
+    int count  = _dataArray.count;
+    for (int i=0;i<count;i++) {
         //创建Content
         UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(contentScorllViewX, 0, _sv_content.frame.size.width, _sv_content.frame.size.height)];
         tableView.tag = i;
@@ -231,11 +289,12 @@
         tableView.dataSource = self;
         tableView.delegate = self;
         tableView.backgroundColor = [UIColor whiteColor];
+        [_contentTableViews addObject:tableView];
         [_sv_content addSubview:tableView];
-        i++;
     }
     _sv_content.contentSize = CGSizeMake(contentScorllViewX, _sv_content.frame.size.height);
     _sv_content.delegate = self;
+    [self selectPage:_index];
 }
 
 
@@ -250,19 +309,39 @@
     }];
 }
 
+-(void)hideOrShowTool{
+    NSNumber *flag = [_waitingDeleteDict objectForKey:[NSNumber numberWithInt:_index]];
+    if (flag.intValue == 1) {
+        [_vi_tool setHidden:NO];
+    }else{
+        [_vi_tool setHidden:YES];
+    }
+}
+
 #pragma mark - Action
 
 -(void)tabBtnClick:(UIButton *)btn{
     int tag = btn.tag;
-    if (tag != _index) {
-        [_sv_content scrollRectToVisible:CGRectMake(_sv_content.frame.size.width * tag, 0, _sv_content.frame.size.width, _sv_content.frame.size.height) animated:YES];
-        [UIView animateWithDuration:0.3 animations:^{
-            CGRect rect = _lightLine.frame;
-            rect.origin.x = 5 + 80.0*tag;
-            _lightLine.frame = rect;
-        }];
-        _index = tag;
+    [self selectPage:tag];
+}
+
+-(void)selectPage:(int)page{
+    _index = page;
+    [_sv_tab scrollRectToVisible:CGRectMake(80*page, 0, _sv_tab.frame.size.width, _sv_tab.frame.size.height) animated:YES];
+    [_sv_content scrollRectToVisible:CGRectMake(_sv_content.frame.size.width*page, 0, _sv_content.frame.size.width, _sv_content.frame.size.height) animated:YES];
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect rect = _lightLine.frame;
+        rect.origin.x = 5 + 80.0*page;
+        _lightLine.frame = rect;
+    }];
+    [self hideOrShowTool];
+}
+
+-(int)nextPage{
+    if (_index < [_dateArray count]-1) {
+        return _index + 1;
     }
+    return _index;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -279,9 +358,15 @@
             _lightLine.frame = rect;
         }];
         _index = currentPage;
+        [self hideOrShowTool];
     }
 }
 
+
+-(BOOL)isDeleteMode{
+    NSNumber * isFlag = [_waitingDeleteDict objectForKey:[NSNumber numberWithInt:_index]];
+    return isFlag.intValue == 1;
+}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -313,7 +398,6 @@
             lable.textAlignment = UITextAlignmentLeft;
             lable.font = [UIFont systemFontOfSize:17];
             lable.tag = 111;
-            lable.text = @"11111";
             lable.textColor = [UIColor darkTextColor];
             cell.contentView.layer.masksToBounds = YES;
             [cell.contentView addSubview:lable];
@@ -331,6 +415,19 @@
             cell = [[PlanCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:PLANCELL];
             cell.contentView.layer.masksToBounds = YES;
         }
+       
+        if ([self isDeleteMode]) {
+            cell.deleteModel = YES;
+            NSMutableArray *array = [_selectedArray objectAtIndex:_index];
+            if ([array containsObject:cell.customer]) {
+                cell.isSelected = YES;
+            }else{
+                cell.isSelected = NO;
+            }
+        }else{
+            cell.deleteModel = NO;
+        }
+        
         cell.customer = [array objectAtIndex:indexPath.row];
         return cell;
     }
@@ -347,6 +444,124 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 1 && [self isDeleteMode]) {
+        NSMutableArray *customerArray = [_dataArray objectAtIndex:_index];
+        NSMutableArray *array = [_selectedArray objectAtIndex:_index];
+        CustomerInfo *customerInfo = [customerArray objectAtIndex:indexPath.row];
+        if ([array containsObject:customerInfo]) {
+            [array removeObject:customerInfo];
+        }else{
+            [array addObject:customerInfo];
+        }
+        UITableView *tableView = [_contentTableViews objectAtIndex:_index];
+        [tableView reloadData];
+    }else if(indexPath.section == 1 && ![self isDeleteMode]){
+        PlanInfoViewController *vlc = [[PlanInfoViewController alloc]init];
+        NSMutableArray *customerArray = [_dataArray objectAtIndex:_index];
+        CustomerInfo *customerInfo = [customerArray objectAtIndex:indexPath.row];
+        vlc.customerInfo = customerInfo;
+        [self.navigationController pushViewController:vlc animated:YES];
+    }
+}
 
+#pragma mark - CustomerChooseDelegate
+
+-(void)chooseCustomer:(NSArray *)customers{
+    NSMutableArray *array = [_dataArray objectAtIndex:_index];
+    for (BNCustomerInfo *bnCustomerInfo in customers) {
+        CustomerInfo *customerInfo = [[CustomerInfo alloc]init];
+        [bnCustomerInfo easyDeepCopy:customerInfo];
+        [array addObject:customerInfo];
+    }
+    UITableView *tableView = [_contentTableViews objectAtIndex:_index];
+    [tableView reloadData];
+}
+
+#pragma mark - Action
+- (IBAction)submitAction:(id)sender {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    UpdateVisitPlansHttpRequest *request = [[UpdateVisitPlansHttpRequest alloc]init];
+    NSMutableArray *array = [NSMutableArray array];
+    NSMutableArray *datas = [_dataArray objectAtIndex:_index];
+    for (CustomerInfo *customerInfo in datas) {
+        VisitPlan *vistiPlan = [[VisitPlan alloc]init];
+        vistiPlan.CUST_ID = customerInfo.CUST_ID;
+        vistiPlan.CHECK_STATE = customerInfo.CHECK_STATE;
+        vistiPlan.CHECK_REMARK = customerInfo.CHECK_REMARK;
+        vistiPlan.CUST_NAME = customerInfo.CUST_NAME;
+        [array addObject:vistiPlan];
+    }
+    request.VISIT_PLANS = array;
+    NSDate *date = [_dateArray objectAtIndex:_index];
+    request.PLAN_DATE = [date stringWithFormat:@"yyyy-MM-dd"];
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *weekdayComponents =
+    [gregorian components:(NSDayCalendarUnit |
+                           NSWeekdayCalendarUnit) fromDate:date];
+    request.WEEKDAY = [weekdayComponents weekday];
+    
+    [KHGLAPI updateVisitPlansByRequest:request success:^(UpdateVisitPlansHttpResponse *response) {
+        NSDate *date = [_dateArray objectAtIndex:_index];
+        NSString *message = [NSString stringWithFormat:@"%@拜访规划提交成功",[date stringWithFormat:@"yyyy-MM-dd"]];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [MBProgressHUD showSuccess:message toView:self.view];
+        _index = [self nextPage];
+        [self loadPlanVisits];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [MBProgressHUD showError:@"网络不给力" toView:self.view];
+    }];
+    
+}
+
+- (IBAction)cancelDelteAction:(id)sender {
+    [_waitingDeleteDict setObject:@0 forKey:[NSNumber numberWithInt:_index]];
+    UITableView *tableView = [_contentTableViews objectAtIndex:_index];
+    [tableView reloadData];
+    [self hideOrShowTool];
+}
+
+- (IBAction)submitDeleteAction:(id)sender {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    UpdateVisitPlansHttpRequest *request = [[UpdateVisitPlansHttpRequest alloc]init];
+    NSMutableArray *array = [NSMutableArray array];
+    NSMutableArray *datas = [_selectedArray objectAtIndex:_index];
+    for (CustomerInfo *customerInfo in datas) {
+        VisitPlan *vistiPlan = [[VisitPlan alloc]init];
+        vistiPlan.CUST_ID = customerInfo.CUST_ID;
+        vistiPlan.CHECK_STATE = 3;
+        vistiPlan.CHECK_REMARK = customerInfo.CHECK_REMARK;
+        vistiPlan.CUST_NAME = customerInfo.CUST_NAME;
+        [array addObject:vistiPlan];
+    }
+    request.VISIT_PLANS = array;
+    NSDate *date = [_dateArray objectAtIndex:_index];
+    request.PLAN_DATE = [date stringWithFormat:@"yyyy-MM-dd"];
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *weekdayComponents =
+    [gregorian components:(NSDayCalendarUnit |
+                           NSWeekdayCalendarUnit) fromDate:date];
+    request.WEEKDAY = [weekdayComponents weekday];
+    
+    [KHGLAPI updateVisitPlansByRequest:request success:^(UpdateVisitPlansHttpResponse *response) {
+        NSDate *date = [_dateArray objectAtIndex:_index];
+        
+        NSString *message = [NSString stringWithFormat:@"%@拜访规划提交成功",[date stringWithFormat:@"yyyy-MM-dd"]];
+        [MBProgressHUD showSuccess:message toView:self.view];
+        [datas removeAllObjects];
+        [self cancelDelteAction:nil];
+        [self loadPlanVisits];
+        //TODO
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [MBProgressHUD showError:@"网络不给力" toView:self.view];
+    }];
+    
+}
 
 @end
