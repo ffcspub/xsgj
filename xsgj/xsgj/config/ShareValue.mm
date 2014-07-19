@@ -16,10 +16,18 @@
 #define SET_NOSHOWPASS @"SET_NOSHOWPASS"
 #define SET_USERID @"SET_USERID"
 
+// 图片上传路径
+#define UPLOAD_PIC_URL @"http://202.101.116.77:8088/xsgj_up/"
+
 static ShareValue *_shareValue;
 
 
 @implementation ShareValue
+
+//获取文件id对应的图片
++(NSString *)getFileUrlByFileId:(NSString *)fileId{
+    return [UPLOAD_PIC_URL stringByAppendingString:fileId];
+}
 
 +(ShareValue *)shareInstance;{
     static dispatch_once_t onceToken;

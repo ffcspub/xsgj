@@ -35,6 +35,8 @@
 
 @interface ShareValue : NSObject
 
+//获取文件id对应的图片
++(NSString *)getFileUrlByFileId:(NSString *)fileId;
 
 +(ShareValue *)shareInstance;
 
