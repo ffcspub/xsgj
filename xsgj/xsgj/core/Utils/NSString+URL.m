@@ -21,6 +21,22 @@
                                             kCFStringEncodingGB_18030_2000));
     return encodedString;
 }
+
+- (BOOL)isEmptyOrWhitespace
+{
+    return self == nil || !([self length] > 0) || [[self trimmedWhitespaceString] length] == 0;
+}
+
+- (NSString *)trimmedWhitespaceString
+{
+    return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+}
+
+- (NSString *)trimmedWhitespaceAndNewlineString
+{
+    return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
 @end
 
 

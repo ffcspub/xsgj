@@ -11,4 +11,14 @@
 @interface NSString (URL)
 // URL转义
 - (NSString *)URLEncodedString;
+
+// 字符串是否为空
+- (BOOL)isEmptyOrWhitespace;
+
+// 去除空格
+- (NSString *)trimmedWhitespaceString;
+
+// 取出回车
+- (NSString *)trimmedWhitespaceAndNewlineString;
+
 @end
