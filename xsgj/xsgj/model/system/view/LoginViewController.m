@@ -71,6 +71,7 @@
      */
     NSMutableAttributedString *hintString1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"客服电话：%@",@"0591-83518200" ]];
     [hintString1 addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor blueColor] CGColor] range:NSMakeRange(5,hintString1.length - 5)];
+    [hintString1 addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont systemFontOfSize:15] range:NSMakeRange(0,hintString1.length )];
     [hintString1 addAttribute:(id)kCTUnderlineStyleAttributeName value:(id)[NSNumber numberWithInt:kCTUnderlineStyleDouble] range:NSMakeRange(5,hintString1.length - 5)];
     [hintString1 addAttribute:(id)kCTUnderlineColorAttributeName value:(id)[UIColor blueColor].CGColor range:NSMakeRange(5,hintString1.length - 5)];
     _lb_tel.font = [UIFont systemFontOfSize:19];

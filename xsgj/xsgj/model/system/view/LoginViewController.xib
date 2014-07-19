@@ -99,7 +99,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="s9u-cN-OEI">
-                    <rect key="frame" x="20" y="307" width="280" height="39"/>
+                    <rect key="frame" x="20" y="295" width="280" height="39"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title="登录">
@@ -110,7 +110,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Imw-kW-hvI" customClass="TTTAttributedLabel">
-                    <rect key="frame" x="0.0" y="483" width="320" height="34"/>
+                    <rect key="frame" x="0.0" y="491" width="320" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>

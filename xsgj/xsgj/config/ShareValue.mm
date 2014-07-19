@@ -25,7 +25,7 @@ static ShareValue *_shareValue;
 
 //获取文件id对应的图片
 +(NSString *)getFileUrlByFileId:(NSString *)fileId{
-    return [IMAGE_PREFIX_URL stringByAppendingString:fileId];
+    return [NSString stringWithFormat:IMAGE_PREFIX_URL,[ShareValue shareInstance].userInfo.CORP_ID,fileId];
 }
 
 +(ShareValue *)shareInstance;{

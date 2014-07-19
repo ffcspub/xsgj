@@ -137,6 +137,7 @@
 @property(nonatomic,strong) NSString *	END_TIME	;//	出差结束时间
 @property(nonatomic,strong) NSString *	TRIP_FROM	;//	出差始发地
 @property(nonatomic,strong) NSString *	TRIP_TO	;//	出差目的地
+@property(nonatomic,assign) NSString *  TRIP_DAYS;//出差时间
 @property(nonatomic,strong) NSString *	REMARK	;//	出差说明
 @property(nonatomic,strong) NSString *	APPROVE_TIME	;//	申请时间
 @property(nonatomic,strong) NSString *	APPROVE_USER	;//	审批人

@@ -21,7 +21,7 @@
 #define UPLOAD_PIC_URL @"http://202.101.116.77:8088/xsgj_up/"
 
 // 图片根路径
-#define IMAGE_PREFIX_URL @"http://202.101.116.77:8088/xsgj_up/photo.shtml?corpId="
+#define IMAGE_PREFIX_URL @"http://202.101.116.77:8088/xsgj_up/photo.shtml?corpId=%d&fileId=%@"
 
 
 // gmm
