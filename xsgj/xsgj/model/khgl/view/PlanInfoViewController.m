@@ -111,8 +111,8 @@ typedef  enum : NSUInteger {
 //        backView.backgroundColor = [UIColor whiteColor];
 //        backView.layer.borderColor = MCOLOR_GRAY.CGColor;
 //        backView.layer.borderWidth = 1;
-        UIImage *image = [UIImage imageNamed:@"NameBg"];
-        image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) ];
+        UIImage *image = [UIImage imageNamed:@"table_border"];
+        image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(1, 1, 1, 1) ];
         backView.image = image;
         textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 0, 300, [PlanCommentCell height])];
         textView.backgroundColor = [UIColor clearColor];
