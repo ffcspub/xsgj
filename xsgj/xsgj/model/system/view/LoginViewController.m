@@ -13,6 +13,8 @@
 #import <UIAlertView+Blocks.h>
 #import <IQKeyboardManager.h>
 #import "SIAlertView.h"
+#import "LK_EasySignal.h"
+#import <NSDate+Helper.h>
 
 @interface LoginViewController ()<TTTAttributedLabelDelegate>{
     UIWebView *_webView;
@@ -200,13 +202,22 @@
 }
 
 - (IBAction)remberAction:(id)sender {
-    [ShareValue shareInstance].noRemberFlag = ![ShareValue shareInstance].noRemberFlag;
-    [self resetBtns];
+    UIDatePicker *picker = [[UIDatePicker alloc]init];
+    picker.datePickerMode = UIDatePickerModeDate;
+    [picker showTitle:@"请选择" inView:self.view];
+//    [ShareValue shareInstance].noRemberFlag = ![ShareValue shareInstance].noRemberFlag;
+//    [self resetBtns];
 }
 
 - (IBAction)autoAction:(id)sender {
     [ShareValue shareInstance].noShowPwd = ![ShareValue shareInstance].noShowPwd;
     [self resetBtns];
+}
+
+ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
+    UIDatePicker *picker =  (UIDatePicker *)signal.sender;
+    NSDate *date = picker.date;
+    NSLog(@"%@",[date stringWithFormat:@"yyyy-MM-dd"] );
 }
 
 

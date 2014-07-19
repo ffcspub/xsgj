@@ -7,6 +7,7 @@
 //
 
 #import "ShareValue.h"
+#import "ServerConfig.h"
 
 #define SET_NOREMBER @"SET_NOREMBER"
 #define SET_NOAUTO @"SET_NOAUTO"
@@ -16,8 +17,6 @@
 #define SET_NOSHOWPASS @"SET_NOSHOWPASS"
 #define SET_USERID @"SET_USERID"
 
-// 图片上传路径
-#define UPLOAD_PIC_URL @"http://202.101.116.77:8088/xsgj_up/"
 
 static ShareValue *_shareValue;
 
@@ -26,7 +25,7 @@ static ShareValue *_shareValue;
 
 //获取文件id对应的图片
 +(NSString *)getFileUrlByFileId:(NSString *)fileId{
-    return [UPLOAD_PIC_URL stringByAppendingString:fileId];
+    return [IMAGE_PREFIX_URL stringByAppendingString:fileId];
 }
 
 +(ShareValue *)shareInstance;{

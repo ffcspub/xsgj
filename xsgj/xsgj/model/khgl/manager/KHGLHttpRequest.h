@@ -371,6 +371,7 @@
 @property(nonatomic,assign) int	USER_ID	;//	用户ID
 @property(nonatomic,assign) int	CUST_ID	;//	客户标识
 @property(nonatomic,strong) NSString * 	FILE_NAME	;//	拍照名称
+@property(nonatomic,strong) NSString * 	FILE_ID	;//	文件ID
 @property(nonatomic,strong) NSString * 	DATA	;//	拍照数据
 
 @end

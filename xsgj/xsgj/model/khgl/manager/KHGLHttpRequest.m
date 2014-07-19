@@ -11,6 +11,7 @@
 #import "OrderBackDetailBean.h"
 #import "StockCommitBean.h"
 #import "VisitPlan.h"
+#import <OpenUDID.h>
 
 @implementation AllTypeHttpRequest
 
@@ -364,6 +365,9 @@
         _DEPT_ID = [ShareValue shareInstance].userInfo.DEPT_ID;
         _USER_AUTH = [ShareValue shareInstance].userInfo.USER_AUTH;
         _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+        NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
+        long long int date = (long long int)time;
+        _FILE_ID = [NSString stringWithFormat:@"%qu",date];
     }
     return self;
 }
