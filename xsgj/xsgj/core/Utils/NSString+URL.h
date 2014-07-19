@@ -21,4 +21,7 @@
 // 取出回车
 - (NSString *)trimmedWhitespaceAndNewlineString;
 
+// 判断是是否为手机号
+- (BOOL)isTelephone;
+
 @end

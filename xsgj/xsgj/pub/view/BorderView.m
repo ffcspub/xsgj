@@ -47,7 +47,7 @@
 
 - (void)_initialize
 {
-    self.imgBorder = @"table_border"; // 默认为圆角边框
+    self.imgBorder = @"日期选择控件背板"; // 默认为圆角边框
     
 	UIImageView *ivBackground = [[UIImageView alloc] initWithFrame:self.bounds];
     ivBackground.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
