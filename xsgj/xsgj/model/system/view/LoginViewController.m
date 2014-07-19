@@ -73,7 +73,7 @@
     [hintString1 addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor blueColor] CGColor] range:NSMakeRange(5,hintString1.length - 5)];
     [hintString1 addAttribute:(id)kCTUnderlineStyleAttributeName value:(id)[NSNumber numberWithInt:kCTUnderlineStyleDouble] range:NSMakeRange(5,hintString1.length - 5)];
     [hintString1 addAttribute:(id)kCTUnderlineColorAttributeName value:(id)[UIColor blueColor].CGColor range:NSMakeRange(5,hintString1.length - 5)];
-   
+    _lb_tel.font = [UIFont systemFontOfSize:19];
     _lb_tel.text = hintString1;
     _lb_tel.delegate = self;
     [_lb_tel addLinkToURL:[NSURL URLWithString:@"tel:0591-83518200"] withRange:NSMakeRange(5,hintString1.length - 5)];
@@ -202,11 +202,12 @@
 }
 
 - (IBAction)remberAction:(id)sender {
+    
     UIDatePicker *picker = [[UIDatePicker alloc]init];
-    picker.datePickerMode = UIDatePickerModeDate;
+    picker.datePickerMode = UIDatePickerModeDateAndTime;
     [picker showTitle:@"请选择" inView:self.view];
-//    [ShareValue shareInstance].noRemberFlag = ![ShareValue shareInstance].noRemberFlag;
-//    [self resetBtns];
+    [ShareValue shareInstance].noRemberFlag = ![ShareValue shareInstance].noRemberFlag;
+    [self resetBtns];
 }
 
 - (IBAction)autoAction:(id)sender {
@@ -218,6 +219,16 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
     UIDatePicker *picker =  (UIDatePicker *)signal.sender;
     NSDate *date = picker.date;
     NSLog(@"%@",[date stringWithFormat:@"yyyy-MM-dd"] );
+}
+
+//忘记密码
+- (IBAction)forgetAction:(id)sender {
+    
+}
+
+//企业注册
+- (IBAction)regiterAction:(id)sender {
+    
 }
 
 
