@@ -210,3 +210,34 @@
 
 @end
 
+@implementation LeaveTypeHttpRequest
+
+-(id)init{
+    self = [super init];
+    if (self) {
+        _SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
+        _CORP_ID = [ShareValue shareInstance].userInfo.CORP_ID;
+        _DEPT_ID = [ShareValue shareInstance].userInfo.DEPT_ID;
+        _USER_AUTH = [ShareValue shareInstance].userInfo.USER_AUTH;
+        _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+    }
+    return self;
+}
+
+@end
+
+@implementation InsertUserCameraHttpRequest
+
+-(id)init{
+    self = [super init];
+    if (self) {
+        _SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
+        _CORP_ID = [ShareValue shareInstance].userInfo.CORP_ID;
+        _DEPT_ID = [ShareValue shareInstance].userInfo.DEPT_ID;
+        _USER_AUTH = [ShareValue shareInstance].userInfo.USER_AUTH;
+        _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+    }
+    return self;
+}
+
+@end

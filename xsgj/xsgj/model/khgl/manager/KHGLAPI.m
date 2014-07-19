@@ -210,6 +210,21 @@
 }
 
 /**
+ *  退货查请接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)insertOrderBackByRequest:(InsertOrderBackHttpRequest *)request success:(void(^)(InsertOrderBackHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_ORDER_BACK_COMMIT Success:^(LK_HttpBaseResponse *response) {
+        success((InsertOrderBackHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[InsertOrderBackHttpResponse class]];
+}
+
+/**
  *  退单查询接口
  *
  *  @param request 请求参数

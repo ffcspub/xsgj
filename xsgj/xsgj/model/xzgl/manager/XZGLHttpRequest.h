@@ -251,5 +251,30 @@
 
 @end
 
+@interface LeaveTypeHttpRequest : LK_HttpBaseRequest
 
+@property(nonatomic,strong) NSString *	SESSION_ID	;//	会话ID
+@property(nonatomic,assign) int         CORP_ID	;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID	;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
+@property(nonatomic,assign) int         USER_ID	;//	用户ID
+
+@end
+
+@interface InsertUserCameraHttpRequest : LK_HttpBaseRequest
+
+@property(nonatomic,strong) NSString *	SESSION_ID	;//	会话ID
+@property(nonatomic,assign) int         CORP_ID	;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID	;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
+@property(nonatomic,assign) int         USER_ID	;//	用户ID
+@property(nonatomic,strong) NSString *	REMARK	;//	备注
+@property(nonatomic,strong) NSString *	PHOTO1	;//	照片1ID
+@property(nonatomic,strong) NSString *	PHOTO2	;//	照片2ID
+@property(nonatomic,strong) NSString *	PHOTO3	;//	照片3ID
+@property(nonatomic,strong) NSString *	PHOTO4	;//	照片4ID
+@property(nonatomic,strong) NSString *	PHOTO5	;//	照片5ID
+@property(nonatomic,strong) NSString *	COMITTIME	;//	上报时间
+
+@end
 

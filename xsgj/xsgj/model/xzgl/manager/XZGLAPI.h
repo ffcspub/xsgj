@@ -158,5 +158,23 @@
  */
 +(void)QuerySaleTaskByRequest:(QuerySaleTaskHttpRequest *)request success:(void(^)(QueryDetailAdviceHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
+/**
+ *  获取调休、请假类型接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)queryLeaveTypeByRequest:(LeaveTypeHttpRequest *)request success:(void(^)(LeaveTypeHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
+ *  日常拍照上报接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)insertUserCameraByRequest:(InsertUserCameraHttpRequest *)request success:(void(^)(InsertUserCameraHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
 
 @end

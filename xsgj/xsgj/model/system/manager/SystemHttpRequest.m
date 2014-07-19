@@ -8,6 +8,7 @@
 
 #import "SystemHttpRequest.h"
 #import <OpenUDID.h>
+#import <NSDate+Helper.h>
 
 @implementation UserLoginHttpRequest
 
@@ -31,5 +32,21 @@
     }
     return self;
 }
+
+@end
+
+@implementation LocateCommitHttpRequest
+
+-(id)init{
+    self = [super init];
+    if (self) {
+        _CORP_ID = [ShareValue shareInstance].userInfo.CORP_ID;
+        _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+        _LOC_WAY = 4;
+        _COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
+    }
+    return self;
+}
+
 
 @end

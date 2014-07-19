@@ -22,6 +22,7 @@
 #import "BNDisplayCase.h"
 #import "BNDisplayShape.h"
 #import "BNDisplayType.h"
+#import "BNSignConfigBean.h"
 
 #import "LK_NSDictionary2Object.h"
 
@@ -48,6 +49,7 @@
     [helper createTableWithModelClass:[BNVisitPlan class]];
     [helper createTableWithModelClass:[BNVisitStepRecord class]];
     [helper createTableWithModelClass:[BNVistRecord class]];
+    [helper createTableWithModelClass:[BNSignConfigBean class]];
 }
 
 -(void)saveCacheDB{
@@ -121,6 +123,10 @@
 
 +(Class)__DISPLAY_SHAPESClass{
     return [BNDisplayShape class];
+}
+
++(Class)__SIGN_CONFIGSClass{
+    return [BNSignConfigBean class];
 }
 
 -(void)saveDefaultMobileMenus{
@@ -227,9 +233,17 @@
             [bean saveToDB];
         }
     }
-    
-    
+    if (_SIGN_CONFIG_UPDATE_STATE == 1) {
+        [BNSignConfigBean deleteWithWhere:nil];
+        for (BNSignConfigBean *bean in _SIGN_CONFIGS) {
+            [bean saveToDB];
+        }
+    }
 }
 
+
+@end
+
+@implementation LocateCommitHttpResponse
 
 @end

@@ -26,3 +26,15 @@
 @property(nonatomic,assign) int UPDATE_TYPE;
 
 @end
+
+@interface LocateCommitHttpRequest : LK_HttpBaseRequest
+
+@property(nonatomic,assign) int CORP_ID;
+@property(nonatomic,assign) int USER_ID;
+@property(nonatomic,assign) int LOC_WAY;
+@property(nonatomic,strong) NSString *LOC_TYPE;
+@property(nonatomic,strong) NSNumber *LNG;
+@property(nonatomic,strong) NSNumber *LAT;
+@property(nonatomic,strong) NSString *COMMITTIME;
+
+@end

@@ -67,4 +67,19 @@
     
 }
 
+//定时定位上报
++(void)commitLocateSuccess:(void(^)())success LOC_TYPE:(NSString *)type LNG:(double)lng LAT:(double)lat fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+{
+    LocateCommitHttpRequest *request = [[LocateCommitHttpRequest alloc]init];
+    request.LAT = [NSNumber numberWithDouble:lat];
+    request.LNG = [NSNumber numberWithDouble:lng];
+    request.LOC_TYPE = type;
+    [LK_APIUtil getHttpRequest:request apiPath:URL_locateCommit Success:^(LK_HttpBaseResponse *response) {
+        success();
+    } fail:^(BOOL NotReachable, NSString *descript) {
+        fail(NotReachable,descript);
+    } class:[LocateCommitHttpResponse class]];
+
+}
+
 @end

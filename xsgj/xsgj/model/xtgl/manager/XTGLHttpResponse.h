@@ -33,3 +33,11 @@
 @interface UpdatePwdHttpResponse : LK_HttpBaseResponse
 
 @end
+
+@interface ForgetPwdHttpResponse : LK_HttpBaseResponse
+
+@end
+
+@interface AddApplyCorpHttpResponse : LK_HttpBaseResponse
+
+@end

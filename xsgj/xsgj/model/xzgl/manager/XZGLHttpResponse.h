@@ -83,4 +83,15 @@
 
 @end
 
+@interface LeaveTypeHttpResponse : LK_HttpBaseResponse
+
+@property(nonatomic,strong) NSArray *LeaveInfoBean;
+
+@end
+
+@interface InsertUserCameraHttpResponse : LK_HttpBaseResponse
+
+@end
+
+
 

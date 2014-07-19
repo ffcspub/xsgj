@@ -57,3 +57,13 @@
 
 @end
 
+@implementation ForgetPwdHttpResponse
+
+
+@end
+
+@implementation AddApplyCorpHttpResponse
+
+
+@end
+

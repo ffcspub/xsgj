@@ -66,6 +66,8 @@
 #define URL_querySaleTask @"saletask/querySaleTask.shtml"// 销售任务(拜访目标)
 #define URL_queryVisitRecord @"visit/queryVisitRecord.shtml"// 拜访记录
 #define URL_updatePwd @"user/updatePwd.shtml"// 修改密码
+#define URL_forgetPwd @"user/forgetPwd.shtml"//忘记密码
+#define URL_addApplyCorp @"corp/addApplyCorp.shtml"//企业申请
 #define URL_insertCompete @"compete/insertCompete.shtml"// 竞品上报
 #define URL_storeCameraCommit @"store/storeCameraCommit.shtml"// 店招拍照
 #define URL_toDisplayCamera @"display/toDisplayCamera.shtml"// 获取陈列类型和资产类别接口
@@ -88,7 +90,8 @@
 #define URL_getCustomerTypes @"visit/getCustomerTypes.shtml"// 获取客户类型
 #define URL_getDeptInfos @"visit/getDeptInfos.shtml"// 获取部门树
 #define URL_getTempCustomerInfos @"visit/getTempCustomerInfos.shtml"// 获取客户列表
-
+#define URL_insertUserCamera @"usercamera/insertUserCamera.shtml"//日常拍照上报
 #define URL_uploadPhoto @"uploadPhoto.shtml" //照片上传
+#define URL_locateCommit @"locate/locateCommit.shtml"//实时定位上传
 
 #endif

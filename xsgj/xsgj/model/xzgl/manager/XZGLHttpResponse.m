@@ -13,6 +13,7 @@
 #import "AdviceInfoBean.h"
 #import "AdviceDetailBean.h"
 #import "SaleTaskInfoBean.h"
+#import "LeaveinfoBean.h"
 
 @implementation SignUpHttpReponse
 
@@ -102,5 +103,17 @@
     return [SaleTaskInfoBean class];
 }
 
+
+@end
+
+@implementation LeaveTypeHttpResponse
+
++(Class)__LeaveInfoBeanCLASS{
+    return [LeaveinfoBean class];
+}
+
+@end
+
+@implementation InsertUserCameraHttpResponse
 
 @end

@@ -133,6 +133,15 @@
 +(void)queryOrderDetailByRequest:(OrderDetailHttpRequest *)request success:(void(^)(OrderDetailHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 /**
+ *  退货查请接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)insertOrderBackByRequest:(InsertOrderBackHttpRequest *)request success:(void(^)(InsertOrderBackHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
  *  退单查询接口
  *
  *  @param request 请求参数
@@ -149,6 +158,15 @@
  *  @param fail    失败返回结果
  */
 +(void)queryOrderBackDetailByRequest:(QueryOrderBackDetailHttpRequest *)request success:(void(^)(QueryOrderBackDetailHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
+ *  库存上传接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)commitStockByRequest:(StockCommitHttpRequest *)request  success:(void(^)(StockCommitHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 /**
  *  店招拍照上传接口

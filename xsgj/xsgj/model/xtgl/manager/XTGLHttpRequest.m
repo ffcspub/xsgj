@@ -7,6 +7,7 @@
 //
 
 #import "XTGLHttpRequest.h"
+#import <NSDate+Helper.h>
 
 @implementation GetUserAllDeptHttpRequest
 
@@ -83,6 +84,24 @@
         _DEPT_ID = [ShareValue shareInstance].userInfo.DEPT_ID;
         _USER_AUTH = [ShareValue shareInstance].userInfo.USER_AUTH;
         _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+    }
+    return self;
+}
+
+@end
+
+@implementation ForgetPwdHttpRequest
+
+
+@end
+
+@implementation AddApplyCorpHttpRequest
+
+
+-(id)init{
+    self = [super init];
+    if (self) {
+        _COMMITTIME = [[NSDate date]stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     }
     return self;
 }

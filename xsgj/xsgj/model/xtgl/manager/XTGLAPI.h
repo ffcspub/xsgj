@@ -66,5 +66,22 @@
  */
 +(void)updatePwdByRequest:(UpdataPwdHttpRequest *)request success:(void(^)(UpdatePwdHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
+/**
+ *  忘记密码接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)forgetPwdByRequest:(ForgetPwdHttpRequest *)request success:(void(^)(ForgetPwdHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
+ *  企业申请接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)addApplyCorpHttpRequest:(AddApplyCorpHttpRequest *)request success:(void(^)(AddApplyCorpHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 @end

@@ -78,3 +78,25 @@
 @property(nonatomic,strong) NSString *  NEWPWD;//新密码
 
 @end
+
+@interface ForgetPwdHttpRequest : LK_HttpBaseRequest
+
+@property(nonatomic,strong) NSString *USER_NAME;//登录用户名
+@property(nonatomic,strong) NSString *CORP_CODE;//企业编码
+
+@end
+
+
+@interface AddApplyCorpHttpRequest : LK_HttpBaseRequest
+
+@property(nonatomic,strong) NSString * 	NAME	;//	名称
+@property(nonatomic,strong) NSString * 	CODE	;//	编码
+@property(nonatomic,strong) NSString * 	AREAADDRESS	;//	区域地址
+@property(nonatomic,strong) NSString * 	TYPE	;//	行业类型
+@property(nonatomic,strong) NSString * 	LINKNAME	;//	联系人
+@property(nonatomic,strong) NSString * 	TEL	;//	电话
+@property(nonatomic,strong) NSString * 	EMAIL	;//	邮件
+@property(nonatomic,strong) NSString * 	COMMITTIME	;//	申请时间
+@property(nonatomic,strong) NSString * 	REMARK	;//	备注
+
+@end

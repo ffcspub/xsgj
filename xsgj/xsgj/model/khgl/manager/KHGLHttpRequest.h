@@ -299,6 +299,7 @@
 @property(nonatomic,strong) NSString *	COMMITTIME	;//	手机上报时间
 @property(nonatomic,strong) NSString *	VISIT_NO	;//	拜访编号
 @property(nonatomic,strong) NSString *	OPER_MENU	;//	操作菜单
+@property(nonatomic,assign) int TYPE_ID;//拍照类型
 
 @end
 

@@ -1,13 +1,13 @@
 //
-//  LeaveinfoBean.m
+//  BNSignConfigBean.m
 //  xsgj
 //
 //  Created by ilikeido on 14-7-19.
 //  Copyright (c) 2014年 ilikeido. All rights reserved.
 //
 
-#import "LeaveinfoBean.h"
+#import "BNSignConfigBean.h"
 
-@implementation LeaveinfoBean
+@implementation BNSignConfigBean
 
 @end
