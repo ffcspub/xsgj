@@ -9,7 +9,7 @@
 #import "KHGLAPI.h"
 #import "LK_API.h"
 #import "ServerConfig.h"
-#import <NSData+Base64.h>
+#import "NSData+Base64.h"
 
 
 @implementation KHGLAPI
@@ -344,7 +344,7 @@
 +(void)uploadPhotoByFileName:(NSString *)fileName data:(NSData *)data success:(void(^)(NSString *fileId))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
     UploadPhotoHttpRequest *request = [[UploadPhotoHttpRequest alloc]init];
     request.FILE_NAME = fileName;
-    request.DATA = [self base64forData:data];
+    request.DATA = [data base64EncodedString];
     [LK_APIUtil getHttpRequest:request basePath:UPLOAD_PIC_URL apiPath:URL_uploadPhoto Success:^(LK_HttpBaseResponse *response) {
         UploadPhotoHttpResponse *tResponse = (UploadPhotoHttpResponse *)response;
         if (!tResponse.FILE_ID) {
