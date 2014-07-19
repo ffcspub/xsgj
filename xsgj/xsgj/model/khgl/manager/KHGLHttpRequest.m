@@ -367,7 +367,7 @@
         _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
         NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
         long long int date = (long long int)time;
-        _FILE_ID = [NSString stringWithFormat:@"%qu",date];
+        _FILE_ID = [NSString stringWithFormat:@"%@%qu",[OpenUDID value],date];
     }
     return self;
 }
