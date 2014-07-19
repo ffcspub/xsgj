@@ -39,6 +39,7 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+    
 	[self _initialize];
 }
 
@@ -55,6 +56,7 @@
     CGFloat v = imgOrigin.size.height / 2;
     ivBackground.image = [imgOrigin resizableImageWithCapInsets:UIEdgeInsetsMake(v, h, v, h)];
     [self addSubview:ivBackground];
+    [self sendSubviewToBack:ivBackground];
     
     self.ivBackground = ivBackground;
 }
