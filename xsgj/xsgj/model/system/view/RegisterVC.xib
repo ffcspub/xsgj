@@ -7,6 +7,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterVC">
             <connections>
+                <outlet property="tfCity" destination="yTf-Wy-TXe" id="c7g-5m-Hyy"/>
+                <outlet property="tfCropCode" destination="KJb-tp-ahT" id="iXV-Fw-LmX"/>
+                <outlet property="tfCropName" destination="4RJ-62-2Hf" id="Yqh-JM-GAm"/>
+                <outlet property="tfEmail" destination="nvx-vg-9Fl" id="gyX-Tp-qsx"/>
+                <outlet property="tfLinkMan" destination="hUe-Cb-Hmm" id="eiO-Is-qGJ"/>
+                <outlet property="tfProvince" destination="BJ6-8r-Nqj" id="bAz-Fg-wfa"/>
+                <outlet property="tfTel" destination="aOX-0h-YSl" id="6Uf-qp-rmx"/>
+                <outlet property="tfType" destination="h7T-bB-IqV" id="t1B-42-xbd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

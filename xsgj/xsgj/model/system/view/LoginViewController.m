@@ -15,6 +15,8 @@
 #import "SIAlertView.h"
 #import "LK_EasySignal.h"
 #import <NSDate+Helper.h>
+#import "ForgetPasswordVC.h"
+#import "RegisterVC.h"
 
 @interface LoginViewController ()<TTTAttributedLabelDelegate>{
     UIWebView *_webView;
@@ -224,12 +226,14 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
 
 //忘记密码
 - (IBAction)forgetAction:(id)sender {
-    
+    ForgetPasswordVC *vc = [[ForgetPasswordVC alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 //企业注册
 - (IBAction)regiterAction:(id)sender {
-    
+    RegisterVC *vc = [[RegisterVC alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

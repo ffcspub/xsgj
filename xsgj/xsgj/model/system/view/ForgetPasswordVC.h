@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HideTabViewController.h"
 
-@interface ForgetPasswordVC : UIViewController
+@interface ForgetPasswordVC : HideTabViewController
+
+@property (weak, nonatomic) IBOutlet UITextField *tfCorpCode;
+@property (weak, nonatomic) IBOutlet UITextField *tfUserName;
+@property (weak, nonatomic) IBOutlet UILabel *lblPrompt;
 
 @end
