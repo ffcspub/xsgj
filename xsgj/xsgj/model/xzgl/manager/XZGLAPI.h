@@ -47,7 +47,7 @@
  *  @param success 成功block
  *  @param fail    失败返回结果
  */
-+(void)applyLeaveByRequest:(ApprovalLeaveHttpRequest *)request success:(void(^)(ApprovalLeaveHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
++(void)applyLeaveByRequest:(ApplyLeaveHttpRequest *)request success:(void(^)(ApplyLeaveHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 /**
  *  调休详细信息查询接口

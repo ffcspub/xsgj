@@ -70,13 +70,12 @@
  *  @param success 成功block
  *  @param fail    失败返回结果
  */
-+(void)applyLeaveByRequest:(ApprovalLeaveHttpRequest *)request success:(void(^)(ApprovalLeaveHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;{
-    
-    [LK_APIUtil getHttpRequest:request apiPath:URL_detailAttendance Success:^(LK_HttpBaseResponse *response) {
-        success((ApprovalLeaveHttpResponse *)response);
++(void)applyLeaveByRequest:(ApplyLeaveHttpRequest *)request success:(void(^)(ApplyLeaveHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_ApplyLeave Success:^(LK_HttpBaseResponse *response) {
+        success((ApplyLeaveHttpResponse *)response);
     } fail:^(BOOL NotReachable, NSString *desciption) {
         fail(NotReachable,desciption);
-    } class:[ApprovalLeaveHttpResponse class]];
+    } class:[ApplyLeaveHttpResponse class]];
 }
 
 /**
