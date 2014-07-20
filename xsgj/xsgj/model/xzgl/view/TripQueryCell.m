@@ -7,6 +7,7 @@
 //
 
 #import "TripQueryCell.h"
+#import "TripInfoBean.h"
 
 @interface TripQueryCell ()
 
@@ -104,11 +105,21 @@
 - (void)configureForData:(id)data;
 {
     // TODO: 设置数据
+    TripInfoBean *bean = (TripInfoBean *)data;
+    self.lblTitle.text = bean.USER_NAME;
+    self.lblDetail.text = bean.APPLY_TIME;
     
-    // 图片
-    self.ivState.image = [UIImage imageNamed:@"stateicon_pass"];
-    self.ivState.image = [UIImage imageNamed:@"stateicon_wait"];
-    self.ivState.image = [UIImage imageNamed:@"stateicon_nopass"];
+    // 0:未审批 1:已通过 2:未通过
+    if ([bean.APPROVE_STATE intValue] == 0) {
+        self.lblState.text = @"待审";
+        self.ivState.image = [UIImage imageNamed:@"stateicon_wait"];
+    } else if ([bean.APPROVE_STATE intValue] == 1) {
+        self.lblState.text = @"通过";
+        self.ivState.image = [UIImage imageNamed:@"stateicon_pass"];
+    } else {
+        self.lblState.text = @"驳回";
+        self.ivState.image = [UIImage imageNamed:@"stateicon_nopass"];
+    }
 }
 
 @end

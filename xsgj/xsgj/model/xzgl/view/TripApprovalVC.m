@@ -20,13 +20,18 @@
 #import "ShareValue.h"
 #import "TripQueryCell.h"
 #import "TripDetailVC.h"
+#import "SVPullToRefresh.h"
 
 static NSString * const TripApprovalCellIdentifier = @"TripApprovalCellIdentifier";
+
+static int const pageSize = 20;
 
 @interface TripApprovalVC ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tbvApproval;
 @property (nonatomic, strong) NSMutableArray *arrTrips;
+@property (nonatomic, assign) NSUInteger currentPage; // 第一页开始
+@property (nonatomic, assign) BOOL isExistData; // 记录是否存在数据
 
 @end
 
@@ -46,12 +51,9 @@ static NSString * const TripApprovalCellIdentifier = @"TripApprovalCellIdentifie
     [super viewDidLoad];
     
     [self UI_setup];
-
-    // 测试数据
-    for (int i = 0; i<10; i++) {
-        [self.arrTrips addObject:@"1"];
-    }
-    [self.tbvApproval reloadData];
+    
+    self.currentPage = 1;
+    [self loadTripList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -71,18 +73,65 @@ static NSString * const TripApprovalCellIdentifier = @"TripApprovalCellIdentifie
     return _arrTrips;
 }
 
+#pragma mark - 方法
+
+- (void)loadTripList
+{
+    QueryTripHttpRequest *request = [[QueryTripHttpRequest alloc] init];
+    request.PAGE = self.currentPage;
+    request.ROWS = pageSize;
+    
+    MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在加载···" toView:self.view];
+    [hud showAnimated:YES whileExecutingBlock:^{
+        [XZGLAPI queryTripByRequest:request success:^(QueryTripHttpResponse *response) {
+            
+            int resultCount = [response.queryTripList count];
+            if (resultCount < pageSize) {
+                self.tbvApproval.showsInfiniteScrolling = NO;
+            }
+            if (self.currentPage == 1) {
+                [self.arrTrips removeAllObjects];
+            }
+            
+            [self.tbvApproval.infiniteScrollingView stopAnimating];
+            [self.arrTrips addObjectsFromArray:response.queryTripList];
+            [self.tbvApproval reloadData];
+            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            //[MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        } fail:^(BOOL notReachable, NSString *desciption) {
+            
+            [self.tbvApproval.infiniteScrollingView stopAnimating];
+            self.tbvApproval.showsInfiniteScrolling = NO;
+            self.tbvApproval.showsInfiniteScrolling = YES;
+            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+        }];
+    }];
+}
+
 #pragma mark - UI
 
 - (void)UI_setup
 {
     self.view.backgroundColor = HEX_RGB(0xefeff4);
     
+    self.tbvApproval.backgroundColor = HEX_RGB(0xefeff4);
     self.tbvApproval.delegate = self;
     self.tbvApproval.dataSource = self;
     self.tbvApproval.tableFooterView = [[UIView alloc] init];
     self.tbvApproval.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tbvApproval.showsVerticalScrollIndicator = NO;
     [self.tbvApproval registerNib:[TripQueryCell nib] forCellReuseIdentifier:TripApprovalCellIdentifier];
+    
+    // 上提加载更多
+    __weak TripApprovalVC *weakSelf = self;
+    [self.tbvApproval addInfiniteScrollingWithActionHandler:^{
+        // 加载下一页
+        self.currentPage += 1;
+        [weakSelf loadTripList];
+    }];
 }
 
 #pragma mark - UITableViewDataSource methods

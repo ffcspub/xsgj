@@ -17,10 +17,11 @@
 #import <NSDate+Helper.h>
 #import "NSString+URL.h"
 #import "ShareValue.h"
+#import "TripDetailBean.h"
 
 @interface TripDetailVC ()
 
-@property (nonatomic, strong) TripDetailBean *data;
+@property (nonatomic, strong) TripDetailBean *tripDetail;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *svRoot;
 @property (weak, nonatomic) IBOutlet BorderView *vGroupTheme;
@@ -164,7 +165,7 @@
     [hud showAnimated:YES whileExecutingBlock:^{
         [XZGLAPI queryTripDeTailByRequest:rquest success:^(QueryTripDetailHttpResponse *response) {
             
-            self.data = response.data;
+            self.tripDetail = response.data;
             [self refreshUI];
     
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -179,16 +180,18 @@
 
 - (void)refreshUI
 {
-    self.lblTheme.text = self.data.TITLE;
-    //!!!: 天数实体中没有
-    self.lblDays.text = @"1";
-    self.lblBeginTime.text = self.data.BEGIN_TIME;
-    self.lblEndTime.text = self.data.END_TIME;
-    self.lblStarting.text = self.data.TRIP_FROM;
-    self.lblDestination.text = self.data.TRIP_TO;
-    self.lblApprovalMan.text = self.data.APPROVE_USER_NAME;
-    self.lblApprovalState.text = self.data.APPROVE_STATE;
-    self.lblApplyDesc.text = self.data.REMARK;
+    self.lblTheme.text = self.tripInfo.TITLE;
+    self.lblDays.text = self.tripInfo.TRIP_DAYS;
+    self.lblBeginTime.text = self.tripInfo.BEGIN_TIME;
+    self.lblEndTime.text = self.tripInfo.END_TIME;
+    self.lblStarting.text = self.tripInfo.TRIP_FROM;
+    self.lblDestination.text = self.tripInfo.TRIP_TO;
+    
+    //!!!: TripInfo中没有审批人实体
+    // self.lblApprovalMan.text = self.tripInfo.APPROVE_USER;
+    
+    self.lblApprovalState.text = self.tripInfo.APPROVE_STATE;
+    self.lblApplyDesc.text = self.tripInfo.REMARK;
 }
 
 - (void)handleTripAction:(BOOL)isAgree

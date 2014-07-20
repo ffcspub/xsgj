@@ -9,6 +9,8 @@
 #import "HideTabViewController.h"
 #import "BorderView.h"
 
+@class TripInfoBean;
+
 /**
  *  出差明细
     1.点击出差查询，然后进去查看出差明细
@@ -22,6 +24,8 @@ typedef NS_ENUM(NSUInteger, TripDetailShowStyle) {
 };
 
 @interface TripDetailVC : HideTabViewController
+
+@property (nonatomic, strong) TripInfoBean *tripInfo;
 
 @property (weak, nonatomic) IBOutlet UILabel *lblTheme;
 @property (weak, nonatomic) IBOutlet UILabel *lblDays;

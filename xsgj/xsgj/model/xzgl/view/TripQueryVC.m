@@ -21,12 +21,16 @@
 #import "ShareValue.h"
 #import "TripQueryCell.h"
 #import "TripDetailVC.h"
+#import "SVPullToRefresh.h"
 
 static NSString * const TripQueryCellIdentifier = @"TripQueryCellIdentifier";
+
+static int const pageSize = 20;
 
 @interface TripQueryVC ()
 
 @property (nonatomic, strong) NSMutableArray *arrTrips;
+@property (nonatomic, assign) NSUInteger currentPage; // 第一页开始,每页加载20，当加载返回的数量少于请求的页数认为没有数据了
 
 @end
 
@@ -46,12 +50,9 @@ static NSString * const TripQueryCellIdentifier = @"TripQueryCellIdentifier";
     [super viewDidLoad];
 
     [self UI_setup];
-    
-    [self.arrTrips removeAllObjects];
-    for (int i = 0; i < 5; i++) {
-        [self.arrTrips addObject:@"1"];
-    }
-    [self.tbvQuery reloadData];
+ 
+    self.currentPage = 1;
+    [self loadTripList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -113,6 +114,14 @@ static NSString * const TripQueryCellIdentifier = @"TripQueryCellIdentifier";
     self.tbvQuery.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tbvQuery.showsVerticalScrollIndicator = NO;
     [self.tbvQuery registerNib:[TripQueryCell nib] forCellReuseIdentifier:TripQueryCellIdentifier];
+    
+    // 上提加载更多
+    __weak TripQueryVC *weakSelf = self;
+    [self.tbvQuery addInfiniteScrollingWithActionHandler:^{
+        // 加载下一页
+        self.currentPage += 1;
+        [weakSelf loadTripList];
+    }];
 }
 
 #pragma mark - 事件
@@ -127,21 +136,43 @@ static NSString * const TripQueryCellIdentifier = @"TripQueryCellIdentifier";
         return;
     }
     
+    // 每次点击查询，从第一页重新加载数据
+    self.currentPage = 1;
+    self.tbvQuery.showsInfiniteScrolling = YES;
+    [self loadTripList];
+}
+
+- (void)loadTripList
+{
     QueryTripHttpRequest *request = [[QueryTripHttpRequest alloc] init];
     request.BEGIN_TIME = self.lblBeginTime.text;
     request.END_TIME = self.lblEndTime.text;
+    request.PAGE = self.currentPage;
+    request.ROWS = pageSize;
     
     MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在加载···" toView:self.view];
     [hud showAnimated:YES whileExecutingBlock:^{
         [XZGLAPI queryTripByRequest:request success:^(QueryTripHttpResponse *response) {
             
-            [self.arrTrips addObjectsFromArray:response.DATA];
+            int resultCount = [response.queryTripList count];
+            if (resultCount < pageSize) {
+                self.tbvQuery.showsInfiniteScrolling = NO;
+            }
+            if (self.currentPage == 1) {
+                [self.arrTrips removeAllObjects];
+            }
+            
+            [self.tbvQuery.infiniteScrollingView stopAnimating];
+            [self.arrTrips addObjectsFromArray:response.queryTripList];
             [self.tbvQuery reloadData];
             
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
-            
+            //[MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
         } fail:^(BOOL notReachable, NSString *desciption) {
+            
+            [self.tbvQuery.infiniteScrollingView stopAnimating];
+            self.tbvQuery.showsInfiniteScrolling = NO;
+            self.tbvQuery.showsInfiniteScrolling = YES;
             
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [MBProgressHUD showError:desciption toView:self.view];
@@ -223,11 +254,15 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     TripDetailVC *vc = [[TripDetailVC alloc] initWithNibName:nil bundle:nil];
-    if (indexPath.row / 2 == 0) {
+    TripInfoBean *bean = self.arrTrips[indexPath.row];
+    vc.tripInfo = bean;
+    // 待审批
+    if ([bean.APPROVE_STATE intValue] == 0) {
         vc.showStyle = TripDetailShowStyleApproval;
     } else {
         vc.showStyle = TripDetailShowStyleQuery;
     }
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
 
