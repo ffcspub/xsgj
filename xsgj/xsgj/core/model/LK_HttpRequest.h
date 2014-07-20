@@ -14,7 +14,7 @@
 
 @interface LK_HttpBasePageRequest : LK_HttpBaseRequest
 
-@property(nonatomic,assign) NSInteger rows;
-@property(nonatomic,assign) NSInteger page;
+@property(nonatomic,assign) NSInteger ROWS;
+@property(nonatomic,assign) NSInteger PAGE;
 
 @end

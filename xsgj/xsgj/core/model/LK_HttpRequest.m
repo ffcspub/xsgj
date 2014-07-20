@@ -16,7 +16,8 @@
 -(id)init{
     self = [super init];
     if (self) {
-        
+        _ROWS = 20;
+        _PAGE = 1;
     }
     return self;
 }

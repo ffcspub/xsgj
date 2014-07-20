@@ -378,8 +378,18 @@
 
 -(void)setDeSelected:(BOOL)deSelected{
     _deSelected = deSelected;
+    if (_deSelected) {
+        iv_select.image = [UIImage imageNamed:@"btn_check_deable"];
+    }else{
+        if (_isSelected) {
+            iv_select.image = [UIImage imageNamed:@"btn_check_on"];
+        }else{
+            iv_select.image = [UIImage imageNamed:@"btn_check_off"];
+        }
+    }
     
 }
+
 +(CGFloat)height{
     return 55.0;
 }
@@ -877,11 +887,16 @@
         NSArray *array = [_showingCustomersArrays objectAtIndex:indexPath.section];
         CustomerInfo *customer = [array objectAtIndex:indexPath.row];
         cell.customerInfo = customer;
-        if ([_selectedCustomers containsObject:customer]) {
-            cell.isSelected = YES;
+        if ([_deselectedCutomerIds containsObject:customer.CUST_ID]) {
+            
         }else{
-            cell.isSelected = NO;
+            if ([_selectedCustomers containsObject:customer]) {
+                cell.isSelected = YES;
+            }else{
+                cell.isSelected = NO;
+            }
         }
+        
         return cell;
     }
     if (tableView == _tv_customerType) {

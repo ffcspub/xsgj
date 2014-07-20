@@ -152,9 +152,12 @@
 
 @interface ApproveTripHttpRequst : LK_HttpBaseRequest
 
+@property(nonatomic,strong) NSString *	SESSION_ID;//	会话ID
+@property(nonatomic,assign) int         CORP_ID;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限
+@property(nonatomic,assign) int         USER_ID;//	用户ID
 @property(nonatomic,assign) int         TRIP_ID	;//	出差标识
-@property(nonatomic,assign) int         CORP_ID	;//	企业标识
-@property(nonatomic,assign) int         USER_ID	;//	用户标识
 @property(nonatomic,strong) NSString *	APPROVE_STATE	;//	审批状态
 @property(nonatomic,strong) NSString *	APPROVE_REMARK	;//	审批描述
 @property(nonatomic,strong) NSString *	APPROVE_TIME	;//	审批时间
@@ -163,9 +166,12 @@
 
 @interface QueryTripHttpRequest : LK_HttpBasePageRequest
 
+@property(nonatomic,strong) NSString *	SESSION_ID;//	会话ID
+@property(nonatomic,assign) int         CORP_ID;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限
+@property(nonatomic,assign) int         USER_ID;//	用户ID
 @property(nonatomic,assign) int         TRIP_ID	;//	出差标识
-@property(nonatomic,assign) int         CORP_ID	;//	企业标识
-@property(nonatomic,assign) int         USER_ID	;//	用户标识
 @property(nonatomic,strong) NSString *	TITLE	;//	主题
 @property(nonatomic,strong) NSString *	BEGIN_TIME	;//	出差开始时间
 @property(nonatomic,strong) NSString *	END_TIME	;//	出差结束时间
@@ -173,15 +179,17 @@
 @property(nonatomic,strong) NSString *	TRIP_TO	;//	出差目的地
 @property(nonatomic,strong) NSString *	APPLY_TIME	;//	申请时间
 @property(nonatomic,strong) NSString *	APPROVE_USER	;//	审批人
-@property(nonatomic,assign) int         PAGE	;//	第N页
-@property(nonatomic,assign) int         ROWS	;//	加载行数
 @property(nonatomic,strong) NSString *	APPROVE_STATE	;//	审批状态0:未审批 1:已通过 2:未通过
 @property(nonatomic,strong) NSString *	APPROVE_TIME	;//	审批时间
 
 @end
 
 @interface QueryTripDetailHttpRequest : LK_HttpBaseRequest
-
+@property(nonatomic,strong) NSString *	SESSION_ID;//	会话ID
+@property(nonatomic,assign) int         CORP_ID;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限
+@property(nonatomic,assign) int         USER_ID;//	用户ID
 @property(nonatomic,assign) int TRIP_ID;//出差标识
 
 @end
