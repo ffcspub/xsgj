@@ -329,6 +329,7 @@
 }
 @property(nonatomic,strong) CustomerInfo *customerInfo;
 @property(nonatomic,assign) BOOL isSelected;
+@property(nonatomic,assign) BOOL deSelected;
 
 +(CGFloat)height;
 
@@ -375,6 +376,10 @@
     }
 }
 
+-(void)setDeSelected:(BOOL)deSelected{
+    _deSelected = deSelected;
+    
+}
 +(CGFloat)height{
     return 55.0;
 }

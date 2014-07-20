@@ -130,8 +130,11 @@
 
 @interface ApplyTripHttpRequest : LK_HttpBaseRequest
 
-@property(nonatomic,assign) int         CORP_ID	;//	企业标识
-@property(nonatomic,assign) int         USER_ID	;//	用户标识
+@property(nonatomic,strong) NSString *	SESSION_ID;//	会话ID
+@property(nonatomic,assign) int         CORP_ID;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限
+@property(nonatomic,assign) int         USER_ID;//	用户ID
 @property(nonatomic,strong) NSString *	TITLE	;//	主题
 @property(nonatomic,strong) NSString *	BEGIN_TIME	;//	出差开始时间
 @property(nonatomic,strong) NSString *	END_TIME	;//	出差结束时间

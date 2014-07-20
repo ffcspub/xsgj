@@ -24,6 +24,11 @@
 @property(nonatomic,assign) int	CHECK_STATE	;//	审核状态
 @property(nonatomic,strong) NSString *	CHECK_REMARK	;//	审核备注
 
+-(BOOL)canDelete;
+-(BOOL)needToUpdate;
+-(NSString *)applyStateName;//获取申请类型
+-(void)setApplyState:(int)type;//设置申请类型(1:申请添加 2:申请删除）
+
 -(NSString *)stateName;
 
 @end

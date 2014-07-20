@@ -31,6 +31,7 @@
 @property (nonatomic) BOOL searchWasActive;
 
 @property(nonatomic,assign) id<CustomerChooseDelegate> chooseDelegate;
+@property(nonatomic,strong) NSArray *deselectedCutomerIds;
 
 @end
 
