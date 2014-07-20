@@ -291,7 +291,7 @@
     LeaveTypeHttpRequest *request = [[LeaveTypeHttpRequest alloc] init];
     [XZGLAPI queryLeaveTypeByRequest:request success:^(LeaveTypeHttpResponse *response) {
         _typeList = [[NSMutableArray alloc] init];
-        [_typeList addObjectsFromArray:response.LeaveInfoBean];
+        [_typeList addObjectsFromArray:response.LEAVEINFOBEAN];
         NSMutableArray *options = [[NSMutableArray alloc]init];
         [options addObject:@"1"];
         [options addObject:@"2"];

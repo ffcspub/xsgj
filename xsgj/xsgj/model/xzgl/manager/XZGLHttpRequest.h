@@ -74,6 +74,7 @@
 @property(nonatomic,strong) NSString *	APPLY_TIME	;//	申请时间
 @property(nonatomic,strong) NSString *	BEGIN_TIME	;//	开始时间
 @property(nonatomic,strong) NSString *	END_TIME	;//	结束时间
+@property(nonatomic,strong) NSString *	APPROVE_USER	;//	审批人
 
 @end
 

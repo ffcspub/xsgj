@@ -29,7 +29,7 @@
             name = @"已驳回";
             break;
         case 3:
-            name = @"申请删除";
+            name = @"已通过";
             break;
         default:
             break;
@@ -37,25 +37,19 @@
     return name;
 }
 
--(BOOL)needToUpdate{
-    return _applyState>0;
-}
-
 -(NSString *)applyStateName{
-    if (_applyState == 1) {
-        return @"申请添加";
-    }else if(_applyState == 2){
-        return @"申请删除";
+    NSString *name = nil;
+    switch (_CHECK_STATE) {
+        case 0:
+            name = @"申请添加";
+            break;
+        case 3:
+            name = @"申请删除";
+            break;
+        default:
+            break;
     }
-    return nil;
-}
-
--(void)setApplyState:(int)type{
-    _applyState = type;
-}
-
--(BOOL)canDelete{
-    return _CHECK_STATE != 0;
+    return name;
 }
 
 @end
