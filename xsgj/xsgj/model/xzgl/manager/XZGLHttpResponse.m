@@ -113,7 +113,7 @@
 
 @implementation LeaveTypeHttpResponse
 
-+(Class)__LeaveInfoBeanCLASS{
++(Class)__LEAVEINFOBEANClass{
     return [LeaveTypeBean class];
 }
 
