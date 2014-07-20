@@ -42,38 +42,75 @@
     
 	[self _initialize];
 }
-
+ 
 #pragma mark - Private
 
 - (void)_initialize
 {
-    self.imgBorder = @"日期选择控件背板"; // 默认为圆角边框
+    if (!self.ivBackground) {
+        UIImageView *ivBackground = [[UIImageView alloc] initWithFrame:self.bounds];
+        ivBackground.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self addSubview:ivBackground];
+        [self sendSubviewToBack:ivBackground];
+        self.ivBackground = ivBackground;
+    }
     
-	UIImageView *ivBackground = [[UIImageView alloc] initWithFrame:self.bounds];
-    ivBackground.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    UIImage *imgOrigin = [UIImage imageNamed:self.imgBorder];
-    CGFloat h = imgOrigin.size.width / 2;
-    CGFloat v = imgOrigin.size.height / 2;
-    ivBackground.image = [imgOrigin resizableImageWithCapInsets:UIEdgeInsetsMake(v, h, v, h)];
-    [self addSubview:ivBackground];
-    [self sendSubviewToBack:ivBackground];
-    
-    self.ivBackground = ivBackground;
+    self.borderStyle = BorderViewStyleRoundCorner;
 }
 
 #pragma mark - 访问器
 
-- (void)setImgBorder:(NSString *)image
+- (void)setBorderStyle:(BorderViewStyle)style
 {
-    if (![image isEmptyOrWhitespace] && ![_imgBorder isEqualToString:image]) {
-        _imgBorder = image;
+    if (_borderStyle != style) {
+        _borderStyle = style;
         
-        UIImage *imgOrigin = [UIImage imageNamed:image];
-        CGFloat h = imgOrigin.size.width / 2;
-        CGFloat v = imgOrigin.size.height / 2;
-        self.ivBackground.image = [imgOrigin resizableImageWithCapInsets:UIEdgeInsetsMake(v, h, v, h)];
-        
-        [self setNeedsLayout];
+		switch (style) {
+			case BorderViewStyleGroupSingle:
+			{
+				UIImage *imgOrigin = [UIImage imageNamed:@"table_main"];
+				self.ivBackground.image = [imgOrigin resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];
+			}
+			break;
+			case BorderViewStyleGroupTop:
+			{
+                UIImage *imgOrigin = [UIImage imageNamed:@"table_part1"];
+				self.ivBackground.image = [imgOrigin resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];
+			}
+			break;
+            case BorderViewStyleGroupMiddle:
+			{
+                UIImage *imgOrigin = [UIImage imageNamed:@"table_part2"];
+				self.ivBackground.image = [imgOrigin resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];
+			}
+                break;
+            case BorderViewStyleGroupBottom:
+			{
+                UIImage *imgOrigin = [UIImage imageNamed:@"table_part3"];
+				self.ivBackground.image = [imgOrigin resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];
+			}
+            break;
+            case BorderViewStyleMutableColumn:
+			{
+                UIImage *imgOrigin = [UIImage imageNamed:@"bgNo2"];
+				self.ivBackground.image = [imgOrigin resizableImageWithCapInsets:UIEdgeInsetsMake(5, 10, 5, 5) resizingMode:UIImageResizingModeStretch];
+			}
+            break;
+            case BorderViewStyleMutableColumn1:
+			{
+                UIImage *imgOrigin = [UIImage imageNamed:@"bgNo1"];
+				self.ivBackground.image = [imgOrigin resizableImageWithCapInsets:UIEdgeInsetsMake(5, 10, 5, 5) resizingMode:UIImageResizingModeStretch];
+			}
+            break;
+            case BorderViewStyleRoundCorner:
+			{
+                UIImage *imgOrigin = [UIImage imageNamed:@"日期选择控件背板"];
+				self.ivBackground.image = [imgOrigin resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];
+			}
+            break;
+			default:
+				break;
+		}
     }
 }
 
