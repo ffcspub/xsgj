@@ -135,7 +135,7 @@ static NSString * const TripQueryCellIdentifier = @"TripQueryCellIdentifier";
     [hud showAnimated:YES whileExecutingBlock:^{
         [XZGLAPI queryTripByRequest:request success:^(QueryTripHttpResponse *response) {
             
-            [self.arrTrips addObjectsFromArray:response.DATA];
+            [self.arrTrips addObjectsFromArray:response.queryTripList];
             [self.tbvQuery reloadData];
             
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
