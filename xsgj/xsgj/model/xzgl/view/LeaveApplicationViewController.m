@@ -1,19 +1,19 @@
 //
-//  SignInViewController.m
+//  LeaveApplicationViewController.m
 //  xsgj
 //
-//  Created by ilikeido on 14-7-14.
+//  Created by Geory on 14-7-19.
 //  Copyright (c) 2014年 ilikeido. All rights reserved.
 //
 
-#import "SignInViewController.h"
+#import "LeaveApplicationViewController.h"
 #import "UIColor+External.h"
 
-@interface SignInViewController ()
+@interface LeaveApplicationViewController ()
 
 @end
 
-@implementation SignInViewController
+@implementation LeaveApplicationViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,11 +29,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    _viewContain.layer.borderColor = HEX_RGB(0xd3d3d3).CGColor;
-    _viewContain.layer.borderWidth = 1.0;
-    
-    [self setup];
-    
     [self setRightBarButtonItem];
     
     self.view.backgroundColor = HEX_RGB(0xefeff4);
@@ -43,17 +38,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)setup
-{
-    _lb_currentLocation.textColor = HEX_RGB(0x939fa7);
-    _lb_manualAdjust.textColor = HEX_RGB(0x939fa7);
-    [_iv_photobg setImage:[[UIImage imageNamed:@"Photo外框"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 20, 20, 20)]];
-    [_iv_photo setImage:[UIImage imageNamed:@"defaultPhoto"]];
-    [_iv_photobgdown setImage:[UIImage imageNamed:@"Photo外框Part2"]];
-    _lb_photo.textColor = HEX_RGB(0xb1b9bf);
-    _lb_ps.textColor = HEX_RGB(0xc4c9cf);
 }
 
 #pragma mark - navBarButton

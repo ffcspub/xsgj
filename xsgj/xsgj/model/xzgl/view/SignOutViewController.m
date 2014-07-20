@@ -1,19 +1,19 @@
 //
-//  SignInViewController.m
+//  SignOutViewController.m
 //  xsgj
 //
-//  Created by ilikeido on 14-7-14.
+//  Created by Geory on 14-7-19.
 //  Copyright (c) 2014年 ilikeido. All rights reserved.
 //
 
-#import "SignInViewController.h"
+#import "SignOutViewController.h"
 #import "UIColor+External.h"
 
-@interface SignInViewController ()
+@interface SignOutViewController ()
 
 @end
 
-@implementation SignInViewController
+@implementation SignOutViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

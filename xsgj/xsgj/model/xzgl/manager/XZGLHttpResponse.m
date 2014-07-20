@@ -45,6 +45,10 @@
 
 @implementation QueryLeaveHttpResponse
 
++(Class)__LEAVEINFOBEANClass{
+    return [LeaveinfoBean class];
+}
+
 @end
 
 @implementation QueryLeaveDetailHttpResponse
