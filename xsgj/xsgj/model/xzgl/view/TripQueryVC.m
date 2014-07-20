@@ -153,7 +153,7 @@ static int const pageSize = 20;
     MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在加载···" toView:self.view];
     [hud showAnimated:YES whileExecutingBlock:^{
         [XZGLAPI queryTripByRequest:request success:^(QueryTripHttpResponse *response) {
-            
+
             int resultCount = [response.queryTripList count];
             if (resultCount < pageSize) {
                 self.tbvQuery.showsInfiniteScrolling = NO;

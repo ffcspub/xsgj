@@ -26,6 +26,6 @@
 @property(nonatomic,assign) int APPROVE_STATE;//	审批状态 (0:未审批 1:已通过 2:未通过)
 @property(nonatomic,strong) NSString *	APPROVE_REAMRK 	;//	审批备注
 @property(nonatomic,strong) NSString *	APPROVE_TIME 	;//	审批时间
-
+@property(nonatomic,strong) NSString *	LEAVE_DAYS;//请假天数
 
 @end

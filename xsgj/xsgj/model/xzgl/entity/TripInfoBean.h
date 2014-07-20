@@ -27,5 +27,6 @@
 @property(nonatomic,strong) NSString *	APPROVE_STATE	;//	审批状态
 @property(nonatomic,strong) NSString *	APPROVE_REMARK	;//	审批说明
 @property(nonatomic,strong) NSString *	APPROVE_TIME	;//	审批时间
+@property(nonatomic,assign) int         TRIP_ID;//编号
 
 @end
