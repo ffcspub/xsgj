@@ -67,7 +67,7 @@
 
 @implementation QueryTripHttpResponse
 
-+(Class)__DATAClass{
++(Class)__queryTripListClass{
     return [TripInfoBean class];
 }
 

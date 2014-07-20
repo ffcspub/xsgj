@@ -16,6 +16,7 @@
 @property(nonatomic,strong) NSString *	MOBILENO 	;//	电话号码
 @property(nonatomic,strong) NSString *	REALNAME 	;//	姓名
 @property(nonatomic,strong) NSString *	TYPE_NAME 	;//	调休类型名称
+@property(nonatomic,strong) NSString *  LEAVE_ID    ;//调休ID
 @property(nonatomic,strong) NSString *	TITLE 	;//	 主题
 @property(nonatomic,strong) NSString *	REMARK 	;//	调休说明
 @property(nonatomic,strong) NSString *	BEGIN_TIME 	;//	开始时间
