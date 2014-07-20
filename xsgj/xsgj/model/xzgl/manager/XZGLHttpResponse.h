@@ -85,7 +85,7 @@
 
 @interface LeaveTypeHttpResponse : LK_HttpBaseResponse
 
-@property(nonatomic,strong) NSArray *LEAVEINFOBEAN;
+@property(nonatomic,strong) NSArray *LeaveInfoBean;
 
 @end
 
