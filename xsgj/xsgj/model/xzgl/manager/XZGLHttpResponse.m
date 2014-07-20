@@ -14,6 +14,7 @@
 #import "AdviceDetailBean.h"
 #import "SaleTaskInfoBean.h"
 #import "LeaveinfoBean.h"
+#import "LeaveTypeBean.h"
 
 @implementation SignUpHttpReponse
 
@@ -113,7 +114,7 @@
 @implementation LeaveTypeHttpResponse
 
 +(Class)__LeaveInfoBeanCLASS{
-    return [LeaveinfoBean class];
+    return [LeaveTypeBean class];
 }
 
 @end

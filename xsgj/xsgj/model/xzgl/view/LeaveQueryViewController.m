@@ -181,7 +181,7 @@ typedef  enum : NSUInteger {
     [XZGLAPI queryLeaveByRequest:request success:^(QueryLeaveHttpResponse *response) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_leaves removeAllObjects];
-        [_leaves addObjectsFromArray:response.leaveInfoBean];
+        [_leaves addObjectsFromArray:response.LEAVEINFOBEAN];
         [self.tableView reloadData];
     } fail:^(BOOL notReachable, NSString *desciption) {
         
