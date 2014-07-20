@@ -191,7 +191,7 @@
 -(void)loadPlanVisits{
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     QueryPlanVisitConfigsHttpRequest *request = [[QueryPlanVisitConfigsHttpRequest alloc]init];
-    request.PLAN_DATE = [[NSDate getNextDate:1] stringWithFormat:@"yyyy-MM-dd"];
+    request.PLAN_DATE = [[NSDate date] stringWithFormat:@"yyyy-MM-dd"];
     [KHGLAPI queryPlanVisiConfigsByRequest:request success:^(QueryPlanVisitConfigsHttpResponse *response) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSArray *array =  response.PLAN_VISIT_CONFIGS;
