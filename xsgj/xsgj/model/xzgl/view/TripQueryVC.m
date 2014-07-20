@@ -256,8 +256,7 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
     TripDetailVC *vc = [[TripDetailVC alloc] initWithNibName:nil bundle:nil];
     TripInfoBean *bean = self.arrTrips[indexPath.row];
     vc.tripInfo = bean;
-    NSLog(@"TRIP-ID:%d", bean.TRIP_ID);
-    
+
     // 待审批
     if ([bean.APPROVE_STATE intValue] == 0) {
         vc.showStyle = TripDetailShowStyleApproval;

@@ -181,11 +181,16 @@ static int const pageSize = 20;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     TripDetailVC *vc = [[TripDetailVC alloc] initWithNibName:nil bundle:nil];
-    if (indexPath.row / 2 == 0) {
+    TripInfoBean *bean = self.arrTrips[indexPath.row];
+    vc.tripInfo = bean;
+    
+    // 待审批
+    if ([bean.APPROVE_STATE intValue] == 0) {
         vc.showStyle = TripDetailShowStyleApproval;
     } else {
         vc.showStyle = TripDetailShowStyleQuery;
     }
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
 

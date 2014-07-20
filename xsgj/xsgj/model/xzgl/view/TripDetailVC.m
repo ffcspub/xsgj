@@ -56,6 +56,8 @@
     
     [self UI_setup];
     
+    [self updateTripInfo];
+    
     [self loadTripDetail];
 }
 
@@ -160,16 +162,19 @@
 - (void)loadTripDetail
 {
     QueryTripDetailHttpRequest *rquest = [[QueryTripDetailHttpRequest alloc] init];
+    rquest.TRIP_ID = self.tripInfo.TRIP_ID;
     
     MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在加载···" toView:self.view];
     [hud showAnimated:YES whileExecutingBlock:^{
         [XZGLAPI queryTripDeTailByRequest:rquest success:^(QueryTripDetailHttpResponse *response) {
             
+            //!!!: reponse.data返回的数据为空
+            NSLog(@"QueryTripDetailHttpResponse.data返回结果:%@", response.data);
             self.tripDetail = response.data;
-            [self refreshUI];
+            [self updateTripDetail];
     
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+            //[MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
         } fail:^(BOOL notReachable, NSString *desciption) {
             
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -178,7 +183,7 @@
     }];
 }
 
-- (void)refreshUI
+- (void)updateTripInfo
 {
     self.lblTheme.text = self.tripInfo.TITLE;
     self.lblDays.text = self.tripInfo.TRIP_DAYS;
@@ -186,12 +191,25 @@
     self.lblEndTime.text = self.tripInfo.END_TIME;
     self.lblStarting.text = self.tripInfo.TRIP_FROM;
     self.lblDestination.text = self.tripInfo.TRIP_TO;
-    
-    //!!!: TripInfo中没有审批人实体
-    // self.lblApprovalMan.text = self.tripInfo.APPROVE_USER;
-    
     self.lblApprovalState.text = self.tripInfo.APPROVE_STATE;
     self.lblApplyDesc.text = self.tripInfo.REMARK;
+}
+
+- (void)updateTripDetail
+{
+    self.lblTheme.text = self.tripDetail.TITLE;
+    self.lblBeginTime.text = self.tripDetail.BEGIN_TIME;
+    self.lblEndTime.text = self.tripDetail.END_TIME;
+    self.lblStarting.text = self.tripDetail.TRIP_FROM;
+    self.lblDestination.text = self.tripDetail.TRIP_TO;
+    self.lblApprovalState.text = self.tripDetail.APPROVE_STATE;
+    self.lblApplyDesc.text = self.tripDetail.REMARK;
+
+    //???: 审批人显示的是哪个字段？
+    self.lblApprovalMan.text = self.tripDetail.APPROVE_USER_NAME;
+    
+    //!!!: TripInfoBean模型没有天数信息
+    //self.lblDays.text = self.tripDetail.TRIP_DAYS;
 }
 
 - (void)handleTripAction:(BOOL)isAgree
@@ -205,6 +223,7 @@
             
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+            
             [self performSelector:@selector(back) withObject:nil afterDelay:1.f];
             
         } fail:^(BOOL notReachable, NSString *desciption) {
