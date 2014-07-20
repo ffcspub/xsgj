@@ -7,7 +7,10 @@
 //
 
 #import "HideTabViewController.h"
+#import "LeveyPopListView.h"
 
-@interface LeaveApplicationViewController : HideTabViewController
+@interface LeaveApplicationViewController : HideTabViewController<LeveyPopListViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
