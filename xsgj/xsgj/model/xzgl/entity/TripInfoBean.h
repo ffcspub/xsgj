@@ -17,6 +17,7 @@
 @property(nonatomic,strong) NSString *	REALNAME	;//	姓名
 @property(nonatomic,strong) NSString *	TITLE	;//	主题
 @property(nonatomic,strong) NSString *	REMARK	;//	出差说明
+@property(nonatomic,strong) NSString *  TRIP_DAYS;//出差天数
 @property(nonatomic,strong) NSString *	BEGIN_TIME	;//	出差开始时间
 @property(nonatomic,strong) NSString *	END_TIME 	;//	出差结束时间
 @property(nonatomic,strong) NSString *	TRIP_FROM	;//	出发地

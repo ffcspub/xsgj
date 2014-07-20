@@ -53,7 +53,7 @@
 
 @end
 
-@interface QueryTripHttpResponse : LK_HttpBasePageResponse
+@interface QueryTripHttpResponse : LK_HttpBaseResponse
 
 @property(nonatomic,strong) NSArray *queryTripList;
 
