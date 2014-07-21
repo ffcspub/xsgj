@@ -25,6 +25,11 @@
     return [UINib nibWithNibName:NSStringFromClass([TripQueryCell class]) bundle:nil];
 }
 
++ (CGFloat)cellHeight
+{
+    return 56.f;
+}
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -43,12 +48,21 @@
 
 - (void)_initialize
 {
-    self.backgroundColor = [UIColor clearColor];
-    self.contentView.backgroundColor = [UIColor clearColor];
-    
     //TODO: 设置所有控件默认风格
+    self.lblTitle.font = [UIFont systemFontOfSize:17.f];
+    self.lblTitle.textColor = HEX_RGB(0x050505);
     self.lblTitle.backgroundColor = [UIColor clearColor];
+    
+    self.lblDetail.font = [UIFont systemFontOfSize:12.f];
+    self.lblDetail.textColor = HEX_RGB(0x989d9e);
     self.lblDetail.backgroundColor = [UIColor clearColor];
+    
+    self.lblPrompt.font = [UIFont systemFontOfSize:15.f];
+    self.lblPrompt.textColor = HEX_RGB(0x989d9e);
+    self.lblPrompt.backgroundColor = [UIColor clearColor];
+    
+    self.lblState.font = [UIFont systemFontOfSize:12.f];
+    self.lblState.backgroundColor = [UIColor clearColor];
     
     // 设置选中效果
     self.ivBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300, 56)];
@@ -59,6 +73,7 @@
     self.cellStyle = TOP;
 }
 
+//!!!: 表格卡顿的原因主要是因为图片引起
 - (void)setCellStyle:(TripQueryCellStyle)cellStyle
 {
     _cellStyle = cellStyle;
@@ -92,6 +107,15 @@
             imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5,5, 5) ];
             self.ivBackgroundSelect.image = imageSelect;
         }
+        case SINGLE:{
+            UIImage *image = [UIImage imageNamed:@"table_main"];
+            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) ];
+            self.ivBackground.image = image;
+            
+            UIImage *imageSelect = [UIImage imageNamed:@"table_main_s"];
+            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5,5, 5) ];
+            self.ivBackgroundSelect.image = imageSelect;
+        }
             break;
         default:
             break;
@@ -112,12 +136,15 @@
     // 0:未审批 1:已通过 2:未通过
     if ([bean.APPROVE_STATE intValue] == 0) {
         self.lblState.text = @"待审";
+        self.lblState.textColor = HEX_RGB(0x3cadde);
         self.ivState.image = [UIImage imageNamed:@"stateicon_wait"];
     } else if ([bean.APPROVE_STATE intValue] == 1) {
         self.lblState.text = @"通过";
+        self.lblState.textColor = HEX_RGB(0x5fdd74);
         self.ivState.image = [UIImage imageNamed:@"stateicon_pass"];
     } else {
         self.lblState.text = @"驳回";
+        self.lblState.textColor = HEX_RGB(0xff9b10);
         self.ivState.image = [UIImage imageNamed:@"stateicon_nopass"];
     }
 }

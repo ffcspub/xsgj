@@ -103,4 +103,63 @@ static ShareValue *_shareValue;
 }
 
 
++ (UIButton *)getDefaulBorder
+{
+    UIButton *inputBorderView = [UIButton buttonWithType:UIButtonTypeCustom];
+    [inputBorderView setBackgroundImage:[[UIImage imageNamed:@"normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 100, 20, 30)] forState:UIControlStateNormal];
+    [inputBorderView setBackgroundImage:[[UIImage imageNamed:@"press"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 100, 20, 30)] forState:UIControlStateHighlighted];
+    return inputBorderView;
+}
+
++ (UIView *)getDefaultShowBorder
+{
+    UIImageView *showBorderView = [[UIImageView alloc] init];
+    [showBorderView setImage:[[UIImage imageNamed:@"bgNo2"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 20, 20, 20)]];
+    return showBorderView;
+}
+
++ (UIView *)getDefaultInputBorder
+{
+    UIImageView *showBorderView = [[UIImageView alloc] init];
+    [showBorderView setImage:[[UIImage imageNamed:@"bgNo1"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 20, 20, 20)]];
+    return showBorderView;
+}
+
++ (UILabel *)getDefaultInputTitle
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.font = [UIFont systemFontOfSize:FONT_SIZE_INPUT_TITLE];
+    label.textColor = COLOR_INPUT_TITLE;
+    label.backgroundColor = [UIColor clearColor];
+    return label;
+}
+
++ (UITextField *)getDefaultTextField
+{
+    UITextField *textfield = [[UITextField alloc] initWithFrame:CGRectZero];
+    textfield.font = [UIFont boldSystemFontOfSize:FONT_SIZE_INPUT_CONTENT];
+    textfield.textColor = COLOR_INPUT_CONTENT;
+    textfield.borderStyle = UITextBorderStyleNone;
+    textfield.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    return textfield;
+}
+
++ (UILabel *)getDefaultContent
+{
+    UILabel *label = [[UILabel alloc] init];
+    label.textColor = COLOR_INPUT_CONTENT;
+    label.font = [UIFont systemFontOfSize:FONT_SIZE_INPUT_CONTENT];
+    label.backgroundColor = [UIColor clearColor];
+    return label;
+}
+
++ (UILabel *)getDefaultDetailContent
+{
+    UILabel *label = [[UILabel alloc] init];
+    label.textColor = COLOR_DETAIL_CONTENT;
+    label.font = [UIFont systemFontOfSize:FONT_SIZE_DETAIL_CONTENT];
+    label.backgroundColor = [UIColor clearColor];
+    return label;
+}
+
 @end

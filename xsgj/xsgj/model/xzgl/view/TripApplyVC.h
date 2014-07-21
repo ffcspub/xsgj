@@ -19,12 +19,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *tfStarting;
 @property (weak, nonatomic) IBOutlet UITextField *tfDestination;
 @property (weak, nonatomic) IBOutlet UITextView *tvDescription;
-@property (weak, nonatomic) IBOutlet UILabel *lblApproval;
-
 
 @property (weak, nonatomic) IBOutlet UIButton *btnBeginTime;
 @property (weak, nonatomic) IBOutlet UIButton *btnEndTime;
-@property (weak, nonatomic) IBOutlet UILabel *lblBeginTime;
-@property (weak, nonatomic) IBOutlet UILabel *lblEndTime;
 
 @end

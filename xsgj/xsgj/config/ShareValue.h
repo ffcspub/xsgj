@@ -33,6 +33,16 @@
 
 #define IMG_BTN_ORGLE_S [[UIImage imageNamed:@"bg_BtnLogin_press"]resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]
 
+/**
+ *  输入类文本标题的颜色设置
+ */
+#define COLOR_INPUT_TITLE       HEX_RGB(0x939a9d)
+#define FONT_SIZE_INPUT_TITLE   17.f
+#define COLOR_INPUT_CONTENT     HEX_RGB(0x000000)
+#define FONT_SIZE_INPUT_CONTENT 15.f
+#define COLOR_DETAIL_CONTENT    HEX_RGB(0x5C6871)
+#define FONT_SIZE_DETAIL_CONTENT 18.f
+
 @interface ShareValue : NSObject
 
 //获取文件id对应的图片
@@ -49,5 +59,24 @@
 @property(nonatomic,weak) NSString *userName;//用户名
 @property(nonatomic,weak) NSString *userPass;//登录类型
 @property(nonatomic,weak) NSNumber *userId;//用户编号
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// eg: 左侧为文本 右侧为文本输入框或者仅用户显示的文本
+// ___________________________________________________________
+// |           |                                             |
+// |  prompt   |           textfield or label                |
+// |___________|_____________________________________________|
+
++ (UIButton *)getDefaulBorder; // 用于输入或者展示信息时候，带有高亮状态 press.png && normal.png
++ (UIView *)getDefaultShowBorder; // 用于展示的边框，不带有高亮，左侧有类似于双划线的 bgNO2.png
++ (UIView *)getDefaultInputBorder; // 用于提醒输入的边框，不带有高亮，顶部有类似于双划线的 bgNO1.png
+
++ (UILabel *)getDefaultInputTitle;   // 左侧提示的文本
++ (UITextField *)getDefaultTextField;// 右侧用户输入的文本框
++ (UILabel *)getDefaultContent;      // 右侧用于显示信息的文本
++ (UILabel *)getDefaultDetailContent;// 用于显示明细的文本 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @end
