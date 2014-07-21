@@ -134,48 +134,48 @@
 
 -(void)loginRequest{
     MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在登录" toView:self.view];
-    [hud showAnimated:YES whileExecutingBlock:^{
-        [SystemAPI loginByCorpcode:_tf_companycode.text username:_tf_username.text password:_tf_pwd.text success:^(BNUserInfo *userinfo) {
-            dispatch_async(dispatch_get_main_queue() , ^{
-                MBProgressHUD *mhud = [[MBProgressHUD alloc]initWithWindow:ShareAppDelegate.window ];
-                mhud.labelText = @"正在更新配置...";
-                [mhud showAnimated:YES whileExecutingBlock:^{
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                        [SystemAPI updateConfigSuccess:^{
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                [self showTabViewController];
-                                [mhud removeFromSuperview];
-                            });
-                        } fail:^(BOOL notReachable, NSString *desciption) {
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                [mhud removeFromSuperview];
-                                [MBProgressHUD showError:desciption toView:self.view];
-                            });
-                        }];
-
-                    });
-                    
-                }];
-                [mhud show:YES];
-            });
-        } fail:^(BOOL notReachable, NSString *desciption) {
-            if (notReachable) {
-                if ([[ShareValue shareInstance].corpCode isEqual:_tf_companycode.text] && [[ShareValue shareInstance].userName isEqual:_tf_username.text] && [[ShareValue shareInstance].userPass isEqual:_tf_pwd.text]) {
-                    SIAlertView *alert = [[SIAlertView alloc]initWithTitle:@"提示" message:@"当前网络不佳，是否进入离线模式？" cancelButtonTitle:@"取消" cancelHandler:^(SIAlertView *alertView) {
-                        
-                    } destructiveButtonTitle:@"确定" destructiveHandler:^(SIAlertView *alertView) {
+    [SystemAPI loginByCorpcode:_tf_companycode.text username:_tf_username.text password:_tf_pwd.text success:^(BNUserInfo *userinfo) {
+        dispatch_async(dispatch_get_main_queue() , ^{
+            hud.labelText = @"正在更新配置...";
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                [SystemAPI updateConfigSuccess:^{
+                    dispatch_async(dispatch_get_main_queue(), ^{
                         [self showTabViewController];
-                    }];
-                    [alert show];
-                }else{
-                    [MBProgressHUD showError:desciption toView:self.view];
-                }
+                        [hud removeFromSuperview];
+                    });
+                } fail:^(BOOL notReachable, NSString *desciption) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [hud removeFromSuperview];
+                        [MBProgressHUD showError:desciption toView:self.view];
+                    });
+                }];
+            });
+        });
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        
+        [hud removeFromSuperview];
+        
+        if (notReachable) {
+            if ([[ShareValue shareInstance].corpCode isEqual:_tf_companycode.text] &&
+                [[ShareValue shareInstance].userName isEqual:_tf_username.text] &&
+                [[ShareValue shareInstance].userPass isEqual:_tf_pwd.text]) {
+                
+                SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"提示"
+                                                                message:@"当前网络不佳，是否进入离线模式？"
+                                                      cancelButtonTitle:@"取消"
+                                                          cancelHandler:^(SIAlertView *alertView) {}
+                                                 destructiveButtonTitle:@"确定"
+                                                     destructiveHandler:^(SIAlertView *alertView) {
+                                                         [self showTabViewController];
+                                                     }];
+                [alert show];
             }else{
                 [MBProgressHUD showError:desciption toView:self.view];
             }
-        }];
+        }else{
+            [MBProgressHUD showError:desciption toView:self.view];
+        }
     }];
-    
 }
 
 -(void)showTabViewController{

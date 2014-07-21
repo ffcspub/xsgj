@@ -51,7 +51,13 @@ static int const pageSize = 20;
     [super viewDidLoad];
     
     [self UI_setup];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
+    // 每次进入页面重新加载
     self.currentPage = 1;
     [self loadTripList];
 }
@@ -81,34 +87,33 @@ static int const pageSize = 20;
     request.PAGE = self.currentPage;
     request.ROWS = pageSize;
     
-    MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在加载···" toView:self.view];
-    [hud showAnimated:YES whileExecutingBlock:^{
-        [XZGLAPI queryTripByRequest:request success:^(QueryTripHttpResponse *response) {
-            
-            int resultCount = [response.queryTripList count];
-            if (resultCount < pageSize) {
-                self.tbvApproval.showsInfiniteScrolling = NO;
-            }
-            if (self.currentPage == 1) {
-                [self.arrTrips removeAllObjects];
-            }
-            
-            [self.tbvApproval.infiniteScrollingView stopAnimating];
-            [self.arrTrips addObjectsFromArray:response.queryTripList];
-            [self.tbvApproval reloadData];
-            
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            //[MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
-        } fail:^(BOOL notReachable, NSString *desciption) {
-            
-            [self.tbvApproval.infiniteScrollingView stopAnimating];
+    MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [XZGLAPI queryTripByRequest:request success:^(QueryTripHttpResponse *response) {
+        
+        int resultCount = [response.queryTripList count];
+        if (resultCount < pageSize) {
             self.tbvApproval.showsInfiniteScrolling = NO;
-            self.tbvApproval.showsInfiniteScrolling = YES;
-            
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
-        }];
+        }
+        if (self.currentPage == 1) {
+            [self.arrTrips removeAllObjects];
+        }
+        
+        [self.tbvApproval.infiniteScrollingView stopAnimating];
+        [self.arrTrips addObjectsFromArray:response.queryTripList];
+        [self.tbvApproval reloadData];
+        
+        [hub removeFromSuperview];
+        //[MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        
+        [self.tbvApproval.infiniteScrollingView stopAnimating];
+        self.tbvApproval.showsInfiniteScrolling = NO;
+        self.tbvApproval.showsInfiniteScrolling = YES;
+        
+        [hub removeFromSuperview];
+        [MBProgressHUD showError:desciption toView:self.view];
     }];
+
 }
 
 #pragma mark - UI

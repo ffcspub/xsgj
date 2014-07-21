@@ -164,22 +164,19 @@
     QueryTripDetailHttpRequest *rquest = [[QueryTripDetailHttpRequest alloc] init];
     rquest.TRIP_ID = self.tripInfo.TRIP_ID;
     
-    MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在加载···" toView:self.view];
-    [hud showAnimated:YES whileExecutingBlock:^{
-        [XZGLAPI queryTripDeTailByRequest:rquest success:^(QueryTripDetailHttpResponse *response) {
-            
-            //!!!: reponse.data返回的数据为空
-            NSLog(@"QueryTripDetailHttpResponse.data返回结果:%@", response.data);
-            self.tripDetail = response.data;
-            [self updateTripDetail];
-    
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            //[MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
-        } fail:^(BOOL notReachable, NSString *desciption) {
-            
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
-        }];
+    MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [XZGLAPI queryTripDeTailByRequest:rquest success:^(QueryTripDetailHttpResponse *response) {
+        
+        //!!!: reponse.data返回的数据为空
+        self.tripDetail = response.detailTripList.firstObject;
+        [self updateTripDetail];
+        
+        [hub removeFromSuperview];
+        //[MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        
+        [hub removeFromSuperview];
+        [MBProgressHUD showError:desciption toView:self.view];
     }];
 }
 
@@ -204,6 +201,7 @@
     self.lblDestination.text = self.tripDetail.TRIP_TO;
     self.lblApprovalState.text = self.tripDetail.APPROVE_STATE;
     self.lblApplyDesc.text = self.tripDetail.REMARK;
+    self.tvApprovalDesc.text = self.tripInfo.APPROVE_REMARK;
 
     //???: 审批人显示的是哪个字段？
     self.lblApprovalMan.text = self.tripDetail.APPROVE_USER_NAME;
@@ -216,21 +214,23 @@
 {
     ApproveTripHttpRequst *request = [[ApproveTripHttpRequst alloc] init];
     //TODO: 为请求赋值参数
-    
-    MBProgressHUD *hud = [MBProgressHUD showMessag:@"处理中···" toView:self.view];
-    [hud showAnimated:YES whileExecutingBlock:^{
-        [XZGLAPI approvalTripByRequest:request success:^(ApproveTripHttpResponse *response) {
-            
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
-            
-            [self performSelector:@selector(back) withObject:nil afterDelay:1.f];
-            
-        } fail:^(BOOL notReachable, NSString *desciption) {
-            
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
-        }];
+    request.TRIP_ID = self.tripInfo.TRIP_ID;
+    request.APPROVE_STATE = isAgree ? @"1" : @"2";
+    request.APPROVE_TIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
+    request.APPROVE_REMARK = self.tvApprovalDesc.text;
+
+    [MBProgressHUD showMessag:@"处理中···" toView:ShareAppDelegate.window];
+    [XZGLAPI approvalTripByRequest:request success:^(ApproveTripHttpResponse *response) {
+        
+        [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        
+        [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
+        
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        
+        [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showError:desciption toView:self.view];
     }];
 }
 

@@ -130,17 +130,15 @@
     request.REMARK       = self.tvDescription.text;
     request.APPLY_TIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     request.APPROVE_USER = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.USER_ID];
-    
-    MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在提交···" toView:self.view];
-    [hud showAnimated:YES whileExecutingBlock:^{
-        [XZGLAPI applyTripByRequest:request success:^(ApplyTripHttpResponse *response) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
-            [self performSelector:@selector(backToFront) withObject:nil afterDelay:1.f];
-        } fail:^(BOOL notReachable, NSString *desciption) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
-        }];
+
+    [MBProgressHUD showMessag:@"正在提交···" toView:ShareAppDelegate.window];
+    [XZGLAPI applyTripByRequest:request success:^(ApplyTripHttpResponse *response) {
+        [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        [self performSelector:@selector(backToFront) withObject:nil afterDelay:.5f];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showError:desciption toView:self.view];
     }];
 }
 
