@@ -12,9 +12,12 @@
 #import "LK_EasySignal.h"
 #import <NSDate+Helper.h>
 #import "XZGLAPI.h"
+#import "LeaveTypeBean.h"
+#import "MBProgressHUD+Add.h"
 
 @interface LeaveApplicationViewController (){
     NSMutableArray *_typeList;
+    LeaveTypeBean *_selectType;
 }
 
 @end
@@ -215,10 +218,11 @@
     tv_input.tag = 406;
     [self.scrollView addSubview:tv_input];
     
-    NSMutableAttributedString *hintString1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"直接审批人：%@",@"0591-83518200" ]];
+    NSMutableAttributedString *hintString1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"直接审批人：%@",[ShareValue shareInstance].userInfo.LEADER_NAME]];
     [hintString1 addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[HEX_RGB(0x939fa7) CGColor] range:NSMakeRange(0,6)];
     [hintString1 addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor blackColor] CGColor] range:NSMakeRange(6,hintString1.length - 6)];
-    [hintString1 addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont boldSystemFontOfSize:18] range:NSMakeRange(0,hintString1.length )];
+    [hintString1 addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont boldSystemFontOfSize:16] range:NSMakeRange(0,6)];
+    [hintString1 addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont boldSystemFontOfSize:22] range:NSMakeRange(6,hintString1.length - 6)];
     TTTAttributedLabel *lb_Approval = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(iv_edge.frame) + 10, 280, 35)];
     lb_Approval.textColor = HEX_RGB(0x939fa7);
     lb_Approval.text = hintString1;
@@ -256,9 +260,9 @@
     UITextView *tv_input = (UITextView *)[_scrollView viewWithTag:406];
     if (tf_title.text.length == 0) {
         errorMessage = @"请输入主题";
-    }else if(tf_title.text.length == 0){
+    }else if(!_selectType){
         errorMessage = @"请选择请假类型";
-    }else if(tf_day.text.length == 0){
+    }else if (tf_day.text.length == 0){
         errorMessage = @"请输入请假天数";
     }else if (tv_input.text.length == 0){
         errorMessage = @"请输入请假详情";
@@ -273,7 +277,33 @@
 
 - (void)applyLeaveRequest
 {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
+    ApplyLeaveHttpRequest *request = [[ApplyLeaveHttpRequest alloc] init];
+    UITextField *tf_title = (UITextField *)[_scrollView viewWithTag:401];
+    UILabel *lb_begintimeValue = (UILabel *)[_scrollView viewWithTag:403];
+    UILabel *lb_endtimeValue = (UILabel *)[_scrollView viewWithTag:404];
+    UITextField *tf_day = (UITextField *)[_scrollView viewWithTag:405];
+    UITextView *tv_input = (UITextView *)[_scrollView viewWithTag:406];
+    request.TITLE = tf_title.text;
+    request.TYPE_ID = _selectType.TYPE_ID;
+    request.BEGIN_TIME = lb_begintimeValue.text;
+    request.END_TIME = lb_endtimeValue.text;
+    request.LEAVE_DAYS = tf_day.text;
+    request.REMARK = tv_input.text;
+    
+    NSDate *now = [NSDate date];
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    request.APPLY_TIME = [formatter stringFromDate:now];
+    request.LEADER = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.LEADER_ID];
+    [XZGLAPI applyLeaveByRequest:request success:^(ApplyLeaveHttpResponse *response) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showSuccess:@"申请成功" toView:self.view];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:@"网络不给力" toView:self.view];
+    }];
 }
 
 #pragma mark - Action
@@ -293,9 +323,9 @@
         _typeList = [[NSMutableArray alloc] init];
         [_typeList addObjectsFromArray:response.LEAVEINFOBEAN];
         NSMutableArray *options = [[NSMutableArray alloc]init];
-        [options addObject:@"1"];
-        [options addObject:@"2"];
-        [options addObject:@"3"];
+        for (LeaveTypeBean *type in _typeList) {
+            [options addObject:[NSDictionary dictionaryWithObjectsAndKeys:type.TYPE_NAME,@"text", nil]];
+        }
         LeveyPopListView *listView = [[LeveyPopListView alloc] initWithTitle:@"选择类型" options:options];
         listView.delegate = self;
         [listView showInView:self.navigationController.view animated:YES];
@@ -338,7 +368,10 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
 
 - (void)leveyPopListView:(LeveyPopListView *)popListView didSelectedIndex:(NSInteger)anIndex
 {
-    
+    LeaveTypeBean *type = [_typeList objectAtIndex:anIndex];
+    _selectType = type;
+    UILabel *lb_typeValue = (UILabel *)[_scrollView viewWithTag:402];
+    lb_typeValue.text = type.TYPE_NAME;
 }
 
 @end

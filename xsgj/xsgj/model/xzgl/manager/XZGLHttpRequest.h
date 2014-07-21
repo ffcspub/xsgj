@@ -66,15 +66,18 @@
 
 @interface ApplyLeaveHttpRequest : LK_HttpBaseRequest
 
-@property(nonatomic,assign) int         CORP_ID	;//	企业ID
-@property(nonatomic,assign) int         USER_ID	;//	用户ID
+@property(nonatomic,strong) NSString *	SESSION_ID;//	会话ID
+@property(nonatomic,assign) int         CORP_ID;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限
+@property(nonatomic,assign) int         USER_ID;//	用户ID
 @property(nonatomic,assign) int         TYPE_ID	;//	请假类型
 @property(nonatomic,strong) NSString *	TITLE	;//	请假标题
 @property(nonatomic,strong) NSString *	REMARK	;//	请假说明
 @property(nonatomic,strong) NSString *	APPLY_TIME	;//	申请时间
 @property(nonatomic,strong) NSString *	BEGIN_TIME	;//	开始时间
 @property(nonatomic,strong) NSString *	END_TIME	;//	结束时间
-@property(nonatomic,strong) NSString *	APPROVE_USER	;//	审批人
+@property(nonatomic,strong) NSString *	LEADER	;//	直属领导ID
 @property(nonatomic,strong) NSString *  LEAVE_DAYS;//请假天数
 
 @end
@@ -94,6 +97,8 @@
 @property(nonatomic,strong) NSString *	END_TIME	;//	申请时间（结束时间）
 @property(nonatomic,assign) int         PAGE	;//	第N页
 @property(nonatomic,assign) int         ROWS	;//	加载行数
+@property(nonatomic,strong) NSString *	LEADER	;//	直属领导ID
+@property(nonatomic,strong) NSString *	QUERY_USERID	;//	人员标识id
 @property(nonatomic,strong) NSString *	APPROVE_USER	;//	审批人
 
 @end
