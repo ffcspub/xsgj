@@ -10,7 +10,6 @@
 #import "BNUserInfo.h"
 #import "UIColor+External.h"
 #import "UIButton+Style.h"
-#import <CoreLocation/CoreLocation.h>
 
 #define VERSION 1
 
@@ -50,8 +49,5 @@
 @property(nonatomic,weak) NSString *userName;//用户名
 @property(nonatomic,weak) NSString *userPass;//登录类型
 @property(nonatomic,weak) NSNumber *userId;//用户编号
-
-@property(nonatomic,assign) CLLocationCoordinate2D currentLocation;//当前经纬度
-@property(nonatomic,assign) NSString *address;//当前地址
 
 @end
