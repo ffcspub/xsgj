@@ -61,7 +61,7 @@
 
 @interface QueryTripDetailHttpResponse : LK_HttpBaseResponse
 
-@property(nonatomic,strong) TripDetailBean *data;
+@property(nonatomic,strong) NSArray *detailTripList;
 
 @end
 

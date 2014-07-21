@@ -75,6 +75,9 @@
 
 @implementation QueryTripDetailHttpResponse
 
++(Class)__detailTripListClass{
+    return [TripDetailBean class];
+}
 
 @end
 
