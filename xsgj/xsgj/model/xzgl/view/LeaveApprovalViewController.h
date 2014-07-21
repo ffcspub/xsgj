@@ -10,4 +10,6 @@
 
 @interface LeaveApprovalViewController : HideTabViewController
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 @end

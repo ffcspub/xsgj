@@ -13,6 +13,8 @@
 #import "LK_EasySignal.h"
 #import <NSDate+Helper.h>
 #import "LeaveInfoBean.h"
+#import "LeaveInfoViewController.h"
+#import "SVPullToRefresh.h"
 
 typedef  enum : NSUInteger {
     TOP = 0,
@@ -22,11 +24,14 @@ typedef  enum : NSUInteger {
 
 @interface LeaveQueryCell : UITableViewCell{
     UIImageView *_backView;
+    UIImageView *_stateView;
+    UILabel *_lb_state;
     UILabel *_lb_name;
     UILabel *_lb_time;
 }
 
 @property(nonatomic,assign) LeaveQueryCellStyle style;
+@property(nonatomic,assign) int state;
 @property(nonatomic,strong) NSString *name;
 @property(nonatomic,strong) NSString *time;
 
@@ -41,15 +46,24 @@ typedef  enum : NSUInteger {
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         _backView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, 300, [LeaveQueryCell height])];
-        _lb_name = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 180, 28)];
+        _stateView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 7, 26, 26)];
+        _lb_state = [[UILabel alloc] initWithFrame:CGRectMake(19, 33, 29, 21)];
+        _lb_state.font = [UIFont systemFontOfSize:12];
+        _lb_state.textAlignment = NSTextAlignmentCenter;
+        _lb_name = [[UILabel alloc]initWithFrame:CGRectMake(56, 5, 210, 28)];
         _lb_name.backgroundColor = [UIColor clearColor];
         _lb_name.font = [UIFont systemFontOfSize:17];
-        _lb_time = [[UILabel alloc]initWithFrame:CGRectMake(20, 31, 200,21)];
+        _lb_time = [[UILabel alloc]initWithFrame:CGRectMake(56, 31, 210,21)];
         _lb_time.textColor = HEX_RGB(0x939fa7);
         _lb_time.font = [UIFont systemFontOfSize:15];
+        UIImageView *iv_next = [[UIImageView alloc] initWithFrame:CGRectMake(275, 15, 26, 26)];
+        iv_next.image = [UIImage imageNamed:@"tableCtrlBtnIcon_next_nor"];
         [self.contentView addSubview:_backView];
+        [self.contentView addSubview:_stateView];
+        [self.contentView addSubview:_lb_state];
         [self.contentView addSubview:_lb_name];
         [self.contentView addSubview:_lb_time];
+        [self.contentView addSubview:iv_next];
     }
     return self;
 }
@@ -84,6 +98,27 @@ typedef  enum : NSUInteger {
     }
 }
 
+- (void)setState:(int)state
+{
+    _state = state;
+    switch (state) {
+        case 0:
+            _stateView.image = [UIImage imageNamed:@"stateicon_wait"];
+            _lb_state.text = @"待审";
+            break;
+        case 1:
+            _stateView.image = [UIImage imageNamed:@"stateicon_pass"];
+            _lb_state.text = @"通过";
+            break;
+        case 2:
+            _stateView.image = [UIImage imageNamed:@"stateicon_nopass"];
+            _lb_state.text = @"驳回";
+            break;
+        default:
+            break;
+    }
+}
+
 -(void)setName:(NSString *)name{
     _name = name;
     _lb_name.text = name;
@@ -96,8 +131,11 @@ typedef  enum : NSUInteger {
 
 @end
 
+static int const pageSize = 20;
+
 @interface LeaveQueryViewController (){
     NSMutableArray *_leaves;
+    int page;
 }
 
 @end
@@ -118,9 +156,14 @@ typedef  enum : NSUInteger {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [self setup];
+    _leaves = [[NSMutableArray alloc] init];
     
     [self setRightBarButtonItem];
+    
+    [self setup];
+    
+    page = 0;
+    [self queryLeave];
     
     self.view.backgroundColor = HEX_RGB(0xefeff4);
 }
@@ -167,24 +210,46 @@ typedef  enum : NSUInteger {
     iv_endcalendar.image = [UIImage imageNamed:@"tableCtrlBtnIcon_calendar-nor"];
     [_btn_endtime addSubview:iv_endcalendar];
     
-    [self queryLeave];
+    __weak LeaveQueryViewController *weakSelf = self;
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        [weakSelf queryLeave];
+    }];
 }
 
 - (void)queryLeave
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    page++;
     QueryLeaveHttpRequest *request = [[QueryLeaveHttpRequest alloc] init];
     UILabel *lb_starttime = (UILabel *)[_btn_starttime viewWithTag:401];
     UILabel *lb_endtime = (UILabel *)[_btn_endtime viewWithTag:402];
     request.BEGIN_TIME = lb_starttime.text;
     request.END_TIME = lb_endtime.text;
+    request.PAGE = page;
+    request.ROWS = pageSize;
+    request.QUERY_USERID = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.USER_ID];
+    
     [XZGLAPI queryLeaveByRequest:request success:^(QueryLeaveHttpResponse *response) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [_leaves removeAllObjects];
+        
+        int resultCount = [response.LEAVEINFOBEAN count];
+        if (resultCount < pageSize) {
+            self.tableView.showsInfiniteScrolling = NO;
+        }
+        if (page == 1) {
+            [_leaves removeAllObjects];
+        }
+        
+        [self.tableView.infiniteScrollingView stopAnimating];
         [_leaves addObjectsFromArray:response.LEAVEINFOBEAN];
         [self.tableView reloadData];
     } fail:^(BOOL notReachable, NSString *desciption) {
+        [self.tableView.infiniteScrollingView stopAnimating];
+        self.tableView.showsInfiniteScrolling = NO;
         
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:@"网络不给力" toView:self.view];
     }];
 }
 
@@ -211,6 +276,17 @@ typedef  enum : NSUInteger {
 
 - (void)queryAction:(id)sender
 {
+    // 验证时间
+    UILabel *lb_starttime = (UILabel *)[_btn_starttime viewWithTag:401];
+    UILabel *lb_endtime = (UILabel *)[_btn_endtime viewWithTag:402];
+    NSDate *beginTime = [NSDate dateFromString:lb_starttime.text withFormat:@"yyyy-MM-dd"];
+    NSDate *endTime = [NSDate dateFromString:lb_endtime.text withFormat:@"yyyy-MM-dd"];
+    if ([beginTime compare:endTime] == NSOrderedDescending) {
+        [MBProgressHUD showError:@"起始时间大于结束时间!" toView:self.view];
+        return;
+    }
+    
+    page = 0;
     [self queryLeave];
 }
 
@@ -260,13 +336,9 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
     
     LeaveinfoBean *info = [_leaves objectAtIndex:indexPath.row];
     
-//    if ([info.SIGN_FLAG isEqualToString:@"i"]) {
-//        cell.name = @"签到";
-//    } else {
-//        cell.name = @"签退";
-//    }
     cell.name = info.TYPE_NAME;
-    cell.time = info.TYPE_NAME;
+    cell.time = info.APPLY_TIME;
+    cell.state = info.APPROVE_STATE;
     
     if (indexPath.row == 0) {
         cell.style = TOP;
@@ -286,6 +358,10 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    LeaveinfoBean *info = [_leaves objectAtIndex:indexPath.row];
+    LeaveInfoViewController *vlc = [[LeaveInfoViewController alloc] initWithNibName:@"LeaveInfoViewController" bundle:nil];
+    vlc.leaveInfo = info;
+    [self.navigationController pushViewController:vlc animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

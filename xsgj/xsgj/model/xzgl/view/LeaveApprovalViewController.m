@@ -8,6 +8,10 @@
 
 #import "LeaveApprovalViewController.h"
 #import "UIColor+External.h"
+#import "XZGLAPI.h"
+#import "MBProgressHUD+Add.h"
+#import "LeaveInfoBean.h"
+#import "SVPullToRefresh.h"
 
 typedef  enum : NSUInteger {
     TOP = 0,
@@ -17,11 +21,14 @@ typedef  enum : NSUInteger {
 
 @interface LeaveApprovalCell : UITableViewCell{
     UIImageView *_backView;
+    UIImageView *_stateView;
+    UILabel *_lb_state;
     UILabel *_lb_name;
     UILabel *_lb_time;
 }
 
 @property(nonatomic,assign) LeaveApprovalCellStyle style;
+@property(nonatomic,assign) int state;
 @property(nonatomic,strong) NSString *name;
 @property(nonatomic,strong) NSString *time;
 
@@ -36,16 +43,24 @@ typedef  enum : NSUInteger {
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         _backView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, 300, [LeaveApprovalCell height])];
-        _lb_name = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 180, 28)];
+        _stateView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 7, 26, 26)];
+        _lb_state = [[UILabel alloc] initWithFrame:CGRectMake(19, 33, 29, 21)];
+        _lb_state.font = [UIFont systemFontOfSize:12];
+        _lb_state.textAlignment = NSTextAlignmentCenter;
+        _lb_name = [[UILabel alloc]initWithFrame:CGRectMake(56, 5, 210, 28)];
         _lb_name.backgroundColor = [UIColor clearColor];
         _lb_name.font = [UIFont systemFontOfSize:17];
-//        _lb_name.textColor = [UIColor grayColor];
-        _lb_time = [[UILabel alloc]initWithFrame:CGRectMake(20, 31, 200,21)];
+        _lb_time = [[UILabel alloc]initWithFrame:CGRectMake(56, 31, 210,21)];
         _lb_time.textColor = HEX_RGB(0x939fa7);
         _lb_time.font = [UIFont systemFontOfSize:15];
+        UIImageView *iv_next = [[UIImageView alloc] initWithFrame:CGRectMake(275, 15, 26, 26)];
+        iv_next.image = [UIImage imageNamed:@"tableCtrlBtnIcon_next_nor"];
         [self.contentView addSubview:_backView];
+        [self.contentView addSubview:_stateView];
+        [self.contentView addSubview:_lb_state];
         [self.contentView addSubview:_lb_name];
         [self.contentView addSubview:_lb_time];
+        [self.contentView addSubview:iv_next];
     }
     return self;
 }
@@ -80,6 +95,27 @@ typedef  enum : NSUInteger {
     }
 }
 
+- (void)setState:(int)state
+{
+    _state = state;
+    switch (state) {
+        case 0:
+            _stateView.image = [UIImage imageNamed:@"stateicon_wait"];
+            _lb_state.text = @"待审";
+            break;
+        case 1:
+            _stateView.image = [UIImage imageNamed:@"stateicon_pass"];
+            _lb_state.text = @"通过";
+            break;
+        case 2:
+            _stateView.image = [UIImage imageNamed:@"stateicon_nopass"];
+            _lb_state.text = @"驳回";
+            break;
+        default:
+            break;
+    }
+}
+
 -(void)setName:(NSString *)name{
     _name = name;
     _lb_name.text = name;
@@ -92,7 +128,13 @@ typedef  enum : NSUInteger {
 
 @end
 
+static int const pageSize = 20;
+
 @interface LeaveApprovalViewController ()
+{
+    NSMutableArray *_leaves;
+    int page;
+}
 
 @end
 
@@ -112,7 +154,22 @@ typedef  enum : NSUInteger {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    _leaves = [[NSMutableArray alloc] init];
+    
+    __weak LeaveApprovalViewController *weakSelf = self;
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        [weakSelf loadLeaves];
+    }];
+    
     self.view.backgroundColor = HEX_RGB(0xefeff4);
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    page = 0;
+    [self loadLeaves];
 }
 
 - (void)didReceiveMemoryWarning
@@ -121,11 +178,45 @@ typedef  enum : NSUInteger {
     // Dispose of any resources that can be recreated.
 }
 
+- (void)loadLeaves
+{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    page++;
+    QueryLeaveHttpRequest *request = [[QueryLeaveHttpRequest alloc] init];
+    request.PAGE = page;
+    request.ROWS = pageSize;
+    request.LEADER = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.USER_ID];
+    request.APPROVE_STATE = @"";
+    
+    [XZGLAPI queryLeaveByRequest:request success:^(QueryLeaveHttpResponse *response) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        int resultCount = [response.LEAVEINFOBEAN count];
+        if (resultCount < pageSize) {
+            self.tableView.showsInfiniteScrolling = NO;
+        }
+        if (page == 1) {
+            [_leaves removeAllObjects];
+        }
+        
+        [self.tableView.infiniteScrollingView stopAnimating];
+        [_leaves addObjectsFromArray:response.LEAVEINFOBEAN];
+        [self.tableView reloadData];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        [self.tableView.infiniteScrollingView stopAnimating];
+        self.tableView.showsInfiniteScrolling = NO;
+        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:@"网络不给力" toView:self.view];
+    }];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return [_leaves count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -135,17 +226,17 @@ typedef  enum : NSUInteger {
         cell = [[LeaveApprovalCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
+    LeaveinfoBean *info = [_leaves objectAtIndex:indexPath.row];
+    
+    cell.name = info.TYPE_NAME;
+    cell.time = info.APPLY_TIME;
+    cell.state = info.APPROVE_STATE;
+    
     if (indexPath.row == 0) {
-        cell.name = @"客户名称";
-        cell.time = @"123";
         cell.style = TOP;
-    } else if (indexPath.row == 4) {
-        cell.name = @"审批状态";
-        cell.time = @"789";
+    } else if (indexPath.row == ([_leaves count] - 1)) {
         cell.style = BOT;
     } else {
-        cell.name = @"客户地址";
-        cell.time = @"456";
         cell.style = MID;
     }
     

@@ -12,6 +12,7 @@
 #import "XZGLAPI.h"
 #import "LK_EasySignal.h"
 #import <NSDate+Helper.h>
+#import "SVPullToRefresh.h"
 
 typedef  enum : NSUInteger {
     TOP = 0,
@@ -46,9 +47,12 @@ typedef  enum : NSUInteger {
         _lb_time = [[UILabel alloc]initWithFrame:CGRectMake(20, 31, 200,21)];
         _lb_time.textColor = HEX_RGB(0x939fa7);
         _lb_time.font = [UIFont systemFontOfSize:15];
+        UIImageView *iv_next = [[UIImageView alloc] initWithFrame:CGRectMake(275, 15, 26, 26)];
+        iv_next.image = [UIImage imageNamed:@"tableCtrlBtnIcon_next_nor"];
         [self.contentView addSubview:_backView];
         [self.contentView addSubview:_lb_name];
         [self.contentView addSubview:_lb_time];
+        [self.contentView addSubview:iv_next];
     }
     return self;
 }
@@ -95,8 +99,11 @@ typedef  enum : NSUInteger {
 
 @end
 
+static int const pageSize = 20;
+
 @interface AttendanceQueryViewController (){
     NSMutableArray *_attendances;
+    int page;
 }
 
 @end
@@ -122,6 +129,9 @@ typedef  enum : NSUInteger {
     [self setup];
     
     [self setRightBarButtonItem];
+    
+    page = 0;
+    [self queryAttendance];
     
     self.view.backgroundColor = HEX_RGB(0xefeff4);
 }
@@ -168,24 +178,45 @@ typedef  enum : NSUInteger {
     iv_endcalendar.image = [UIImage imageNamed:@"tableCtrlBtnIcon_calendar-nor"];
     [_btn_endtime addSubview:iv_endcalendar];
     
-    [self queryAttendance];
+    __weak AttendanceQueryViewController *weakSelf = self;
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        [weakSelf queryAttendance];
+    }];
 }
 
 - (void)queryAttendance
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    page++;
     QueryAttendanceHttpRequest *request = [[QueryAttendanceHttpRequest alloc] init];
     UILabel *lb_starttime = (UILabel *)[_btn_starttime viewWithTag:301];
     UILabel *lb_endtime = (UILabel *)[_btn_endtime viewWithTag:302];
     request.BEGIN_TIME = lb_starttime.text;
     request.END_TIME = lb_endtime.text;
+    request.PAGE = page;
+    request.ROWS = pageSize;
+    
     [XZGLAPI queryAttendanceByRequest:request success:^(QueryAttendanceHttpReponse *response) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [_attendances removeAllObjects];
+        
+        int resultCount = [response.DATA count];
+        if (resultCount < pageSize) {
+            self.tableView.showsInfiniteScrolling = NO;
+        }
+        if (page == 1) {
+            [_attendances removeAllObjects];
+        }
+        
+        [self.tableView.infiniteScrollingView stopAnimating];
         [_attendances addObjectsFromArray:response.DATA];
         [self.tableView reloadData];
     } fail:^(BOOL notReachable, NSString *desciption) {
+        [self.tableView.infiniteScrollingView stopAnimating];
+        self.tableView.showsInfiniteScrolling = NO;
         
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:@"网络不给力" toView:self.view];
     }];
 }
 
@@ -212,13 +243,24 @@ typedef  enum : NSUInteger {
 
 - (void)queryAction:(id)sender
 {
+    // 验证时间
+    UILabel *lb_starttime = (UILabel *)[_btn_starttime viewWithTag:301];
+    UILabel *lb_endtime = (UILabel *)[_btn_endtime viewWithTag:302];
+    NSDate *beginTime = [NSDate dateFromString:lb_starttime.text withFormat:@"yyyy-MM-dd"];
+    NSDate *endTime = [NSDate dateFromString:lb_endtime.text withFormat:@"yyyy-MM-dd"];
+    if ([beginTime compare:endTime] == NSOrderedDescending) {
+        [MBProgressHUD showError:@"起始时间大于结束时间!" toView:self.view];
+        return;
+    }
+    
+    page = 0;
     [self queryAttendance];
 }
 
 - (IBAction)selectBeginTimeAction:(id)sender
 {
     UIDatePicker *picker = [[UIDatePicker alloc]init];
-    picker.datePickerMode = UIDatePickerModeDateAndTime;
+    picker.datePickerMode = UIDatePickerModeDate;
     picker.tag = 101;
     [picker showTitle:@"请选择" inView:self.view];
 }
@@ -226,7 +268,7 @@ typedef  enum : NSUInteger {
 - (IBAction)selectEndTimeAction:(id)sender
 {
     UIDatePicker *picker = [[UIDatePicker alloc]init];
-    picker.datePickerMode = UIDatePickerModeDateAndTime;
+    picker.datePickerMode = UIDatePickerModeDate;
     picker.tag = 102;
     [picker showTitle:@"请选择" inView:self.view];
 }
