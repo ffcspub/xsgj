@@ -10,6 +10,7 @@
 #import "BNUserInfo.h"
 #import "UIColor+External.h"
 #import "UIButton+Style.h"
+#import <CoreLocation/CoreLocation.h>
 
 #define VERSION 1
 
@@ -60,6 +61,8 @@
 @property(nonatomic,weak) NSString *userPass;//登录类型
 @property(nonatomic,weak) NSNumber *userId;//用户编号
 
+@property(nonatomic,assign) CLLocationCoordinate2D currentLocation;//当前经纬度
+@property(nonatomic,assign) NSString *address;//当前地址
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // eg: 左侧为文本 右侧为文本输入框或者仅用户显示的文本
@@ -75,7 +78,7 @@
 + (UILabel *)getDefaultInputTitle;   // 左侧提示的文本
 + (UITextField *)getDefaultTextField;// 右侧用户输入的文本框
 + (UILabel *)getDefaultContent;      // 右侧用于显示信息的文本
-+ (UILabel *)getDefaultDetailContent;// 用于显示明细的文本 
++ (UILabel *)getDefaultDetailContent;// 用于显示明细的文本
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 

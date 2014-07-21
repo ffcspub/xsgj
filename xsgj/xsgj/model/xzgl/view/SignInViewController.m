@@ -8,8 +8,12 @@
 
 #import "SignInViewController.h"
 #import "UIColor+External.h"
+#import "MapUtils.h"
+#import "MapAddressVC.h"
 
-@interface SignInViewController ()
+@interface SignInViewController ()<MapAddressVCDelegate>{
+    
+}
 
 @end
 
@@ -37,6 +41,18 @@
     [self setRightBarButtonItem];
     
     self.view.backgroundColor = HEX_RGB(0xefeff4);
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(startLocationUpdate) name:NOTIFICATION_LOCATION_WILLUPDATE object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(locationUpdated) name:NOTIFICATION_LOCATION_UPDATED object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(locationUpdateError) name:NOTIFICATION_LOCATION_UPDATERROR object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(locationAddressUpdate) name:NOTIFICATION_ADDRESS_UPDATED object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(locationAddressUpdateErro) name:NOTIFICATION_ADDRESS_UPDATEERROR object:nil];
+    
+    [[MapUtils shareInstance] startLocationUpdate];
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,6 +60,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)viewDidUnload{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [super viewDidUnload];
+}
+
 
 - (void)setup
 {
@@ -77,9 +99,51 @@
 
 #pragma mark - Action
 
+- (IBAction)startLocationUpdate:(id)sender {
+    [_btn_update setEnabled:NO];
+    [[MapUtils shareInstance]startLocationUpdate];
+}
+
+
 - (void)submitAction:(id)sender
 {
     
+}
+
+- (IBAction)otherAddressAction:(id)sender {
+    MapAddressVC *vcl = [[MapAddressVC alloc]init];
+    vcl.delegate = self;
+    [self.navigationController pushViewController:vcl
+                                         animated:YES];
+}
+
+#pragma mark - MapNotification
+
+-(void)startLocationUpdate{
+    _lb_currentLocation.text = @"正在定位...";
+}
+
+-(void)locationUpdated{
+    [[MapUtils shareInstance] startGeoCodeSearch];
+}
+
+-(void)locationUpdateError{
+    _lb_currentLocation.text = @"定位失败";
+}
+
+-(void)locationAddressUpdate{
+    _lb_currentLocation.text = [ShareValue shareInstance].address;
+    _btn_update.enabled = YES;
+}
+
+-(void)locationAddressUpdateErro{
+    _lb_currentLocation.text = @"定位失败";
+    _btn_update.enabled = YES;
+}
+
+#pragma mark
+-(void)onAddressReturn:(NSString *)address coordinate:(CLLocationCoordinate2D)coordinate{
+    _lb_manualAdjust.text = address;
 }
 
 @end
