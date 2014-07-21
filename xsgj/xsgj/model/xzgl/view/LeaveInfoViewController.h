@@ -7,7 +7,12 @@
 //
 
 #import "HideTabViewController.h"
+#import "LeaveInfoBean.h"
 
 @interface LeaveInfoViewController : HideTabViewController
+
+@property (nonatomic, strong) LeaveinfoBean *leaveInfo;
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
