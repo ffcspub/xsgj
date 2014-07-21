@@ -65,6 +65,12 @@
 
 @end
 
+@interface WorkTypeHttpResponse : LK_HttpBaseResponse
+
+@property(nonatomic,strong) NSArray *WORKREPORTINFOBEAN;
+
+@end
+
 @interface WorkReportHttpResponse : LK_HttpBaseResponse
 
 @end

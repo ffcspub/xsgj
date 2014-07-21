@@ -185,6 +185,24 @@
     } class:[QueryTripDetailHttpResponse class]];
 }
 
+
+/**
+ *  工作汇报类型获取接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)workReportTypeByRequest:(WorkTypeHttpRequest *)request success:(void(^)(WorkTypeHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_work_type Success:^(LK_HttpBaseResponse *response) {
+        success((WorkTypeHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[WorkTypeHttpResponse class]];
+    
+}
+
+
 /**
  *  工作汇报接口
  *

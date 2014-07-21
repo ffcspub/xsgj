@@ -15,6 +15,7 @@
 #import "SaleTaskInfoBean.h"
 #import "LeaveinfoBean.h"
 #import "LeaveTypeBean.h"
+#import "WorkReportTypeBean.h"
 
 @implementation SignUpHttpReponse
 
@@ -77,6 +78,14 @@
 
 +(Class)__detailTripListClass{
     return [TripDetailBean class];
+}
+
+@end
+
+@implementation WorkTypeHttpResponse
+
++(Class)__WORKREPORTINFOBEANClass{
+    return [WorkReportTypeBean class];
 }
 
 @end

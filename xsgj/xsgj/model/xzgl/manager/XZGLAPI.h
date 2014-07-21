@@ -113,6 +113,15 @@
 +(void)queryTripDeTailByRequest:(QueryTripDetailHttpRequest *)request success:(void(^)(QueryTripDetailHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 /**
+ *  工作汇报类型获取接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)workReportTypeByRequest:(WorkTypeHttpRequest *)request success:(void(^)(WorkTypeHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
  *  工作汇报接口
  *
  *  @param request 请求参数
