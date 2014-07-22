@@ -68,14 +68,14 @@
     self.lblState.backgroundColor = [UIColor clearColor];
     
     // 设置选中效果
-    self.ivBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300, 56)];
-    self.ivBackgroundSelect = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300, 56)];
+    self.ivBackground = [[UIImageView alloc] initWithFrame:self.bounds];
+    self.ivBackgroundSelect = [[UIImageView alloc] initWithFrame:self.bounds];
     
     // 缓存中间高亮的图片
     UIImage *image = [UIImage imageNamed:@"table_part2"];
     self.imgMiddle = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
     UIImage *imageSelect = [UIImage imageNamed:@"table_part2_s"];
-    self.imgMiddleHight = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5,5, 5)];
+    self.imgMiddleHight = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
     
     self.backgroundView = self.ivBackground;
     self.selectedBackgroundView = self.ivBackgroundSelect;
@@ -96,12 +96,12 @@
             imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
             self.ivBackgroundSelect.image = imageSelect;
         }
-            break;
+        break;
         case MID:{
             self.ivBackground.image = self.imgMiddle;
             self.ivBackgroundSelect.image = self.imgMiddleHight;
         }
-            break;
+        break;
         case BOT:{
             UIImage *image = [UIImage imageNamed:@"table_part3"];
             image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
@@ -111,6 +111,7 @@
             imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
             self.ivBackgroundSelect.image = imageSelect;
         }
+        break;
         case SINGLE:{
             UIImage *image = [UIImage imageNamed:@"table_main_n"];
             image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
@@ -120,7 +121,7 @@
             imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
             self.ivBackgroundSelect.image = imageSelect;
         }
-            break;
+        break;
         default:
             break;
     }
