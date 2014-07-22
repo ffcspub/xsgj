@@ -8,8 +8,14 @@
 
 #import "WorkReportViewController.h"
 #import "UIColor+External.h"
+#import "XZGLAPI.h"
+#import "WorkReportTypeBean.h"
+#import "MBProgressHUD+Add.h"
 
-@interface WorkReportViewController ()
+@interface WorkReportViewController (){
+    NSMutableArray *_types;
+    WorkReportTypeBean *_selectType;
+}
 
 @end
 
@@ -61,6 +67,7 @@
     lb_content.font = [UIFont boldSystemFontOfSize:18];
     lb_content.textColor = HEX_RGB(0x000000);
     lb_content.backgroundColor = [UIColor clearColor];
+    lb_content.tag = 701;
     [_btn_inputType addSubview:lb_content];
     
     UIImageView *iv_dropbox = [[UIImageView alloc] initWithFrame:CGRectMake(270, 10, 20, 20)];
@@ -91,29 +98,83 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
 }
 
+#pragma mark - private
+
+-(BOOL)isVailData{
+    NSString *errorMessage = nil;
+    if(!_selectType){
+        errorMessage = @"请选择汇报类型";
+    }else if (_tv_content.text.length == 0){
+        errorMessage = @"请输入汇报内容";
+    }
+    if (errorMessage.length > 0) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:errorMessage delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)workReportRequest
+{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    WorkReportHttpRequest *request = [[WorkReportHttpRequest alloc] init];
+    request.TYPE_ID = [NSString stringWithFormat:@"%d",_selectType.TYPE_ID];
+    request.CONTENT = _tv_content.text;
+    NSDate *now = [NSDate date];
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    request.COMMITTIME = [formatter stringFromDate:now];
+    
+    [XZGLAPI workReportByRequest:request success:^(WorkReportHttpResponse *response) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showSuccess:@"提交成功！" toView:self.view];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:@"网络不给力" toView:self.view];
+    }];
+}
+
+
 #pragma mark - LeveyPopListViewDelegate
 
 - (void)leveyPopListView:(LeveyPopListView *)popListView didSelectedIndex:(NSInteger)anIndex
 {
-    
+    WorkReportTypeBean *type = [_types objectAtIndex:anIndex];
+    _selectType = type;
+    UILabel *lb_content = (UILabel *)[_btn_inputType viewWithTag:701];
+    lb_content.text = type.TYPE_NAME;
 }
 
 #pragma mark - Action
 
 - (void)submitAction:(id)sender
 {
-    
+    [_tv_content resignFirstResponder];
+    if (![self isVailData]) {
+        return;
+    }
+    [self workReportRequest];
 }
 
 - (IBAction)selectReportTypeAction:(id)sender
 {
-    NSMutableArray *options = [[NSMutableArray alloc]init];
-    [options addObject:@"1"];
-    [options addObject:@"2"];
-    [options addObject:@"3"];
-    LeveyPopListView *listView = [[LeveyPopListView alloc] initWithTitle:@"选择类型" options:options];
-    listView.delegate = self;
-    [listView showInView:self.navigationController.view animated:YES];
+    WorkTypeHttpRequest *request = [[WorkTypeHttpRequest alloc] init];
+    
+    [XZGLAPI workReportTypeByRequest:request success:^(WorkTypeHttpResponse *response) {
+        _types = [[NSMutableArray alloc] init];
+        [_types addObjectsFromArray:response.WORKREPORTINFOBEAN];
+        NSMutableArray *options = [[NSMutableArray alloc]init];
+        for (WorkReportTypeBean *type in _types) {
+            [options addObject:[NSDictionary dictionaryWithObjectsAndKeys:type.TYPE_NAME, @"text",nil]];
+        }
+        LeveyPopListView *listView = [[LeveyPopListView alloc] initWithTitle:@"选择类型" options:options];
+        listView.delegate = self;
+        [listView showInView:self.navigationController.view animated:YES];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        
+    }];
 }
 
 @end
