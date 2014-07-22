@@ -312,7 +312,7 @@
  *  @param fail    失败返回结果
  */
 +(void)insertDisplayVividByRequest:(InsertDisplayVividHttpRequest *)request success:(void(^)(InsertDisplayVividHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
-    [LK_APIUtil getHttpRequest:request apiPath:URL_displayCameraCommit Success:^(LK_HttpBaseResponse *response) {
+    [LK_APIUtil getHttpRequest:request apiPath:URL_insertDisplayVivid Success:^(LK_HttpBaseResponse *response) {
         success((InsertDisplayVividHttpResponse *)response);
     } fail:^(BOOL NotReachable, NSString *desciption) {
         fail(NotReachable,desciption);
@@ -327,7 +327,7 @@
  *  @param fail    失败返回结果
  */
 +(void)insertDisplayCostByRequest:(InsertDisplayCostHttpRequest *)request success:(void(^)(InsertDisplayCostHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
-    [LK_APIUtil getHttpRequest:request apiPath:URL_displayCameraCommit Success:^(LK_HttpBaseResponse *response) {
+    [LK_APIUtil getHttpRequest:request apiPath:URL_insertDisplayCost Success:^(LK_HttpBaseResponse *response) {
         success((InsertDisplayCostHttpResponse *)response);
     } fail:^(BOOL NotReachable, NSString *desciption) {
         fail(NotReachable,desciption);

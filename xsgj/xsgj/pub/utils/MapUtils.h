@@ -16,9 +16,11 @@
 #define NOTIFICATION_ADDRESS_UPDATEERROR @"NOTIFICATION_ADDRESS_UPDATEERROR"
 
 @interface MapUtils : NSObject<BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>{
-    BMKLocationService *_service;
-    BMKGeoCodeSearch *_search;
+    
 }
+
+@property(nonatomic,strong) BMKLocationService *locationService;
+@property(nonatomic,strong) BMKGeoCodeSearch *geoCodesearch;
 
 +(MapUtils *)shareInstance;
 

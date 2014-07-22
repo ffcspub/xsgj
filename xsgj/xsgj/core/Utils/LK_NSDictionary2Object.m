@@ -463,6 +463,11 @@
                 NSNumber *number = (NSNumber *)value;
                 [dict setObject:number forKey:propertyName];
             }
+            else if ( type[0] == _C_DBL || type[0] == _C_BFLD )
+            {
+                NSNumber *number = (NSNumber *)value;
+                [dict setObject:number forKey:propertyName];
+            }
         }
         
     }

@@ -8,37 +8,37 @@
 
 #import "MapUtils.h"
 
-static MapUtils * _utils;
+static MapUtils * _Maputils;
 
 @implementation MapUtils
 
 +(MapUtils *)shareInstance{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _utils = [[MapUtils alloc]init];
+        _Maputils = [[MapUtils alloc]init];
     });
-    return _utils;
+    return _Maputils;
 }
 
 -(id)init{
     self = [super init];
     if (self) {
-        _service = [[BMKLocationService alloc]init];
-        _service.delegate = self;
-        _search = [[BMKGeoCodeSearch alloc]init];
-        _search.delegate = self;
+        self.locationService = [[BMKLocationService alloc]init];
+        _locationService.delegate = self;
+        self.geoCodesearch = [[BMKGeoCodeSearch alloc]init];
+        _geoCodesearch.delegate = self;
     }
     return self;
 }
 
 -(void)startLocationUpdate{
-    [_service startUserLocationService];
+    [_locationService startUserLocationService];
 }
 
 -(void)startGeoCodeSearch{
     BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
     reverseGeocodeSearchOption.reverseGeoPoint = [ShareValue shareInstance].currentLocation;
-    BOOL flag = [_search reverseGeoCode:reverseGeocodeSearchOption];
+    BOOL flag = [_geoCodesearch reverseGeoCode:reverseGeocodeSearchOption];
     if(flag)
     {
         NSLog(@"反geo检索发送成功");
@@ -78,7 +78,7 @@ static MapUtils * _utils;
  *@param userLocation 新的用户位置
  */
 - (void)didUpdateUserLocation:(BMKUserLocation *)userLocation{
-    [_service stopUserLocationService];
+    [_locationService stopUserLocationService];
     [ShareValue shareInstance].currentLocation = userLocation.location.coordinate;
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOCATION_UPDATED object:nil];
 }

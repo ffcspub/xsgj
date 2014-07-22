@@ -14,5 +14,8 @@
 @property(nonatomic,assign) int	STOCK_NUM	;//	库存数量
 @property(nonatomic,strong) NSString *	STOCK_NO	;//	批次
 @property(nonatomic,assign) int	PRODUCT_UNIT_ID	;//	产品单位表ID
+@property(nonatomic,strong) NSString *SPEC;//
+@property(nonatomic,strong) NSString *PROD_NAME;//产品名
+@property(nonatomic,strong) NSString *PRODUCT_UNIT_NAME;//产品单位名
 
 @end

@@ -195,6 +195,14 @@
  */
 +(void)insertDisplayVividByRequest:(InsertDisplayVividHttpRequest *)request success:(void(^)(InsertDisplayVividHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
+/**
+ *  陈列费用上报接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)insertDisplayCostByRequest:(InsertDisplayCostHttpRequest *)request success:(void(^)(InsertDisplayCostHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 /**
  *  照片上传接口
