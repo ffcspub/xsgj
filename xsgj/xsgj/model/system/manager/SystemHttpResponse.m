@@ -245,7 +245,7 @@
             [bean saveToDB];
         }
     }
-    if (CAMERA_TYPE_UPDATE_STATE == 1) {
+    if (_CAMERA_TYPE_UPDATE_STATE == 1) {
         [BNCameraType deleteWithWhere:nil];
         for (BNCameraType *bean in _CAMERA_TYPES) {
             [bean saveToDB];
