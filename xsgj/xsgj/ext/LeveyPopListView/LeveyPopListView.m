@@ -22,11 +22,16 @@
     UITableView *_tableView;
     NSString *_title;
     NSArray *_options;
+    UIView *_backView;
 }
 
 #pragma mark - initialization & cleaning up
 - (id)initWithTitle:(NSString *)aTitle options:(NSArray *)aOptions {
     CGRect rect = [[UIScreen mainScreen] applicationFrame]; // portrait bounds
+    if (!_backView) {
+        _backView = [[UIView alloc]init];
+        _backView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    }
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         rect.size = CGSizeMake(rect.size.height, rect.size.width);
     }
@@ -58,16 +63,25 @@
     return self;
 }
 
+-(id)init{
+    if(self = [self initWithTitle:nil options:nil]){
+        
+    }
+    return self;
+}
+
 
 #pragma mark - Private Methods
-- (void)fadeIn {
+- (void)fadeIn:(UIView *)view {
     self.transform = CGAffineTransformMakeScale(1.3, 1.3);
     self.alpha = 0;
+    
+    _backView.alpha = 0;
     [UIView animateWithDuration:.35 animations:^{
         self.alpha = 1;
         self.transform = CGAffineTransformMakeScale(1, 1);
+        _backView.alpha = 1;
     }];
-
 }
 
 - (void) orientationDidChange: (NSNotification *) not {
@@ -83,23 +97,31 @@
     [UIView animateWithDuration:.35 animations:^{
         self.transform = CGAffineTransformMakeScale(1.3, 1.3);
         self.alpha = 0.0;
+        _backView.alpha = 0.0;
     } completion:^(BOOL finished) {
         if (finished) {
             [[NSNotificationCenter defaultCenter] removeObserver:self];
             [self removeFromSuperview];
+            [_backView removeFromSuperview];
         }
     }];
 }
 
 #pragma mark - Instance Methods
 - (void)showInView:(UIView *)aView animated:(BOOL)animated {
+    if ([aView viewWithTag:11000011]) {
+        return;
+    }
     [[NSNotificationCenter defaultCenter] addObserver: self
                                           selector: @selector(orientationDidChange:)
                                           name: UIApplicationDidChangeStatusBarOrientationNotification
                                           object: nil];
-    [aView addSubview:self];
+    _backView.tag = 11000011;
+    _backView.frame = aView.frame;
+    [_backView addSubview:self];
+    [aView addSubview:_backView];
     if (animated) {
-        [self fadeIn];
+        [self fadeIn:aView];
     }
 }
 
@@ -160,7 +182,7 @@
     
     // Draw the background with shadow
     CGContextSetShadowWithColor(ctx, CGSizeZero, 6., [UIColor colorWithWhite:0 alpha:.75].CGColor);
-    [[UIColor colorWithWhite:0 alpha:.75] setFill];
+    [[UIColor colorWithWhite:1 alpha:1.0] setFill];
     
     
     float x = POPLISTVIEW_SCREENINSET;
@@ -179,9 +201,9 @@
     CGPathRelease(path);
     
     // Draw the title and the separator with shadow
-    CGContextSetShadowWithColor(ctx, CGSizeMake(0, 1), 0.5f, [UIColor blackColor].CGColor);
-    [[UIColor colorWithRed:0.020 green:0.549 blue:0.961 alpha:1.] setFill];
-    [_title drawInRect:titleRect withFont:[UIFont systemFontOfSize:16.]];
+    CGContextSetShadowWithColor(ctx, CGSizeMake(0, 1), 0.5f, [UIColor clearColor].CGColor);
+    [[UIColor colorWithRed:0    green:155.0/255 blue:230.0/255 alpha:1.] setFill];
+    [_title drawInRect:titleRect withFont:[UIFont boldSystemFontOfSize:16.]];
     CGContextFillRect(ctx, separatorRect);
 }
 

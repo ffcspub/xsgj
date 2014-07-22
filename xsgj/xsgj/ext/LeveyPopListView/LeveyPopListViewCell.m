@@ -15,8 +15,10 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        self.textLabel.textColor = [UIColor whiteColor];
+        self.textLabel.textColor = [UIColor darkGrayColor];
         self.textLabel.font = [UIFont fontWithName:@"Helvetica" size:15.];
+        self.textLabel.numberOfLines = 2;
+        self.textLabel.minimumFontSize = 11;
     }
     return self;
 }
