@@ -14,6 +14,9 @@
 @property (strong, nonatomic) UIImageView *ivBackground;
 @property (strong, nonatomic) UIImageView *ivBackgroundSelect;
 
+@property (strong, nonatomic) UIImage *imgMiddle;
+@property (strong, nonatomic) UIImage *imgMiddleHight;
+
 - (void)_initialize;
 
 @end
@@ -67,9 +70,15 @@
     // 设置选中效果
     self.ivBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300, 56)];
     self.ivBackgroundSelect = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300, 56)];
+    
+    // 缓存中间高亮的图片
+    UIImage *image = [UIImage imageNamed:@"table_part2"];
+    self.imgMiddle = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+    UIImage *imageSelect = [UIImage imageNamed:@"table_part2_s"];
+    self.imgMiddleHight = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5,5, 5)];
+    
     self.backgroundView = self.ivBackground;
     self.selectedBackgroundView = self.ivBackgroundSelect;
-    self.selectionStyle = UITableViewCellSelectionStyleDefault;
     self.cellStyle = TOP;
 }
 
@@ -80,40 +89,35 @@
     switch (cellStyle) {
         case TOP:{
             UIImage *image = [UIImage imageNamed:@"table_part1"];
-            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5,5, 5)];
+            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
             self.ivBackground.image = image;
             
             UIImage *imageSelect = [UIImage imageNamed:@"table_part1_s"];
-            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5,5, 5)];
+            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
             self.ivBackgroundSelect.image = imageSelect;
         }
             break;
         case MID:{
-            UIImage *image = [UIImage imageNamed:@"table_part2"];
-            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5,5, 5)];
-            self.ivBackground.image = image;
-            
-            UIImage *imageSelect = [UIImage imageNamed:@"table_part2_s"];
-            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5,5, 5)];
-            self.ivBackgroundSelect.image = imageSelect;
+            self.ivBackground.image = self.imgMiddle;
+            self.ivBackgroundSelect.image = self.imgMiddleHight;
         }
             break;
         case BOT:{
             UIImage *image = [UIImage imageNamed:@"table_part3"];
-            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5,5, 5)];
+            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
             self.ivBackground.image = image;
             
             UIImage *imageSelect = [UIImage imageNamed:@"table_part3_s"];
-            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5,5, 5)];
+            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
             self.ivBackgroundSelect.image = imageSelect;
         }
         case SINGLE:{
             UIImage *image = [UIImage imageNamed:@"table_main_n"];
-            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5,5, 5)];
+            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
             self.ivBackground.image = image;
             
             UIImage *imageSelect = [UIImage imageNamed:@"table_main_s"];
-            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5,5, 5)];
+            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
             self.ivBackgroundSelect.image = imageSelect;
         }
             break;
