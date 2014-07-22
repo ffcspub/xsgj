@@ -41,8 +41,6 @@
     UILongPressGestureRecognizer *longPress =
     [[UILongPressGestureRecognizer alloc] initWithTarget:self
                                                   action:@selector(handleTableviewCellLongPressed:)];
-    //代理
-    longPress.delegate = self;
     longPress.minimumPressDuration = 1.0;
     //将长按手势添加到需要实现长按操作的视图里
     [_mapView addGestureRecognizer:longPress];
