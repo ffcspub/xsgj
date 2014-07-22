@@ -25,6 +25,13 @@
 
 #pragma mark - IBActionSheet
 
+@interface IBActionSheet ()
+{
+    CGFloat _border;  // Border Width , Default is 8.f
+}
+
+@end
+
 @implementation IBActionSheet
 
 #pragma mark IBActionSheet Set up methods
@@ -45,6 +52,8 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeFromView)];
     tap.numberOfTapsRequired = 1;
     [self.transparentView addGestureRecognizer:tap];
+    
+    _border = 8.f;
     
     return self;
 }
@@ -183,110 +192,109 @@
 
 - (void)setUpTheActionSheet {
     
-    float height;
-    float width;
+    CGFloat titleViewHeight = 44.f; // IBActionTitleView的高度默认是60，文本高度为44居中
+    CGFloat buttonHeight = 44.f;
+    CGFloat topOffset    = 50.f; // 顶部需要留出的大小
+    
+    float height = 0.f; // 计算高度
+    float width  = 0.f; // 屏幕宽度
+    float screenHeight = 0.f; // 屏幕高度
     
     if (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])) {
         width = CGRectGetWidth([UIScreen mainScreen].bounds);
+        screenHeight = CGRectGetHeight([UIScreen mainScreen].bounds);
     } else {
         width = CGRectGetHeight([UIScreen mainScreen].bounds);
+        screenHeight = CGRectGetWidth([UIScreen mainScreen].bounds);
     }
     
-    
-    // slight adjustment to take into account non-retina devices
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]
-        && [[UIScreen mainScreen] scale] == 2.0) {
-        
-        // setup spacing for retina devices
-        if (self.hasCancelButton) {
-            height = 59.5;
-        } else if (!self.hasCancelButton && self.titleView) {
-            height = 52.0;
-        } else {
-            height = 104.0;
-        }
-        
-        if (self.buttons.count) {
-            height += (self.buttons.count * 44.5);
-        }
-        if (self.titleView) {
-            height += CGRectGetHeight(self.titleView.frame) - 44;
-        }
-        
-        self.frame = CGRectMake(0, 0, width, height);
-        [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        
-        CGPoint pointOfReference = CGPointMake(CGRectGetWidth(self.frame) / 2.0, CGRectGetHeight(self.frame) - 30);
-        
-        int whereToStop;
-        if (self.hasCancelButton) {
-            [self addSubview:[self.buttons lastObject]];
-            [[self.buttons lastObject] setCenter:pointOfReference];
-            [[self.buttons objectAtIndex:0] setCenter:CGPointMake(pointOfReference.x, pointOfReference.y - 52)];
-            pointOfReference = CGPointMake(pointOfReference.x, pointOfReference.y - 52);
-            whereToStop = self.buttons.count - 2;
-        } else {
-            [self addSubview:[self.buttons lastObject]];
-            [[self.buttons lastObject] setCenter:pointOfReference];
-            whereToStop = self.buttons.count - 1;
-        }
-        
-        for (int i = 0, j = whereToStop; i <= whereToStop; ++i, --j) {
-            [self addSubview:[self.buttons objectAtIndex:i]];
-            [[self.buttons objectAtIndex:i] setCenter:CGPointMake(pointOfReference.x, pointOfReference.y - (44.5 * j))];
-        }
-        
-        if (self.titleView) {
-            [self addSubview:self.titleView];
-            self.titleView.center = CGPointMake(self.center.x, CGRectGetHeight(self.titleView.frame) / 2.0);
-        }
-        
+    // 边框
+    if (self.hasCancelButton) {
+        height = 2*_border; // 取消按钮上下各有边框大小的距离
     } else {
-        
-        // setup spacing for non-retina devices
-        
-        if (self.hasCancelButton) {
-            height = 60.0;
-        } else {
-            height = 104.0;
-        }
-        
-        if (self.buttons.count) {
-            height += (self.buttons.count * 45);
-        }
-        if (self.titleView) {
-            height += CGRectGetHeight(self.titleView.frame) - 45;
-        }
-        
-        self.frame = CGRectMake(0, 0, width, height);
-        [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        
-        CGPoint pointOfReference = CGPointMake(CGRectGetWidth(self.frame) / 2.0, CGRectGetHeight(self.frame) - 30);
-        
-        int whereToStop;
-        if (self.hasCancelButton) {
-            [self addSubview:[self.buttons lastObject]];
-            [[self.buttons lastObject] setCenter:pointOfReference];
-            [[self.buttons objectAtIndex:0] setCenter:CGPointMake(pointOfReference.x, pointOfReference.y - 52)];
-            pointOfReference = CGPointMake(pointOfReference.x, pointOfReference.y - 52);
-            whereToStop = self.buttons.count - 2;
-        } else {
-            [self addSubview:[self.buttons lastObject]];
-            [[self.buttons lastObject] setCenter:pointOfReference];
-            whereToStop = self.buttons.count - 1;
-        }
-        
-        for (int i = 0, j = whereToStop; i <= whereToStop; ++i, --j) {
-            [self addSubview:[self.buttons objectAtIndex:i]];
-            [[self.buttons objectAtIndex:i] setCenter:CGPointMake(pointOfReference.x, pointOfReference.y - (45 * j))];
-        }
-        
-        if (self.titleView) {
-            [self addSubview:self.titleView];
-            self.titleView.center = CGPointMake(self.center.x, CGRectGetHeight(self.titleView.frame) / 2.0);
-        }
+        height = _border; // 没有取消时底部有一个边距
     }
     
+    // 按钮高度
+    height += (self.buttons.count * buttonHeight);
+    
+    // 标题
+    if (self.titleView) {
+        height += titleViewHeight;
+    }
+    
+    // 设置不超过屏幕
+    CGFloat realHeight = MIN(height, screenHeight - topOffset); // 顶部最少空出50个高度
+    CGFloat realWidth = CGRectGetWidth([UIScreen mainScreen].bounds) - 2*_border;
+    
+    self.frame = CGRectMake(0, 0, width, realHeight);
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    // 存在取消按钮
+    CGFloat hCancelButton = 0.f;
+    int whereToStop = self.buttons.count - 1;
+    if (self.hasCancelButton) {
+        UIButton *btnCancel = [self.buttons lastObject];
+        [self addSubview:btnCancel];
+        hCancelButton = buttonHeight;
+        
+        CGPoint pointCancel = CGPointMake(self.center.x, CGRectGetHeight(self.bounds) - hCancelButton / 2 - _border);
+        btnCancel.center = pointCancel;
+        
+        whereToStop = whereToStop - 1;
+    }
+    
+    // 标题
+    CGFloat hTitleView = 0.f;
+    if (self.titleView) {
+        [self addSubview:self.titleView];
+        hTitleView = titleViewHeight;
+        
+        self.titleView.frame = CGRectMake(_border, 0.f, realWidth, titleViewHeight);
+    }
+    
+    // 确定按钮判断
+    CGFloat hDestructiveButton = 0.f;
+    int whereToStart = 0;
+    if (self.hasDestructiveButton) {
+        
+        UIButton *btnDestructive = [self.buttons objectAtIndex:0];
+        [self addSubview:btnDestructive];
+        hDestructiveButton = buttonHeight;
+        btnDestructive.frame = CGRectMake(_border, hTitleView, realWidth, buttonHeight);
+        
+        //CGPoint pointDestructive = CGPointMake(self.center.x, hTitleView + hDestructiveButton / 2);
+        //[btnDestructive setCenter:pointDestructive];
+        
+        whereToStart = 1;
+    }
+    
+    // 存在其它按钮的情况svHeight
+    if (whereToStart <= whereToStop) {
+        
+        CGFloat svContentHeight = (whereToStop - whereToStart + 1) *buttonHeight;
+        CGFloat yOffset = hTitleView + hDestructiveButton;
+        CGFloat svHeight = realHeight - hTitleView - hCancelButton - hDestructiveButton;
+        
+        // 如果存在取消按钮，会有两个间距
+        if (self.hasCancelButton) {
+            svHeight -= 2*_border;
+        } else {
+            svHeight -= _border;
+        }
+        UIScrollView *sv = [[UIScrollView alloc] initWithFrame:CGRectMake(_border, yOffset, realWidth, svHeight)];
+        sv.contentSize = CGSizeMake(realWidth, svContentHeight);
+        sv.backgroundColor = [UIColor clearColor];
+        [self addSubview:sv];
+        
+        CGRect rectButton = CGRectMake(0.f, 0.f, CGRectGetWidth(self.bounds), buttonHeight);
+        for (int i = whereToStart, j = whereToStop; i <= whereToStop; ++i, --j) {
+            UIButton *btn = [self.buttons objectAtIndex:i];
+            btn.frame = rectButton;
+            [sv addSubview:btn];
+            rectButton = CGRectOffset(rectButton, 0.f, buttonHeight);
+        }
+    }
 }
 
 - (void)setUpTheActions {
@@ -520,12 +528,7 @@
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^() {
                          self.transparentView.alpha = 0.4f;
-                         if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
-                             self.center = CGPointMake(x, (height - 20) - CGRectGetHeight(self.frame) / 2.0);
-                         } else {
-                             self.center = CGPointMake(x, height - CGRectGetHeight(self.frame) / 2.0);
-                         }
-                         
+                         self.center = CGPointMake(x, height - CGRectGetHeight(self.frame) / 2.0);
                      } completion:^(BOOL finished) {
                          self.visible = YES;
                      }];
@@ -716,7 +719,7 @@
     } else {
         width = CGRectGetHeight([UIScreen mainScreen].bounds);
     }
-    self = [self initWithFrame:CGRectMake(0, 0, width - 16, 44)];
+    self = [self initWithFrame:CGRectMake(0, 0, width - 16, 44)]; // 默认的按钮的宽度是屏幕的宽度-2*8，高度44
     
     self.backgroundColor = [UIColor whiteColor];
     self.originalBackgroundColor = self.backgroundColor;
