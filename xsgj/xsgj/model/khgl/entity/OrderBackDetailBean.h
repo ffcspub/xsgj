@@ -10,10 +10,14 @@
 
 @interface OrderBackDetailBean : NSObject
 
-@property(nonatomic,strong) NSString *	PROD_ID	;//	产品id
-@property(nonatomic,strong) NSString *	PRODUCT_UNIT_ID	;//	单位
+@property(nonatomic,assign) int         PROD_ID	;//	产品id
+@property(nonatomic,assign) int         PRODUCT_UNIT_ID	;//	单位
 @property(nonatomic,assign) int         ITEM_NUM	;//	退货数量
 @property(nonatomic,strong) NSString *	REMARK	;//	退货原因
 @property(nonatomic,strong) NSString *	BATCH	;//	批次
+@property(nonatomic,strong) NSString *  SPEC;
+@property(nonatomic,strong) NSString *  PRODUCT_UNIT_NAME;
+@property(nonatomic,strong) NSString *  PRODUCT_NAME;
+
 
 @end
