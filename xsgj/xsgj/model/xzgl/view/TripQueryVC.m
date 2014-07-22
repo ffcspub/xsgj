@@ -15,7 +15,6 @@
 #import <UIAlertView+Blocks.h>
 #import <IQKeyboardManager.h>
 #import "SIAlertView.h"
-#import "BorderView.h"
 #import <NSDate+Helper.h>
 #import "NSString+URL.h"
 #import "ShareValue.h"
@@ -50,6 +49,9 @@ static int const pageSize = 20;
     [super viewDidLoad];
 
     [self UI_setup];
+    
+    self.currentPage = 1;
+    [self loadTripList];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -57,8 +59,6 @@ static int const pageSize = 20;
     [super viewDidAppear:animated];
     
     // 每次进入页面重新加载
-    self.currentPage = 1;
-    [self loadTripList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -238,12 +238,16 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
     [cell configureForData:self.arrTrips[indexPath.row]];
     
     // 配置背景
-    if (indexPath.row == 0) {
-        cell.cellStyle = TOP;
-    } else if (indexPath.row == ([self.arrTrips count] - 1)) {
-        cell.cellStyle = BOT;
+    if ([self.arrTrips count] == 1) {
+        cell.cellStyle = SINGLE;
     } else {
-        cell.cellStyle = MID;
+        if (indexPath.row == 0) {
+            cell.cellStyle = TOP;
+        } else if (indexPath.row == ([self.arrTrips count] - 1)) {
+            cell.cellStyle = BOT;
+        } else {
+            cell.cellStyle = MID;
+        }
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -273,7 +277,7 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 56.f;
+    return [TripQueryCell cellHeight];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath

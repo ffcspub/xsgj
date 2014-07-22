@@ -7,7 +7,6 @@
 //
 
 #import "HideTabViewController.h"
-#import "BorderView.h"
 
 @class TripInfoBean;
 
@@ -26,20 +25,6 @@ typedef NS_ENUM(NSUInteger, TripDetailShowStyle) {
 @interface TripDetailVC : HideTabViewController
 
 @property (nonatomic, strong) TripInfoBean *tripInfo;
-
-@property (weak, nonatomic) IBOutlet UILabel *lblTheme;
-@property (weak, nonatomic) IBOutlet UILabel *lblDays;
-@property (weak, nonatomic) IBOutlet UILabel *lblBeginTime;
-@property (weak, nonatomic) IBOutlet UILabel *lblEndTime;
-@property (weak, nonatomic) IBOutlet UILabel *lblStarting;
-@property (weak, nonatomic) IBOutlet UILabel *lblDestination;
-@property (weak, nonatomic) IBOutlet UILabel *lblApprovalMan;
-@property (weak, nonatomic) IBOutlet UILabel *lblApprovalState;
-@property (weak, nonatomic) IBOutlet UILabel *lblApplyDesc;
-
-@property (weak, nonatomic) IBOutlet UITextView *tvApprovalDesc;
-@property (weak, nonatomic) IBOutlet UILabel *lblInputFlag;
-
 @property (nonatomic, assign) TripDetailShowStyle showStyle;
 
 @end

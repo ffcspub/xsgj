@@ -11,7 +11,8 @@
 typedef NS_OPTIONS(NSUInteger, TripQueryCellStyle) {
     TOP = 0,
     MID = 1,
-    BOT = 2
+    BOT = 2,
+    SINGLE
 };
 
 /**
@@ -24,10 +25,13 @@ typedef NS_OPTIONS(NSUInteger, TripQueryCellStyle) {
 
 @property (weak, nonatomic) IBOutlet UILabel *lblTitle;
 @property (weak, nonatomic) IBOutlet UILabel *lblDetail;
+@property (weak, nonatomic) IBOutlet UILabel *lblPrompt;
 
 @property (nonatomic, assign) TripQueryCellStyle cellStyle;
 
 + (UINib *)nib;
+
++ (CGFloat)cellHeight;
 
 @end
 
