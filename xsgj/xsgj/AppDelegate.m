@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import <AKTabBarController.h>
-#import <MAMapKit/MAMapKit.h>
 #import "UIColor+External.h"
 #import "LoginViewController.h"
 
@@ -49,7 +48,6 @@
 
 -(void)addThirthPart{
     [self test];
-    [MAMapServices sharedServices].apiKey =@"9dfdf1c3299afea34b2c97c45010afaa";
     
     _mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
