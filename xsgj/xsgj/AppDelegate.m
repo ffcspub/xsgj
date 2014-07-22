@@ -50,6 +50,14 @@
 -(void)addThirthPart{
     [self test];
     [MAMapServices sharedServices].apiKey =@"9dfdf1c3299afea34b2c97c45010afaa";
+    
+    _mapManager = [[BMKMapManager alloc]init];
+    // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
+    BOOL ret = [_mapManager start:@"LoKhl36KEikegL3WHiHFkpc8"  generalDelegate:nil];
+    if (!ret) {
+        NSLog(@"manager start failed!");
+    }
+
 }
 
 

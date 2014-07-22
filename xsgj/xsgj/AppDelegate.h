@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BMapKit.h"
 
 @class AKTabBarController;
 @class LoginViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>{
+    BMKMapManager* _mapManager;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 
@@ -22,6 +25,8 @@
 @property (strong, nonatomic) AKTabBarController *tabBarController;
 
 @property (strong, nonatomic) LoginViewController *loginViewController;
+
+
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

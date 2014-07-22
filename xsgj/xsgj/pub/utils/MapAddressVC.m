@@ -129,7 +129,7 @@
     if (annotationView == nil) {
         annotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID];
 		((BMKPinAnnotationView*)annotationView).pinColor = BMKPinAnnotationColorRed;
-		((BMKPinAnnotationView*)annotationView).animatesDrop = YES;
+		((BMKPinAnnotationView*)annotationView).animatesDrop = NO;
     }
 	
 	annotationView.centerOffset = CGPointMake(0, -(annotationView.frame.size.height * 0.5));
