@@ -23,6 +23,7 @@
 #import "BNDisplayShape.h"
 #import "BNDisplayType.h"
 #import "BNSignConfigBean.h"
+#import "BNCameraType.h"
 
 #import "LK_NSDictionary2Object.h"
 
@@ -50,6 +51,7 @@
     [helper createTableWithModelClass:[BNVisitStepRecord class]];
     [helper createTableWithModelClass:[BNVistRecord class]];
     [helper createTableWithModelClass:[BNSignConfigBean class]];
+    [helper createTableWithModelClass:[BNCameraType class]];
 }
 
 -(void)saveCacheDB{
@@ -127,6 +129,10 @@
 
 +(Class)__SIGN_CONFIGSClass{
     return [BNSignConfigBean class];
+}
+
++(Class)__CAMERA_TYPESClass{
+    return [BNCameraType class];
 }
 
 -(void)saveDefaultMobileMenus{
@@ -236,6 +242,12 @@
     if (_SIGN_CONFIG_UPDATE_STATE == 1) {
         [BNSignConfigBean deleteWithWhere:nil];
         for (BNSignConfigBean *bean in _SIGN_CONFIGS) {
+            [bean saveToDB];
+        }
+    }
+    if (CAMERA_TYPE_UPDATE_STATE == 1) {
+        [BNCameraType deleteWithWhere:nil];
+        for (BNCameraType *bean in _CAMERA_TYPES) {
             [bean saveToDB];
         }
     }

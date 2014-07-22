@@ -37,6 +37,8 @@
 @property(nonatomic,strong) NSArray *	DISPLAY_CASES	;//	陈列情况
 @property(nonatomic,strong) NSArray *	DISPLAY_SHAPES	;//	陈列形式
 @property(nonatomic,strong) NSArray *	SIGN_CONFIGS	;//	考勤配置
+@property(nonatomic,strong) NSArray *   CAMERA_TYPES;//拍照类型
+
 @property(nonatomic,assign) int	MENU_UPDATE_STATE	;//	手机菜单是否有更新
 @property(nonatomic,assign) int	PRODUCT_TYPE_UPDATE_STATE	;//	产品类别是否有更新
 @property(nonatomic,assign) int	PRODUCT_UNIT_UPDATE_STATE	;//	产品单位是否有更新
@@ -51,6 +53,7 @@
 @property(nonatomic,assign) int	DISPLAY_CASE_UPDATE_STATE	;//	陈列情况是否有更新
 @property(nonatomic,assign) int	DISPLAY_SHPAE_UPDATE_STATE	;//	陈列形式是否有更新
 @property(nonatomic,assign) int SIGN_CONFIG_UPDATE_STATE;//考勤配置是否有更新
+@property(nonatomic,assign) int CAMERA_TYPE_UPDATE_STATE;//拍照类型是否有更新
 
 -(void)saveCacheDB;
 
