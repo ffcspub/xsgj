@@ -57,21 +57,15 @@ typedef  enum : NSUInteger {
     _style = style;
     switch (style) {
         case TOP:{
-            UIImage *image = [UIImage imageNamed:@"table_part1"];
-            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5,5, 5) ];
-            _backView.image = image;
+            _backView.image = [ShareValue tablePart1];
         }
             break;
         case MID:{
-            UIImage *image = [UIImage imageNamed:@"table_part2"];
-            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) ];
-            _backView.image = image;
+            _backView.image = [ShareValue tablePart2];
         }
             break;
         case BOT:{
-            UIImage *image = [UIImage imageNamed:@"table_part3"];
-            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) ];
-            _backView.image = image;
+            _backView.image = [ShareValue tablePart3];;
         }
             break;
         default:

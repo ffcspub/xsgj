@@ -44,7 +44,17 @@
 #define COLOR_DETAIL_CONTENT    HEX_RGB(0x5C6871)
 #define FONT_SIZE_DETAIL_CONTENT 18.f
 
-@interface ShareValue : NSObject
+@interface ShareValue : NSObject{
+   
+}
+
++(UIImage *)tablePart1;
++(UIImage *)tablePart2;
++(UIImage *)tablePart3;
+
++(UIImage *)tablePart1S;
++(UIImage *)tablePart2S;
++(UIImage *)tablePart3S;
 
 //获取文件id对应的图片
 +(NSString *)getFileUrlByFileId:(NSString *)fileId;

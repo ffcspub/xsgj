@@ -64,6 +64,13 @@
     [((AppDelegate *)[UIApplication sharedApplication].delegate) hideTabView];
 }
 
+-(void)showRightBarButtonItemWithTitle:(NSString *)title target:(id)target action:(SEL)action{
+    UIButton *button = [self defaultRightButtonWithTitle:title];
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+
+}
+
 //-(void)setTitle:(NSString *)title{
 //    [super setTitle:title];
 //    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];

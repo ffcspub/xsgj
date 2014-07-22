@@ -33,9 +33,7 @@
 {
     [super viewDidLoad];
     self.title = @"调整位置";
-    UIButton *rightButton = [self defaultRightButtonWithTitle:@"确定"];
-    [rightButton addTarget:self action:@selector(sureAction) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [self showRightBarButtonItemWithTitle:@"确定" target:self action:@selector(sureAction)];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(locationAddressUpdate) name:NOTIFICATION_ADDRESS_UPDATED object:nil];
     

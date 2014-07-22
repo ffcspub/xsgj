@@ -10,7 +10,7 @@
 
 @interface HideTabViewController : UIViewController
 
-- (UIButton *)titleButton;
+-(UIButton *)titleButton;
 
 -(UIButton *)defaultRightButtonWithTitle:(NSString *)title;
 

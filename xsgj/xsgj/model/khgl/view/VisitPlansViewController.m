@@ -146,9 +146,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIButton *rightButton = [self defaultRightButtonWithTitle:@"操作"];
-    [rightButton addTarget:self action:@selector(showMenus:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [self showRightBarButtonItemWithTitle:@"操作" target:self action:@selector(showMenus:) ];
+    
     [_btn_submit configBlueStyle];
     [self loadPlanVisits];
     // Do any additional setup after loading the view from its nib.

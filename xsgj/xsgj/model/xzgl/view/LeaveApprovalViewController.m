@@ -21,6 +21,7 @@ typedef  enum : NSUInteger {
 
 @interface LeaveApprovalCell : UITableViewCell{
     UIImageView *_backView;
+    UIImageView *_backSelectedView;
     UIImageView *_stateView;
     UILabel *_lb_state;
     UILabel *_lb_name;
@@ -55,7 +56,8 @@ typedef  enum : NSUInteger {
         _lb_time.font = [UIFont systemFontOfSize:15];
         UIImageView *iv_next = [[UIImageView alloc] initWithFrame:CGRectMake(275, 15, 26, 26)];
         iv_next.image = [UIImage imageNamed:@"tableCtrlBtnIcon_next_nor"];
-        [self.contentView addSubview:_backView];
+        self.backgroundView = _backView;
+        self.selectedBackgroundView = _backSelectedView;
         [self.contentView addSubview:_stateView];
         [self.contentView addSubview:_lb_state];
         [self.contentView addSubview:_lb_name];
@@ -73,21 +75,18 @@ typedef  enum : NSUInteger {
     _style = style;
     switch (style) {
         case TOP:{
-            UIImage *image = [UIImage imageNamed:@"table_part1"];
-            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5,5, 5) ];
-            _backView.image = image;
+            _backView.image = [ShareValue tablePart1];
+            _backSelectedView.image = [ShareValue tablePart1S];
         }
             break;
         case MID:{
-            UIImage *image = [UIImage imageNamed:@"table_part2"];
-            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) ];
-            _backView.image = image;
+            _backView.image = [ShareValue tablePart2];
+            _backSelectedView.image = [ShareValue tablePart2S];
         }
             break;
         case BOT:{
-            UIImage *image = [UIImage imageNamed:@"table_part3"];
-            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) ];
-            _backView.image = image;
+            _backView.image = [ShareValue tablePart3];
+            _backSelectedView.image = [ShareValue tablePart3S];
         }
             break;
         default:

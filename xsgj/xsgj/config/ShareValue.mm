@@ -19,9 +19,60 @@
 
 
 static ShareValue *_shareValue;
+static UIImage *_imageTablePart1;
+static UIImage *_imageTablePart2;
+static UIImage *_imageTablePart3;
 
 
 @implementation ShareValue
+
++(UIImage *)tablePart1{
+    if (!_imageTablePart1) {
+      _imageTablePart1  = [UIImage imageNamed:@"table_part1"];
+        _imageTablePart1 = [_imageTablePart1 resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
+    }
+    return _imageTablePart1;
+}
+
++(UIImage *)tablePart2{
+    if (!_imageTablePart2) {
+        _imageTablePart2  = [UIImage imageNamed:@"table_part2"];
+        _imageTablePart2 = [_imageTablePart1 resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
+    }
+    return _imageTablePart2;
+}
+
++(UIImage *)tablePart3{
+    if (!_imageTablePart3) {
+        _imageTablePart3  = [UIImage imageNamed:@"table_part3"];
+        _imageTablePart3 = [_imageTablePart1 resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
+    }
+    return _imageTablePart3;
+}
+
++(UIImage *)tablePart1S{
+    if (!_imageTablePart1) {
+        _imageTablePart1  = [UIImage imageNamed:@"table_part1_S"];
+        _imageTablePart1 = [_imageTablePart1 resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
+    }
+    return _imageTablePart1;
+}
+
++(UIImage *)tablePart2S{
+    if (!_imageTablePart2) {
+        _imageTablePart2  = [UIImage imageNamed:@"table_part2_S"];
+        _imageTablePart2 = [_imageTablePart1 resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
+    }
+    return _imageTablePart2;
+}
+
++(UIImage *)tablePart3S{
+    if (!_imageTablePart3) {
+        _imageTablePart3  = [UIImage imageNamed:@"table_part3_S"];
+        _imageTablePart3 = [_imageTablePart1 resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
+    }
+    return _imageTablePart3;
+}
 
 //获取文件id对应的图片
 +(NSString *)getFileUrlByFileId:(NSString *)fileId{
