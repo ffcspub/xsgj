@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btn_inputType;
 @property (weak, nonatomic) IBOutlet UIImageView *iv_contentbg;
 @property (weak, nonatomic) IBOutlet UIImageView *iv_inputbg;
+@property (weak, nonatomic) IBOutlet UITextView *tv_content;
 
 - (IBAction)selectReportTypeAction:(id)sender;
 
