@@ -32,6 +32,12 @@ static MapUtils * _Maputils;
 }
 
 -(void)startLocationUpdate{
+    noOnce = NO;
+    [_locationService startUserLocationService];
+}
+
+-(void)startLocationUpdateForBackgroud{
+    noOnce = YES;
     [_locationService startUserLocationService];
 }
 
@@ -78,7 +84,9 @@ static MapUtils * _Maputils;
  *@param userLocation 新的用户位置
  */
 - (void)didUpdateUserLocation:(BMKUserLocation *)userLocation{
-    [_locationService stopUserLocationService];
+    if (!noOnce) {
+        [_locationService stopUserLocationService];
+    }
     [ShareValue shareInstance].currentLocation = userLocation.location.coordinate;
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOCATION_UPDATED object:nil];
 }
