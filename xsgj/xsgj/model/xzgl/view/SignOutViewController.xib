@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignOutViewController">
             <connections>
+                <outlet property="btn_update" destination="nKf-ng-jdf" id="XWK-JG-2rw"/>
                 <outlet property="iv_photo" destination="dPX-b1-YVo" id="05X-0F-Tme"/>
                 <outlet property="iv_photobg" destination="kPa-NZ-7SW" id="F2g-kW-bJw"/>
                 <outlet property="iv_photobgdown" destination="pxd-M1-Vb7" id="YKH-np-agx"/>
@@ -58,6 +59,36 @@
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nKf-ng-jdf">
+                            <rect key="frame" x="246" y="-6" width="46" height="48"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" image="tableCtrlBtnIcon_refresh-nor.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3cY-U1-hih">
+                            <rect key="frame" x="252" y="46" width="34" height="41"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" image="tableCtrlBtnIcon_map-nor.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="刷新" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Frl-6B-GO3">
+                            <rect key="frame" x="248" y="28" width="42" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" red="0.2171507808" green="0.73985224179999998" blue="0.3301146653" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="地图" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="J2J-wo-8aC">
+                            <rect key="frame" x="248" y="75" width="42" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" red="0.94125764270000001" green="0.59499814340000001" blue="0.22182041599999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
@@ -87,6 +118,9 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <state key="highlighted" backgroundImage="btnPhoto_press.png"/>
+                    <connections>
+                        <action selector="takePhotoAction:" destination="-1" eventType="touchUpInside" id="EFY-6F-JuQ"/>
+                    </connections>
                 </button>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="拍照" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rNr-AM-EfP">
                     <rect key="frame" x="101" y="374" width="118" height="21"/>
@@ -103,5 +137,7 @@
     <resources>
         <image name="btnPhoto_nor.png" width="58" height="58"/>
         <image name="btnPhoto_press.png" width="58" height="58"/>
+        <image name="tableCtrlBtnIcon_map-nor.png" width="26" height="26"/>
+        <image name="tableCtrlBtnIcon_refresh-nor.png" width="26" height="26"/>
     </resources>
 </document>

@@ -12,12 +12,14 @@
 #import "MapAddressVC.h"
 #import "XZGLAPI.h"
 #import "MBProgressHUD+Add.h"
+#import "SystemAPI.h"
 
 @interface SignInViewController ()<MapAddressVCDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>{
     BOOL _isLocationSuccess;
     BOOL _isManualLocation;
     NSData *_imageData;
     CLLocationCoordinate2D manualCoordinate;
+    NSString *_photoId;
 }
 
 @end
@@ -125,18 +127,16 @@
 
 - (void)signUpRequest
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
     SignUpHttpRequest *request = [[SignUpHttpRequest alloc] init];
     request.LNG = [ShareValue shareInstance].currentLocation.longitude;
     request.LAT = [ShareValue shareInstance].currentLocation.latitude;
     request.POSITION = _lb_currentLocation.text;
     request.SIGN_FLAG = @"i";
     
-    NSString *imageString = [[NSString alloc] initWithData:_imageData encoding:NSUTF8StringEncoding];
+//    NSString *imageString = [[NSString alloc] initWithData:_imageData encoding:NSUTF8StringEncoding];
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     [formatter setNumberStyle:NSNumberFormatterScientificStyle];
-    NSNumber *imageNum = [formatter numberFromString:imageString];
+    NSNumber *imageNum = [formatter numberFromString:_photoId];
     request.PHOTO = imageNum;
     
     if (_isManualLocation) {
@@ -158,6 +158,27 @@
     }];
 }
 
+- (void)uploadPhoto
+{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    NSDate *now = [NSDate new];
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    [formatter setDateFormat:@"yyMMddHHmmss"];
+    NSString *fileName = [NSString stringWithFormat:@"IMG_%@",[formatter stringFromDate:now]];
+    
+    [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
+        
+        _photoId = fileId;
+        [self signUpRequest];
+        
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:desciption toView:self.view];
+    }];
+}
+
 #pragma mark - Action
 
 - (IBAction)startLocationUpdate:(id)sender {
@@ -172,7 +193,7 @@
         return;
     }
     
-    [self signUpRequest];
+    [self uploadPhoto];
 }
 
 - (IBAction)otherAddressAction:(id)sender {
