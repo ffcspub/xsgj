@@ -97,7 +97,7 @@
 @end
 
 
-@interface QueryVistitRecordHttpRequest : LK_HttpBaseRequest
+@interface QueryVistitRecordHttpRequest : LK_HttpBasePageRequest
 
 @property(nonatomic,assign) int USER_ID	;//	用户标识
 @property(nonatomic,strong) NSString * 	SESSION_ID	;//	会话标识
@@ -212,7 +212,6 @@
 @property(nonatomic,strong) NSString *	BEGIN_TIME	;//	上报开始时间
 @property(nonatomic,strong) NSString *	END_TIME	;//	上报结束时间
 @property(nonatomic,strong) NSString *	CUST_NAME	;//	客户名称
-@property(nonatomic,assign) int         PAGE;       //每几页
 
 @end
 
