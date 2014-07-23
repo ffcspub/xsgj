@@ -11,6 +11,7 @@
 #import "KHGLAPI.h"
 #import "SVPullToRefresh.h"
 #import "VisitRecordCell.h"
+#import "NSString+URL.h"
 
 static NSString * const VisiteRecordCellIdentifier = @"VisiteRecordCellIdentifier";
 static int const pageSize = 10;
@@ -57,8 +58,13 @@ static int const pageSize = 10;
 - (void)loadVisitRecord
 {
     QueryVistitRecordHttpRequest *request = [[QueryVistitRecordHttpRequest alloc] init];
-    request.BEGIN_TIME = self.lblBeginTime.text;
-    request.END_TIME = self.lblEndTime.text;
+    // 如果是空串就不上传
+    if (![self.lblBeginTime.text isEmptyOrWhitespace]) {
+        request.BEGIN_TIME = self.lblBeginTime.text;
+    }
+    if (![self.lblEndTime.text isEmptyOrWhitespace]) {
+        request.END_TIME = self.lblEndTime.text;
+    }
     request.CUST_NAME = self.tfVisiterName.text;
     request.PAGE = self.currentPage;
     request.ROWS = pageSize;
