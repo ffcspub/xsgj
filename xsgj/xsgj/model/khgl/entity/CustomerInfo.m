@@ -29,13 +29,8 @@
         case 2:
             name = @"已驳回";
             break;
-        case 3:{
-            if (_offlineState) {
-               name = @"待审核";
-            }else{
-               name = @"已通过";
-            }
-        }
+        case 3:
+            name = @"待审核";
             break;
         default:
             break;

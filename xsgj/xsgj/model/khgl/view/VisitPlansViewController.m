@@ -100,7 +100,11 @@
 
 -(void)setDeleteModel:(BOOL)deleteModel{
     if (deleteModel) {
-        iv_delete.hidden = NO;
+        if (_customer.CHECK_STATE == 3 && !_customer.isOffline) {
+            iv_delete.hidden = YES;
+        }else{
+            iv_delete.hidden = NO;
+        }
         lb_otherstate.hidden = YES;
         lb_state.hidden = YES;
     }else{
@@ -194,7 +198,7 @@
 -(void)loadPlanVisits{
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     QueryPlanVisitConfigsHttpRequest *request = [[QueryPlanVisitConfigsHttpRequest alloc]init];
-    request.PLAN_DATE = [[NSDate date] stringWithFormat:@"yyyy-MM-dd"];
+    request.PLAN_DATE = [[NSDate getNextDate:1] stringWithFormat:@"yyyy-MM-dd"];
     [KHGLAPI queryPlanVisiConfigsByRequest:request success:^(QueryPlanVisitConfigsHttpResponse *response) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSArray *array =  response.PLAN_VISIT_CONFIGS;
@@ -453,9 +457,15 @@
         NSMutableArray *customerArray = [_dataArray objectAtIndex:_index];
         NSMutableArray *array = [_selectedArray objectAtIndex:_index];
         CustomerInfo *customerInfo = [customerArray objectAtIndex:indexPath.row];
+        if (customerInfo.CHECK_STATE == 3 && customerInfo.isOffline) {
+            return;
+        }
         if ([array containsObject:customerInfo]) {
+            [customerInfo setCHECK_STATE:customerInfo.oldCheckState];
+            [customerInfo setOfflineState:NO];
             [array removeObject:customerInfo];
         }else{
+            [customerInfo setOldCheckState:customerInfo.CHECK_STATE];
             [array addObject:customerInfo];
         }
         UITableView *tableView = [_contentTableViews objectAtIndex:_index];
@@ -508,6 +518,8 @@
     request.WEEKDAY = [weekdayComponents weekday];
     
     [KHGLAPI updateVisitPlansByRequest:request success:^(UpdateVisitPlansHttpResponse *response) {
+        NSMutableArray *datas = [_selectedArray objectAtIndex:_index];
+        [datas removeAllObjects];
         NSDate *date = [_dateArray objectAtIndex:_index];
         NSString *message = [NSString stringWithFormat:@"%@拜访规划提交成功",[date stringWithFormat:@"yyyy-MM-dd"]];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -539,7 +551,6 @@
         customerInfo.CHECK_STATE = 3;
         [customerInfo setOfflineState:YES];
     }
-    [datas removeAllObjects];
     NSMutableArray *indexDatas = [_dataArray objectAtIndex:_index];
     //先删除未提交的申请
     [indexDatas removeObjectsInArray:deleArray];
