@@ -202,12 +202,17 @@
                                          animated:YES];
 }
 
-- (IBAction)takePhotoAction:(id)sender
+- (void)showCamera
 {
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.delegate = self;
     imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self presentViewController:imagePickerController animated:YES completion:NULL];
+}
+
+- (IBAction)takePhotoAction:(id)sender
+{
+    [self performSelector:@selector(showCamera) withObject:nil afterDelay:0.3];
 }
 
 #pragma mark - MapNotification
