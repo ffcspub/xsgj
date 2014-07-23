@@ -38,3 +38,18 @@
 @property(nonatomic,strong) NSString *COMMITTIME;
 
 @end
+
+
+@interface UploadPhotoHttpRequest : LK_HttpBaseRequest
+
+@property(nonatomic,strong) NSString * 	SESSION_ID	;//	会话ID
+@property(nonatomic,assign) int	CORP_ID	;//	企业ID
+@property(nonatomic,assign) int	DEPT_ID	;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
+@property(nonatomic,assign) int	USER_ID	;//	用户ID
+@property(nonatomic,assign) int	CUST_ID	;//	客户标识
+@property(nonatomic,strong) NSString * 	FILE_NAME	;//	拍照名称
+@property(nonatomic,strong) NSString * 	FILE_ID	;//	文件ID
+@property(nonatomic,strong) NSString * 	DATA	;//	拍照数据
+
+@end

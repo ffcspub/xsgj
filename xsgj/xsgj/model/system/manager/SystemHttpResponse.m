@@ -269,3 +269,8 @@
 @implementation LocateCommitHttpResponse
 
 @end
+
+@implementation UploadPhotoHttpResponse
+
+@end
+

@@ -13,7 +13,7 @@
 #import "CRSA.h"
 #import "ServerConfig.h"
 #import "NSObject+EasyCopy.h"
-
+#import "NSData+Base64.h"
 
 @implementation SystemAPI
 
@@ -81,5 +81,28 @@
     } class:[LocateCommitHttpResponse class]];
 
 }
+
+/**
+ *  照片上传接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)uploadPhotoByFileName:(NSString *)fileName data:(NSData *)data success:(void(^)(NSString *fileId))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    UploadPhotoHttpRequest *request = [[UploadPhotoHttpRequest alloc]init];
+    request.FILE_NAME = fileName;
+    request.DATA = [data base64EncodedString];
+    [LK_APIUtil getHttpRequest:request basePath:UPLOAD_PIC_URL apiPath:URL_uploadPhoto Success:^(LK_HttpBaseResponse *response) {
+        UploadPhotoHttpResponse *tResponse = (UploadPhotoHttpResponse *)response;
+        if (!tResponse.FILE_ID) {
+            tResponse.FILE_ID = request.FILE_ID;
+        }
+        success(tResponse.FILE_ID);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[UploadPhotoHttpResponse class]];
+}
+
 
 @end

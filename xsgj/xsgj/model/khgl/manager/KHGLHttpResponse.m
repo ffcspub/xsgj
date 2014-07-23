@@ -146,9 +146,6 @@
 
 @end
 
-@implementation UploadPhotoHttpResponse
-
-@end
 
 
 

@@ -204,14 +204,7 @@
  */
 +(void)insertDisplayCostByRequest:(InsertDisplayCostHttpRequest *)request success:(void(^)(InsertDisplayCostHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
-/**
- *  照片上传接口
- *
- *  @param request 请求参数
- *  @param success 成功block
- *  @param fail    失败返回结果
- */
-+(void)uploadPhotoByFileName:(NSString *)fileName data:(NSData *)data success:(void(^)(NSString *fileId))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
 
 
 
