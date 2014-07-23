@@ -23,5 +23,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *btn_update;
 
 
+- (IBAction)takePhotoAction:(id)sender;
 
 @end
