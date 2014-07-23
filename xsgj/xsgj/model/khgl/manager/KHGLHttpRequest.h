@@ -198,7 +198,7 @@
 @end
 
 
-@interface OrderQueryHttpRequest : LK_HttpBaseRequest
+@interface OrderQueryHttpRequest : LK_HttpBasePageRequest
 
 @property(nonatomic,strong) NSString *	SESSION_ID	;//	会话ID
 @property(nonatomic,assign) int 	CORP_ID	;//	企业ID
