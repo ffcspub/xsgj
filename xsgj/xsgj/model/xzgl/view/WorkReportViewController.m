@@ -130,6 +130,7 @@
     [XZGLAPI workReportByRequest:request success:^(WorkReportHttpResponse *response) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showSuccess:@"提交成功！" toView:self.view];
+        [self.navigationController popViewControllerAnimated:YES];
     } fail:^(BOOL notReachable, NSString *desciption) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showError:@"网络不给力" toView:self.view];
