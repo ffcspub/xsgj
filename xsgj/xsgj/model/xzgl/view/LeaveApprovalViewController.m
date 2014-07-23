@@ -43,18 +43,18 @@ typedef  enum : NSUInteger {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        _backView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, 300, [LeaveApprovalCell height])];
-        _stateView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 7, 26, 26)];
-        _lb_state = [[UILabel alloc] initWithFrame:CGRectMake(19, 33, 29, 21)];
+        _backView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, [LeaveApprovalCell height])];
+        _stateView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 7, 26, 26)];
+        _lb_state = [[UILabel alloc] initWithFrame:CGRectMake(9, 33, 29, 21)];
         _lb_state.font = [UIFont systemFontOfSize:12];
         _lb_state.textAlignment = NSTextAlignmentCenter;
-        _lb_name = [[UILabel alloc]initWithFrame:CGRectMake(56, 5, 210, 28)];
+        _lb_name = [[UILabel alloc]initWithFrame:CGRectMake(46, 5, 210, 28)];
         _lb_name.backgroundColor = [UIColor clearColor];
         _lb_name.font = [UIFont systemFontOfSize:17];
-        _lb_time = [[UILabel alloc]initWithFrame:CGRectMake(56, 31, 210,21)];
+        _lb_time = [[UILabel alloc]initWithFrame:CGRectMake(46, 31, 210,21)];
         _lb_time.textColor = HEX_RGB(0x939fa7);
         _lb_time.font = [UIFont systemFontOfSize:15];
-        UIImageView *iv_next = [[UIImageView alloc] initWithFrame:CGRectMake(275, 15, 26, 26)];
+        UIImageView *iv_next = [[UIImageView alloc] initWithFrame:CGRectMake(265, 15, 26, 26)];
         iv_next.image = [UIImage imageNamed:@"tableCtrlBtnIcon_next_nor"];
         self.backgroundView = _backView;
         self.selectedBackgroundView = _backSelectedView;

@@ -35,15 +35,15 @@ typedef  enum : NSUInteger {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        _backView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, 300, [LeaveInfoCell height])];
-        _backSelectedView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, 300, [LeaveInfoCell height])];
-        _lb_name = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 80, [LeaveInfoCell height])];
+        _backView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, [LeaveInfoCell height])];
+        _backSelectedView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, [LeaveInfoCell height])];
+        _lb_name = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 80, [LeaveInfoCell height])];
         _lb_name.backgroundColor = [UIColor clearColor];
-        _lb_name.font = [UIFont systemFontOfSize:16];
-        _lb_name.textColor = [UIColor grayColor];
-        _lb_value = [[UILabel alloc]initWithFrame:CGRectMake(100, 0, 200,[LeaveInfoCell height])];
-        _lb_name.textColor = [UIColor grayColor];
-        _lb_name.font = [UIFont systemFontOfSize:15];
+        _lb_name.font = [UIFont boldSystemFontOfSize:17];
+        _lb_name.textColor = HEX_RGB(0x939fa7);
+        _lb_value = [[UILabel alloc]initWithFrame:CGRectMake(90, 0, 200,[LeaveInfoCell height])];
+        _lb_value.textColor = HEX_RGB(0x000000);
+        _lb_value.font = [UIFont boldSystemFontOfSize:17];
         self.backgroundView = _backView;
         self.selectedBackgroundView = _backSelectedView;
         [self.contentView addSubview:_lb_name];
@@ -89,6 +89,26 @@ typedef  enum : NSUInteger {
     _lb_value.text = value;
 }
 
+-(void)setState:(int)state
+{
+    switch (state) {
+        case 0:
+            _lb_value.textColor = HEX_RGB(0x3cadde);
+            _lb_value.text = @"待审";
+            break;
+        case 1:
+            _lb_value.textColor = HEX_RGB(0x5fdd74);
+            _lb_value.text = @"通过";
+            break;
+        case 2:
+            _lb_value.textColor = HEX_RGB(0xff9b10);
+            _lb_value.text = @"驳回";
+            break;
+        default:
+            break;
+    }
+}
+
 @end
 
 @interface LeaveCommentCell : UITableViewCell{
@@ -107,11 +127,13 @@ typedef  enum : NSUInteger {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        backView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, 300, [LeaveCommentCell height])];
+        backView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, [LeaveCommentCell height])];
         UIImage *image = [UIImage imageNamed:@"bgNo2"];
         image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
         backView.image = image;
-        textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 0, 300, [LeaveCommentCell height])];
+        textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 0, 290, [LeaveCommentCell height])];
+        textView.textColor = HEX_RGB(0x000000);
+        textView.font = [UIFont boldSystemFontOfSize:17];
         textView.backgroundColor = [UIColor clearColor];
         textView.editable = NO;
         textView.textColor = [UIColor darkTextColor];
@@ -222,19 +244,20 @@ typedef  enum : NSUInteger {
                 break;
             case 6:{
                 cell.name = @"审批状态";
-                switch (_leaveInfo.APPROVE_STATE) {
-                    case 0:
-                        cell.value = @"未审批";
-                        break;
-                    case 1:
-                        cell.value = @"已通过";
-                        break;
-                    case 2:
-                        cell.value = @"未通过";
-                        break;
-                    default:
-                        break;
-                }
+                [cell setState:_leaveInfo.APPROVE_STATE];
+//                switch (_leaveInfo.APPROVE_STATE) {
+//                    case 0:
+//                        cell.value = @"未审批";
+//                        break;
+//                    case 1:
+//                        cell.value = @"已通过";
+//                        break;
+//                    case 2:
+//                        cell.value = @"未通过";
+//                        break;
+//                    default:
+//                        break;
+//                }
                 cell.style = BOT;
             }
             default:
@@ -274,13 +297,14 @@ typedef  enum : NSUInteger {
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 35)];
-    UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(15, 14, 200, 20)];
-    lable.textColor = [UIColor darkGrayColor];
+    UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(5, 14, 200, 20)];
+    lable.textColor = HEX_RGB(0x939fa7);
     if (section == 1) {
         lable.text = @"请假详细描述";
     } else {
         lable.text = @"审批意见";
     }
+    lable.font = [UIFont boldSystemFontOfSize:17];
     lable.backgroundColor = [UIColor clearColor];
     [view addSubview:lable];
     return view;

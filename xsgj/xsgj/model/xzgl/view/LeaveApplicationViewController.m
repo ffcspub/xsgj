@@ -300,6 +300,7 @@
     [XZGLAPI applyLeaveByRequest:request success:^(ApplyLeaveHttpResponse *response) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showSuccess:@"申请成功" toView:self.view];
+        [self.navigationController popViewControllerAnimated:YES];
     } fail:^(BOOL notReachable, NSString *desciption) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showError:@"网络不给力" toView:self.view];
