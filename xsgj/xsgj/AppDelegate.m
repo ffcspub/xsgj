@@ -22,6 +22,7 @@
 #import <LKDBHelper.h>
 #import "BNMobileMenu.h"
 #import <MBProgressHUD.h>
+#import "MapUtils.h"
 
 @implementation AppDelegate
 
@@ -103,6 +104,7 @@
     [self showLoginViewController];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
@@ -116,6 +118,7 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [[MapUtils shareInstance]startLocationUpdateForBackgroud];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -132,6 +135,8 @@
 {
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+    
+    
 }
 
 - (void)saveContext

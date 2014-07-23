@@ -16,7 +16,7 @@
 #define NOTIFICATION_ADDRESS_UPDATEERROR @"NOTIFICATION_ADDRESS_UPDATEERROR"
 
 @interface MapUtils : NSObject<BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>{
-    
+    BOOL noOnce;
 }
 
 @property(nonatomic,strong) BMKLocationService *locationService;
@@ -27,4 +27,5 @@
 -(void)startLocationUpdate;//开始定位
 -(void)startGeoCodeSearch;//开始反编码
 
+-(void)startLocationUpdateForBackgroud;//开始定位
 @end
