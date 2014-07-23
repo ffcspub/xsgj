@@ -20,7 +20,7 @@
 /**
  * 类型id
  */
-@property (nonatomic,assign)    int TYPE_ID;
+@property (nonatomic,assign)      int TYPE_ID;
 @property (nonatomic,strong)      NSString* TYPE_NAME;
 /**
  * 区域id
@@ -70,6 +70,5 @@
 @property (nonatomic,assign)    int USER_ID;
 /** 用户数据权限 */
 @property (nonatomic,strong)      NSString* USER_AUTH;
-// 拜访记录
-@property (nonatomic,strong)      BNVistRecord *VISIT_RECORD;
+
 @end

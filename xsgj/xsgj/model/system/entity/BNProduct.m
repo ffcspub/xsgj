@@ -7,6 +7,7 @@
 //
 
 #import "BNProduct.h"
+#import "BNUnitBean.h"
 
 @implementation BNProduct
 

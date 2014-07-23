@@ -195,6 +195,9 @@
     CGFloat titleViewHeight = 44.f; // IBActionTitleView的高度默认是60，文本高度为44居中
     CGFloat buttonHeight = 44.f;
     CGFloat topOffset    = 50.f; // 顶部需要留出的大小
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending) {
+        topOffset += 20;
+    }
     
     float height = 0.f; // 计算高度
     float width  = 0.f; // 屏幕宽度
@@ -236,12 +239,19 @@
     if (self.hasCancelButton) {
         UIButton *btnCancel = [self.buttons lastObject];
         [self addSubview:btnCancel];
+        
         hCancelButton = buttonHeight;
         
         CGPoint pointCancel = CGPointMake(self.center.x, CGRectGetHeight(self.bounds) - hCancelButton / 2 - _border);
         btnCancel.center = pointCancel;
         
         whereToStop = whereToStop - 1;
+        
+        if (self.buttons.count > 1) {
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(_border, whereToStop - 0.5, realWidth, 0.5)];
+            line.backgroundColor = [UIColor lightGrayColor];
+            [self addSubview:line];
+        }
     }
     
     // 标题
@@ -251,6 +261,9 @@
         hTitleView = titleViewHeight;
         
         self.titleView.frame = CGRectMake(_border, 0.f, realWidth, titleViewHeight);
+        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(_border, titleViewHeight - 0.5, realWidth, 0.5)];
+        line.backgroundColor = [UIColor lightGrayColor];
+        [self addSubview:line];
     }
     
     // 确定按钮判断
@@ -267,6 +280,12 @@
         //[btnDestructive setCenter:pointDestructive];
         
         whereToStart = 1;
+        if (self.buttons.lastObject <= btnDestructive) {
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(_border, hTitleView - 0.5, realWidth, 0.5)];
+            line.backgroundColor = [UIColor lightGrayColor];
+            [self addSubview:line];
+        }
+        
     }
     
     // 存在其它按钮的情况svHeight
@@ -287,11 +306,14 @@
         sv.backgroundColor = [UIColor clearColor];
         [self addSubview:sv];
         
-        CGRect rectButton = CGRectMake(0.f, 0.f, CGRectGetWidth(self.bounds), buttonHeight);
+        CGRect rectButton = CGRectMake(0.f, 0.f, CGRectGetWidth(self.bounds)-_border*2, buttonHeight);
         for (int i = whereToStart, j = whereToStop; i <= whereToStop; ++i, --j) {
             UIButton *btn = [self.buttons objectAtIndex:i];
             btn.frame = rectButton;
             [sv addSubview:btn];
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0.0, rectButton.origin.y, rectButton.size.width, 0.5)];
+            line.backgroundColor = [UIColor lightGrayColor];
+            [sv addSubview:line];
             rectButton = CGRectOffset(rectButton, 0.f, buttonHeight);
         }
     }

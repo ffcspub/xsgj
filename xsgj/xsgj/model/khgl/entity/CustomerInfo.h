@@ -29,6 +29,10 @@
 
 -(NSString *)stateName;
 
+-(void)setOldCheckState:(int)oldCheckState;//设计旧审核状态
+
+-(int) oldCheckState;//原审核状态
+
 -(void)setOfflineState:(BOOL)isOffline;
 
 -(BOOL)isOffline;

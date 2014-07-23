@@ -160,7 +160,6 @@
 
 @end
 
-
 @implementation TypeSelectCell
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -168,8 +167,8 @@
                 reuseIdentifier:reuseIdentifier];
     if (self) {
         btn_select = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 43)];
-        [btn_select setImage:[UIImage imageNamed:@"checkbox_unselected"] forState:UIControlStateNormal];
-        [btn_select setImage:[UIImage imageNamed:@"checkbox_selected"] forState:UIControlStateHighlighted];
+        [btn_select setImage:[UIImage imageNamed:@"CheckBox1_unSelected"] forState:UIControlStateNormal];
+        [btn_select setImage:[UIImage imageNamed:@"CheckBox1_Selected"] forState:UIControlStateHighlighted];
         [btn_select addTarget:self action:@selector(selectAction) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:btn_select];
         lb_name = [[UILabel alloc]initWithFrame:CGRectMake(56, 0, 200, 44)];
@@ -207,11 +206,11 @@
 -(void)setIsSelected:(BOOL)isSelected{
     _isSelected = isSelected;
     if (!_isSelected) {
-        [btn_select setImage:[UIImage imageNamed:@"checkbox_unselected"] forState:UIControlStateNormal];
-        [btn_select setImage:[UIImage imageNamed:@"checkbox_selected"] forState:UIControlStateHighlighted];
+        [btn_select setImage:[UIImage imageNamed:@"CheckBox1_unSelected"] forState:UIControlStateNormal];
+        [btn_select setImage:[UIImage imageNamed:@"CheckBox1_Selected"] forState:UIControlStateHighlighted];
     }else{
-        [btn_select setImage:[UIImage imageNamed:@"checkbox_selected"] forState:UIControlStateNormal];
-        [btn_select setImage:[UIImage imageNamed:@"checkbox_unselected"] forState:UIControlStateHighlighted];
+        [btn_select setImage:[UIImage imageNamed:@"CheckBox1_Selected"] forState:UIControlStateNormal];
+        [btn_select setImage:[UIImage imageNamed:@"CheckBox1_unSelected"] forState:UIControlStateHighlighted];
     }
 }
 
@@ -262,8 +261,8 @@
                 reuseIdentifier:reuseIdentifier];
     if (self) {
         btn_select = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 43)];
-        [btn_select setImage:[UIImage imageNamed:@"checkbox_unselected"] forState:UIControlStateNormal];
-        [btn_select setImage:[UIImage imageNamed:@"checkbox_selected"] forState:UIControlStateHighlighted];
+        [btn_select setImage:[UIImage imageNamed:@"CheckBox1_unSelected"] forState:UIControlStateNormal];
+        [btn_select setImage:[UIImage imageNamed:@"CheckBox1_Selected"] forState:UIControlStateHighlighted];
         [btn_select addTarget:self action:@selector(selectAction) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:btn_select];
         lb_name = [[UILabel alloc]initWithFrame:CGRectMake(56, 0, 200, 44)];
@@ -301,11 +300,11 @@
 -(void)setIsSelected:(BOOL)isSelected{
     _isSelected = isSelected;
     if (!_isSelected) {
-        [btn_select setImage:[UIImage imageNamed:@"checkbox_unselected"] forState:UIControlStateNormal];
-        [btn_select setImage:[UIImage imageNamed:@"checkbox_selected"] forState:UIControlStateHighlighted];
+        [btn_select setImage:[UIImage imageNamed:@"CheckBox1_unSelected"] forState:UIControlStateNormal];
+        [btn_select setImage:[UIImage imageNamed:@"CheckBox1_Selected"] forState:UIControlStateHighlighted];
     }else{
-        [btn_select setImage:[UIImage imageNamed:@"checkbox_selected"] forState:UIControlStateNormal];
-        [btn_select setImage:[UIImage imageNamed:@"checkbox_unselected"] forState:UIControlStateHighlighted];
+        [btn_select setImage:[UIImage imageNamed:@"CheckBox1_Selected"] forState:UIControlStateNormal];
+        [btn_select setImage:[UIImage imageNamed:@"CheckBox1_unSelected"] forState:UIControlStateHighlighted];
     }
 }
 
