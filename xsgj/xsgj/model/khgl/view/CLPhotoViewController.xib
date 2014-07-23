@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment defaultVersion="1296" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CLPhotoViewController">
+            <connections>
+                <outlet property="btnTakePhoto" destination="ge8-Z8-n9p" id="wD2-R8-viY"/>
+                <outlet property="ivPhoto1" destination="sYn-LD-yJS" id="OlM-u2-HOx"/>
+                <outlet property="ivPhoto2" destination="gxm-Vl-PcX" id="YP8-ar-p7X"/>
+                <outlet property="ivPhoto3" destination="0Cs-A8-8wd" id="LFT-8t-cJ1"/>
+                <outlet property="ivPhoto4" destination="Tik-CQ-8Rd" id="9Jy-v9-0ve"/>
+                <outlet property="ivPhoto5" destination="3hB-R1-MWf" id="qNo-al-Exc"/>
+                <outlet property="ivPhoto6" destination="JVD-bL-XKk" id="d4i-In-QMJ"/>
+                <outlet property="ivShowBig" destination="OAs-mi-FGa" id="0Sq-RE-xU3"/>
+                <outlet property="svContain" destination="nOS-Vz-xXt" id="w2c-bA-ns8"/>
+                <outlet property="svImgContain" destination="abN-H9-54c" id="KW5-rv-5WX"/>
+                <outlet property="tfClType" destination="i3y-mr-xjO" id="KAg-kg-gm4"/>
+                <outlet property="tfZcNumber" destination="AYA-xh-1Gw" id="K8S-2a-oWQ"/>
+                <outlet property="tfZcType" destination="isR-Gr-VnI" id="cxG-VU-FrC"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="nOS-Vz-xXt">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" id="jBd-tj-s7j">
+                            <rect key="frame" x="10" y="10" width="300" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="part1-nor.png" id="map-8k-QyP">
+                                    <rect key="frame" x="0.0" y="0.0" width="20" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </imageView>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="part2.png" id="XaG-26-tKn">
+                                    <rect key="frame" x="20" y="0.0" width="260" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </imageView>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="part4.png" id="HSE-NG-o2b">
+                                    <rect key="frame" x="280" y="0.0" width="20" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </imageView>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="dropbox.png" id="CCS-fC-ZVV">
+                                    <rect key="frame" x="270" y="15" width="17" height="19"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </imageView>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="陈列类型" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GrC-oQ-uEP">
+                                    <rect key="frame" x="14" y="14" width="60" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请选择类型" minimumFontSize="17" id="i3y-mr-xjO">
+                                    <rect key="frame" x="90" y="10" width="170" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＊" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="X27-Lm-9js">
+                                    <rect key="frame" x="77" y="14" width="20" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                    <color key="textColor" red="0.98039215690000003" green="0.21176470589999999" blue="0.0078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="uqx-hl-L2v">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="handleBtnClTypeClicked:" destination="-1" eventType="touchUpInside" id="nDh-5P-Yiy"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="Kmp-UG-pnH">
+                            <rect key="frame" x="10" y="70" width="300" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="part1-nor.png" id="XWb-uP-ADh">
+                                    <rect key="frame" x="0.0" y="0.0" width="20" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </imageView>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="part2.png" id="DsS-ab-bBM">
+                                    <rect key="frame" x="20" y="0.0" width="260" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </imageView>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="part4.png" id="4XE-Et-1sn">
+                                    <rect key="frame" x="280" y="0.0" width="20" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </imageView>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="dropbox.png" id="Cr7-0l-9WE">
+                                    <rect key="frame" x="270" y="15" width="17" height="19"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </imageView>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="资产类型" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Z9e-Ql-25X">
+                                    <rect key="frame" x="14" y="14" width="60" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请选择类型" minimumFontSize="17" id="isR-Gr-VnI">
+                                    <rect key="frame" x="90" y="10" width="170" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＊" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gYH-KL-4yO">
+                                    <rect key="frame" x="77" y="14" width="20" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                    <color key="textColor" red="0.98039215690000003" green="0.21176470589999999" blue="0.0078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dV2-y4-DVQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="handleBtnZcTypeClicked:" destination="-1" eventType="touchUpInside" id="5Mo-1v-zq0"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="lDG-7i-ytk">
+                            <rect key="frame" x="10" y="130" width="300" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="part1-nor.png" id="9nc-Zo-Smg">
+                                    <rect key="frame" x="0.0" y="0.0" width="20" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </imageView>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="part2.png" id="JIh-2g-8Pc">
+                                    <rect key="frame" x="20" y="0.0" width="260" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </imageView>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="part4.png" id="bNS-G5-Dwf">
+                                    <rect key="frame" x="280" y="0.0" width="20" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </imageView>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="资产数量" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7CQ-z9-xNh">
+                                    <rect key="frame" x="14" y="14" width="60" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入数量" minimumFontSize="17" clearButtonMode="whileEditing" id="AYA-xh-1Gw">
+                                    <rect key="frame" x="90" y="10" width="190" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＊" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LkJ-z8-75f">
+                                    <rect key="frame" x="77" y="14" width="20" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                    <color key="textColor" red="0.98039215690000003" green="0.21176470589999999" blue="0.0078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="3FW-2C-wld">
+                            <rect key="frame" x="0.0" y="190" width="320" height="308"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="defaultPhoto.png" id="OAs-mi-FGa">
+                                    <rect key="frame" x="7" y="0.0" width="306" height="229"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </imageView>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Photo外框Part2.png" id="nxW-SP-223">
+                                    <rect key="frame" x="7" y="204" width="306" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </imageView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ge8-Z8-n9p">
+                                    <rect key="frame" x="131" y="168" width="58" height="58"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="btnPhoto_nor.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="disabled" image="btnPhoto_disable.png"/>
+                                    <state key="highlighted" image="btnPhoto_press.png"/>
+                                    <connections>
+                                        <action selector="handleBtnTakePhotoClicked:" destination="-1" eventType="touchUpInside" id="wXf-uK-1wR"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="拍照" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HPq-UA-1L6">
+                                    <rect key="frame" x="139" y="226" width="42" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="abN-H9-54c">
+                                    <rect key="frame" x="7" y="258" width="306" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="Photo_addPhoto.png" id="sYn-LD-yJS" userLabel="Image View1 - Photo_addPhoto.png">
+                                            <rect key="frame" x="0.0" y="0.0" width="72" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <gestureRecognizers/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="Swf-Ra-syO" appends="YES" id="oca-f5-uHE"/>
+                                                <outletCollection property="gestureRecognizers" destination="Bu8-X4-bdE" appends="YES" id="7fv-ex-pw0"/>
+                                            </connections>
+                                        </imageView>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleAspectFill" image="Photo_addPhoto.png" id="gxm-Vl-PcX" userLabel="Image View2 - Photo_addPhoto.png">
+                                            <rect key="frame" x="80" y="0.0" width="72" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="Swf-Ra-syO" appends="YES" id="oU7-1l-b5x"/>
+                                                <outletCollection property="gestureRecognizers" destination="Bu8-X4-bdE" appends="YES" id="ICu-0X-upa"/>
+                                            </connections>
+                                        </imageView>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleAspectFill" image="Photo_addPhoto.png" id="0Cs-A8-8wd" userLabel="Image View3 - Photo_addPhoto.png">
+                                            <rect key="frame" x="158" y="0.0" width="72" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="Swf-Ra-syO" appends="YES" id="F2L-Uy-8vb"/>
+                                                <outletCollection property="gestureRecognizers" destination="Bu8-X4-bdE" appends="YES" id="mUE-5l-QtY"/>
+                                            </connections>
+                                        </imageView>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="3" contentMode="scaleAspectFill" image="Photo_addPhoto.png" id="Tik-CQ-8Rd" userLabel="Image View4 - Photo_addPhoto.png">
+                                            <rect key="frame" x="236" y="0.0" width="72" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="Swf-Ra-syO" appends="YES" id="Hz0-Fn-U7X"/>
+                                                <outletCollection property="gestureRecognizers" destination="Bu8-X4-bdE" appends="YES" id="FSf-6E-BjD"/>
+                                            </connections>
+                                        </imageView>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="4" contentMode="scaleAspectFill" image="Photo_addPhoto.png" id="3hB-R1-MWf" userLabel="Image View5 - Photo_addPhoto.png">
+                                            <rect key="frame" x="314" y="0.0" width="72" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="Swf-Ra-syO" appends="YES" id="zJv-xp-8T5"/>
+                                                <outletCollection property="gestureRecognizers" destination="Bu8-X4-bdE" appends="YES" id="pxF-w2-eHE"/>
+                                            </connections>
+                                        </imageView>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="5" contentMode="scaleAspectFill" image="Photo_addPhoto.png" id="JVD-bL-XKk" userLabel="Image View6 - Photo_addPhoto.png">
+                                            <rect key="frame" x="392" y="0.0" width="72" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="Swf-Ra-syO" appends="YES" id="JT7-Mn-8hc"/>
+                                                <outletCollection property="gestureRecognizers" destination="Bu8-X4-bdE" appends="YES" id="lsw-rJ-hlr"/>
+                                            </connections>
+                                        </imageView>
+                                    </subviews>
+                                </scrollView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                        </view>
+                    </subviews>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+        <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="Swf-Ra-syO">
+            <connections>
+                <action selector="handleLongPressImageView:" destination="-1" id="NFR-2R-gXh"/>
+            </connections>
+        </pongPressGestureRecognizer>
+        <tapGestureRecognizer id="Bu8-X4-bdE">
+            <connections>
+                <action selector="handleTapImageView:" destination="-1" id="qPL-fx-hPt"/>
+                <outlet property="delegate" destination="-1" id="ZlB-Qz-0px"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="Photo_addPhoto.png" width="72" height="50"/>
+        <image name="Photo外框Part2.png" width="306" height="43"/>
+        <image name="btnPhoto_disable.png" width="58" height="58"/>
+        <image name="btnPhoto_nor.png" width="58" height="58"/>
+        <image name="btnPhoto_press.png" width="58" height="58"/>
+        <image name="defaultPhoto.png" width="306" height="229"/>
+        <image name="dropbox.png" width="17" height="17"/>
+        <image name="part1-nor.png" width="20" height="40"/>
+        <image name="part2.png" width="20" height="40"/>
+        <image name="part4.png" width="20" height="40"/>
+    </resources>
+</document>
