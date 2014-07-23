@@ -12,6 +12,7 @@
 #import "MBProgressHUD+Add.h"
 #import "LeaveInfoBean.h"
 #import "SVPullToRefresh.h"
+#import "ApprovalInfoViewController.h"
 
 typedef  enum : NSUInteger {
     TOP = 0,
@@ -250,6 +251,18 @@ static int const pageSize = 20;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    ApprovalInfoViewController *vlc = [[ApprovalInfoViewController alloc] initWithNibName:@"ApprovalInfoViewController" bundle:nil];
+    LeaveinfoBean *info = [_leaves objectAtIndex:indexPath.row];
+    vlc.leaveInfo = info;
+    
+    if (info.APPROVE_STATE == 0) {
+        vlc.showStyle = ApprovalInfoShowStyleApproval;
+    } else {
+        vlc.showStyle = ApprovalInfoShowStyleQuery;
+    }
+    
+    [self.navigationController pushViewController:vlc animated:YES];
 }
 
 @end
