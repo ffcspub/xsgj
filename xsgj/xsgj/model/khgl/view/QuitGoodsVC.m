@@ -74,7 +74,7 @@ static int const pageSize = 10;
     MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [KHGLAPI queryOrderBackByRequest:request success:^(QueryOrderBackHttpResponse *response) {
         
-        int resultCount = [response.DATA count];
+        int resultCount = [response.QUERYORDERBACKINFOBEAN count];
         NSLog(@"退货查询总数:%d", resultCount);
         
         if (resultCount < pageSize) {
@@ -88,7 +88,7 @@ static int const pageSize = 10;
         }
         
         [self.tbvQuery.infiniteScrollingView stopAnimating];
-        [self.arrData addObjectsFromArray:response.DATA];
+        [self.arrData addObjectsFromArray:response.QUERYORDERBACKINFOBEAN];
         
         [self.tbvQuery reloadData];
         

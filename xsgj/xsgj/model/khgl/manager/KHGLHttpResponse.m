@@ -7,6 +7,7 @@
 //
 
 #import "KHGLHttpResponse.h"
+#import "OrderInfoBean.h"
 #import "CustTypeBean.h"
 #import "CustInfoBean.h"
 #import "CustDetailBean.h"
@@ -91,7 +92,7 @@
 @implementation OrderQueryHttpResponse
 
 +(Class)__DATAClass{
-    return [VisistRecordVO class];
+    return [OrderInfoBean class];
 }
 
 @end
@@ -111,7 +112,7 @@
 
 @implementation QueryOrderBackHttpResponse
 
-+(Class)__DATAClass{
++(Class)__QUERYORDERBACKINFOBEANClass{
     return [QueryOrderBackInfoBean class];
 }
 
