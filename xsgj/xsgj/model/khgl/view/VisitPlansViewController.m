@@ -145,6 +145,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _btn_submit.hidden = YES;
     [self showRightBarButtonItemWithTitle:@"操作" target:self action:@selector(showMenus:) ];
     
     [_btn_submit configBlueStyle];
@@ -201,6 +202,7 @@
     request.PLAN_DATE = [[NSDate getNextDate:1] stringWithFormat:@"yyyy-MM-dd"];
     [KHGLAPI queryPlanVisiConfigsByRequest:request success:^(QueryPlanVisitConfigsHttpResponse *response) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        _btn_submit.hidden = NO;
         NSArray *array =  response.PLAN_VISIT_CONFIGS;
         _dateArray = [[NSMutableArray alloc]init];
         _dataArray = [[NSMutableArray alloc]init];
@@ -223,6 +225,7 @@
         [self selectPage:_index];
 //        [self loadPlayVisitRecords];
     } fail:^(BOOL notReachable, NSString *desciption) {
+        self.navigationItem.rightBarButtonItem.enabled = NO;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showError:@"网络不给力" toView:self.view];
     }];
