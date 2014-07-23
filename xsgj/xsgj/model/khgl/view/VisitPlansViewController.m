@@ -78,20 +78,15 @@
     lb_customeName.text = customer.CUST_NAME;
     lb_linkman.text = customer.ADDRESS;
     lb_state.text = [customer stateName];
+     lb_otherstate.text = [customer applyStateName];
     if (customer.CHECK_STATE == 0) {
         lb_state.textColor = MCOLOR_BLUE;
-        lb_otherstate.hidden = YES;
     }else if (customer.CHECK_STATE == 1){
         lb_state.textColor = MCOLOR_GREEN;
-        lb_otherstate.hidden = YES;
     }else if (customer.CHECK_STATE == 2){
         lb_state.textColor = MCOLOR_RED;
-        lb_otherstate.hidden = YES;
     }else if (customer.CHECK_STATE == 3){
-        lb_state.text = @"待审核";
         lb_state.textColor = MCOLOR_BLUE;
-        lb_otherstate.hidden = NO;
-        lb_otherstate.text = [customer stateName];
     }
 }
 
@@ -161,6 +156,15 @@
 
 #pragma mark -function
 
+-(NSMutableArray *)getCustomerIdArray{
+    NSArray *array = [_dataArray objectAtIndex:_index];
+    NSMutableArray *tempArray = [NSMutableArray array];
+    for (CustomerInfo *customer in array) {
+        [tempArray addObject:[NSNumber numberWithInt:customer.CUST_ID]];
+    }
+    return tempArray;
+}
+
 -(void)showMenus:(UIButton *)sender{
     if (_sheet) {
         [_sheet dismissAnimated:NO];
@@ -175,6 +179,7 @@
     if (buttonIndex == 0) {
         CustomerChooseViewController *vcl = [[CustomerChooseViewController alloc]init];
         vcl.chooseDelegate = self;
+        vcl.deselectedCutomerIds = [self getCustomerIdArray];
         [self.navigationController pushViewController:vcl animated:YES];
     }else if(buttonIndex == 1){
         [_waitingDeleteDict setObject:@1 forKey:[NSNumber numberWithInt:_index]];
@@ -471,6 +476,7 @@
     for (BNCustomerInfo *bnCustomerInfo in customers) {
         CustomerInfo *customerInfo = [[CustomerInfo alloc]init];
         [bnCustomerInfo easyDeepCopy:customerInfo];
+        [customerInfo setOfflineState:YES];
         [array addObject:customerInfo];
     }
     UITableView *tableView = [_contentTableViews objectAtIndex:_index];
@@ -523,43 +529,21 @@
 }
 
 - (IBAction)submitDeleteAction:(id)sender {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    UpdateVisitPlansHttpRequest *request = [[UpdateVisitPlansHttpRequest alloc]init];
-    NSMutableArray *array = [NSMutableArray array];
     NSMutableArray *datas = [_selectedArray objectAtIndex:_index];
+    NSMutableArray *deleArray = [NSMutableArray array];
     for (CustomerInfo *customerInfo in datas) {
-        VisitPlan *vistiPlan = [[VisitPlan alloc]init];
-        vistiPlan.CUST_ID = customerInfo.CUST_ID;
-        vistiPlan.CHECK_STATE = 3;
-        vistiPlan.CHECK_REMARK = customerInfo.CHECK_REMARK;
-        vistiPlan.CUST_NAME = customerInfo.CUST_NAME;
-        [array addObject:vistiPlan];
+        if (customerInfo.CHECK_STATE == 0 && customerInfo.isOffline) {
+            [deleArray addObject:customerInfo];
+            continue;
+        }
+        customerInfo.CHECK_STATE = 3;
+        [customerInfo setOfflineState:YES];
     }
-    request.VISIT_PLANS = array;
-    NSDate *date = [_dateArray objectAtIndex:_index];
-    request.PLAN_DATE = [date stringWithFormat:@"yyyy-MM-dd"];
-    NSCalendar *gregorian = [[NSCalendar alloc]
-                             initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *weekdayComponents =
-    [gregorian components:(NSDayCalendarUnit |
-                           NSWeekdayCalendarUnit) fromDate:date];
-    request.WEEKDAY = [weekdayComponents weekday];
-    
-    [KHGLAPI updateVisitPlansByRequest:request success:^(UpdateVisitPlansHttpResponse *response) {
-        NSDate *date = [_dateArray objectAtIndex:_index];
-        
-        NSString *message = [NSString stringWithFormat:@"%@拜访规划提交成功",[date stringWithFormat:@"yyyy-MM-dd"]];
-        [MBProgressHUD showSuccess:message toView:self.view];
-        [datas removeAllObjects];
-        [self cancelDelteAction:nil];
-        [self loadPlanVisits];
-        //TODO
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    } fail:^(BOOL notReachable, NSString *desciption) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [MBProgressHUD showError:@"网络不给力" toView:self.view];
-    }];
-    
+    [datas removeAllObjects];
+    NSMutableArray *indexDatas = [_dataArray objectAtIndex:_index];
+    //先删除未提交的申请
+    [indexDatas removeObjectsInArray:deleArray];
+    [self cancelDelteAction:nil];
 }
 
 @end
