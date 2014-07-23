@@ -97,7 +97,7 @@
 @end
 
 
-@interface QueryVistitRecordHttpRequest : LK_HttpBaseRequest
+@interface QueryVistitRecordHttpRequest : LK_HttpBasePageRequest
 
 @property(nonatomic,assign) int USER_ID	;//	用户标识
 @property(nonatomic,strong) NSString * 	SESSION_ID	;//	会话标识

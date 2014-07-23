@@ -106,6 +106,13 @@
         _DEPT_ID = [ShareValue shareInstance].userInfo.DEPT_ID;
         _USER_AUTH = [ShareValue shareInstance].userInfo.USER_AUTH;
         _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+        if ([[ShareValue shareInstance].userInfo.USER_AUTH isEqual:@"1"]) {
+            _QUERY_DEPTID = [NSNumber numberWithInt:[ShareValue shareInstance].userInfo.DEPT_ID];
+            self.QUERY_USER_ID = [NSNumber numberWithInt:-1];
+        }else{
+            _QUERY_DEPTID = [NSNumber numberWithInt:-1];;
+            self.QUERY_USER_ID = [NSNumber numberWithInt:[ShareValue shareInstance].userInfo.USER_ID];
+        }
     }
     return self;
 }
