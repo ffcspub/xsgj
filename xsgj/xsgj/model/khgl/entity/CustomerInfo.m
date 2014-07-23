@@ -10,6 +10,7 @@
 
 @interface CustomerInfo(){
     BOOL _offlineState;
+    int _oldCheckState;
 }
 
 @end
@@ -65,5 +66,12 @@
     return _offlineState;
 }
 
+-(void)setOldCheckState:(int)oldCheckState{
+    _oldCheckState = oldCheckState;
+}
+
+-(int)oldCheckState{
+    return _oldCheckState;
+}
 
 @end

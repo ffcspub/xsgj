@@ -15,7 +15,11 @@
 @property (nonatomic,strong)      NSString* PROD_NAME;
 // 类别ID
 @property (nonatomic,assign)    int CLASS_ID;
-// 产品单元<内为BNUnitBean类型>
-@property (nonatomic,strong)      NSArray*  UNIT_BEANS;
+
+@property (nonatomic,strong) 	NSString *PROD_CODE;//产品编码
+
+@property (nonatomic,strong) 	NSString *BARCODE;//产品条形码
+
+@property (nonatomic,strong) 	NSString *SPEC;//全名
 
 @end

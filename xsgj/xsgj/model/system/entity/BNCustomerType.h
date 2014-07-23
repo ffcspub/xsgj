@@ -17,4 +17,5 @@
 @property (nonatomic,assign)    int ORDER_NO;
 // 类型名
 @property (nonatomic,strong)      NSString* TYPE_NAME;
+
 @end
