@@ -7,8 +7,13 @@
 //
 
 #import "OrderGoodsCell.h"
+#import "OrderInfoBean.h"
 
 @interface OrderGoodsCell ()
+
+@property (weak, nonatomic) IBOutlet UILabel *lblTitle;
+@property (weak, nonatomic) IBOutlet UILabel *lblTime;
+@property (weak, nonatomic) IBOutlet UILabel *lblMoney;
 
 - (void)_initialize;
 
@@ -55,7 +60,10 @@
 - (void)configureForData:(id)data;
 {
     // TODO: 设置数据
-    
+    OrderInfoBean *bean = (OrderInfoBean *)data;
+    self.lblTitle.text = bean.CUST_NAME;
+    self.lblTime.text = bean.CUST_NAME;
+    self.lblMoney.text = bean.CUST_NAME;
 }
 
 @end

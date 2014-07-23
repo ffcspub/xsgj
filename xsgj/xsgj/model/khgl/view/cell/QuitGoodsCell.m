@@ -7,8 +7,13 @@
 //
 
 #import "QuitGoodsCell.h"
+#import "QueryOrderBackInfoBean.h"
 
 @interface QuitGoodsCell ()
+
+@property (weak, nonatomic) IBOutlet UILabel *lblTitle;
+@property (weak, nonatomic) IBOutlet UILabel *lblDetail;
+@property (weak, nonatomic) IBOutlet UILabel *lblCustomerName;
 
 - (void)_initialize;
 
@@ -55,7 +60,10 @@
 - (void)configureForData:(id)data;
 {
     // TODO: 设置数据
-    
+    QueryOrderBackInfoBean *bean = (QueryOrderBackInfoBean *)data;
+    self.lblTitle.text = bean.PROD_NAME;
+    self.lblCustomerName.text = bean.CUST_NAME;
+    self.lblDetail.text = bean.COMMITTIME;
 }
 
 @end

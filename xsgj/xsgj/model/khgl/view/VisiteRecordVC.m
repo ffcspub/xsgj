@@ -60,6 +60,8 @@ static int const pageSize = 10;
     request.BEGIN_TIME = self.lblBeginTime.text;
     request.END_TIME = self.lblEndTime.text;
     request.CUST_NAME = self.tfVisiterName.text;
+    request.PAGE = self.currentPage;
+    request.ROWS = pageSize;
     
     MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [KHGLAPI queryVisitRecordByRequest:request success:^(QueryVistitRecordHttpResponse *response) {
@@ -107,14 +109,15 @@ static int const pageSize = 10;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 100;
+    return [self.arrData count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     VisitRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:VisiteRecordCellIdentifier];
     // 配置Cell
-    // [cell configureForData:self.arrData[indexPath.row]];
+    [cell configureForData:self.arrData[indexPath.row]];
+    
     return cell;
 }
 

@@ -11,6 +11,7 @@
 #import "KHGLAPI.h"
 #import "SVPullToRefresh.h"
 #import "QuitGoodsCell.h"
+#import "NSString+URL.h"
 
 static NSString * const QuitGoodsCellIdentifier = @"QuitGoodsCellIdentifier";
 static int const pageSize = 10;
@@ -56,29 +57,38 @@ static int const pageSize = 10;
 
 - (void)loadQuitGoods
 {
-    OrderQueryHttpRequest *request = [[OrderQueryHttpRequest alloc] init];
-    request.BEGIN_TIME = self.lblBeginTime.text;
-    request.END_TIME = self.lblEndTime.text;
+    QueryOrderBackHttpRequest *request = [[QueryOrderBackHttpRequest alloc] init];
+    
+    // 如果是空串就不上传
+    if (![self.lblBeginTime.text isEmptyOrWhitespace]) {
+        request.BEGIN_TIME = self.lblBeginTime.text;
+    }
+    if (![self.lblEndTime.text isEmptyOrWhitespace]) {
+        request.END_TIME = self.lblEndTime.text;
+    }
+
     request.CUST_NAME = self.tfVisiterName.text;
+    request.PAGE = self.currentPage;
+    request.ROWS = pageSize;
     
     MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [KHGLAPI queryOrderByRequest:request success:^(OrderQueryHttpResponse *response) {
+    [KHGLAPI queryOrderBackByRequest:request success:^(QueryOrderBackHttpResponse *response) {
         
-        /*
-         int resultCount = [response.VISIT_RECORDS count];
-         if (resultCount < pageSize) {
-         self.tbvQuery.showsInfiniteScrolling = NO;
-         } else {
-         self.tbvQuery.showsInfiniteScrolling = YES;
-         }
-         
-         if (self.currentPage == 1) {
-         [self.arrData removeAllObjects];
-         }
-         
-         [self.tbvQuery.infiniteScrollingView stopAnimating];
-         [self.arrData addObjectsFromArray:response.VISIT_RECORDS];
-         */
+        int resultCount = [response.DATA count];
+        NSLog(@"退货查询总数:%d", resultCount);
+        
+        if (resultCount < pageSize) {
+            self.tbvQuery.showsInfiniteScrolling = NO;
+        } else {
+            self.tbvQuery.showsInfiniteScrolling = YES;
+        }
+        
+        if (self.currentPage == 1) {
+            [self.arrData removeAllObjects];
+        }
+        
+        [self.tbvQuery.infiniteScrollingView stopAnimating];
+        [self.arrData addObjectsFromArray:response.DATA];
         
         [self.tbvQuery reloadData];
         
@@ -92,7 +102,6 @@ static int const pageSize = 10;
         
         [hub removeFromSuperview];
         [MBProgressHUD showError:desciption toView:self.view];
-        
     }];
 }
 
@@ -114,21 +123,22 @@ static int const pageSize = 10;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 100;
+    return [self.arrData count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     QuitGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:QuitGoodsCellIdentifier];
     // 配置Cell
-    // [cell configureForData:self.arrData[indexPath.row]];
+    [cell configureForData:self.arrData[indexPath.row]];
+    
     // 配置背景
     if ([self.arrData count] == 1) {
         cell.cellStyle = SINGLE;
     } else {
         if (indexPath.row == 0) {
             cell.cellStyle = TOP;
-        } else if (indexPath.row == 99) {
+        } else if (indexPath.row == [self.arrData count] - 1) {
             cell.cellStyle = BOT;
         } else {
             cell.cellStyle = MID;

@@ -7,6 +7,7 @@
 //
 
 #import "VisitRecordCell.h"
+#import "VisistRecordVO.h"
 
 @interface VisitRecordCell ()
 
@@ -61,7 +62,11 @@
 - (void)configureForData:(id)data;
 {
     // TODO: 设置数据
-    
+    VisistRecordVO *bean = (VisistRecordVO *)data;
+    self.lblTitle.text = bean.CUST_NAME;
+    self.lblDetail.text = bean.END_TIME_M;
+    self.lblEnterTime.text = bean.START_TIME_M;
+    self.lblLeaveTime.text = bean.END_TIME_M;
 }
 
 @end

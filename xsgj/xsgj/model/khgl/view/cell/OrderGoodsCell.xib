@@ -43,6 +43,11 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="lblMoney" destination="CYF-Sg-Cdr" id="9l7-Bb-oPW"/>
+                <outlet property="lblTime" destination="PcH-dW-ezs" id="X4X-D6-b89"/>
+                <outlet property="lblTitle" destination="k1t-8c-QnN" id="S23-za-9vd"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>
