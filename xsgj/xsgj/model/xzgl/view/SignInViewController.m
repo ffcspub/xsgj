@@ -10,9 +10,14 @@
 #import "UIColor+External.h"
 #import "MapUtils.h"
 #import "MapAddressVC.h"
+#import "XZGLAPI.h"
+#import "MBProgressHUD+Add.h"
 
-@interface SignInViewController ()<MapAddressVCDelegate>{
-    
+@interface SignInViewController ()<MapAddressVCDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>{
+    BOOL _isLocationSuccess;
+    BOOL _isManualLocation;
+    NSData *_imageData;
+    CLLocationCoordinate2D manualCoordinate;
 }
 
 @end
@@ -97,6 +102,62 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
 }
 
+- (BOOL)isValidData
+{
+    NSString *errorMessage = nil;
+    if (!_isLocationSuccess) {
+        errorMessage = @"未定位成功，请重新获取当前位置";
+    }else if(!_imageData){
+        errorMessage = @"请先拍照";
+    }
+    if (errorMessage.length > 0) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:errorMessage delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)signUpRequest
+{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    SignUpHttpRequest *request = [[SignUpHttpRequest alloc] init];
+    request.LNG = [ShareValue shareInstance].currentLocation.longitude;
+    request.LAT = [ShareValue shareInstance].currentLocation.latitude;
+    request.POSITION = _lb_currentLocation.text;
+    request.SIGN_FLAG = @"i";
+    
+    NSString *imageString = [[NSString alloc] initWithData:_imageData encoding:NSUTF8StringEncoding];
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterScientificStyle];
+    NSNumber *imageNum = [formatter numberFromString:imageString];
+    request.PHOTO = imageNum;
+    
+    if (_isManualLocation) {
+        request.LNG2 = [NSNumber numberWithFloat:manualCoordinate.longitude];
+        request.LAT2 = [NSNumber numberWithFloat:manualCoordinate.latitude];
+        request.POSITION2 = _lb_manualAdjust.text;
+    }
+    
+    [XZGLAPI signupByRequest:request success:^(SignUpHttpReponse *response) {
+        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        
+        [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:desciption toView:self.view];
+    }];
+}
+
 #pragma mark - Action
 
 - (IBAction)startLocationUpdate:(id)sender {
@@ -107,7 +168,11 @@
 
 - (void)submitAction:(id)sender
 {
+    if (![self isValidData]) {
+        return;
+    }
     
+    [self signUpRequest];
 }
 
 - (IBAction)otherAddressAction:(id)sender {
@@ -115,6 +180,14 @@
     vcl.delegate = self;
     [self.navigationController pushViewController:vcl
                                          animated:YES];
+}
+
+- (IBAction)takePhotoAction:(id)sender
+{
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    [self presentViewController:imagePickerController animated:YES completion:NULL];
 }
 
 #pragma mark - MapNotification
@@ -129,21 +202,133 @@
 
 -(void)locationUpdateError{
     _lb_currentLocation.text = @"定位失败";
+    _isLocationSuccess = NO;
 }
 
 -(void)locationAddressUpdate{
     _lb_currentLocation.text = [ShareValue shareInstance].address;
     _btn_update.enabled = YES;
+    _isLocationSuccess = YES;
 }
 
 -(void)locationAddressUpdateErro{
     _lb_currentLocation.text = @"定位失败";
     _btn_update.enabled = YES;
+    _isLocationSuccess = NO;
 }
 
 #pragma mark
 -(void)onAddressReturn:(NSString *)address coordinate:(CLLocationCoordinate2D)coordinate{
     _lb_manualAdjust.text = address;
+    manualCoordinate = coordinate;
+    _isManualLocation = YES;
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (UIImage *)fixOrientation:(UIImage *)aImage {
+    
+    // No-op if the orientation is already correct
+    if (aImage.imageOrientation == UIImageOrientationUp)
+        return aImage;
+    
+    // We need to calculate the proper transformation to make the image upright.
+    // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationDown:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+            
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+            
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+        default:
+            break;
+    }
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationUpMirrored:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+            
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.height, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+        default:
+            break;
+    }
+    
+    // Now we draw the underlying CGImage into a new context, applying the transform
+    // calculated above.
+    CGContextRef ctx = CGBitmapContextCreate(NULL, aImage.size.width, aImage.size.height,
+                                             CGImageGetBitsPerComponent(aImage.CGImage), 0,
+                                             CGImageGetColorSpace(aImage.CGImage),
+                                             CGImageGetBitmapInfo(aImage.CGImage));
+    CGContextConcatCTM(ctx, transform);
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            // Grr...
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.height,aImage.size.width), aImage.CGImage);
+            break;
+            
+        default:
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.width,aImage.size.height), aImage.CGImage);
+            break;
+    }
+    
+    // And now we just create a new UIImage from the drawing context
+    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
+    UIImage *img = [UIImage imageWithCGImage:cgimg];
+    CGContextRelease(ctx);
+    CGImageRelease(cgimg);
+    return img;
+}
+
+- (UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
+{
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
+    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    image = [self fixOrientation:image];
+    image = [self scaleImage:image toScale:0.2f];
+    
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.5f);
+    _imageData = imageData;
+    
+    [picker dismissViewControllerAnimated:YES completion:^{
+        _iv_photo.image = image;
+    }];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end
