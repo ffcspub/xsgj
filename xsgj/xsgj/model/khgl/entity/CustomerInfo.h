@@ -10,7 +10,7 @@
 
 @interface CustomerInfo : NSObject
 
-@property(nonatomic,strong) NSString *	CUST_ID	;//	客户id
+@property(nonatomic,assign) int         CUST_ID	;//	客户id
 @property(nonatomic,strong) NSString *	CUST_NAME	;//	客户姓名
 @property(nonatomic,assign) int         TYPE_ID;//	类型id
 @property(nonatomic,assign) int         AREA_ID;//	区域id
@@ -28,5 +28,10 @@
 -(NSString *)applyStateName;//获取申请类型
 
 -(NSString *)stateName;
+
+-(void)setOfflineState:(BOOL)isOffline;
+
+-(BOOL)isOffline;
+
 
 @end

@@ -8,6 +8,9 @@
 
 #import "CustInfoBean.h"
 
+
+
 @implementation CustInfoBean
+
 
 @end

@@ -9,7 +9,7 @@
 #import "CustomerInfo.h"
 
 @interface CustomerInfo(){
-    int _applyState;
+    BOOL _offlineState;
 }
 
 @end
@@ -28,8 +28,13 @@
         case 2:
             name = @"已驳回";
             break;
-        case 3:
-            name = @"已通过";
+        case 3:{
+            if (_offlineState) {
+               name = @"待审核";
+            }else{
+               name = @"已通过";
+            }
+        }
             break;
         default:
             break;
@@ -51,5 +56,14 @@
     }
     return name;
 }
+
+-(void)setOfflineState:(BOOL)isOffline{
+    _offlineState = isOffline;
+}
+
+-(BOOL)isOffline{
+    return _offlineState;
+}
+
 
 @end

@@ -251,6 +251,16 @@
             [bean saveToDB];
         }
     }
+    [BNVistRecord deleteWithWhere:nil];
+    for (BNVistRecord *bean in _VISIT_RECORDS) {
+        [bean saveToDB];
+    }
+    [BNVisitStepRecord deleteWithWhere:nil];
+    for (BNVisitStepRecord *bean in _VISIT_STEP_RECORDS) {
+        [bean saveToDB];
+    }
+    
+    
 }
 
 

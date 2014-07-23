@@ -887,9 +887,11 @@
         NSArray *array = [_showingCustomersArrays objectAtIndex:indexPath.section];
         CustomerInfo *customer = [array objectAtIndex:indexPath.row];
         cell.customerInfo = customer;
-        if ([_deselectedCutomerIds containsObject:customer.CUST_ID]) {
-            
+        
+        if ([_deselectedCutomerIds containsObject:[NSNumber numberWithInt:customer.CUST_ID]]) {
+            cell.deSelected = YES;
         }else{
+            cell.deSelected = NO;
             if ([_selectedCustomers containsObject:customer]) {
                 cell.isSelected = YES;
             }else{
@@ -979,6 +981,9 @@
     if (tableView == _tableView) {
         NSArray *array = [_showingCustomersArrays objectAtIndex:indexPath.section];
         CustomerInfo *customer = [array objectAtIndex:indexPath.row];
+        if ([_deselectedCutomerIds containsObject:[NSNumber numberWithInt:customer.CUST_ID]]) {
+            return;
+        }
         if ([_selectedCustomers containsObject:customer]) {
             [_selectedCustomers removeObject:customer];
         }else{

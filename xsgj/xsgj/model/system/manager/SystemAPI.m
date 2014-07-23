@@ -46,9 +46,9 @@
     [[ShareValue shareInstance].userInfo easyDeepCopy:userInfo];
     request.USER_INFO_BEAN = userInfo;
     NSNumber *lastupdatetime = [[NSUserDefaults standardUserDefaults]valueForKey:[NSString stringWithFormat:@"LASTUPDATE_%D",[ShareValue shareInstance].userInfo.USER_ID]];
-//    if (!lastupdatetime) {
+    if (!lastupdatetime) {
         lastupdatetime = @0;
-//    }
+    }
     request.USER_INFO_BEAN.LAST_UPDATE_TIME = [lastupdatetime unsignedLongLongValue];
     [LK_APIUtil getHttpRequest:request apiPath:URL_UPDATE_CONFIG Success:^(LK_HttpBaseResponse *response) {
         if ([DEFINE_SUCCESSCODE isEqual:response.MESSAGE.MESSAGECODE]) {
