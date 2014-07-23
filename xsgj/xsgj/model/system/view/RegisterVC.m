@@ -7,6 +7,7 @@
 //
 
 #import "RegisterVC.h"
+#import "LK_EasySignal.h"
 #import "NSString+URL.h"
 #import "MBProgressHUD+Add.h"
 #import "XTGLAPI.h"
@@ -42,6 +43,183 @@
           forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     
+    [self UI_setup];
+}
+
+- (void)UI_setup
+{
+    // 常量
+    // 布局|xoffset|titleOffset|wTitle|titleOffset|wContent|xoffset| = 320
+    CGFloat topOffset = 20.f; // 顶部偏移
+    CGFloat xOffset   = 10.f; // 水平边框边距
+    CGFloat titleOffset = 10.f; // 标题的水平边距
+    CGFloat yOffset   = 10.f; // 垂直间距
+    CGFloat rowHeight = 40.f; // 行高
+    CGFloat width     = CGRectGetWidth(self.svRoot.bounds) - xOffset * 2; // 边框行宽
+    CGRect rect       = CGRectMake(xOffset, topOffset, width, rowHeight); // 边框区域
+    
+    CGFloat wTitle = 80.f;
+    CGFloat xTitle = xOffset+titleOffset;
+    CGRect rectTitle  = CGRectMake(xTitle, topOffset, wTitle, rowHeight);
+    
+    CGFloat xContent = CGRectGetMaxX(rectTitle) + titleOffset;
+    CGFloat wContent = width - 2*xOffset - wTitle - 2*titleOffset;
+    CGRect rectContent  = CGRectMake(xContent, topOffset, wContent, rowHeight);
+    
+    // 主题
+    UIButton *btnCropName = [ShareValue getDefaulBorder];
+    btnCropName.frame = rect;
+    [self.svRoot addSubview:btnCropName];
+    
+    UILabel *lblCropName = [ShareValue getDefaultInputTitle];
+    lblCropName.frame = rectTitle;
+    lblCropName.text = @"企业名称";
+    [self.svRoot addSubview:lblCropName];
+    
+    UITextField *tfCropName = [ShareValue getDefaultTextField];
+    tfCropName.frame = rectContent;
+    tfCropName.keyboardType = UIKeyboardTypeDefault;
+    [self.svRoot addSubview:tfCropName];
+    self.tfCropName = tfCropName;
+    
+    // 出差天数
+    rect = CGRectOffset(rect, 0.f, rowHeight + yOffset);
+    UIButton *btnCropCode = [ShareValue getDefaulBorder];
+    btnCropCode.frame = rect;
+    [self.svRoot addSubview:btnCropCode];
+    
+    rectTitle = CGRectOffset(rectTitle, 0.f, rowHeight + yOffset);
+    UILabel *lblCropCode = [ShareValue getDefaultInputTitle];
+    lblCropCode.frame = rectTitle;
+    lblCropCode.text = @"企业编码";
+    [self.svRoot addSubview:lblCropCode];
+    
+    rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
+    UITextField *tfCropCode = [ShareValue getDefaultTextField];
+    tfCropCode.placeholder = @"用英文或数字组成，长度不能超过20";
+    tfCropCode.frame = rectContent;
+    tfCropCode.maxLength = 5;
+    [self.svRoot addSubview:tfCropCode];
+    self.tfCropCode = tfCropCode;
+    
+    // 所属区域
+    rect = CGRectOffset(rect, 0.f, rowHeight + yOffset);
+    UIButton *btnAddr = [ShareValue getDefaulBorder];
+    btnAddr.frame = rect;
+    [self.svRoot addSubview:btnAddr];
+    
+    rectTitle = CGRectOffset(rectTitle, 0.f, rowHeight + yOffset);
+    UILabel *lblAddr = [ShareValue getDefaultInputTitle];
+    lblAddr.frame = rectTitle;
+    lblAddr.text = @"所属区域";
+    [self.svRoot addSubview:lblAddr];
+    
+    rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
+    CGRect rectProvince = CGRectMake(rectContent.origin.x, rectContent.origin.y, CGRectGetWidth(rectContent) / 2 - 20, CGRectGetHeight(rectContent));
+    UITextField *tfProvince = [ShareValue getDefaultTextField];
+    tfProvince.frame = rectProvince;
+    tfProvince.textAlignment = NSTextAlignmentCenter;
+    tfProvince.maxLength = 5;
+    [self.svRoot addSubview:tfProvince];
+    self.tfProvince = tfProvince;
+    
+    CGRect rectProvinceLabel = CGRectMake(CGRectGetMaxX(rectProvince), CGRectGetMinY(rectProvince), 20.f, CGRectGetHeight(rectProvince));
+    UILabel *lblProvince = [ShareValue getDefaultContent];
+    lblProvince.frame = rectProvinceLabel;
+    lblProvince.text = @"省";
+    [self.svRoot addSubview:lblProvince];
+    
+    CGRect rectCity = CGRectMake(CGRectGetMaxX(rectProvinceLabel), CGRectGetMinY(rectProvinceLabel), CGRectGetWidth(rectContent) / 2 - 20, CGRectGetHeight(rectContent));
+    UITextField *tfCity = [ShareValue getDefaultTextField];
+    tfCity.frame = rectCity;
+    tfCity.textAlignment = NSTextAlignmentCenter;
+    tfCity.maxLength = 5;
+    [self.svRoot addSubview:tfCity];
+    self.tfCity = tfCity;
+    
+    CGRect rectCityLabel = CGRectMake(CGRectGetMaxX(rectCity), CGRectGetMinY(rectCity), 20.f, CGRectGetHeight(rectCity));
+    UILabel *lblCity = [ShareValue getDefaultContent];
+    lblCity.frame = rectCityLabel;
+    lblCity.text = @"市";
+    [self.svRoot addSubview:lblCity];
+    
+    // 行业类型
+    rect = CGRectOffset(rect, 0.f, rowHeight + yOffset);
+    UIButton *btnType = [ShareValue getDefaulBorder];
+    btnType.frame = rect;
+    [self.svRoot addSubview:btnType];
+    
+    rectTitle = CGRectOffset(rectTitle, 0.f, rowHeight + yOffset);
+    UILabel *lblType = [ShareValue getDefaultInputTitle];
+    lblType.frame = rectTitle;
+    lblType.text = @"行业类型";
+    [self.svRoot addSubview:lblType];
+    
+    rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
+    UITextField *tfType = [ShareValue getDefaultTextField];
+    tfType.frame = rectContent;
+    [self.svRoot addSubview:tfType];
+    self.tfType = tfType;
+    
+    // 联系人
+    rect = CGRectOffset(rect, 0.f, rowHeight + yOffset);
+    UIButton *btnLinkMan = [ShareValue getDefaulBorder];
+    btnLinkMan.frame = rect;
+    [self.svRoot addSubview:btnLinkMan];
+    
+    rectTitle = CGRectOffset(rectTitle, 0.f, rowHeight + yOffset);
+    UILabel *lblLinkMan = [ShareValue getDefaultInputTitle];
+    lblLinkMan.frame = rectTitle;
+    lblLinkMan.text = @"联  系  人";
+    [self.svRoot addSubview:lblLinkMan];
+    
+    rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
+    UITextField *tfLinkMan = [ShareValue getDefaultTextField];
+    tfLinkMan.frame = rectContent;
+    [self.svRoot addSubview:tfLinkMan];
+    self.tfLinkMan = tfLinkMan;
+    
+    // 联系人
+    rect = CGRectOffset(rect, 0.f, rowHeight + yOffset);
+    UIButton *btnTel = [ShareValue getDefaulBorder];
+    btnTel.frame = rect;
+    [self.svRoot addSubview:btnTel];
+    
+    rectTitle = CGRectOffset(rectTitle, 0.f, rowHeight + yOffset);
+    UILabel *lblTel = [ShareValue getDefaultInputTitle];
+    lblTel.frame = rectTitle;
+    lblTel.text = @"手机号码";
+    [self.svRoot addSubview:lblTel];
+    
+    rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
+    UITextField *tfTel = [ShareValue getDefaultTextField];
+    tfTel.frame = rectContent;
+    tfTel.keyboardType = UIKeyboardTypeNumberPad;
+    [self.svRoot addSubview:tfTel];
+    self.tfTel = tfTel;
+    
+    // 联系人
+    rect = CGRectOffset(rect, 0.f, rowHeight + yOffset);
+    UIButton *btnEmail = [ShareValue getDefaulBorder];
+    btnEmail.frame = rect;
+    [self.svRoot addSubview:btnEmail];
+    
+    rectTitle = CGRectOffset(rectTitle, 0.f, rowHeight + yOffset);
+    UILabel *lblEmail = [ShareValue getDefaultInputTitle];
+    lblEmail.frame = rectTitle;
+    lblEmail.text = @"电子邮箱";
+    [self.svRoot addSubview:lblEmail];
+    
+    rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
+    UITextField *tfEmail = [ShareValue getDefaultTextField];
+    tfEmail.frame = rectContent;
+    tfEmail.keyboardType = UIKeyboardTypeEmailAddress;
+    [self.svRoot addSubview:tfEmail];
+    self.tfEmail = tfEmail;
+    
+    // 初始化
+    self.svRoot.backgroundColor = HEX_RGB(0xefeff4);
+    self.svRoot.contentSize = CGSizeMake(CGRectGetWidth(self.svRoot.bounds), CGRectGetMaxY(rect) + yOffset); // 设置可滚动区域
 }
 
 - (void)didReceiveMemoryWarning
@@ -54,10 +232,10 @@
 
 - (IBAction)registerAction:(id)sender
 {
-    [self closeInputKeyboard];
+    // 关闭键盘
+    [[IQKeyboardManager sharedManager] resignFirstResponder];
     
     if (![self verifyInput]) {
-        [MBProgressHUD showError:@"信息未填完整,请填写完整后提交!" toView:self.view];
         return;
     }
     
@@ -71,42 +249,29 @@
     request.TEL = self.tfTel.text;
     request.EMAIL = self.tfEmail.text;
     request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd"];
+    request.REMARK = @"";
     
-    MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在提交···" toView:self.view];
-    [hud showAnimated:YES whileExecutingBlock:^{
-        [XTGLAPI addApplyCorpHttpRequest:request success:^(AddApplyCorpHttpResponse *response) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            
-            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"提示" andMessage:@"申请资料提交成功"];
-            [alertView addButtonWithTitle:@"取消"
-                                     type:SIAlertViewButtonTypeCancel
-                                  handler:^(SIAlertView *alert) {
-                                      
-                                  }];
-            [alertView addButtonWithTitle:@"确定"
-                                     type:SIAlertViewButtonTypeDefault
-                                  handler:^(SIAlertView *alert) {
-                                      [self.navigationController popViewControllerAnimated:YES];
-                                  }];
-            alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
-            [alertView show];
-        } fail:^(BOOL notReachable, NSString *desciption) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
-        }];
+    [MBProgressHUD showMessag:@"正在提交···" toView:ShareAppDelegate.window];
+    [XTGLAPI addApplyCorpHttpRequest:request success:^(AddApplyCorpHttpResponse *response) {
+        [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+        
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"提示" andMessage:@"申请资料提交成功"];
+        [alertView addButtonWithTitle:@"取消"
+                                 type:SIAlertViewButtonTypeCancel
+                              handler:^(SIAlertView *alert) {
+                                  
+                              }];
+        [alertView addButtonWithTitle:@"确定"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  [self.navigationController popViewControllerAnimated:YES];
+                              }];
+        alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+        [alertView show];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showError:desciption toView:self.view];
     }];
-}
-
-- (void)closeInputKeyboard
-{
-    [self.tfCropName resignFirstResponder];
-    [self.tfCropCode resignFirstResponder];
-    [self.tfProvince resignFirstResponder];
-    [self.tfCity resignFirstResponder];
-    [self.tfType resignFirstResponder];
-    [self.tfLinkMan resignFirstResponder];
-    [self.tfTel resignFirstResponder];
-    [self.tfEmail resignFirstResponder];
 }
 
 - (BOOL)verifyInput
@@ -121,8 +286,21 @@
         self.tfTel.text.length == 0 ||
         self.tfEmail.text.length == 0) {
         
+        [MBProgressHUD showError:@"信息未填完整,请填写完整后提交!" toView:self.view];
         return NO;
 	}
+    
+    if (![self.tfTel.text isTelephone]) {
+        
+        [MBProgressHUD showError:@"联系电话输入有误!" toView:self.view];
+        return NO;
+    }
+    
+    if (![self.tfEmail.text isEmail]) {
+        
+        [MBProgressHUD showError:@"电子邮箱输入有误!" toView:self.view];
+        return NO;
+    }
     
     return YES;
 }

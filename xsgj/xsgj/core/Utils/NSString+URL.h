@@ -24,4 +24,7 @@
 // 判断是是否为手机号
 - (BOOL)isTelephone;
 
+// 邮箱判断
+- (BOOL)isEmail;
+
 @end

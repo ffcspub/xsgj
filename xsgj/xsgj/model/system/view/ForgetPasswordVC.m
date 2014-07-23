@@ -15,7 +15,8 @@
 #import "SIAlertView.h"
 
 @interface ForgetPasswordVC ()
-
+@property (weak, nonatomic) IBOutlet UIButton *btnCodeBg;
+@property (weak, nonatomic) IBOutlet UIButton *btnUserBg;
 @end
 
 @implementation ForgetPasswordVC
@@ -42,6 +43,11 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     
     // 设置样式
+    [self.btnCodeBg setBackgroundImage:[[UIImage imageNamed:@"normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 100, 20, 30)] forState:UIControlStateNormal];
+    [self.btnCodeBg setBackgroundImage:[[UIImage imageNamed:@"press"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 100, 20, 30)] forState:UIControlStateHighlighted];
+    
+    [self.btnUserBg setBackgroundImage:[[UIImage imageNamed:@"normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 100, 20, 30)] forState:UIControlStateNormal];
+    [self.btnUserBg setBackgroundImage:[[UIImage imageNamed:@"press"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 100, 20, 30)] forState:UIControlStateHighlighted];
 }
 
 - (void)didReceiveMemoryWarning

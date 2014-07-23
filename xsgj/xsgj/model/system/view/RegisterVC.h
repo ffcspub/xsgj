@@ -10,6 +10,7 @@
 
 @interface RegisterVC : HideTabViewController
 
+@property (weak, nonatomic) IBOutlet UIScrollView *svRoot;
 @property (weak, nonatomic) IBOutlet UITextField *tfCropName;
 @property (weak, nonatomic) IBOutlet UITextField *tfCropCode;
 @property (weak, nonatomic) IBOutlet UITextField *tfProvince;
