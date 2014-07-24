@@ -24,6 +24,8 @@
 #import "BNDisplayType.h"
 #import "BNSignConfigBean.h"
 #import "BNCameraType.h"
+#import "ContactBean.h"
+#import "DeptInfoBean.h"
 
 #import "SignConfigBean.h"
 
@@ -54,6 +56,8 @@
     [helper createTableWithModelClass:[BNVistRecord class]];
     [helper createTableWithModelClass:[BNSignConfigBean class]];
     [helper createTableWithModelClass:[BNCameraType class]];
+    [helper createTableWithModelClass:[DeptInfoBean class]];
+    [helper createTableWithModelClass:[ContactBean class]];
 }
 
 -(void)saveCacheDB{
@@ -135,6 +139,16 @@
 
 +(Class)__CAMERA_TYPESClass{
     return [BNCameraType class];
+}
+
++(Class)__DEPT_INFOClass
+{
+    return [DeptInfoBean class];
+}
+
++(Class)__CONTACT_Class
+{
+    return [ContactBean class];
 }
 
 -(void)saveDefaultMobileMenus{

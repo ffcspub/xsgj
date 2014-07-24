@@ -19,4 +19,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *lb_photo;
 @property (weak, nonatomic) IBOutlet UILabel *lb_ps;
 
+@property (weak, nonatomic) IBOutlet UIButton *btn_update;
+
+
+- (IBAction)takePhotoAction:(id)sender;
+
 @end
