@@ -70,3 +70,9 @@
 }
 
 @end
+
+
+@implementation GetWorkRangeHttpRequest
+
+
+@end

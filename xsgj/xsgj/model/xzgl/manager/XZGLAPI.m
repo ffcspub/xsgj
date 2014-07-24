@@ -185,6 +185,21 @@
     } class:[QueryTripDetailHttpResponse class]];
 }
 
+/**
+ *  出差详细查询接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)queryApproveCountByRequest:(QueryApproveCountHttpRequest *)request success:(void(^)(QueryApproveCountHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_approveCount Success:^(LK_HttpBaseResponse *response) {
+        success((QueryApproveCountHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[QueryApproveCountHttpResponse class]];
+
+}
 
 /**
  *  工作汇报类型获取接口

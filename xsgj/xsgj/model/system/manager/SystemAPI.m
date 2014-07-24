@@ -104,5 +104,19 @@
     } class:[UploadPhotoHttpResponse class]];
 }
 
+/**
+ *  读取手机上报工作时间范围
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)getWorkRangeByRequest:(GetWorkRangeHttpRequest *)request success:(void(^)(GetWorkRangeHttpResponse *reponse))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_getWorkRange Success:^(LK_HttpBaseResponse *response) {
+        success((GetWorkRangeHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[GetWorkRangeHttpResponse class]];
+}
 
 @end

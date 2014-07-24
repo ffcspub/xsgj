@@ -11,6 +11,7 @@
 #import "SigninfoBean.h"
 #import "TripInfoBean.h"
 #import "TripDetailBean.h"
+#import "QueryApproveCount.h"
 
 @interface SignUpHttpReponse : LK_HttpBaseResponse
 
@@ -22,6 +23,13 @@
 @end
 
 @interface DetailAttendanceHttpResponse : LK_HttpBasePageResponse
+
+@end
+
+
+@interface QueryApproveCountHttpResponse : LK_HttpBaseResponse
+
+@property(nonatomic,strong) QueryApproveCount *QUERYAPPROVECOUNT;
 
 @end
 

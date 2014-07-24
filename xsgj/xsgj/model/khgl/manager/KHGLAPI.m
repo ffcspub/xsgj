@@ -90,7 +90,7 @@
  *  @param fail    失败返回结果
  */
 +(void)queryVisitRecordByRequest:(QueryVistitRecordHttpRequest *)request success:(void(^)(QueryVistitRecordHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
-    [LK_APIUtil getHttpRequest:request apiPath:URL_recordVisit Success:^(LK_HttpBaseResponse *response) {
+    [LK_APIUtil getHttpRequest:request apiPath:URL_queryVisitRecord Success:^(LK_HttpBaseResponse *response) {
         success((QueryVistitRecordHttpResponse *)response);
     } fail:^(BOOL NotReachable, NSString *desciption) {
         fail(NotReachable,desciption);

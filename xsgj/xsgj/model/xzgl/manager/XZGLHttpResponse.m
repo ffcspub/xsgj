@@ -37,6 +37,11 @@
 
 @end
 
+@implementation QueryApproveCountHttpResponse
+
+
+@end
+
 @implementation ApplyLeaveHttpResponse
 
 @end

@@ -25,6 +25,8 @@
 #import "BNSignConfigBean.h"
 #import "BNCameraType.h"
 
+#import "SignConfigBean.h"
+
 #import "LK_NSDictionary2Object.h"
 
 #import <LKDBHelper.h>
@@ -271,6 +273,14 @@
 @end
 
 @implementation UploadPhotoHttpResponse
+
+@end
+
+@implementation GetWorkRangeHttpResponse
+
++(Class)__DATAClass{
+    return [SignConfigBean class];
+}
 
 @end
 

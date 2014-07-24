@@ -70,3 +70,7 @@
 
 @end
 
+@interface GetWorkRangeHttpResponse : LK_HttpBasePageResponse
+
+@end
+
