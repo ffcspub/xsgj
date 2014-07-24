@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "BNUserInfo.h"
+#import "SystemHttpRequest.h"
+#import "SystemHttpResponse.h"
 
 @interface SystemAPI : NSObject
 
@@ -28,5 +30,23 @@
  *  @param fail    失败返回结果
  */
 +(void)uploadPhotoByFileName:(NSString *)fileName data:(NSData *)data success:(void(^)(NSString *fileId))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
+ *  读取手机上报工作时间范围
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)getWorkRangeByRequest:(GetWorkRangeHttpRequest *)request success:(void(^)(GetWorkRangeHttpResponse *reponse))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
+ *  读取手机上报时间间隔
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)getTimeIntervalByRequest:(GetTimeIntervalHttpRequest *)request success:(void(^)(GetTimeIntervalHttpResponse *reponse))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 @end

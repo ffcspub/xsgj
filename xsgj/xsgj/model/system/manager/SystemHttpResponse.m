@@ -27,6 +27,9 @@
 #import "ContactBean.h"
 #import "DeptInfoBean.h"
 
+#import "SignConfigBean.h"
+#import "TimeIntervalBean.h"
+
 #import "LK_NSDictionary2Object.h"
 
 #import <LKDBHelper.h>
@@ -285,6 +288,18 @@
 @end
 
 @implementation UploadPhotoHttpResponse
+
+@end
+
+@implementation GetWorkRangeHttpResponse
+
++(Class)__DATAClass{
+    return [SignConfigBean class];
+}
+
+@end
+
+@implementation GetTimeIntervalHttpResponse
 
 @end
 

@@ -14,7 +14,7 @@
  {"id":"13","name":"出差申请","icon":"icon_applytrip","parentId":"5","childClass":"TripApplyVC","leftShow":"true", "rightShow":"true"},
  {"id":"14","name":"出差查询","icon":"icon_querytrip","parentId":"5","childClass":"TripQueryVC","leftShow":"true", "rightShow":"true"},
  {"id":"15","name":"出差审批","icon":"icon_tripapproval","parentId":"5","childClass":"TripApprovalVC","leftShow":"true", "rightShow":"true"},
- {"id":"50","name":"我要审批","icon":"icon_approval","parentId":"0","childClass":"admin.approval.ApprovalActivity","leftShow":"true", "rightShow":"false"},
+ {"id":"50","name":"我要审批","icon":"icon_approval","parentId":"0","childClass":"ApproveListViewController","leftShow":"true", "rightShow":"false"},
  {"id":"6","name":"工作汇报","icon":"icon_work_report","parentId":"0","childClass":"WorkReportViewController","leftShow":"true", "rightShow":"true"},
  {"id":"16","name":"计划拜访","icon":"icon_planvisit","parentId":"1","childClass":"customer.visit.PlanVisit","leftShow":"true", "rightShow":"true"},
  {"id":"40","name":"店招拍照","icon":"ic_launcher","parentId":"16","childClass":"customer.visitContent.photo.SignagephotosActivity","leftShow":"true", "rightShow":"true"},
@@ -45,10 +45,10 @@
  {"id":"51","name":"拜访规划","icon":"icon_customerquery","parentId":"1","childClass":"VisitPlansViewController","leftShow":"true", "rightShow":"true", "rightText":"操作"},
  {"id":"30","name":"企业公告","icon":"icon_announcement","parentId":"2","childClass":"system.message.Announcement","leftShow":"true", "rightShow":"true"},
  {"id":"24","name":"企业通讯录","icon":"icon_addressbook","parentId":"2","childClass":"CorpAddressBookViewController","leftShow":"true", "rightShow":"true"},
- {"id":"25","name":"修改密码","icon":"icon_changepwd","parentId":"2","childClass":"core.login.PasswordActivity","leftShow":"true", "rightShow":"true"},
+ {"id":"25","name":"修改密码","icon":"icon_changepwd","parentId":"2","childClass":"ChangePasswordViewController","leftShow":"true", "rightShow":"true"},
  {"id":"26","name":"离线消息","icon":"icon_offlineinfo","parentId":"2","childClass":"system.message.OfflineInfo","leftShow":"true", "rightShow":"false"},
  {"id":"27","name":"系统更新","icon":"icon_updateversion","parentId":"2","childClass":"SystemUpdateViewController","leftShow":"true", "rightShow":"true"},
  {"id":"28","name":"流量统计","icon":"icon_flowcount","parentId":"2","childClass":"system.message.FlowCount","leftShow":"true", "rightShow":"true"},
- {"id":"29","name":"关于","icon":"icon_about","parentId":"2","childClass":"system.message.AboutActivity","leftShow":"true", "rightShow":"true"},
+ {"id":"29","name":"关于","icon":"icon_about","parentId":"2","childClass":"AboutViewController","leftShow":"true", "rightShow":"true"},
  {"id":"49","name":"用户反馈", "icon":"icon_advicereport","parentId":"3","childClass":"FXAdviceReportVC","leftShow":"true", "rightShow":"true"}
 ]
