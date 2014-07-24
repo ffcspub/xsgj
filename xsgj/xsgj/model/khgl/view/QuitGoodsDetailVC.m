@@ -71,7 +71,7 @@
 - (void)loadQuitGoodsDetail
 {
     QueryOrderBackDetailHttpRequest *request = [[QueryOrderBackDetailHttpRequest alloc] init];
-    request.ORDER_ID = [NSNumber numberWithInt:self.quitBean.ORDER_ID];
+    // request.ORDER_ID = [NSNumber numberWithInt:self.quitBean.ORDER_ID];
     
     MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [KHGLAPI queryOrderBackDetailByRequest:request success:^(QueryOrderBackDetailHttpResponse *response) {
@@ -93,32 +93,28 @@
     [self.arrLeftTableData removeAllObjects];
     [self.arrRightTableData removeAllObjects];
     
-    NSMutableArray *one = [NSMutableArray arrayWithCapacity:10];
-    NSMutableArray *oneR = [NSMutableArray arrayWithCapacity:10];
     for (int i = 0; i < [self.arrQuitGoods count]; i++)
     {
-        //QueryOrderBackDetailInfoBean *bean = self.arrQuitGoods[i];
-        //[one addObject:bean.PROD_NAME];
-        [one addObject:[NSString stringWithFormat:@"物品-%d", i]];
+        QueryOrderBackDetailInfoBean *bean = self.arrQuitGoods[i];
+        [self.arrLeftTableData addObject:bean.PROD_NAME];
+        //[self.arrLeftTableData addObject:[NSString stringWithFormat:@"物品-%d", i]];
 
-        NSMutableArray *ary = [NSMutableArray arrayWithCapacity:5];
-        /*
-        [ary addObject:bean.SPEC];
-        [ary addObject:bean.ITEM_NUM];
-        [ary addObject:bean.UNITNAME];
-        [ary addObject:bean.BATCH];
-        [ary addObject:bean.REMARK];
-        */
-        [ary addObject:@"规格"];
-        [ary addObject:@"数量"];
-        [ary addObject:@"单位"];
-        [ary addObject:@"日期"];
-        [ary addObject:@"退货原因"];
+        NSMutableArray *oneRow = [NSMutableArray arrayWithCapacity:5];
         
-        [oneR addObject:ary];
+        [oneRow addObject:bean.SPEC];
+        [oneRow addObject:bean.ITEM_NUM];
+        [oneRow addObject:bean.UNITNAME];
+        [oneRow addObject:bean.BATCH];
+        [oneRow addObject:bean.REMARK];
+        /*
+        [oneRow addObject:@"规格"];
+        [oneRow addObject:@"数量"];
+        [oneRow addObject:@"单位"];
+        [oneRow addObject:@"日期"];
+        [oneRow addObject:@"退货原因"];
+        */
+        [self.arrRightTableData addObject:oneRow];
     }
-    [self.arrLeftTableData addObject:one];
-    [self.arrRightTableData addObject:oneR];
     
     [tableView reloadData];
 }
@@ -170,17 +166,17 @@
 
 - (NSArray *)arrayDataForLeftHeaderInTableView:(XCMultiTableView *)tableView InSection:(NSUInteger)section
 {
-    return [self.arrLeftTableData objectAtIndex:section];
+    return self.arrLeftTableData;
 }
 
 - (NSArray *)arrayDataForContentInTableView:(XCMultiTableView *)tableView InSection:(NSUInteger)section
 {
-    return [self.arrRightTableData objectAtIndex:section];
+    return self.arrRightTableData;
 }
 
 - (NSUInteger)numberOfSectionsInTableView:(XCMultiTableView *)tableView
 {
-    return [self.arrLeftTableData count];
+    return 1;
 }
 
 - (CGFloat)tableView:(XCMultiTableView *)tableView contentTableCellWidth:(NSUInteger)column

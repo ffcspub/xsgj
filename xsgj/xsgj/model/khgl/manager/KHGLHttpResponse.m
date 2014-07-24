@@ -120,7 +120,7 @@
 
 @implementation QueryOrderBackDetailHttpResponse
 
-+(Class)__DATAClass{
++(Class)__QUERYORDERBACKINFOBEANClass{
     return [QueryOrderBackDetailInfoBean class];
 }
 
