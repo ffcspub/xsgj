@@ -27,6 +27,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setRightBarButtonItem];
+    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -50,6 +52,19 @@
 
 -(void)updateAction:(id)sender
 {
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    NSString *appleID = @"725369561";
+    [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",appleID]]];
+    [request setHTTPMethod:@"GET"];
+    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:nil];
+    NSString *latestVersion = [jsonData objectForKey:@"version"];
+    NSString *trackViewUrl1 = [jsonData objectForKey:@"trackViewUrl"];//地址trackViewUrl
+    NSString *trackName     = [jsonData objectForKey:@"trackName"];//trackName
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.apple.com/us/app/geniusbaby/id521989084"]];
+    
+    
     NSLog(@"更新");
 }
 - (void)didReceiveMemoryWarning

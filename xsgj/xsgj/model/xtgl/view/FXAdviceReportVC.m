@@ -7,7 +7,10 @@
 //
 
 #import "FXAdviceReportVC.h"
-#import "XTGLAPI.h"
+#import "XZGLAPI.h"
+#import "ShareValue.h"
+#import "NSDate+Helper.h"
+#import "MBProgressHUD+Add.h"
 
 @interface FXAdviceReportVC ()<UITextViewDelegate>
 {
@@ -66,7 +69,31 @@
 
 -(void)submitAction:(id)sender
 {
-    NSLog(@"用户反馈提交");
+    if ([[self.txtAdvice text] length] <= 0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"意见建议上报入参有为空" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    AddAdviceHttpRequest *request = [[AddAdviceHttpRequest alloc]init];
+    request.SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
+    request.CORP_ID    = [ShareValue shareInstance].userInfo.CORP_ID;
+    request.DEPT_ID    = [ShareValue shareInstance].userInfo.DEPT_ID;
+    request.USER_AUTH  = [ShareValue shareInstance].userInfo.USER_AUTH;
+    request.USER_ID    = [ShareValue shareInstance].userInfo.USER_ID;
+    request.CONTENT    = [self.txtAdvice text];
+    request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd"];
+    [XZGLAPI addAdviceByRequest:request success:^(AddAdviceHttpResponse *response)
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    fail:^(BOOL notReachable, NSString *desciption)
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:@"网络不给力" toView:self.view];
+    }];
 }
 - (void)didReceiveMemoryWarning
 {

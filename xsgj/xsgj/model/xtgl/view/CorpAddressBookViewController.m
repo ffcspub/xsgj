@@ -15,14 +15,20 @@
 #import "ContactBean.h"
 #import "ContactTableViewCell.h"
 #import "MBProgressHUD+Add.h"
+#import "OAChineseToPinyin.h"
+#import "NSObject+LKDBHelper.h"
 
 @interface CorpAddressBookViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
-    NSMutableArray *mAry_DEPT_ID;
-    NSMutableArray *mAry_DEPT_NAME;
-    NSMutableArray *mAry_DEPT_PID;
-    NSMutableArray *mAry_REALNAME;
-    NSMutableArray *mAry_MOBILENO;
+    // 本地部门信息
+    NSMutableArray *mLocalDept;
+    // 本地联系人
+    NSMutableArray *mLocalContact;
+
+    // A-Z段落列表
+    NSMutableArray *mSectionArray;
+    // 分段联系人-二维
+    NSMutableArray *mLocalSectionContact;
 }
 @end
 
@@ -33,11 +39,11 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        mAry_DEPT_ID   = [[NSMutableArray alloc]init];
-        mAry_DEPT_NAME = [[NSMutableArray alloc]init];
-        mAry_DEPT_PID  = [[NSMutableArray alloc]init];
-        mAry_REALNAME  = [[NSMutableArray alloc]init];
-        mAry_MOBILENO  = [[NSMutableArray alloc]init];
+        mLocalDept           = [[NSMutableArray alloc]init];
+        mLocalContact        = [[NSMutableArray alloc]init];
+        mLocalSectionContact = [[NSMutableArray alloc]init];
+        [DeptInfoBean deleteWithWhere:nil];
+        [ContactBean deleteWithWhere:nil];
     }
     return self;
 }
@@ -62,15 +68,8 @@
             NSArray *aryTemp = response.DATA;
             for (DeptInfoBean *bean in aryTemp)
             {
-                [mAry_DEPT_ID    addObject:@(bean.DEPT_ID)];
-                [mAry_DEPT_PID   addObject:@(bean.DEPT_PID)];
-                [mAry_DEPT_NAME  addObject:bean.DEPT_NAME];
-            }
-            NSLog(@"%@",mAry_DEPT_ID);
-            NSLog(@"%@",mAry_DEPT_PID);
-            for (NSString *s in mAry_DEPT_NAME)
-            {
-                 NSLog(@"%@",s);
+                [bean saveToDB];
+                [mLocalDept addObject:bean];
             }
         }
     }
@@ -95,18 +94,42 @@
             NSArray *aryTemp = response.DATA;
             for (ContactBean *bean in aryTemp)
             {
-                [mAry_REALNAME    addObject:bean.REALNAME];
-                [mAry_MOBILENO    addObject:bean.MOBILENO];
+                bean.USER_NAME_PINYIN = [OAChineseToPinyin pinyinFromChiniseString:bean.REALNAME];
+                bean.USER_NAME_HEAD   = [bean.USER_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
+                [bean saveToDB];
+                
+                [mLocalContact addObject:bean];
             }
-            for (NSString *s in mAry_REALNAME)
+            
+            // 获取A-Z分段列表
+            NSMutableArray *mSearch = [ContactBean searchWithWhere:nil orderBy:nil offset:0 count:100];
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            for (ContactBean *bean in mSearch)
             {
-                NSLog(@"%@",s);
+                [dict setObject:bean.USER_NAME_HEAD forKey:bean.USER_NAME_HEAD];
             }
-            for (NSString *s in mAry_MOBILENO)
+            mSectionArray = (NSMutableArray*)[dict allValues];
+            NSStringCompareOptions comparisonOptions = NSCaseInsensitiveSearch|NSNumericSearch|
+            NSWidthInsensitiveSearch|NSForcedOrderingSearch;
+            NSComparator sort = ^(NSString *obj1,NSString *obj2)
             {
-                NSLog(@"%@",s);
+                NSRange range = NSMakeRange(0,obj1.length);
+                return [obj1 compare:obj2 options:comparisonOptions range:range];
+            };
+            mSectionArray = (NSMutableArray*)[mSectionArray sortedArrayUsingComparator:sort];
+            
+            //
+            for (NSString*s in mSectionArray)
+            {
+                NSString *sql = [NSString stringWithFormat:@"USER_NAME_HEAD = '%@'",s];
+                NSMutableArray *mN = [ContactBean searchWithWhere:sql orderBy:nil offset:0 count:100];
+                NSLog(@"mN = %@",mN);
+                [mLocalSectionContact addObject:mN];
             }
+            NSLog(@"mLocalSectionContact = %@",mLocalSectionContact);
+            // 刷新table
             [_tabContact reloadData];
+
         }
     }
     fail:^(BOOL notReachable, NSString *desciption)
@@ -126,7 +149,14 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [mAry_REALNAME count];
+    if ([mLocalSectionContact count] == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        return [mLocalSectionContact[section] count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -138,7 +168,11 @@
     {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ContactTableViewCell"  owner:self options:nil] lastObject];
     }
-    cell.labName.text = mAry_REALNAME[indexPath.row];
+    
+
+    ContactBean *bean = mLocalSectionContact[indexPath.section][indexPath.row];
+    cell.labName.text = bean.REALNAME;
+
     cell.btnMsg.tag  = indexPath.row;
     cell.btnDail.tag = indexPath.row;
     
@@ -151,13 +185,15 @@
 -(void)clkMsg:(id)sender
 {
     UIButton *btn = sender;
-    NSString *str = [NSString stringWithFormat:@"sms://%@",mAry_MOBILENO[btn.tag]];
+    ContactBean *bean =  mLocalContact[btn.tag];
+    NSString *str = [NSString stringWithFormat:@"sms://%@",bean.MOBILENO];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
 -(void)clkDail:(id)sender
 {
     UIButton *btn = sender;
-    NSString *str = [NSString stringWithFormat:@"tel://%@",mAry_MOBILENO[btn.tag]];
+    ContactBean *bean =  mLocalContact[btn.tag];
+    NSString *str = [NSString stringWithFormat:@"tel://%@",bean.MOBILENO];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
 
@@ -166,4 +202,16 @@
     [_schBar resignFirstResponder];
 }
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [mSectionArray count];
+}
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return mSectionArray[section];
+}
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    return mSectionArray;
+}
 @end
