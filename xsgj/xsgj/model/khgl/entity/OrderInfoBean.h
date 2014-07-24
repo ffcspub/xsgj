@@ -15,9 +15,9 @@
 @property(nonatomic,strong) NSString *	MOBILENO	;//	手机号码
 @property(nonatomic,strong) NSString *	REALNAME	;//	姓名
 @property(nonatomic,strong) NSNumber *	TOTAL_PRICE	;//	订单总价
-@property(nonatomic,strong) NSNumber *	BOOK_PRICE	;//	优惠总价
+@property(nonatomic,assign) int         ORDER_ID	;//	订单ID
 @property(nonatomic,strong) NSString *	COMMITTIME	;//	上报时间
-@property(nonatomic,strong) NSString *	STATE	;//	状态
+@property(nonatomic,strong) NSString *	CREATETIME	;//	创建时间
 @property(nonatomic,strong) NSString *	CUST_NAME	;//	订货客户
 
 @end
