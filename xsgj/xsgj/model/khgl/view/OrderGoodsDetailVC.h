@@ -7,7 +7,10 @@
 //
 
 #import "HideTabViewController.h"
+#import "OrderInfoBean.h"
 
 @interface OrderGoodsDetailVC : HideTabViewController
+
+@property (nonatomic, strong) OrderInfoBean *orderInfoBean;
 
 @end

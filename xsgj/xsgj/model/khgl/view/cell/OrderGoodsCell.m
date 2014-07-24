@@ -62,8 +62,8 @@
     // TODO: 设置数据
     OrderInfoBean *bean = (OrderInfoBean *)data;
     self.lblTitle.text = bean.CUST_NAME;
-    self.lblTime.text = bean.CUST_NAME;
-    self.lblMoney.text = bean.CUST_NAME;
+    self.lblTime.text = bean.COMMITTIME;
+    self.lblMoney.text = [NSString stringWithFormat:@"订货金额:%.2f", [bean.TOTAL_PRICE floatValue]];
 }
 
 @end

@@ -29,11 +29,15 @@ typedef NS_ENUM(NSUInteger, SortColumnType) {
 
 @property (nonatomic, strong) UIColor *boldSeperatorLineColor;
 @property (nonatomic, strong) UIColor *normalSeperatorLineColor;
+@property (nonatomic, strong) UIColor *cellTextColor;
+@property (nonatomic, strong) UIColor *headerTextColor;
 
-@property (nonatomic, assign) BOOL leftHeaderEnable;
+@property (nonatomic, assign) BOOL leftHeaderEnable; // 左侧是否固定
+@property (nonatomic, assign) BOOL shouldShowSection; // 是否显示分区视图
+@property (nonatomic, assign) BOOL shouldSortEnable; // 是否开启点击标题排序，默认为NO
+@property (nonatomic, assign) BOOL isExpandable; // 是否开启点击左侧标题伸缩，默认为NO
 
 @property (nonatomic, weak) id<XCMultiTableViewDataSource> datasource;
-
 
 - (void)reloadData;
 
@@ -53,5 +57,6 @@ typedef NS_ENUM(NSUInteger, SortColumnType) {
 - (CGFloat)topHeaderHeightInTableView:(XCMultiTableView *)tableView;
 - (UIColor *)tableView:(XCMultiTableView *)tableView bgColorInSection:(NSUInteger)section InRow:(NSUInteger)row InColumn:(NSUInteger)column;
 - (UIColor *)tableView:(XCMultiTableView *)tableView headerBgColorInColumn:(NSUInteger)column;
+- (NSString *)titleForHeaderInTableView:(XCMultiTableView *)tableView;
 
 @end

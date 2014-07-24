@@ -7,32 +7,213 @@
 //
 
 #import "QuitGoodsDetailVC.h"
+#import "QueryOrderBackDetailInfoBean.h"
+#import "KHGLAPI.h"
+#import "MBProgressHUD+Add.h"
+#import "XCMultiSortTableView.h"
 
-@interface QuitGoodsDetailVC ()
+@interface QuitGoodsDetailVC () <XCMultiTableViewDataSource>
+{
+    XCMultiTableView *tableView;
+}
+
+@property(nonatomic, strong) NSMutableArray *arrQuitGoods;
+@property(nonatomic, strong) NSMutableArray *arrHeadData;
+@property(nonatomic, strong) NSMutableArray *arrLeftTableData;
+@property(nonatomic, strong) NSMutableArray *arrRightTableData;
 
 @end
 
 @implementation QuitGoodsDetailVC
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+
+}
+
+- (void)loadView
+{
+    [super loadView];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.title = @"退货详情";
+
+    [self setupHead];
+    
+    tableView = [[XCMultiTableView alloc] initWithFrame:self.view.bounds];
+    tableView.boldSeperatorLineColor = HEX_RGB(0xf3f3f3);
+    tableView.normalSeperatorLineColor = HEX_RGB(0xf3f3f3);
+    tableView.cellTextColor = HEX_RGB(0x40525c);
+    tableView.headerTextColor = HEX_RGB(0x2989e1);
+    tableView.boldSeperatorLineWidth = 1.f;
+    tableView.normalSeperatorLineWidth = 1.f;
+    tableView.leftHeaderEnable = YES;
+    tableView.datasource = self;
+    [self.view addSubview:tableView];
+
+    // 请求数据
+    [self loadQuitGoodsDetail];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+	// Do any additional setup after loading the view, typically from a nib.
 }
 
-- (void)didReceiveMemoryWarning
+- (void)setupHead
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.arrHeadData addObject:@"规格"];
+    [self.arrHeadData addObject:@"数量"];
+    [self.arrHeadData addObject:@"单位"];
+    [self.arrHeadData addObject:@"日期"];
+    [self.arrHeadData addObject:@"退货原因"];
+}
+
+- (void)loadQuitGoodsDetail
+{
+    QueryOrderBackDetailHttpRequest *request = [[QueryOrderBackDetailHttpRequest alloc] init];
+    request.ORDER_ID = [NSNumber numberWithInt:self.quitBean.ORDER_ID];
+    
+    MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [KHGLAPI queryOrderBackDetailByRequest:request success:^(QueryOrderBackDetailHttpResponse *response) {
+        
+        [self.arrQuitGoods removeAllObjects];
+        [self.arrQuitGoods addObjectsFromArray:response.QUERYORDERBACKINFOBEAN];
+        [self refreshUI];
+        
+        [hub removeFromSuperview];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        [hub removeFromSuperview];
+        [MBProgressHUD showError:desciption toView:self.view];
+    }];
+}
+
+- (void)refreshUI
+{
+    // 清空数据
+    [self.arrLeftTableData removeAllObjects];
+    [self.arrRightTableData removeAllObjects];
+    
+    NSMutableArray *one = [NSMutableArray arrayWithCapacity:10];
+    NSMutableArray *oneR = [NSMutableArray arrayWithCapacity:10];
+    for (int i = 0; i < [self.arrQuitGoods count]; i++)
+    {
+        //QueryOrderBackDetailInfoBean *bean = self.arrQuitGoods[i];
+        //[one addObject:bean.PROD_NAME];
+        [one addObject:[NSString stringWithFormat:@"物品-%d", i]];
+
+        NSMutableArray *ary = [NSMutableArray arrayWithCapacity:5];
+        /*
+        [ary addObject:bean.SPEC];
+        [ary addObject:bean.ITEM_NUM];
+        [ary addObject:bean.UNITNAME];
+        [ary addObject:bean.BATCH];
+        [ary addObject:bean.REMARK];
+        */
+        [ary addObject:@"规格"];
+        [ary addObject:@"数量"];
+        [ary addObject:@"单位"];
+        [ary addObject:@"日期"];
+        [ary addObject:@"退货原因"];
+        
+        [oneR addObject:ary];
+    }
+    [self.arrLeftTableData addObject:one];
+    [self.arrRightTableData addObject:oneR];
+    
+    [tableView reloadData];
+}
+
+#pragma mark - 访问器
+
+- (NSMutableArray *)arrQuitGoods
+{
+    if (!_arrQuitGoods) {
+        _arrQuitGoods = [[NSMutableArray alloc] initWithCapacity:5];
+    }
+    
+    return _arrQuitGoods;
+}
+
+- (NSMutableArray *)arrHeadData
+{
+    if (!_arrHeadData) {
+        _arrHeadData = [[NSMutableArray alloc] initWithCapacity:5];
+    }
+    
+    return _arrHeadData;
+}
+
+- (NSMutableArray *)arrLeftTableData
+{
+    if (!_arrLeftTableData) {
+        _arrLeftTableData = [[NSMutableArray alloc] initWithCapacity:5];
+    }
+    
+    return _arrLeftTableData;
+}
+
+- (NSMutableArray *)arrRightTableData
+{
+    if (!_arrRightTableData) {
+        _arrRightTableData = [[NSMutableArray alloc] initWithCapacity:5];
+    }
+    
+    return _arrRightTableData;
+}
+
+#pragma mark - XCMultiTableViewDataSource
+
+- (NSArray *)arrayDataForTopHeaderInTableView:(XCMultiTableView *)tableView
+{
+    return [self.arrHeadData copy];
+}
+
+- (NSArray *)arrayDataForLeftHeaderInTableView:(XCMultiTableView *)tableView InSection:(NSUInteger)section
+{
+    return [self.arrLeftTableData objectAtIndex:section];
+}
+
+- (NSArray *)arrayDataForContentInTableView:(XCMultiTableView *)tableView InSection:(NSUInteger)section
+{
+    return [self.arrRightTableData objectAtIndex:section];
+}
+
+- (NSUInteger)numberOfSectionsInTableView:(XCMultiTableView *)tableView
+{
+    return [self.arrLeftTableData count];
+}
+
+- (CGFloat)tableView:(XCMultiTableView *)tableView contentTableCellWidth:(NSUInteger)column
+{
+    if (column == 0) {
+        return 100.0f;
+    }
+    return 100.f;
+}
+
+- (CGFloat)tableView:(XCMultiTableView *)tableView cellHeightInRow:(NSUInteger)row InSection:(NSUInteger)section
+{
+    if (section == 0) {
+        return 40.0f;
+    }else {
+        return 40.0f;
+    }
+}
+
+- (UIColor *)tableView:(XCMultiTableView *)tableView bgColorInSection:(NSUInteger)section InRow:(NSUInteger)row InColumn:(NSUInteger)column
+{
+    return [UIColor whiteColor];
+}
+
+- (UIColor *)tableView:(XCMultiTableView *)tableView headerBgColorInColumn:(NSUInteger)column
+{
+    return [UIColor whiteColor];
+}
+
+- (NSString *)titleForHeaderInTableView:(XCMultiTableView *)tableView
+{
+    return @"产品";
 }
 
 @end
+

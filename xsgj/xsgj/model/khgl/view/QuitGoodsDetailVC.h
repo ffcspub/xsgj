@@ -7,7 +7,10 @@
 //
 
 #import "HideTabViewController.h"
+#import "QueryOrderBackInfoBean.h"
 
 @interface QuitGoodsDetailVC : HideTabViewController
+
+@property (nonatomic, strong) QueryOrderBackInfoBean *quitBean;
 
 @end

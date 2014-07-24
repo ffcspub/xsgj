@@ -12,6 +12,7 @@
 #import "SVPullToRefresh.h"
 #import "QuitGoodsCell.h"
 #import "NSString+URL.h"
+#import "QuitGoodsDetailVC.h"
 
 static NSString * const QuitGoodsCellIdentifier = @"QuitGoodsCellIdentifier";
 static int const pageSize = 10;
@@ -153,6 +154,10 @@ static int const pageSize = 10;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    QuitGoodsDetailVC *vc = [[QuitGoodsDetailVC alloc] initWithNibName:nil bundle:nil];
+    vc.quitBean = self.arrData[indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

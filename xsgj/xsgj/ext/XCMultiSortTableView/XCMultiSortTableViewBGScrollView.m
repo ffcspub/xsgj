@@ -25,7 +25,8 @@
     return self;
 }
 
-- (void)reDraw {
+- (void)reDraw
+{
     if (lines == nil) lines = [[NSMutableArray alloc] initWithCapacity:10];
     
     for (UIView *view in lines) {
@@ -59,7 +60,8 @@
     }
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     lines = nil;
 }
 

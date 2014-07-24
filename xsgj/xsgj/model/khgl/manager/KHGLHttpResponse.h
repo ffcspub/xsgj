@@ -79,7 +79,9 @@
 
 @end
 
-@interface QueryOrderBackDetailHttpResponse : LK_HttpBasePageResponse
+@interface QueryOrderBackDetailHttpResponse : LK_HttpBaseResponse
+
+@property(nonatomic,strong) NSArray *QUERYORDERBACKINFOBEAN;
 
 @end
 
