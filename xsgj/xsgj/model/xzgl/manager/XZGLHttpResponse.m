@@ -16,6 +16,7 @@
 #import "LeaveinfoBean.h"
 #import "LeaveTypeBean.h"
 #import "WorkReportTypeBean.h"
+#import "MobileInfoDisBean.h"
 
 @implementation SignUpHttpReponse
 
@@ -137,5 +138,18 @@
 @end
 
 @implementation InsertUserCameraHttpResponse
+
+@end
+
+@implementation GetMobileDisInfoHttpResponse
+
++(Class)__DATAClass{
+    return [MobileInfoDisBean class];
+}
+
+@end
+
+@implementation MobileDisUpdateStateHttpResponse
+
 
 @end

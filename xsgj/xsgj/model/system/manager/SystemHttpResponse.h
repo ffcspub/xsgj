@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "LK_HttpResponse.h"
 #import "BNUserInfo.h"
+#import "TimeIntervalBean.h"
 
 @interface UserLoginHttpResponse : LK_HttpBaseResponse
 
@@ -71,6 +72,12 @@
 @end
 
 @interface GetWorkRangeHttpResponse : LK_HttpBasePageResponse
+
+@end
+
+@interface GetTimeIntervalHttpResponse : LK_HttpBaseResponse
+
+@property(nonatomic,strong)TimeIntervalBean *TIMEINTERVALBEAN;//
 
 @end
 

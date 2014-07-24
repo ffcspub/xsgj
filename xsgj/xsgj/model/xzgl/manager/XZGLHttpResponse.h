@@ -109,5 +109,10 @@
 
 @end
 
+@interface GetMobileDisInfoHttpResponse : LK_HttpBasePageResponse
 
+@end
+@interface MobileDisUpdateStateHttpResponse : LK_HttpBaseResponse
+
+@end
 

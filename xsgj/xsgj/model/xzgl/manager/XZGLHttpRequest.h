@@ -318,3 +318,30 @@
 
 @end
 
+@interface GetMobileDisInfoHttpRequest : LK_HttpBasePageRequest
+
+@property(nonatomic,strong) NSString *	SESSION_ID	;//	会话ID
+@property(nonatomic,assign) int         CORP_ID	;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID	;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
+@property(nonatomic,assign) int         USER_ID	;//	用户ID
+@property(nonatomic,strong) NSString *YY_TIME;// 预约时间
+
+
+@end
+
+@interface MobileDisUpdateStateHttpRequest : LK_HttpBaseRequest
+
+@property(nonatomic,strong) NSString *	SESSION_ID	;//	会话ID
+@property(nonatomic,assign) int         CORP_ID	;//	企业ID
+@property(nonatomic,assign) int         DEPT_ID	;//	部门ID
+@property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
+@property(nonatomic,assign) int         USER_ID	;//	用户ID
+@property(nonatomic,strong) NSString *	DISTRIBUTION_ID	;//	配送id(在配送成功状态下非空)
+@property(nonatomic,strong) NSString *	MONEY;	;//	收取金额
+@property(nonatomic,strong) NSString *	PHOTO;	;//	图片id(在配送成功状态下非空)
+@property(nonatomic,strong) NSString *	REMARK;	;//	备注(在配送成功状态下非空)
+@property(nonatomic,strong) NSString *	STATE;	;//	订单状态id(非空)
+
+@end
+
