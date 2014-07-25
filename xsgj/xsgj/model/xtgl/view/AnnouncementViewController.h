@@ -7,7 +7,17 @@
 //
 
 #import "HideTabViewController.h"
+#import "LeveyPopListView.h"
 
-@interface AnnouncementViewController : HideTabViewController
+@interface AnnouncementViewController : HideTabViewController<LeveyPopListViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UIButton *btn_starttime;
+@property (weak, nonatomic) IBOutlet UIButton *btn_endtime;
+@property (weak, nonatomic) IBOutlet UIButton *btn_announceType;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+- (IBAction)selectBeginTimeAction:(id)sender;
+- (IBAction)selectEndTimeAction:(id)sender;
+- (IBAction)selectAnnounceTypeAction:(id)sender;
 
 @end
