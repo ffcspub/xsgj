@@ -43,7 +43,7 @@
     self.title = @"陈列生动化";
     [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(handleNavBarRight)];
     [super.svContain setContentSize:CGSizeMake(0, super.svImgContain.frame.origin.y + super.svImgContain.frame.size.height + 150)];
-    [super.svImgContain setContentSize:CGSizeMake(super.ivPhoto6.frame.origin.x + super.ivPhoto6.frame.size.width, 0)];
+    [super.svImgContain setContentSize:CGSizeMake(super.ivPhoto5.frame.origin.x + super.ivPhoto5.frame.size.width, 0)];
 }
 
 #pragma mark - functions

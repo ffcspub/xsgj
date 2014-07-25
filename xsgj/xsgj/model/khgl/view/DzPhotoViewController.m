@@ -8,7 +8,7 @@
 
 #import "DzPhotoViewController.h"
 
-#define MAXPHOTONUMBER   6
+#define MAXPHOTONUMBER   5
 
 @implementation ImageFileInfo
 
@@ -18,6 +18,7 @@
         if (image) {
             _name = @"file";
             _mimeType = @"image/jpg";
+            _image = image;
             _fileData = UIImageJPEGRepresentation(image, 0.5);
             if (_fileData == nil)
             {
@@ -78,7 +79,7 @@
 {
     self.title = @"店招拍照";
     [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(handleNavBarRight)];
-    [_svImgContain setContentSize:CGSizeMake(_ivPhoto6.frame.origin.x + _ivPhoto6.frame.size.width, 0)];
+    [_svImgContain setContentSize:CGSizeMake(_ivPhoto5.frame.origin.x + _ivPhoto5.frame.size.width, 0)];
 }
 
 #pragma mark - functions
@@ -158,11 +159,16 @@
     if(_ivCurrentTap)
     {
         [_aryImages removeObject:_ivCurrentTap.image];
-    
-        //[_aryfileDatas removeObject:nil];
-        
         _ivCurrentTap = nil;
+        
         [self reloadScrollView];
+        
+        [_aryfileDatas removeAllObjects];
+        for(UIImage *image in _aryImages)
+        {
+            ImageFileInfo *imageInfo = [[ImageFileInfo alloc]initWithImage:image];
+            [_aryfileDatas addObject:imageInfo];
+        }
     }
 }
 
@@ -213,6 +219,10 @@
     if(_aryImages.count >= MAXPHOTONUMBER)
     {
         _btnTakePhoto.enabled = NO;
+    }
+    else
+    {
+        _btnTakePhoto.enabled = YES;
     }
 }
 

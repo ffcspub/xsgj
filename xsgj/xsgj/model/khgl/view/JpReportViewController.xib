@@ -13,12 +13,11 @@
                 <outlet property="ivPhoto3" destination="KXq-h2-zMF" id="QMp-dd-zbq"/>
                 <outlet property="ivPhoto4" destination="I5i-ue-Hwr" id="ry1-s9-dJV"/>
                 <outlet property="ivPhoto5" destination="QSK-TU-qbb" id="MRD-5V-Jwn"/>
-                <outlet property="ivPhoto6" destination="iH6-EV-p8m" id="xjT-xE-d00"/>
                 <outlet property="svContain" destination="LJX-tT-h3N" id="ZdA-Wq-2Az"/>
                 <outlet property="svImgContain" destination="3TS-K1-2wN" id="rML-RG-ufH"/>
                 <outlet property="tfBrand" destination="ckF-JR-waf" id="05n-W1-cCr"/>
                 <outlet property="tfCustomer" destination="3gw-Wq-TZL" id="Ml2-hx-fSn"/>
-                <outlet property="tfMark" destination="hek-Qe-azu" id="khD-8O-YD5"/>
+                <outlet property="tfMark" destination="hek-Qe-azu" id="oWm-yq-k3a"/>
                 <outlet property="tfName" destination="rkJ-7k-5fo" id="iEa-RZ-clH"/>
                 <outlet property="tfPrice" destination="aRY-Iu-aRW" id="0Tt-h2-0VZ"/>
                 <outlet property="tfPromotion" destination="Q3Q-fd-xAj" id="cg8-4L-D5v"/>
@@ -332,13 +331,6 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <connections>
                                         <outletCollection property="gestureRecognizers" destination="V95-qp-Tg8" appends="YES" id="UZH-Tm-0gP"/>
-                                    </connections>
-                                </imageView>
-                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="5" contentMode="scaleAspectFill" image="Photo_addPhoto.png" id="iH6-EV-p8m" userLabel="Image View6 - Photo_addPhoto.png">
-                                    <rect key="frame" x="392" y="0.0" width="72" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <connections>
-                                        <outletCollection property="gestureRecognizers" destination="V95-qp-Tg8" appends="YES" id="KqT-qi-ent"/>
                                     </connections>
                                 </imageView>
                             </subviews>

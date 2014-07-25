@@ -179,7 +179,8 @@
 @property(nonatomic,strong) NSString *	PHOTO3	;//	照片
 @property(nonatomic,strong) NSString *	PHOTO4	;//	照片
 @property(nonatomic,strong) NSString *	PHOTO5	;//	照片
-
+@property(nonatomic,strong) NSString *	VISIT_NO	;//	拜访编号
+@property(nonatomic,strong) NSString *	OPER_MENU	;//	操作菜单
 
 @end
 
