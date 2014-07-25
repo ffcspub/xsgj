@@ -155,7 +155,7 @@ static int const pageSize = 10;
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    QuitGoodsDetailVC *vc = [[QuitGoodsDetailVC alloc] initWithNibName:nil bundle:nil];
+    QuitGoodsDetailVC *vc = [[QuitGoodsDetailVC alloc] init];
     vc.quitBean = self.arrData[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
 }

@@ -25,17 +25,19 @@
 @end
 
 @implementation QuitGoodsDetailVC
-{
-
-}
 
 - (void)loadView
 {
     [super loadView];
-    
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"退货详情";
-
+    
     [self setupHead];
     
     tableView = [[XCMultiTableView alloc] initWithFrame:self.view.bounds];
@@ -48,15 +50,10 @@
     tableView.leftHeaderEnable = YES;
     tableView.datasource = self;
     [self.view addSubview:tableView];
-
+    tableView.alpha = 0.f;
+    
     // 请求数据
     [self loadQuitGoodsDetail];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)setupHead
@@ -117,6 +114,11 @@
     }
     
     [tableView reloadData];
+    
+    tableView.alpha = 0.f;
+    [UIView animateWithDuration:0.2f animations:^{
+        tableView.alpha = 1.f;
+    }];
 }
 
 #pragma mark - 访问器

@@ -10,50 +10,58 @@
 #import "OrderDetailBean.h"
 #import "KHGLAPI.h"
 #import "MBProgressHUD+Add.h"
+#import "XCMultiSortTableView.h"
 
-@interface OrderGoodsDetailVC ()
+@interface OrderGoodsDetailVC () <XCMultiTableViewDataSource>
+{
+    XCMultiTableView *tableView;
+}
 
-@property (nonatomic, strong) OrderDetailBean *deailBean;
-
-@property (weak, nonatomic) IBOutlet UIView *vRoot;
-@property (weak, nonatomic) IBOutlet UIScrollView *svRoot;
-
-@property (weak, nonatomic) IBOutlet UILabel *lblProductName; // 产品名称
-@property (weak, nonatomic) IBOutlet UILabel *lblStand; // 规格
-@property (weak, nonatomic) IBOutlet UILabel *lblPrice; // 单价
-@property (weak, nonatomic) IBOutlet UILabel *lblOrderNumber; // 数量
-@property (weak, nonatomic) IBOutlet UILabel *lblUnit; // 单位
-@property (weak, nonatomic) IBOutlet UILabel *lblPresentName; // 赠品名称
-@property (weak, nonatomic) IBOutlet UILabel *lblPresentNumber; // 赠品数量
-@property (weak, nonatomic) IBOutlet UILabel *lblPresentUnit; // 单位
-@property (weak, nonatomic) IBOutlet UILabel *lblPresentMoney; // 赠送金额
-@property (weak, nonatomic) IBOutlet UILabel *lblProductMoney; // 产品金额
+@property(nonatomic, strong) NSMutableArray *arrOrderGoods;
+@property(nonatomic, strong) NSMutableArray *arrHeadData;
+@property(nonatomic, strong) NSMutableArray *arrLeftTableData;
+@property(nonatomic, strong) NSMutableArray *arrRightTableData;
 
 @end
 
 @implementation OrderGoodsDetailVC
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = HEX_RGB(0xefeff4);
+    self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"订货详情";
-    self.svRoot.contentSize = CGSizeMake(80 * 9, 80.f);
     
-    // 隐藏
-    self.vRoot.alpha = 0.0f;
+    [self setupHead];
     
+    tableView = [[XCMultiTableView alloc] initWithFrame:self.view.bounds];
+    tableView.boldSeperatorLineColor = HEX_RGB(0xf3f3f3);
+    tableView.normalSeperatorLineColor = HEX_RGB(0xf3f3f3);
+    tableView.cellTextColor = HEX_RGB(0x40525c);
+    tableView.headerTextColor = HEX_RGB(0x2989e1);
+    tableView.boldSeperatorLineWidth = 1.f;
+    tableView.normalSeperatorLineWidth = 1.f;
+    tableView.leftHeaderEnable = YES;
+    tableView.datasource = self;
+    [self.view addSubview:tableView];
+    tableView.alpha = 0.f;
+    
+    // 请求数据
     [self loadOrderGoodsDetail];
+}
+
+- (void)setupHead
+{
+    [self.arrHeadData addObject:@"规格"];
+    [self.arrHeadData addObject:@"单价"];
+    [self.arrHeadData addObject:@"数量"];
+    [self.arrHeadData addObject:@"单位"];
+    [self.arrHeadData addObject:@"赠品名称"];
+    [self.arrHeadData addObject:@"赠品数量"];
+    [self.arrHeadData addObject:@"单位"];
+    [self.arrHeadData addObject:@"赠品金额"];
+    [self.arrHeadData addObject:@"产品金额"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,7 +77,8 @@
     MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [KHGLAPI queryOrderDetailByRequest:request success:^(OrderDetailHttpResponse *response) {
         
-        self.deailBean = [response.DATA firstObject];
+        [self.arrOrderGoods removeAllObjects];
+        [self.arrOrderGoods addObjectsFromArray:response.DATA];
         [self refreshUI];
         
         [hub removeFromSuperview];
@@ -84,21 +93,140 @@
  */
 - (void)refreshUI
 {
-    self.lblProductName.text = self.deailBean.PROD_NAME;
-    self.lblStand.text = self.deailBean.SPEC;
-    self.lblPrice.text = [NSString stringWithFormat:@"%.2f", [self.deailBean.ITEM_PRICE floatValue]];
-    self.lblOrderNumber.text = [NSString stringWithFormat:@"%d", [self.deailBean.ITEM_NUM intValue]];
-    self.lblUnit.text = self.deailBean.UNITNAME;
-    self.lblPresentName.text = self.deailBean.GIFT_NAME;
-    self.lblPresentNumber.text = [NSString stringWithFormat:@"%d", [self.deailBean.GIFT_NUM intValue]];
-    self.lblPresentUnit.text = self.deailBean.GIFT_UNIT;
-    self.lblPresentMoney.text = [NSString stringWithFormat:@"%.2f", [self.deailBean.GIFT_PRICE floatValue]];
-    self.lblProductMoney.text = [NSString stringWithFormat:@"%.2f", [self.deailBean.TOTAL_PRICE floatValue]];
+    // 清空数据
+    [self.arrLeftTableData removeAllObjects];
+    [self.arrRightTableData removeAllObjects];
     
+    for (int i = 0; i < [self.arrOrderGoods count]; i++)
+    {
+        OrderDetailBean *bean = self.arrOrderGoods[i];
+        [self.arrLeftTableData addObject:bean.PROD_NAME];
+        
+        /*
+        // 按列顺序进行赋值
+        [oneRow addObject:@"规格"];
+        [oneRow addObject:@"单价"];
+        [oneRow addObject:@"数量"];
+        [oneRow addObject:@"单位"];
+        [oneRow addObject:@"赠品名称"];
+        [oneRow addObject:@"赠品数量"];
+        [oneRow addObject:@"单位"];
+        [oneRow addObject:@"赠品金额"];
+        [oneRow addObject:@"产品金额"];
+        */
+        NSMutableArray *oneRow = [NSMutableArray arrayWithCapacity:5];
+        [oneRow addObject:bean.SPEC];
+        [oneRow addObject:[NSString stringWithFormat:@"%.2f", [bean.ITEM_PRICE floatValue]]];
+        [oneRow addObject:bean.ITEM_NUM];
+        [oneRow addObject:bean.UNITNAME];
+        [oneRow addObject:bean.GIFT_NAME];
+        [oneRow addObject:bean.GIFT_NUM];
+        [oneRow addObject:bean.GIFT_UNITNAME];
+        [oneRow addObject:[NSString stringWithFormat:@"%.2f", [bean.GIFT_PRICE floatValue]]];
+        [oneRow addObject:[NSString stringWithFormat:@"%.2f", [bean.TOTAL_PRICE floatValue]]];
+        
+        [self.arrRightTableData addObject:oneRow];
+    }
+    
+    [tableView reloadData];
+    
+    tableView.alpha = 0.f;
     [UIView animateWithDuration:0.2f animations:^{
-        self.vRoot.alpha = 0.f;
-        self.vRoot.alpha = 1.f;
+        tableView.alpha = 1.f;
     }];
 }
+
+#pragma mark - 访问器
+
+- (NSMutableArray *)arrOrderGoods
+{
+    if (!_arrOrderGoods) {
+        _arrOrderGoods = [[NSMutableArray alloc] initWithCapacity:5];
+    }
+    
+    return _arrOrderGoods;
+}
+
+- (NSMutableArray *)arrHeadData
+{
+    if (!_arrHeadData) {
+        _arrHeadData = [[NSMutableArray alloc] initWithCapacity:5];
+    }
+    
+    return _arrHeadData;
+}
+
+- (NSMutableArray *)arrLeftTableData
+{
+    if (!_arrLeftTableData) {
+        _arrLeftTableData = [[NSMutableArray alloc] initWithCapacity:5];
+    }
+    
+    return _arrLeftTableData;
+}
+
+- (NSMutableArray *)arrRightTableData
+{
+    if (!_arrRightTableData) {
+        _arrRightTableData = [[NSMutableArray alloc] initWithCapacity:5];
+    }
+    
+    return _arrRightTableData;
+}
+
+#pragma mark - XCMultiTableViewDataSource
+
+- (NSArray *)arrayDataForTopHeaderInTableView:(XCMultiTableView *)tableView
+{
+    return [self.arrHeadData copy];
+}
+
+- (NSArray *)arrayDataForLeftHeaderInTableView:(XCMultiTableView *)tableView InSection:(NSUInteger)section
+{
+    return self.arrLeftTableData;
+}
+
+- (NSArray *)arrayDataForContentInTableView:(XCMultiTableView *)tableView InSection:(NSUInteger)section
+{
+    return self.arrRightTableData;
+}
+
+- (NSUInteger)numberOfSectionsInTableView:(XCMultiTableView *)tableView
+{
+    return 1;
+}
+
+- (CGFloat)tableView:(XCMultiTableView *)tableView contentTableCellWidth:(NSUInteger)column
+{
+    if (column == 0) {
+        return 100.0f;
+    }
+    return 100.f;
+}
+
+- (CGFloat)tableView:(XCMultiTableView *)tableView cellHeightInRow:(NSUInteger)row InSection:(NSUInteger)section
+{
+    if (section == 0) {
+        return 40.0f;
+    }else {
+        return 40.0f;
+    }
+}
+
+- (UIColor *)tableView:(XCMultiTableView *)tableView bgColorInSection:(NSUInteger)section InRow:(NSUInteger)row InColumn:(NSUInteger)column
+{
+    return [UIColor whiteColor];
+}
+
+- (UIColor *)tableView:(XCMultiTableView *)tableView headerBgColorInColumn:(NSUInteger)column
+{
+    return [UIColor whiteColor];
+}
+
+- (NSString *)titleForHeaderInTableView:(XCMultiTableView *)tableView
+{
+    return @"产品";
+}
+
 
 @end

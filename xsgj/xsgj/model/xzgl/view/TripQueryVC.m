@@ -99,7 +99,6 @@ static int const pageSize = 20;
     [self.btnEndTime setBackgroundImage:[[UIImage imageNamed:@"日期选择控件背板_s"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateHighlighted];
     
     // 设置默认时间
-    /*
     NSDate *date = [NSDate date];
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"yyyy-MM-dd"];
@@ -113,7 +112,6 @@ static int const pageSize = 20;
     self.lblEndTime.font = [UIFont systemFontOfSize:15];
     self.lblEndTime.textColor = HEX_RGB(0x000000);
     self.lblEndTime.backgroundColor = [UIColor clearColor];
-    */
     
     // 列表
     self.tbvQuery.backgroundColor = HEX_RGB(0xefeff4);

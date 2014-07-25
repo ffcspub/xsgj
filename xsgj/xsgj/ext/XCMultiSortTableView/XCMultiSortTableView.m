@@ -121,6 +121,8 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 		leftHeaderTableView = [[UITableView alloc] initWithFrame:CGRectZero];
 		leftHeaderTableView.dataSource = self;
 		leftHeaderTableView.delegate = self;
+        leftHeaderTableView.showsVerticalScrollIndicator = NO;
+        leftHeaderTableView.showsHorizontalScrollIndicator = NO;
 		leftHeaderTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		leftHeaderTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		leftHeaderTableView.backgroundColor = [UIColor clearColor];
@@ -485,14 +487,15 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 	[[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
 	CGFloat cellH = [self cellHeightInIndexPath:indexPath];
-	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, leftHeaderWidth, cellH)];
+    CGRect rect = CGRectMake(0, 0, leftHeaderWidth, cellH);
+	UIView *view = [[UIView alloc] initWithFrame:CGRectInset(rect, 5.f, 5.f)];
 	view.clipsToBounds = YES;
 
-	UILabel *label =  [[UILabel alloc] initWithFrame:CGRectZero];
+	UILabel *label =  [[UILabel alloc] initWithFrame:view.bounds];
 	label.text = [[leftHeaderDataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-	[label sizeToFit];
-	label.center = CGPointMake(leftHeaderWidth / 2.0f, cellH / 2.0f);
+	label.font = [UIFont systemFontOfSize:13.f];
     label.textColor = self.cellTextColor;
+    label.textAlignment = NSTextAlignmentCenter;
 
 	UIColor *color = [self bgColorInSection:indexPath.section InRow:indexPath.row InColumn:-1];
 	view.backgroundColor = color;
@@ -527,16 +530,17 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 		CGFloat cellH = [self cellHeightInIndexPath:indexPath];
 
 		CGFloat width = [[columnPointCollection objectAtIndex:i] floatValue];
-
-		UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cellW, cellH)];
+        
+        CGRect rect = CGRectMake(0, 0, cellW, cellH);
+        UIView *view = [[UIView alloc] initWithFrame:CGRectInset(rect, 5.f, 5.f)];
 		view.center = CGPointMake(width, cellH / 2.0f);
 		view.clipsToBounds = YES;
 
-		UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+		UILabel *label = [[UILabel alloc] initWithFrame:view.bounds];
 		label.text = [NSString stringWithFormat:@"%@", [ary objectAtIndex:i]];
         label.textColor = self.cellTextColor;
-		[label sizeToFit];
-		label.center = CGPointMake(cellW / 2.0f, cellH / 2.0f);
+        label.font = [UIFont systemFontOfSize:13.f];
+        label.textAlignment = UITextAlignmentCenter;
 
 		UIColor *color = [self bgColorInSection:indexPath.section InRow:indexPath.row InColumn:i];
 
