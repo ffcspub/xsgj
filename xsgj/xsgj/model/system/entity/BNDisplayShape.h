@@ -11,4 +11,5 @@
 @interface BNDisplayShape : NSObject
 @property (nonatomic,assign)    int SHAPE_ID;// 形式标识
 @property (nonatomic,strong)      NSString* SHAPE_NAME;// 形式名称
+@property (nonatomic,assign)    int ORDER_NO;//
 @end

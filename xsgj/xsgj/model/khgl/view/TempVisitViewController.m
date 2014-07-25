@@ -9,7 +9,7 @@
 #import "TempVisitViewController.h"
 #import "SelectTreeViewController.h"
 #import "CusVisitViewController.h"
-
+#import "InfoCollectViewController.h"
 
 
 @interface TempVisitViewController ()
@@ -122,7 +122,8 @@
 }
 
 - (IBAction)handleBtnCusInfoClicked:(id)sender {
-    //SignInViewController
+    InfoCollectViewController *viewController = [[InfoCollectViewController alloc] initWithNibName:@"InfoCollectViewController" bundle:nil];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (IBAction)handleBtnSmsClicked:(id)sender {
@@ -189,13 +190,15 @@
     self.customerInfoSelect = customerInfo;
     _lbCusName.text = customerInfo.CUST_NAME;
     
+    // chenzftodo: 确认客户类型哪里取得
 //    NSArray *aryType = [BNCustomerType searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D",customerInfo.CUST_ID] orderBy:@"ORDER_NO" offset:0 count:100];
 //    if(aryType.count > 0)
 //    {
 //        BNCustomerType *type = [aryType objectAtIndex:0];
 //        
 //    }
-    _lbCusType.text = customerInfo.TYPE_NAME;
+
+    _lbCusType.text = _cusTypeShow.TYPE_NAME;
     _lbContacts.text = customerInfo.LINKMAN;
     _lbMobile.text = customerInfo.TEL;
     _lbAddress.text = customerInfo.ADDRESS;

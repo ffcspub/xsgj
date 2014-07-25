@@ -47,7 +47,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *ivPhoto3;
 @property (weak, nonatomic) IBOutlet UIImageView *ivPhoto4;
 @property (weak, nonatomic) IBOutlet UIImageView *ivPhoto5;
-@property (weak, nonatomic) IBOutlet UIImageView *ivPhoto6;
 @property(nonatomic,strong) NSMutableArray *aryImages;
 @property (weak, nonatomic) BNCustomerInfo *customerInfo;
 @property (weak, nonatomic) BNVistRecord *vistRecord;
@@ -68,6 +67,7 @@
 @property(nonatomic,strong) NSString *mimeType;
 @property(nonatomic,assign) long long filesize;
 @property(nonatomic,strong) NSData *fileData;
+@property(nonatomic,strong) UIImage *image;
 
 -(id)initWithImage:(UIImage *)image;
 

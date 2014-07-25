@@ -44,6 +44,9 @@
 {
     self.title = @"陈列费用";
     [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(handleNavBarRight)];
+    
+    _tfTimeBegin.text = [[NSDate date] stringWithFormat:@"yyyy-MM-dd"];
+    _tfTimeEnd.text = [[NSDate date] stringWithFormat:@"yyyy-MM-dd"];
 }
 
 #pragma mark - functions
@@ -153,7 +156,6 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
 
 - (void)loadTypeData
 {
-    // todo: 陈列类型娶不到
     _aryClShapreData = [BNDisplayShape searchWithWhere:nil orderBy:nil offset:0 count:100];
 }
 - (void)sendRequest

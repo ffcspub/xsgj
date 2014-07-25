@@ -52,7 +52,7 @@
 @property(nonatomic,assign) int	DISPLAY_TYPE_UPDATE_STATE	;//	陈列类型是否有更新
 @property(nonatomic,assign) int	ASSET_TYPE_UPDATE_STATE	;//	资产类型是否有更新
 @property(nonatomic,assign) int	DISPLAY_CASE_UPDATE_STATE	;//	陈列情况是否有更新
-@property(nonatomic,assign) int	DISPLAY_SHPAE_UPDATE_STATE	;//	陈列形式是否有更新
+@property(nonatomic,assign) int	DISPLAY_SHAPE_UPDATE_STATE	;//	陈列形式是否有更新
 @property(nonatomic,assign) int SIGN_CONFIG_UPDATE_STATE;//考勤配置是否有更新
 @property(nonatomic,assign) int CAMERA_TYPE_UPDATE_STATE;//拍照类型是否有更新
 

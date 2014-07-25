@@ -250,7 +250,7 @@
             [bean saveToDB];
         }
     }
-    if (_DISPLAY_SHPAE_UPDATE_STATE == 1) {
+    if (_DISPLAY_SHAPE_UPDATE_STATE == 1) {
         [BNDisplayShape deleteWithWhere:nil];
         for (BNDisplayShape *bean in _DISPLAY_SHAPES) {
             [bean saveToDB];

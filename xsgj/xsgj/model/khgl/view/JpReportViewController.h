@@ -18,8 +18,5 @@
 @property (weak, nonatomic) IBOutlet UITextField *tfPromotion;
 @property (weak, nonatomic) IBOutlet UITextField *tfPrice;
 @property (weak, nonatomic) IBOutlet UITextField *tfCustomer;
-@property (weak, nonatomic) IBOutlet UITextField *tfMark;
-
-
 
 @end

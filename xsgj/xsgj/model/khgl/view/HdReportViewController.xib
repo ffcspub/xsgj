@@ -13,7 +13,6 @@
                 <outlet property="ivPhoto3" destination="jIy-Xv-KOQ" id="ixd-wV-YM1"/>
                 <outlet property="ivPhoto4" destination="1Z6-ZL-BYk" id="oIP-d6-89t"/>
                 <outlet property="ivPhoto5" destination="pZz-ev-nge" id="aKp-BX-8aa"/>
-                <outlet property="ivPhoto6" destination="ap8-Mx-Wcq" id="ApL-9x-XWV"/>
                 <outlet property="ivShowBig" destination="tQ7-nS-3gp" id="Zqh-fJ-Gsb"/>
                 <outlet property="lbPlaceholder" destination="8dl-e0-nIM" id="bge-ep-dfM"/>
                 <outlet property="svContain" destination="1Gk-FR-3Rt" id="gxs-c1-kYh"/>
@@ -144,14 +143,6 @@
                                             <connections>
                                                 <outletCollection property="gestureRecognizers" destination="e3n-VK-QNW" appends="YES" id="vOK-Ap-h5B"/>
                                                 <outletCollection property="gestureRecognizers" destination="CD2-Wn-nj0" appends="YES" id="xUV-WO-IrH"/>
-                                            </connections>
-                                        </imageView>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="5" contentMode="scaleAspectFill" image="Photo_addPhoto.png" id="ap8-Mx-Wcq" userLabel="Image View6 - Photo_addPhoto.png">
-                                            <rect key="frame" x="392" y="0.0" width="72" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <connections>
-                                                <outletCollection property="gestureRecognizers" destination="e3n-VK-QNW" appends="YES" id="1OJ-eW-8eU"/>
-                                                <outletCollection property="gestureRecognizers" destination="CD2-Wn-nj0" appends="YES" id="chC-LY-cLq"/>
                                             </connections>
                                         </imageView>
                                     </subviews>
