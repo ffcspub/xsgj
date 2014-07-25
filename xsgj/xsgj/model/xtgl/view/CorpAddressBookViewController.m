@@ -18,17 +18,18 @@
 #import "OAChineseToPinyin.h"
 #import "NSObject+LKDBHelper.h"
 
-@interface CorpAddressBookViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface CorpAddressBookViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 {
-    // 本地部门信息
-    NSMutableArray *mLocalDept;
-    // 本地联系人
-    NSMutableArray *mLocalContact;
-
     // A-Z段落列表
     NSMutableArray *mSectionArray;
     // 分段联系人-二维
     NSMutableArray *mLocalSectionContact;
+    // 搜索状态
+    BOOL isSeach;
+    // 原始表格数据
+    NSArray* tableData;
+    // 搜索结果数据
+    NSArray* searchData;
 }
 @end
 
@@ -39,8 +40,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        mLocalDept           = [[NSMutableArray alloc]init];
-        mLocalContact        = [[NSMutableArray alloc]init];
         mLocalSectionContact = [[NSMutableArray alloc]init];
         [DeptInfoBean deleteWithWhere:nil];
         [ContactBean deleteWithWhere:nil];
@@ -69,7 +68,6 @@
             for (DeptInfoBean *bean in aryTemp)
             {
                 [bean saveToDB];
-                [mLocalDept addObject:bean];
             }
         }
     }
@@ -97,12 +95,11 @@
                 bean.USER_NAME_PINYIN = [OAChineseToPinyin pinyinFromChiniseString:bean.REALNAME];
                 bean.USER_NAME_HEAD   = [bean.USER_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
                 [bean saveToDB];
-                
-                [mLocalContact addObject:bean];
             }
             
             // 获取A-Z分段列表
-            NSMutableArray *mSearch = [ContactBean searchWithWhere:nil orderBy:nil offset:0 count:100];
+            NSMutableArray *mSearch = [ContactBean searchWithWhere:nil orderBy:nil offset:0 count:500];
+            tableData = mSearch;
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             for (ContactBean *bean in mSearch)
             {
@@ -117,7 +114,6 @@
                 return [obj1 compare:obj2 options:comparisonOptions range:range];
             };
             mSectionArray = (NSMutableArray*)[mSectionArray sortedArrayUsingComparator:sort];
-            
             //
             for (NSString*s in mSectionArray)
             {
@@ -149,69 +145,122 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([mLocalSectionContact count] == 0)
+    if (isSeach)
     {
-        return 0;
+        return [searchData count];
     }
     else
     {
-        return [mLocalSectionContact[section] count];
+        if ([mLocalSectionContact count] == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return [mLocalSectionContact[section] count];
+        }
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"CONTACTCELL";
-    
     ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell)
     {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ContactTableViewCell"  owner:self options:nil] lastObject];
     }
-    
-
-    ContactBean *bean = mLocalSectionContact[indexPath.section][indexPath.row];
-    cell.labName.text = bean.REALNAME;
-
-    cell.btnMsg.tag  = indexPath.row;
-    cell.btnDail.tag = indexPath.row;
-    
+    if (isSeach)
+    {
+        cell.labName.text = searchData[indexPath.row];
+        cell.btnMsg.tag  = indexPath.row;
+        cell.btnDail.tag = indexPath.row;
+    }
+    else
+    {
+        ContactBean *bean = mLocalSectionContact[indexPath.section][indexPath.row];
+        cell.labName.text = bean.REALNAME;
+        cell.btnMsg.tag  = indexPath.section*10000 +indexPath.row;
+        cell.btnDail.tag = indexPath.section*10000 +indexPath.row;
+    }
     [cell.btnMsg  addTarget:self action:@selector(clkMsg:) forControlEvents:UIControlEventTouchUpInside];
     [cell.btnDail addTarget:self action:@selector(clkDail:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 
 }
-
 -(void)clkMsg:(id)sender
 {
     UIButton *btn = sender;
-    ContactBean *bean =  mLocalContact[btn.tag];
+    ContactBean *bean = [[ContactBean alloc]init];
+    if (isSeach)
+    {
+        bean =  searchData[btn.tag];
+    }
+    else
+    {
+        bean =  mLocalSectionContact[btn.tag/10000][btn.tag%10000];
+    }
     NSString *str = [NSString stringWithFormat:@"sms://%@",bean.MOBILENO];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
 -(void)clkDail:(id)sender
 {
     UIButton *btn = sender;
-    ContactBean *bean =  mLocalContact[btn.tag];
+    ContactBean *bean = [[ContactBean alloc]init];
+    if (isSeach)
+    {
+        bean =  searchData[btn.tag];
+    }
+    else
+    {
+        bean =  mLocalSectionContact[btn.tag/10000][btn.tag%10000];
+    }
     NSString *str = [NSString stringWithFormat:@"tel://%@",bean.MOBILENO];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    isSeach = NO;
     [_schBar resignFirstResponder];
+    [_tabContact reloadData];
 }
-
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if (isSeach)
+    {
+        return 1;
+    }
     return [mSectionArray count];
 }
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    if (isSeach)
+    {
+        return @"";
+    }
     return mSectionArray[section];
 }
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
     return mSectionArray;
+}
+
+//-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+//{
+//    [self filterBySubString:searchText];
+//}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+//    [self filterBySubString:searchBar.text];
+    [searchBar resignFirstResponder];
+}
+
+-(void)filterBySubString:(NSString*)subStr
+{
+    isSeach = YES;
+    NSString *sql = @"REALNAME like '林%'";
+    searchData = [ContactBean searchWithWhere:sql orderBy:nil offset:0 count:100];
+    [_tabContact reloadData];
 }
 @end

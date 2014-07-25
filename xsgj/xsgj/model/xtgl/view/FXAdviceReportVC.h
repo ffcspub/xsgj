@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface FXAdviceReportVC : UIViewController
+#import "HideTabViewController.h"
+@interface FXAdviceReportVC : HideTabViewController
 @property (weak, nonatomic) IBOutlet UITextView *txtAdvice;
 @end

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HideTabViewController.h"
 
-@interface SystemUpdateViewController : UIViewController
+@interface SystemUpdateViewController : HideTabViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *labLocalVer;
 @property (weak, nonatomic) IBOutlet UILabel *labRemoteVer;

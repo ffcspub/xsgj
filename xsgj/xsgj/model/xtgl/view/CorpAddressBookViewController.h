@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HideTabViewController.h"
 
-@interface CorpAddressBookViewController : UIViewController
+@interface CorpAddressBookViewController : HideTabViewController
 
 @property (weak, nonatomic) IBOutlet UIView *btnBack;
 @property (weak, nonatomic) IBOutlet UIButton *btnDeptSelect;
