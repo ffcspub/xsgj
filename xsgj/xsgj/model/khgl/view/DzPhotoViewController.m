@@ -158,10 +158,8 @@
     if(_ivCurrentTap)
     {
         [_aryImages removeObject:_ivCurrentTap.image];
-        
-        
-        [_aryfileDatas removeObject:nil];
-        ImageFileInfo *fileInfo
+    
+        //[_aryfileDatas removeObject:nil];
         
         _ivCurrentTap = nil;
         [self reloadScrollView];
