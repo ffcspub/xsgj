@@ -81,3 +81,7 @@
 
 @end
 
+@interface  InsertMobileStateHttpResponse : LK_HttpBaseResponse
+
+@end
+

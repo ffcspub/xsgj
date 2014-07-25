@@ -205,7 +205,4 @@
 +(void)insertDisplayCostByRequest:(InsertDisplayCostHttpRequest *)request success:(void(^)(InsertDisplayCostHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 
-
-
-
 @end;

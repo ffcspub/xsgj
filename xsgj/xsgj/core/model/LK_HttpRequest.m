@@ -7,7 +7,17 @@
 //
 
 #import "LK_HttpRequest.h"
-@implementation LK_HttpBaseRequest
+@implementation LK_HttpBaseRequest{
+    NSString * _requestPath;
+}
+
+-(void)setRequestPath:(NSString *)path{
+    _requestPath = path;
+}
+
+-(NSString *)requestPath{
+    return _requestPath;
+}
 
 @end
 

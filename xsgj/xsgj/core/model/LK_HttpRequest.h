@@ -10,6 +10,10 @@
 
 @interface LK_HttpBaseRequest : NSObject
 
+-(void)setRequestPath:(NSString *)path;
+
+-(NSString *)requestPath;
+
 @end
 
 @interface LK_HttpBasePageRequest : LK_HttpBaseRequest

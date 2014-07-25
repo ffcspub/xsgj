@@ -10,6 +10,7 @@
 
 @interface NoticeInfoBean : NSObject
 
+@property(nonatomic,assign) int NOTICE_ID;//编号
 @property(nonatomic,strong) NSString *TOPIC;//公告主题
 @property(nonatomic,strong) NSString *BEGIN_TIME;//发布时间
 

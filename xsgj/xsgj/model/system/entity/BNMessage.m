@@ -10,4 +10,10 @@
 
 @implementation BNMessage
 
+//表名
++(NSString *)getTableName
+{
+    return [NSString stringWithFormat:@"t_%d_BNMessage",[ShareValue shareInstance].userInfo.USER_ID];
+}
+
 @end

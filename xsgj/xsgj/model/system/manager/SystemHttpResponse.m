@@ -303,3 +303,7 @@
 
 @end
 
+@implementation InsertMobileStateHttpResponse
+
+@end
+

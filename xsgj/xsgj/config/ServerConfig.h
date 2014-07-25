@@ -94,6 +94,7 @@
 #define URL_insertUserCamera @"usercamera/insertUserCamera.shtml"//日常拍照上报
 #define URL_uploadPhoto @"uploadPhoto.shtml" //照片上传
 #define URL_locateCommit @"locate/locateCommit.shtml"//实时定位上传
+#define URL_insertMobileState @"mobilestate/insertMobileState.shtml"//手机状态上报
 #define URL_getWorkRange @"sign/getWorkRange.shtml"//读取手机状态上报工作范围
 #define URL_getTimeInterval @"mobilestate/getTimeInterval.shtml"
 #define URL_getMobbileDisInfo @"mobileDis/getMobileDisInfo.shtml"//配送查询
