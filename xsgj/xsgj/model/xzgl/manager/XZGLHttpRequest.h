@@ -24,7 +24,7 @@
 @property(nonatomic,strong) NSString *	POSITION2;//	纠偏位置 	String	可选
 @property(nonatomic,strong) NSString *	SIGN_FLAG;//	考勤标志	String	非空(i:签到 o:签退)
 @property(nonatomic,strong) NSString *	DEVICE_CODE;//	手机标识码（IMEI）	String	非空
-@property(nonatomic,strong) NSNumber *  PHOTO;//	上传附件ID	Long	可选
+@property(nonatomic,strong) NSString *  PHOTO;//	上传附件ID	可选
 @property(nonatomic,strong) NSString *  SIGN_TIME;//	上传时间	Date 非空
 
 @end
