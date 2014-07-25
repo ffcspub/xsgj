@@ -11,7 +11,7 @@
 #import <NSDate+Helper.h>
 #import "UIColor+External.h"
 #import "MBProgressHUD+Add.h"
-#import "KHGLAPI.h"
+#import "XZGLAPI.h"
 #import <NSDate+Helper.h>
 #import "NSString+URL.h"
 #import "ShareValue.h"
@@ -115,8 +115,9 @@ static int const pageSize = 10;
     self.tbvQuery.tableFooterView = [[UIView alloc] init];
     self.tbvQuery.delegate = self;
     self.tbvQuery.dataSource = self;
-    self.tbvQuery.separatorStyle = UITableViewCellSeparatorStyleNone;
+    // self.tbvQuery.separatorColor = HEX_RGB(0xf1f1f1);
     self.tbvQuery.showsVerticalScrollIndicator = NO;
+    [self.tbvQuery registerNib:[SellTaskCell nib] forCellReuseIdentifier:SellTaskQueryCellIdentifier];
     
     // 上提加载更多
     __weak SellTaskVC *weakSelf = self;
@@ -145,27 +146,40 @@ static int const pageSize = 10;
 
 - (void)loadSellTask
 {
+    QuerySaleTaskHttpRequest *request = [[QuerySaleTaskHttpRequest alloc] init];
+    request.BEGIN_MONTH = self.lblBeginTime.text;
+    request.END_MONTH = self.lblEndTime.text;
+    
     MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    [XZGLAPI QuerySaleTaskByRequest:request success:^(QuerySaleTaskHttpResponse *response) {
+
+        int resultCount = [response.DATA count];
+        NSLog(@"销售任务查询总数:%d", resultCount);
         
-        sleep(2.f);
-        
-        // 不存在更多数据
-        BOOL isExistMoreData = NO;
-        if (!isExistMoreData) {
+        if (resultCount < pageSize) {
             self.tbvQuery.showsInfiniteScrolling = NO;
+        } else {
+            self.tbvQuery.showsInfiniteScrolling = YES;
         }
+
         if (self.currentPage == 1) {
             [self.arrData removeAllObjects];
         }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self.tbvQuery.infiniteScrollingView stopAnimating];
-            [hub removeFromSuperview];
-            [MBProgressHUD showError:@"完成" toView:self.view];
-        });
-    });
+        [self.tbvQuery.infiniteScrollingView stopAnimating];
+        [self.arrData addObjectsFromArray:response.DATA];
+        [self.tbvQuery reloadData];
+        
+        [hub removeFromSuperview];
+
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        [self.tbvQuery.infiniteScrollingView stopAnimating];
+        
+        [self.tbvQuery reloadData];
+        
+        [hub removeFromSuperview];
+        [MBProgressHUD showError:desciption toView:self.view];
+    }];
 }
 
 - (IBAction)beginTimeAction:(id)sender
@@ -200,6 +214,7 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     NSInteger count = 1;
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     return count;
 }
 
@@ -209,11 +224,6 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
     return count;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return @"";
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SellTaskCell *cell = [tableView dequeueReusableCellWithIdentifier:SellTaskQueryCellIdentifier];
@@ -221,7 +231,7 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
     // 配置Cell
     [cell configureForData:self.arrData[indexPath.row]];
     
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType = UITableViewCellAccessoryNone;
     
     return cell;
 }

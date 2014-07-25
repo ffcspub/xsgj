@@ -7,8 +7,15 @@
 //
 
 #import "SellTaskCell.h"
+#import "SaleTaskInfoBean.h"
 
 @interface SellTaskCell ()
+
+@property (weak, nonatomic) IBOutlet UILabel *lblTime;
+@property (weak, nonatomic) IBOutlet UILabel *lblTargetMoney;
+@property (weak, nonatomic) IBOutlet UILabel *lblCompleteMoney;
+@property (weak, nonatomic) IBOutlet UILabel *lblPrecent;
+
 
 - (void)_initialize;
 
@@ -23,7 +30,7 @@
 
 + (CGFloat)cellHeight
 {
-    return 56.f;
+    return 45.f;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -55,7 +62,11 @@
 - (void)configureForData:(id)data;
 {
     // TODO: 设置数据
-    
+    SaleTaskInfoBean *bean = (SaleTaskInfoBean *)data;
+    self.lblTime.text = bean.SALE_MONTH;
+    self.lblTargetMoney.text = [NSString stringWithFormat:@"%.2f", bean.SALE_TARGET];
+    self.lblCompleteMoney.text = [NSString stringWithFormat:@"%.2f", bean.SALE_FINISH];
+    self.lblPrecent.text = bean.SALE_PERCENT;
 }
 
 @end

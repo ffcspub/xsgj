@@ -174,7 +174,7 @@
  *  @param success 成功block
  *  @param fail    失败返回结果
  */
-+(void)QuerySaleTaskByRequest:(QuerySaleTaskHttpRequest *)request success:(void(^)(QueryDetailAdviceHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
++(void)QuerySaleTaskByRequest:(QuerySaleTaskHttpRequest *)request success:(void(^)(QuerySaleTaskHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 /**
  *  获取调休、请假类型接口

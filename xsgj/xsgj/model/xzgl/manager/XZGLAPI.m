@@ -285,12 +285,12 @@
  *  @param success 成功block
  *  @param fail    失败返回结果
  */
-+(void)QuerySaleTaskByRequest:(QuerySaleTaskHttpRequest *)request success:(void(^)(QueryDetailAdviceHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
++(void)QuerySaleTaskByRequest:(QuerySaleTaskHttpRequest *)request success:(void(^)(QuerySaleTaskHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
     [LK_APIUtil getHttpRequest:request apiPath:URL_querySaleTask Success:^(LK_HttpBaseResponse *response) {
-        success((QueryDetailAdviceHttpResponse *)response);
+        success((QuerySaleTaskHttpResponse *)response);
     } fail:^(BOOL NotReachable, NSString *desciption) {
         fail(NotReachable,desciption);
-    } class:[QueryDetailAdviceHttpResponse class]];
+    } class:[QuerySaleTaskHttpResponse class]];
 }
 
 /**

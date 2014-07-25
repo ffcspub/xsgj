@@ -40,6 +40,8 @@ static int const pageSize = 10;
     
     // 表格设置
     [self.tbvQuery registerNib:[VisitRecordCell nib] forCellReuseIdentifier:VisiteRecordCellIdentifier];
+    [self.tbvQuery setSeparatorColor:[UIColor clearColor]];
+    self.tbvQuery.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // 上提加载更多
     __weak VisiteRecordVC *weakSelf = self;
