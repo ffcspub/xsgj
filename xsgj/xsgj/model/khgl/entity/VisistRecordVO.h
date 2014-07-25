@@ -27,5 +27,6 @@
 @property(nonatomic,strong) NSString *  	START_TIME_M	;//	起始时分
 @property(nonatomic,strong) NSString *  	END_TIME_M	;//	结束时分
 @property(nonatomic,strong) NSString *  	CUST_NAME	;//	客户姓名
+@property(nonatomic,strong) NSString *  	REALNAME	;//	真实姓名
 
 @end
