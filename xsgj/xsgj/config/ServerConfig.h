@@ -54,6 +54,7 @@
 #define URL_approveTrip @"trip/approveTrip.shtml" // 出差审批
 #define URL_queryTrip @"trip/queryTrip.shtml"// 出差查询
 #define URL_detailTrip @"trip/detailTrip.shtml" // 出差详情
+#define URL_approveCount @"leave/queryApproveCount.shtml" //审批数量
 #define URL_insertWorkInfo @"workReport/insertWorkInfo.shtml" // 工作上报
 #define URL_work_type @"workReport/work_type.shtml"// 工作上报类型
 #define URL_addAdvice @"advice/addAdvice.shtml"// 意见上报
@@ -93,5 +94,9 @@
 #define URL_insertUserCamera @"usercamera/insertUserCamera.shtml"//日常拍照上报
 #define URL_uploadPhoto @"uploadPhoto.shtml" //照片上传
 #define URL_locateCommit @"locate/locateCommit.shtml"//实时定位上传
+#define URL_getWorkRange @"sign/getWorkRange.shtml"//读取手机状态上报工作范围
+#define URL_getTimeInterval @"mobilestate/getTimeInterval.shtml"
+#define URL_getMobbileDisInfo @"mobileDis/getMobileDisInfo.shtml"//配送查询
+#define URL_updateMobileDisState @"mobileDis/updateState.shtml"//配送处理上报
 
 #endif

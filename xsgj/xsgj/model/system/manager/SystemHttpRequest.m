@@ -70,3 +70,14 @@
 }
 
 @end
+
+
+@implementation GetWorkRangeHttpRequest
+
+
+@end
+
+@implementation GetTimeIntervalHttpRequest
+
+
+@end

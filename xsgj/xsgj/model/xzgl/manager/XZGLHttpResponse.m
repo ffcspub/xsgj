@@ -16,6 +16,7 @@
 #import "LeaveinfoBean.h"
 #import "LeaveTypeBean.h"
 #import "WorkReportTypeBean.h"
+#import "MobileInfoDisBean.h"
 
 @implementation SignUpHttpReponse
 
@@ -34,6 +35,11 @@
 +(Class)__DATAClass{
     return [SignDetailBean class];
 }
+
+@end
+
+@implementation QueryApproveCountHttpResponse
+
 
 @end
 
@@ -132,5 +138,18 @@
 @end
 
 @implementation InsertUserCameraHttpResponse
+
+@end
+
+@implementation GetMobileDisInfoHttpResponse
+
++(Class)__DATAClass{
+    return [MobileInfoDisBean class];
+}
+
+@end
+
+@implementation MobileDisUpdateStateHttpResponse
+
 
 @end

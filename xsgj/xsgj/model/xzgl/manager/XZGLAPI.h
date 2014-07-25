@@ -113,6 +113,15 @@
 +(void)queryTripDeTailByRequest:(QueryTripDetailHttpRequest *)request success:(void(^)(QueryTripDetailHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 /**
+ *  出差详细查询接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)queryApproveCountByRequest:(QueryApproveCountHttpRequest *)request success:(void(^)(QueryApproveCountHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
  *  工作汇报类型获取接口
  *
  *  @param request 请求参数
@@ -185,5 +194,22 @@
  */
 +(void)insertUserCameraByRequest:(InsertUserCameraHttpRequest *)request success:(void(^)(InsertUserCameraHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
+/**
+ *  配送查询
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)getMobileDisInfoByRequest:(GetMobileDisInfoHttpRequest *)request success:(void(^)(GetMobileDisInfoHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+/**
+ *  配送查询
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)mobileDisUpdateStateByRequest:(MobileDisUpdateStateHttpRequest *)request success:(void(^)(MobileDisUpdateStateHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 @end

@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HideTabViewController.h"
 
-@interface ApproveListViewController : UIViewController
+@interface ApproveListViewController : HideTabViewController
+
+@property (weak, nonatomic) IBOutlet UIView *viewContain;
+
+@property (weak, nonatomic) IBOutlet UILabel *lb_levelCount;
+
+@property (weak, nonatomic) IBOutlet UILabel *lb_businessCount;
 
 @end
