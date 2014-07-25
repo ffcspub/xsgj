@@ -40,7 +40,7 @@
 #define URL_QUERY_ORDER_BACK @"orderBack/queryOrderBack.shtml"// 退货查询
 #define URL_ORDER_BACK_DETAIL @"orderBack/queryOrderBackDetail.shtml" // 退货详情
 #define URL_ANNOUNCEMENT @"notice/noticeQuery.shtml" // 企业公告
-#define URL_ANNOUNCEMENT_TYPE @"/notice/noticeTypes.shtml" // 公告类型
+#define URL_ANNOUNCEMENT_TYPE @"notice/noticeTypes.shtml" // 公告类型
 #define URL_ANNOUNCEMENT_DETAIL @"notice/noticeDetail.shtml"// 公告详情
 #define URL_CONTACT_DEPT @"userdept/myDeptInfo.shtml"
 #define URL_ADDRESS_BOOK @"user/queryContacts.shtml"
