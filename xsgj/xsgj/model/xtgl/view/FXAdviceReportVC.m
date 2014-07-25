@@ -87,7 +87,8 @@
     [XZGLAPI addAdviceByRequest:request success:^(AddAdviceHttpResponse *response)
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [self.navigationController popViewControllerAnimated:YES];
+        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
+//        [self.navigationController popViewControllerAnimated:YES];
     }
     fail:^(BOOL notReachable, NSString *desciption)
     {

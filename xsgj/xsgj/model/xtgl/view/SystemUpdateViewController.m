@@ -8,8 +8,14 @@
 
 #import "SystemUpdateViewController.h"
 
-@interface SystemUpdateViewController ()
+static const NSString *appleID = @"521989084";
 
+@interface SystemUpdateViewController ()<UIAlertViewDelegate>
+{
+    double localVersion;
+    double remoteVersion;
+    NSString *trackViewUrl;
+}
 @end
 
 @implementation SystemUpdateViewController
@@ -28,8 +34,28 @@
 {
     [super viewDidLoad];
     [self setRightBarButtonItem];
-    
-    // Do any additional setup after loading the view from its nib.
+    _labLocalVer.text  = [NSString stringWithFormat:@"%f",[self getLocalVersion]];
+    _labRemoteVer.text = [NSString stringWithFormat:@"%f",[self getRemoteVersion]];
+}
+
+-(double)getLocalVersion
+{
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
+    localVersion = [currentVersion doubleValue];
+    return  localVersion;
+}
+
+-(double)getRemoteVersion
+{
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",appleID]]];
+    [request setHTTPMethod:@"GET"];
+    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:nil];
+    remoteVersion = [jsonData[@"results"][0][@"version"] floatValue];
+    trackViewUrl  = jsonData[@"results"][0][@"trackViewUrl"];
+    return remoteVersion;
 }
 
 #pragma mark - navBarButton
@@ -52,25 +78,43 @@
 
 -(void)updateAction:(id)sender
 {
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    NSString *appleID = @"725369561";
-    [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",appleID]]];
-    [request setHTTPMethod:@"GET"];
-    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:nil];
-    NSString *latestVersion = [jsonData objectForKey:@"version"];
-    NSString *trackViewUrl1 = [jsonData objectForKey:@"trackViewUrl"];//地址trackViewUrl
-    NSString *trackName     = [jsonData objectForKey:@"trackName"];//trackName
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.apple.com/us/app/geniusbaby/id521989084"]];
-    
-    
-    NSLog(@"更新");
+    if (localVersion < remoteVersion)
+    {
+        UIAlertView *alert;
+        alert = [[UIAlertView alloc] initWithTitle:@"销售管家"
+                                           message:@"有新版本，是否升级?"
+                                          delegate: self
+                                 cancelButtonTitle:@"取消"
+                                 otherButtonTitles: @"升级", nil];
+        alert.tag = 1001;
+        [alert show];
+    }
+    else
+    {
+        UIAlertView *alert;
+        alert = [[UIAlertView alloc] initWithTitle:@"销售管家"
+                                           message:@"暂无新版本"
+                                          delegate: nil
+                                 cancelButtonTitle:@"好的"
+                                 otherButtonTitles: nil, nil];
+        [alert show];
+    }
 }
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+//根据被点击按钮的索引处理点击事件
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex ==1)
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:trackViewUrl]];
+    }
 }
 
 @end

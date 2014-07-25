@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SystemUpdateViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIButton *btnBack;
-@property (weak, nonatomic) IBOutlet UIButton *btnUpdate;
+
 @property (weak, nonatomic) IBOutlet UILabel *labLocalVer;
 @property (weak, nonatomic) IBOutlet UILabel *labRemoteVer;
 
