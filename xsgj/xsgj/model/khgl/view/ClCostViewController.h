@@ -11,7 +11,9 @@
 #import "IBActionSheet.h"
 #import "BNDisplayShape.h"
 #import "LKDBHelper.h"
-
+#import "DzPhotoViewController.h"
+#import <NSDate+Helper.h>
+#import "LK_EasySignal.h"
 
 @interface ClCostViewController : HideTabViewController<IBActionSheetDelegate>
 {
@@ -23,19 +25,13 @@
     
 }
 
-@property (weak, nonatomic) IBOutlet UIView *vDatePickerView;
-@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UITextField *tfTimeBegin;
 @property (weak, nonatomic) IBOutlet UITextField *tfTimeEnd;
 @property (weak, nonatomic) IBOutlet UITextField *tfClType;
 @property (weak, nonatomic) IBOutlet UITextField *tfClCost;
-@property (weak, nonatomic) IBOutlet UIButton *btnPickerCancel;
-@property (weak, nonatomic) IBOutlet UIButton *btnPickerConfirm;
-
-
-- (IBAction)handleBtnPickerConfirm:(id)sender;
-
-- (IBAction)handleBtnPickerCancel:(id)sender;
+@property (weak, nonatomic) BNCustomerInfo *customerInfo;
+@property (weak, nonatomic) BNVistRecord *vistRecord;
+@property (weak, nonatomic) BNDisplayShape *clShapeSelect;
 
 - (IBAction)handleBtnTimeBeginClicked:(id)sender;
 - (IBAction)handleBtnTimeEndClicked:(id)sender;

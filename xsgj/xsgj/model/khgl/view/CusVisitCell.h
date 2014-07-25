@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BNMobileMenu.h"
 
 @interface CusVisitCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *ivStatus;
 @property (weak, nonatomic) IBOutlet UILabel *lbName;
-
+@property (strong, nonatomic) BNMobileMenu *mobileMenu;
 
 @end

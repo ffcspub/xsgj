@@ -8,6 +8,7 @@
 
 #import "DhReportViewController.h"
 #import "DhSelectTreeViewController.h"
+#import "DhEditViewController.h"
 
 @interface DhReportViewController ()
 
@@ -38,9 +39,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)handleBtnTypeClicked:(id)sender {
-    DhSelectTreeViewController *selectTreeViewController = [[DhSelectTreeViewController alloc] initWithNibName:@"SelectTreeViewController" bundle:nil];
-    [self.navigationController pushViewController:selectTreeViewController animated:YES];
+#pragma mark - functions
+
+- (void)handleNavBarRight
+{
+    DhEditViewController *viewController = [[DhEditViewController alloc] initWithNibName:@"DhEditViewController" bundle:nil];
+    viewController.aryData = _aryProductSelect;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 @end

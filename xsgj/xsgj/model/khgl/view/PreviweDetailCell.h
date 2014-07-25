@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "StockCommitBean.h"
 
 @interface PreviweDetailCell : UITableViewCell
 
@@ -17,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *ivPhoto;
 
 
-- (void)setCellValue:(NSArray *)test;
+- (void)setCellValue:(StockCommitBean *)commitData;
 - (IBAction)handleBtnModifyClicked:(id)sender;
 - (IBAction)handleBtnCancelClicked:(id)sender;
 

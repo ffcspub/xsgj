@@ -93,7 +93,6 @@
 {
     if([self.strSelect isEqualToString:@""])
     {
-        // todo: 提示
         return;
     }
     

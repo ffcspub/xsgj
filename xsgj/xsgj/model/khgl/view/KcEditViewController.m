@@ -8,7 +8,6 @@
 
 #import "KcEditViewController.h"
 #import "KcPreviewViewController.h"
-#import "BNProduct.h"
 
 @interface KcEditViewController ()
 
@@ -31,7 +30,9 @@
     // Do any additional setup after loading the view from its nib.
     
     _selectIndex = nil;
+    _aryKcData = [[NSMutableArray alloc] init];
     [self initView];
+    [self loadStockCommitBean];
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,6 +44,10 @@
 - (void)initView
 {
     self.title = @"库存编辑";
+    [_btnCommit setBackgroundImage:IMG_BTN_BLUE forState:UIControlStateNormal];
+    [_btnCommit setBackgroundImage:IMG_BTN_BLUE_S forState:UIControlStateHighlighted];
+    [_btnPreview setBackgroundImage:IMG_BTN_BLUE forState:UIControlStateNormal];
+    [_btnPreview setBackgroundImage:IMG_BTN_BLUE_S forState:UIControlStateHighlighted];
 }
 
 #pragma mark - functions
@@ -53,27 +58,51 @@
 
 - (IBAction)handleBtnPreviewClicked:(id)sender {
     KcPreviewViewController *viewController = [[KcPreviewViewController alloc] initWithNibName:@"KcPreviewViewController" bundle:nil];
+    viewController.aryData = _aryKcData;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
+- (void)loadStockCommitBean
+{
+    for(BNProduct *product in _aryData)
+    {
+        
+        NSArray *aryUnitBean = [BNUnitBean searchWithWhere:[NSString stringWithFormat:@"PROD_ID=%D",product.PROD_ID] orderBy:@"UNIT_ORDER" offset:0 count:100];
+        BNUnitBean *unitBean = nil;
+        if(aryUnitBean.count > 0)
+        {
+            unitBean = [aryUnitBean objectAtIndex:0];
+        }
+        
+        StockCommitBean *kcCommitBean = [[StockCommitBean alloc] init];
+        kcCommitBean.PROD_ID = product.PROD_ID;
+        kcCommitBean.STOCK_NUM = 0;
+        kcCommitBean.STOCK_NO = @"";
+        kcCommitBean.PRODUCT_UNIT_ID = unitBean.PRODUCT_UNIT_ID;
+        kcCommitBean.SPEC = product.SPEC;
+        kcCommitBean.PROD_NAME = product.PROD_NAME;
+        kcCommitBean.PRODUCT_UNIT_NAME = unitBean.UNITNAME;
+        
+        [_aryKcData addObject:kcCommitBean];
+    }
+}
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _aryData.count;
+    return _aryKcData.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == _selectIndex.row && _selectIndex != nil)
     {
-        return 204;
+        return 174;
     }
     else
     {
        return 44;
     }
-    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -84,14 +113,13 @@
         [tableView registerNib:[UINib nibWithNibName:@"KcEditCell" bundle:nil] forCellReuseIdentifier:@"KCEDITCELL"];
         cell = [tableView dequeueReusableCellWithIdentifier:@"KCEDITCELL"];
     }
-    
-    if(_aryData.count > 0)
+
+    if(_aryKcData.count > 0)
     {
-        BNProduct *product = [_aryData objectAtIndex:indexPath.row];
+        StockCommitBean * bean = [_aryKcData objectAtIndex:indexPath.row];
         cell.indexPath = indexPath;
-        cell.lbName.text = product.PROD_NAME;
-        cell.lbNumber.text = @"0";
-        cell.tfUnit.text = @"瓶";
+        NSLog(@"%d",indexPath.row);
+        [cell setCellWithValue:bean];
     }
     
     if (indexPath.row == _selectIndex.row && _selectIndex != nil)
@@ -103,6 +131,7 @@
         cell.vDetail.hidden = YES;
     }
     
+    cell.delegate = self;
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -144,16 +173,25 @@
 
 - (void)onBtnAddClicked:(KcEditCell *)cell
 {
-    // todo: 添加数据源
-    NSInteger iAddRow = cell.indexPath.row + 1;
-    NSIndexPath *path = [NSIndexPath indexPathForRow:iAddRow inSection:0];
-    [_tvContain deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationAutomatic];
+
+    StockCommitBean *kcCommitBean = [[StockCommitBean alloc] init];
+    kcCommitBean.PROD_ID = cell.commitData.PROD_ID;
+    kcCommitBean.STOCK_NUM = cell.commitData.STOCK_NUM;
+    kcCommitBean.STOCK_NO = cell.commitData.STOCK_NO;
+    kcCommitBean.PRODUCT_UNIT_ID = cell.commitData.PRODUCT_UNIT_ID;
+    kcCommitBean.SPEC = cell.commitData.SPEC;
+    kcCommitBean.PROD_NAME = cell.commitData.PROD_NAME;
+    kcCommitBean.PRODUCT_UNIT_NAME = cell.commitData.PRODUCT_UNIT_NAME;
+    [_aryKcData insertObject:kcCommitBean atIndex:cell.indexPath.row + 1];
+    
+    [_tvContain reloadData];
 }
 
 - (void)onBtnDelClicked:(KcEditCell *)cell
 {
-    // todo: 删除数据源
-    [_tvContain insertRowsAtIndexPaths:[NSMutableArray arrayWithObject:cell.indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    [_aryKcData removeObjectAtIndex:cell.indexPath.row];
+    [_tvContain reloadData];
 }
 
 - (void)onBtnPhotoClicked:(KcEditCell *)cell
@@ -177,7 +215,6 @@
         
         ImageFileInfo *imageInfo = [[ImageFileInfo alloc]initWithImage:image];
         [_aryfileDatas addObject:imageInfo];
-        _totalfilesize += imageInfo.filesize;
         
     }
     [picker dismissModalViewControllerAnimated:YES];

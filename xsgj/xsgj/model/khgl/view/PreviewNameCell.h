@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "StockCommitBean.h"
 
 @interface PreviewNameCell : UITableViewCell
 
-
 @property (weak, nonatomic) IBOutlet UILabel *lbName;
+
+- (void)setCellValue:(StockCommitBean *)commitData;
 
 @end

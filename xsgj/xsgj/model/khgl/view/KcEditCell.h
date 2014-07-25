@@ -7,6 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BNProduct.h"
+#import "StockCommitBean.h"
+#import "BNUnitBean.h"
+#import "LeveyPopListView.h"
+#import "LKDBHelper.h"
 
 @protocol KcEditCellDelegate;
 
@@ -16,7 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIView *vDetail;
 @property (weak, nonatomic) IBOutlet UILabel *lbName;
 @property (weak, nonatomic) IBOutlet UILabel *lbNumber;
-@property (weak, nonatomic) IBOutlet UITextField *tfKc;
 @property (weak, nonatomic) IBOutlet UITextField *tfNumber;
 @property (weak, nonatomic) IBOutlet UITextField *tfUnit;
 @property (weak, nonatomic) IBOutlet UITextField *tfDate;
@@ -24,12 +28,14 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnAdd;
 @property (weak, nonatomic) IBOutlet UIButton *btnReduce;
 @property (weak, nonatomic) IBOutlet UIImageView *ivPhoto;
-@property (weak, nonatomic) NSIndexPath *indexPath;
+@property (strong, nonatomic) NSIndexPath *indexPath;
+@property (strong, nonatomic) StockCommitBean *commitData;
 
+- (void)setCellWithValue:(StockCommitBean *)commitBean;
 - (IBAction)handleBtnAddClicked:(id)sender;
 - (IBAction)handleBtnReduceClicked:(id)sender;
 - (IBAction)handleBtnPhotoClicked:(id)sender;
-
+- (IBAction)handleBtnUnitClicked:(id)sender;
 
 @end
 

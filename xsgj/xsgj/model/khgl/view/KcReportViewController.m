@@ -36,6 +36,7 @@
     _bSearch = NO;
     [self initView];
     [self loadTypeData];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -189,7 +190,7 @@
         }
     }
     
-    if(_aryProductSelect.count > 0 && _tfType.text.length > 0)
+    if(_aryProductSelect.count > 0)
     {
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }

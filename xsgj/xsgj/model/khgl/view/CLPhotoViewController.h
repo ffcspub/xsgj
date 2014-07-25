@@ -22,6 +22,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *tfClType;
 @property (weak, nonatomic) IBOutlet UITextField *tfZcType;
 @property (weak, nonatomic) IBOutlet UITextField *tfZcNumber;
+@property (weak, nonatomic) BNDisplayType *clTypeSelect;
+@property (weak, nonatomic) BNAssetType *zcTypeSelect;
 
 
 - (IBAction)handleBtnClTypeClicked:(id)sender;

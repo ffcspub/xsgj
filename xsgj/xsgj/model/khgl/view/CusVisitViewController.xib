@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CusVisitViewController">
             <connections>
+                <outlet property="btnRefresh" destination="dnY-sa-IPH" id="xRT-bT-fd4"/>
                 <outlet property="btnVisitBegin" destination="88m-dQ-7yX" id="azq-Pw-xi7"/>
                 <outlet property="btnVisitEnd" destination="WRe-0p-4OU" id="76e-Kp-UJW"/>
                 <outlet property="ivIconOver" destination="GGL-fC-hcZ" id="VM2-mv-CSX"/>
@@ -14,6 +15,7 @@
                 <outlet property="lbCurrentLocation" destination="Xjd-od-Mq4" id="UP5-ZX-dat"/>
                 <outlet property="lbCusName" destination="P0N-EI-Au3" id="9QA-If-qAJ"/>
                 <outlet property="lbVisitTime" destination="LBX-ok-cIP" id="j5t-Wf-kss"/>
+                <outlet property="lbVisitType" destination="ynp-IM-KF5" id="Cgj-Lr-MrU"/>
                 <outlet property="svContain" destination="OZb-fr-2Oj" id="W60-3O-r2r"/>
                 <outlet property="tvFuncBg" destination="doG-dD-PVT" id="ATx-Sx-zEG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -66,7 +68,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="所有" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xjd-od-Mq4">
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="正在定位..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xjd-od-Mq4">
                                     <rect key="frame" x="80" y="15" width="180" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -162,7 +164,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="所有" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ynp-IM-KF5">
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ynp-IM-KF5">
                                     <rect key="frame" x="80" y="14" width="100" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>

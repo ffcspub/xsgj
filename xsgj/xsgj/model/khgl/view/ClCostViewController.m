@@ -31,6 +31,7 @@
     _beginTime = nil;
     _endTime = nil;
     [self initView];
+    [self loadTypeData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,14 +50,53 @@
 
 - (void)handleNavBarRight
 {
+    if(_tfTimeBegin.text.length < 1)
+    {
+        [MBProgressHUD showError:@"请填写开始时间" toView:self.view];
+        return;
+    }
+    if(_tfTimeEnd.text.length < 1)
+    {
+        [MBProgressHUD showError:@"请填写结束时间" toView:self.view];
+        return;
+    }
     
+    if(_tfClType.text.length < 1)
+    {
+        [MBProgressHUD showError:@"请填写陈列形式" toView:self.view];
+        return;
+    }
+    
+    if(_tfClCost.text.length < 1)
+    {
+        [MBProgressHUD showError:@"请填写陈列费用" toView:self.view];
+        return;
+    }
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self sendRequest];
 }
 
-- (IBAction)handleBtnPickerConfirm:(id)sender {
-    NSDate *selectDate = [_datePicker date];
-    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-    [timeFormatter setDateFormat:@"yyyy-MM-dd"];
-    NSString *strTime = [timeFormatter stringFromDate:selectDate];
+- (IBAction)handleBtnTimeBeginClicked:(id)sender {
+    UIDatePicker *picker = [[UIDatePicker alloc]init];
+    picker.datePickerMode = UIDatePickerModeDate;
+    [picker showTitle:@"请选择" inView:self.view];
+    _bSetEndTime = NO;
+}
+
+- (IBAction)handleBtnTimeEndClicked:(id)sender {
+    UIDatePicker *picker = [[UIDatePicker alloc]init];
+    picker.datePickerMode = UIDatePickerModeDate;
+    [picker showTitle:@"请选择" inView:self.view];
+    _bSetEndTime = YES;
+}
+
+ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
+    UIDatePicker *picker =  (UIDatePicker *)signal.sender;
+    NSDate *selectDate = picker.date;
+    NSLog(@"%@",[selectDate stringWithFormat:@"yyyy-MM-dd"] );
+
+    NSString *strTime = [selectDate stringWithFormat:@"yyyy-MM-dd"];
     if(!_bSetEndTime)
     {
         if(_endTime)
@@ -64,8 +104,7 @@
             NSTimeInterval timeInterval = [selectDate timeIntervalSinceDate:_endTime];
             if(timeInterval > 0)
             {
-                // todo: 提示
-                NSLog(@"开始时间晚于结束时间");
+                [MBProgressHUD showError:@"开始时间晚于结束时间" toView:self.view];
                 return;
             }
         }
@@ -79,53 +118,79 @@
             NSTimeInterval timeInterval = [selectDate timeIntervalSinceDate:_beginTime];
             if(timeInterval < 0)
             {
-                // todo: 提示
-                NSLog(@"结束时间早于开始时间");
+                [MBProgressHUD showError:@"结束时间早于开始时间" toView:self.view];
                 return;
             }
         }
         _endTime = selectDate;
         _tfTimeEnd.text = strTime;
     }
-    _vDatePickerView.hidden = YES;
-}
-
-- (IBAction)handleBtnPickerCancel:(id)sender {
-    _vDatePickerView.hidden = YES;
-}
-
-- (IBAction)handleBtnTimeBeginClicked:(id)sender {
-    NSDate *now = [NSDate date];
-    [_datePicker setDate:now animated:NO];
-    _vDatePickerView.hidden = NO;
-    _bSetEndTime = NO;
-}
-
-- (IBAction)handleBtnTimeEndClicked:(id)sender {
-    NSDate *now = [NSDate date];
-    [_datePicker setDate:now animated:NO];
-    _vDatePickerView.hidden = NO;
-    _bSetEndTime = YES;
 }
 
 - (IBAction)handleBtnClTypeClicked:(id)sender{
-    _actionSheet = [[IBActionSheet alloc] initWithTitle:@"选择陈列形式"
-                                               delegate:self
-                                      cancelButtonTitle:@"取消"
-                                 destructiveButtonTitle:nil
-                                      otherButtonTitles:nil, nil];
-    _actionSheet.tag = 10;
+    NSMutableArray *aryItems = [[NSMutableArray alloc] init];
     for(BNDisplayShape *displayShape in _aryClShapreData)
     {
-        [_actionSheet addButtonWithTitle:displayShape.SHAPE_NAME];
+        [aryItems addObject:displayShape.SHAPE_NAME];
     }
     
-    [_actionSheet showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view];
+    LeveyPopListView *popListView = [[LeveyPopListView alloc] initWithTitle:@"选择陈列形式" options:aryItems handler:^(NSInteger anIndex) {
+        NSString *strSelect = [aryItems objectAtIndex:anIndex];
+        _tfClType.text = strSelect;
+        
+        for(BNDisplayShape *displayShape in _aryClShapreData)
+        {
+            if([displayShape.SHAPE_NAME isEqualToString:strSelect])
+            {
+                self.clShapeSelect = displayShape;
+                break;
+            }
+        }
+        
+    }];
+    [popListView showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view animated:NO];
 }
 
 - (void)loadTypeData
 {
+    // todo: 陈列类型娶不到
     _aryClShapreData = [BNDisplayShape searchWithWhere:nil orderBy:nil offset:0 count:100];
+}
+- (void)sendRequest
+{
+    InsertDisplayCostHttpRequest *request = [[InsertDisplayCostHttpRequest alloc]init];
+    // 基础用户信息
+    request.SESSION_ID  = [ShareValue shareInstance].userInfo.SESSION_ID;
+    request.CORP_ID     = [ShareValue shareInstance].userInfo.CORP_ID;
+    request.DEPT_ID     = [ShareValue shareInstance].userInfo.DEPT_ID;
+    request.USER_AUTH   = [ShareValue shareInstance].userInfo.USER_AUTH;
+    request.USER_ID     = [ShareValue shareInstance].userInfo.USER_ID;
+    // 附加信息
+    request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
+    request.COST       = _tfClCost.text;
+    request.CUST_ID    = self.customerInfo.CUST_ID;
+    request.OPER_MENU  = @"34";
+    request.SHAPE_ID   = [NSString stringWithFormat:@"%d",self.clShapeSelect.SHAPE_ID];
+    request.VISIT_NO   = self.vistRecord.VISIT_NO;
+    request.BEGIN_TIME = _tfTimeBegin.text;
+    request.END_TIME   = _tfTimeEnd.text;
+    
+    [KHGLAPI insertDisplayCostByRequest:request success:^(InsertDisplayCostHttpResponse *response){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showSuccess:@"提交成功" toView:self.view];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            sleep(1);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        });
+        
+     }fail:^(BOOL notReachable, NSString *desciption){
+         [MBProgressHUD hideHUDForView:self.view animated:YES];
+         [MBProgressHUD showError:desciption toView:self.view];
+         
+     }];
 }
 
 #pragma mark - IBActionSheetDelegate

@@ -9,10 +9,7 @@
 #import "TempVisitViewController.h"
 #import "SelectTreeViewController.h"
 #import "CusVisitViewController.h"
-#import "BNCustomerType.h"
-#import "BNAreaInfo.h"
-#import "BNCustomerInfo.h"
-#import "LKDBHelper.h"
+
 
 
 @interface TempVisitViewController ()
@@ -24,7 +21,6 @@
     SelectTreeType _selectType;
     BNAreaInfo *_areaInfoShow;
     BNCustomerType *_cusTypeShow;
-    BNCustomerInfo *_cusInfoShow;
 }
 
 @end
@@ -81,7 +77,8 @@
 - (void)handleNavBarRight
 {
     CusVisitViewController *cusVisitViewController = [[CusVisitViewController alloc] initWithNibName:@"CusVisitViewController" bundle:nil];
-    cusVisitViewController.customerInfo = _cusInfoShow;
+    cusVisitViewController.customerInfo = self.customerInfoSelect;
+    cusVisitViewController.vistRecord = self.visitRecordSelect;
     [self.navigationController pushViewController:cusVisitViewController animated:YES];
 }
 
@@ -102,28 +99,30 @@
 }
 
 - (IBAction)handleBtnCusTNameClicked:(id)sender {
-    // todo:根据查询数据显示客户数量
-    NSMutableArray *aryCusNames = [[NSMutableArray alloc] init];
+    NSMutableArray *aryItems = [[NSMutableArray alloc] init];
     for(BNCustomerInfo *info in _aryCusInfoData)
     {
-        [aryCusNames addObject:info.CUST_NAME];
+        [aryItems addObject:info.CUST_NAME];
     }
     
-    _actionSheet = [[IBActionSheet alloc] initWithTitle:@"选择客户"
-                                                             delegate:self
-                                                    cancelButtonTitle:@"取消"
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:nil, nil];
-    _actionSheet.tag = 10;
-    for(NSString *cusName in aryCusNames)
-    {
-        [_actionSheet addButtonWithTitle:cusName];
-    }
-    
-    [_actionSheet showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view];
+    LeveyPopListView *popListView = [[LeveyPopListView alloc] initWithTitle:@"选择客户" options:aryItems handler:^(NSInteger anIndex) {
+        NSString *strSelect = [aryItems objectAtIndex:anIndex];
+        _lbCusNameSelect.text = strSelect;
+        
+        for(BNCustomerInfo *info in _aryCusInfoData)
+        {
+            if([info.CUST_NAME isEqualToString:strSelect])
+            {
+                [self showCustomerInfo:info];
+                break;
+            }
+        }
+    }];
+    [popListView showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view animated:NO];
 }
 
 - (IBAction)handleBtnCusInfoClicked:(id)sender {
+    //SignInViewController
 }
 
 - (IBAction)handleBtnSmsClicked:(id)sender {
@@ -138,7 +137,6 @@
     if(_aryCusInfoData.count > 0)
     {
         BNCustomerInfo *customerInfo = [_aryCusInfoData objectAtIndex:0];
-        _cusInfoShow = customerInfo;
         _lbCusNameSelect.text = customerInfo.CUST_NAME;
         [self showCustomerInfo:customerInfo];
     }
@@ -188,16 +186,28 @@
 
 - (void)showCustomerInfo:(BNCustomerInfo *)customerInfo
 {
+    self.customerInfoSelect = customerInfo;
     _lbCusName.text = customerInfo.CUST_NAME;
+    
+//    NSArray *aryType = [BNCustomerType searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D",customerInfo.CUST_ID] orderBy:@"ORDER_NO" offset:0 count:100];
+//    if(aryType.count > 0)
+//    {
+//        BNCustomerType *type = [aryType objectAtIndex:0];
+//        
+//    }
     _lbCusType.text = customerInfo.TYPE_NAME;
     _lbContacts.text = customerInfo.LINKMAN;
     _lbMobile.text = customerInfo.TEL;
     _lbAddress.text = customerInfo.ADDRESS;
-// todo: 拜访时间无法显示
-//            if(customerInfo.VISIT_RECORD)
-//            {
-//                _lbLastVisit.text = customerInfo.VISIT_RECORD.BEGIN_TIME;
-//            }
+    NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D",customerInfo.CUST_ID] orderBy:nil offset:0 count:100];
+    if(aryRecord.count > 0)
+    {
+        self.visitRecordSelect = [aryRecord objectAtIndex:0];
+    }
+    if(self.visitRecordSelect)
+    {
+        _lbLastVisit.text = self.visitRecordSelect.BEGIN_TIME;
+    }
 }
 
 - (NSArray *)makeCusTypeTreeData

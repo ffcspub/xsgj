@@ -13,6 +13,7 @@
 @interface KcEditViewController : DzPhotoViewController<KcEditCellDelegate>
 {
     NSIndexPath *_selectIndex;
+    NSMutableArray *_aryKcData;
 }
 
 
