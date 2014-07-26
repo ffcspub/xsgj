@@ -67,22 +67,3 @@
 
 @end
 
-@interface  GetWorkRangeHttpRequest : LK_HttpBaseRequest
-
-@property(nonatomic,strong) NSString *	SESSION_ID;//	会话ID
-@property(nonatomic,assign) int         CORP_ID;//	企业ID
-@property(nonatomic,assign) int         DEPT_ID;//	部门ID
-@property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限
-@property(nonatomic,assign) int         USER_ID;//	用户ID
-
-@end
-
-@interface GetTimeIntervalHttpRequest : LK_HttpBaseRequest
-
-@property(nonatomic,strong) NSString *	SESSION_ID;//	会话ID
-@property(nonatomic,assign) int         CORP_ID;//	企业ID
-@property(nonatomic,assign) int         DEPT_ID;//	部门ID
-@property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限
-@property(nonatomic,assign) int         USER_ID;//	用户ID
-
-@end

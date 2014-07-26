@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "LK_HttpResponse.h"
 #import "BNUserInfo.h"
-#import "TimeIntervalBean.h"
 
 @interface UserLoginHttpResponse : LK_HttpBaseResponse
 
@@ -68,16 +67,6 @@
 @interface UploadPhotoHttpResponse : LK_HttpBaseResponse
 
 @property(nonatomic,strong) NSString *FILE_ID;//照片标识
-
-@end
-
-@interface GetWorkRangeHttpResponse : LK_HttpBasePageResponse
-
-@end
-
-@interface GetTimeIntervalHttpResponse : LK_HttpBaseResponse
-
-@property(nonatomic,strong)TimeIntervalBean *TIMEINTERVALBEAN;//
 
 @end
 

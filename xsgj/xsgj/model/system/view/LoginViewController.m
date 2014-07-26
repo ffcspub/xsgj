@@ -137,7 +137,6 @@
 -(void)loginRequest{
     MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在登录" toView:self.view];
     [SystemAPI loginByCorpcode:_tf_companycode.text username:_tf_username.text password:_tf_pwd.text success:^(BNUserInfo *userinfo) {
-        [[AsnyTaskManager shareInstance]loadConfig];
         dispatch_async(dispatch_get_main_queue() , ^{
             hud.labelText = @"正在更新配置...";
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -155,7 +154,6 @@
             });
         });
     } fail:^(BOOL notReachable, NSString *desciption) {
-        [[AsnyTaskManager shareInstance]loadConfig];
         [hud removeFromSuperview];
         if (notReachable) {
             if ([[ShareValue shareInstance].corpCode isEqual:_tf_companycode.text] &&
@@ -187,7 +185,7 @@
         [ShareValue shareInstance].userPass = _tf_pwd.text;
     }
     [ShareAppDelegate showTabViewController];
-    
+    [[AsnyTaskManager shareInstance]loadConfig];
     [[AsnyTaskManager shareInstance]startTask];//开始定时传送
     [[OfflineAPI shareInstance]sendOfflineRequest];
     [[OfflineAPI shareInstance]startListener];

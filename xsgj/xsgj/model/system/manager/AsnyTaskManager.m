@@ -9,11 +9,11 @@
 #import "AsnyTaskManager.h"
 #import "SystemAPI.h"
 #import "SystemHttpRequest.h"
-#import "SignConfigBean.h"
-#import "TimeIntervalBean.h"
 #import <LKDBHelper.h>
 #import "MapUtils.h"
 #import <NSDate+Helper.h>
+#import "BNSignConfigBean.h"
+#import "NSDate+Util.h"
 
 static AsnyTaskManager *_shareValue;
 
@@ -38,9 +38,6 @@ static AsnyTaskManager *_shareValue;
 
 -(id)init{
     if (self) {
-        LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
-        [helper createTableWithModelClass:[SignConfigBean class]];
-        [helper createTableWithModelClass:[TimeIntervalBean class]];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(locationUpdated) name:NOTIFICATION_LOCATION_UPDATED object:nil];
     }
     return self;
@@ -60,27 +57,9 @@ static AsnyTaskManager *_shareValue;
 }
 
 -(void)loadConfig{
-    GetWorkRangeHttpRequest *request = [[GetWorkRangeHttpRequest alloc]init];
-    [SystemAPI getWorkRangeByRequest:request success:^(GetWorkRangeHttpResponse *reponse) {
-        [SignConfigBean deleteWithWhere:nil];
-        for (SignConfigBean *bean in reponse.DATA) {
-            [bean saveToDB];
-        }
-        _signConfigBeans = reponse.DATA;
-        GetTimeIntervalHttpRequest *request1 = [[GetTimeIntervalHttpRequest alloc]init];
-        [SystemAPI getTimeIntervalByRequest:request1 success:^(GetTimeIntervalHttpResponse *reponse) {
-            [TimeIntervalBean deleteWithWhere:nil];
-            _INTERVALTIME =  reponse.TIMEINTERVALBEAN.INTERVALTIME;
-            [reponse.TIMEINTERVALBEAN saveToDB];
-        } fail:^(BOOL notReachable, NSString *desciption) {
-            TimeIntervalBean *bean = [TimeIntervalBean searchSingleWithWhere:nil orderBy:nil];
-            if (bean) {
-                _INTERVALTIME = bean.INTERVALTIME;
-            }
-        }];
-    } fail:^(BOOL notReachable, NSString *desciption) {
-        _signConfigBeans = [SignConfigBean searchWithWhere:nil orderBy:nil offset:0 count:10];
-    }];
+    int weekday = [[NSDate date] getWeekDay];
+    _signConfigBeans = [BNSignConfigBean searchWithWhere:[NSString stringWithFormat:@"WEEK_DAY=%d",weekday] orderBy:nil offset:0 count:10];
+    _INTERVALTIME = [ShareValue shareInstance].userInfo.STATE_UPLOAD_INTERVAL_MILLS / 1000 / 60;
 }
 
 
@@ -88,7 +67,7 @@ static AsnyTaskManager *_shareValue;
     NSString *dateTime = [[NSDate date]stringWithFormat:@"HHmm"];
     int time = [dateTime integerValue];
     BOOL flag = NO;
-    for (SignConfigBean *configBean in _signConfigBeans) {
+    for (BNSignConfigBean *configBean in _signConfigBeans) {
         if (time >=configBean.BEGIN_TIME && time <=configBean.END_TIME) {
             flag = YES;
             break;
@@ -109,12 +88,16 @@ static AsnyTaskManager *_shareValue;
 
 
 -(void)startTask{
-    if (_INTERVALTIME > 0) {
-        if (_taskTimer) {
-            [_taskTimer invalidate];
-            _taskTimer = [NSTimer timerWithTimeInterval:60.0 * _INTERVALTIME target:self selector:@selector(doTask) userInfo:nil repeats:YES];
-        }
+    if (_INTERVALTIME < 15.0) {
+        _INTERVALTIME = 15.0;//默认15分钟
     }
+    if (_taskTimer) {
+        [_taskTimer invalidate];
+        _taskTimer = nil;
+    }
+    [self doTask];
+    _taskTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 * _INTERVALTIME target:self selector:@selector(doTask) userInfo:nil repeats:YES];
+    
 }
 
 -(void)stopTask{

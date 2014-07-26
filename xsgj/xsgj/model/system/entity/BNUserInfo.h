@@ -49,6 +49,8 @@
 @property (nonatomic,strong) NSString* ROLE_NAME;
 // 上次更新时间
 @property (nonatomic,assign) unsigned  long long LAST_UPDATE_TIME;
+// 更新频率
+@property (nonatomic,assign) int STATE_UPLOAD_INTERVAL_MILLS;
 
 +(BNUserInfo *)loadcacheByUserId:(int)userid;
 

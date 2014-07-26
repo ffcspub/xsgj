@@ -23,7 +23,6 @@
 #import "BNMobileMenu.h"
 #import <MBProgressHUD.h>
 #import "MapUtils.h"
-#import "SignConfigBean.h"
 
 @implementation AppDelegate
 
@@ -33,15 +32,6 @@
 @synthesize tabBarController = _tabBarController;
 
 -(void)test{
-    GetWorkRangeHttpRequest *request = [[GetWorkRangeHttpRequest alloc]init];
-    [SystemAPI getWorkRangeByRequest:request success:^(GetWorkRangeHttpResponse *reponse) {
-        NSArray *array =  reponse.DATA;
-        for (SignConfigBean *bean in array) {
-            
-        }
-    } fail:^(BOOL notReachable, NSString *desciption) {
-        
-    }];
     
 }
 

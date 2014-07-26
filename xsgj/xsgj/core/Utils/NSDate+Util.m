@@ -10,6 +10,15 @@
 
 @implementation NSDate (Util)
 
+-(NSInteger)getWeekDay{
+    NSCalendar*calendar = [NSCalendar currentCalendar];
+    NSDateComponents*comps;
+    comps =[calendar components:(NSWeekCalendarUnit | NSWeekdayCalendarUnit |NSWeekdayOrdinalCalendarUnit)
+                       fromDate:self];
+    NSInteger week = [comps weekday];
+    return week;
+}
+
 -(NSString *)getCnWeek{
     NSCalendar*calendar = [NSCalendar currentCalendar];
     NSDateComponents*comps;

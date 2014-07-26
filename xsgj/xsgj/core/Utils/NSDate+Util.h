@@ -10,6 +10,8 @@
 
 @interface NSDate (Util)
 
+-(NSInteger)getWeekDay;
+
 -(NSString *)getCnWeek;
 
 +(NSDate *)getNextDate:(int)dateCount;
