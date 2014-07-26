@@ -60,6 +60,7 @@
 #define URL_addAdvice @"advice/addAdvice.shtml"// 意见上报
 #define URL_queryAdvice @"advice/queryAdvice.shtml"// 查询意见上报
 #define URL_queryDetailAdvice @"advice/queryDetailAdvice.shtml"// 查询意见上报详细
+#define URL_tempVisit @"visit/tempVisit.shtml"//客户信息采集
 #define URL_allTypeinfo @"customerinfo/allTypeinfo.shtml"// 客户类型
 #define URL_addCustomerCommit @"customerinfo/addCustomerCommit.shtml"// 新增客户上报
 #define URL_queryCustomer @"customerinfo/customerQuery.shtml"// 客户查询

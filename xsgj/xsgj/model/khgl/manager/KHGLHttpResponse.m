@@ -17,6 +17,11 @@
 #import "QueryOrderBackInfoBean.h"
 #import "QueryOrderBackDetailInfoBean.h"
 
+@implementation TempVisitHttpResponse
+
+
+@end
+
 @implementation AllTypeHttpResponse
 
 +(Class)__DATAClass{

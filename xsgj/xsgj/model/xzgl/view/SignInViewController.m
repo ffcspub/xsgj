@@ -132,12 +132,7 @@
     request.LAT = [ShareValue shareInstance].currentLocation.latitude;
     request.POSITION = _lb_currentLocation.text;
     request.SIGN_FLAG = @"i";
-    
-//    NSString *imageString = [[NSString alloc] initWithData:_imageData encoding:NSUTF8StringEncoding];
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    [formatter setNumberStyle:NSNumberFormatterScientificStyle];
-    NSNumber *imageNum = [formatter numberFromString:_photoId];
-    request.PHOTO = imageNum;
+    request.PHOTO = _photoId;
     
     if (_isManualLocation) {
         request.LNG2 = [NSNumber numberWithFloat:manualCoordinate.longitude];
