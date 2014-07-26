@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <TTTAttributedLabel.h>
+#import "HideTabViewController.h"
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : HideTabViewController
 
 @property (weak, nonatomic) IBOutlet UITextField *tf_companycode;
 

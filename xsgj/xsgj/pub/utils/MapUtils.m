@@ -7,6 +7,7 @@
 //
 
 #import "MapUtils.h"
+#import "SIAlertView.h"
 
 static MapUtils * _Maputils;
 
@@ -32,6 +33,10 @@ static MapUtils * _Maputils;
 }
 
 -(void)startLocationUpdate{
+    if (![CLLocationManager locationServicesEnabled]) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请在系统的设置中打开定位服务" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }
     noOnce = NO;
     [_locationService startUserLocationService];
 }

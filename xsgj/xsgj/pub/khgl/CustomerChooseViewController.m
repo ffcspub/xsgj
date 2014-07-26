@@ -726,6 +726,13 @@
         }
         sql = [sql stringByAppendingFormat:@"AREA_ID=%d",_selectedAreaInfo.AREA_ID];
     }
+    if (_deselectedCutomerIds.count>0) {
+       NSString *ids =   [_deselectedCutomerIds componentsJoinedByString:@","];
+        if (sql.length > 0) {
+            sql = [sql stringByAppendingFormat:@" and "];
+        }
+        sql = [sql stringByAppendingFormat:@"CUST_ID not in (%@)",ids];
+    }
     NSArray *costomers = [BNCustomerInfo searchWithWhere:sql orderBy:@"CUST_NAME" offset:0 count:1000];
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [_allCustomers addObjectsFromArray:costomers];

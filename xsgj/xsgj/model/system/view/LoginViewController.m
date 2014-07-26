@@ -42,6 +42,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIButton *btn = (UIButton *)self.navigationItem.rightBarButtonItem.customView;
+    [btn setTitle:@"退出" forState:UIControlStateNormal];
     [self initView];
 }
 
@@ -50,6 +52,27 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)backAction{
+    [self exitApplication];
+}
+
+// 退出程序
+- (void)exitApplication
+{
+    UIWindow *window =  [UIApplication sharedApplication].delegate.window;
+    [UIView animateWithDuration:0.5f animations:^
+     {
+         window.alpha = 0;
+         window.frame = CGRectMake(CGRectGetWidth(window.frame)/2,CGRectGetHeight(window.frame)/2,1, 1);
+     }
+                     completion:^(BOOL finished)
+     {
+         exit(0);
+     }];
+}
+
+
 
 -(void)initView{
     [[IQKeyboardManager sharedManager] setEnable:YES];
@@ -116,12 +139,12 @@
     }
     
     if (![ShareValue shareInstance].noShowPwd) {
-        [_btn_auto setImage:[UIImage imageNamed:@"CheckBox1_Selected"] forState:UIControlStateNormal];
-        [_btn_auto setImage:[UIImage imageNamed:@"CheckBox1_Selected"] forState:UIControlStateHighlighted];
-        _tf_pwd.secureTextEntry = YES;
-    }else{
         [_btn_auto setImage:[UIImage imageNamed:@"CheckBox1_unSelected"] forState:UIControlStateNormal];
         [_btn_auto setImage:[UIImage imageNamed:@"CheckBox1_unSelected"] forState:UIControlStateHighlighted];
+        _tf_pwd.secureTextEntry = YES;
+    }else{
+        [_btn_auto setImage:[UIImage imageNamed:@"CheckBox1_Selected"] forState:UIControlStateNormal];
+        [_btn_auto setImage:[UIImage imageNamed:@"CheckBox1_Selected"] forState:UIControlStateHighlighted];
         _tf_pwd.secureTextEntry = NO;
     }
 }
@@ -209,10 +232,6 @@
 }
 
 - (IBAction)remberAction:(id)sender {
-    
-    UIDatePicker *picker = [[UIDatePicker alloc]init];
-    picker.datePickerMode = UIDatePickerModeDateAndTime;
-    [picker showTitle:@"请选择" inView:self.view];
     [ShareValue shareInstance].noRemberFlag = ![ShareValue shareInstance].noRemberFlag;
     [self resetBtns];
 }
