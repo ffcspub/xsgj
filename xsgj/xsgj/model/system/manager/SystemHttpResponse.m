@@ -26,7 +26,8 @@
 #import "BNCameraType.h"
 #import "ContactBean.h"
 #import "DeptInfoBean.h"
-
+#import "BNPartnerInfoBean.h"
+#import "BNPartnerType.h"
 #import "LK_NSDictionary2Object.h"
 
 #import <LKDBHelper.h>
@@ -56,6 +57,8 @@
     [helper createTableWithModelClass:[BNCameraType class]];
     [helper createTableWithModelClass:[DeptInfoBean class]];
     [helper createTableWithModelClass:[ContactBean class]];
+    [helper createTableWithModelClass:[BNPartnerInfoBean class]];
+    [helper createTableWithModelClass:[BNPartnerType class]];
 }
 
 -(void)saveCacheDB{
@@ -148,6 +151,17 @@
 {
     return [ContactBean class];
 }
+
++(Class)__PARTNER_INFOSClass
+{
+    return [BNPartnerInfoBean class];
+}
+
++(Class)__PARTNER_TYPESClass
+{
+    return [BNPartnerType class];
+}
+
 
 -(void)saveDefaultMobileMenus{
     NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"menu_config" ofType:@"json"];
@@ -265,6 +279,19 @@
             [bean saveToDB];
         }
     }
+    if (_PARTNER_UPDATE_STATE == 1) {
+        [BNPartnerInfoBean deleteWithWhere:nil];
+        for (BNPartnerInfoBean *bean in _PARTNER_INFOS) {
+            [bean saveToDB];
+        }
+    }
+    if (_PARTNER_TYPE_UPDATE_STATE == 1) {
+        [BNPartnerType deleteWithWhere:nil];
+        for (BNPartnerType *bean in _PARTNER_TYPES) {
+            [bean saveToDB];
+        }
+    }
+    
     [BNVistRecord deleteWithWhere:nil];
     for (BNVistRecord *bean in _VISIT_RECORDS) {
         [bean saveToDB];

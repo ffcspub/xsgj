@@ -38,6 +38,8 @@
 @property(nonatomic,strong) NSArray *	DISPLAY_SHAPES	;//	陈列形式
 @property(nonatomic,strong) NSArray *	SIGN_CONFIGS	;//	考勤配置
 @property(nonatomic,strong) NSArray *   CAMERA_TYPES;//拍照类型
+@property(nonatomic,strong) NSArray *	PARTNER_INFOS	;//	供货商信息
+@property(nonatomic,strong) NSArray *   PARTNER_TYPES;//供货商类型
 
 @property(nonatomic,assign) int	MENU_UPDATE_STATE	;//	手机菜单是否有更新
 @property(nonatomic,assign) int	PRODUCT_TYPE_UPDATE_STATE	;//	产品类别是否有更新
@@ -54,6 +56,9 @@
 @property(nonatomic,assign) int	DISPLAY_SHAPE_UPDATE_STATE	;//	陈列形式是否有更新
 @property(nonatomic,assign) int SIGN_CONFIG_UPDATE_STATE;//考勤配置是否有更新
 @property(nonatomic,assign) int CAMERA_TYPE_UPDATE_STATE;//拍照类型是否有更新
+@property(nonatomic,assign) int PARTNER_UPDATE_STATE;//	合作商是否有更新
+@property(nonatomic,assign) int PARTNER_TYPE_UPDATE_STATE;//	合作商类型是否有更新
+
 
 -(void)saveCacheDB;
 
