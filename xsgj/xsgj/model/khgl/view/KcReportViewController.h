@@ -14,14 +14,19 @@
 #import "BNProduct.h"
 #import "LKDBHelper.h"
 #import "KcProductCell.h"
+#import "BNCustomerInfo.h"
+#import "BNVistRecord.h"
 
 @interface KcReportViewController : HideTabViewController<UITextFieldDelegate,KcProductCellDelegate>
 {
+    BNProductType *_proTypeShow;
     NSArray *_aryProductData;
     NSArray *_aryProductTypeData;
+    NSArray *_aryProTypeTreeData;
     NSMutableArray *_aryProductSelect;
-    BNProductType *_proTypeShow;
+    NSMutableArray *_aryProDataTemp;
     NSMutableArray *_aryFilter;
+    NSMutableArray *_aryTraversalRet;
     BOOL _bSearch;
 }
 
@@ -29,6 +34,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *tfType;
 @property (weak, nonatomic) IBOutlet UITextField *tfSearch;
 @property (weak, nonatomic) IBOutlet UIButton *btnSeleltAll;
+@property (weak, nonatomic) BNCustomerInfo *customerInfo;
+@property (weak, nonatomic) BNVistRecord *vistRecord;
 
 
 - (IBAction)handleBtnTypeClicked:(id)sender;

@@ -45,6 +45,8 @@
 {
     DhEditViewController *viewController = [[DhEditViewController alloc] initWithNibName:@"DhEditViewController" bundle:nil];
     viewController.aryData = _aryProductSelect;
+    viewController.customerInfo = self.customerInfo;
+    viewController.vistRecord = self.vistRecord;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 

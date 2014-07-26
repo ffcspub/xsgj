@@ -23,25 +23,33 @@
 }
 
 - (void)setCellValue:(OrderItemBean *)commitData
-{    
-    self.lbPrice.text = [NSString stringWithFormat:@"%f",commitData.ITEM_PRICE];
+{
+    commitData.GIFT_TOTAL = commitData.GIFT_NUM * commitData.GIFT_PRICE;
+    commitData.TOTAL_PRICE = commitData.ITEM_NUM * commitData.ITEM_PRICE;
+    
+    self.cellCommitBean = commitData;
+    self.lbPrice.text = [NSString stringWithFormat:@"%0.001f",commitData.ITEM_PRICE];
     self.lbNumber.text = [NSString stringWithFormat:@"%d",commitData.ITEM_NUM];
     self.lbUnit.text = commitData.UNIT_NAME;
     self.lbZpName.text = commitData.GIFT_NAME;
     self.lbZpNumber.text = [NSString stringWithFormat:@"%d",commitData.GIFT_NUM];
     self.lbZpUnit.text = commitData.GIFT_UNIT_NAME;
-    self.lbZpTotalPrice.text = [NSString stringWithFormat:@"%f",commitData.GIFT_TOTAL];
-    self.lbProductPrice.text = [NSString stringWithFormat:@"%f",commitData.TOTAL_PRICE];
+    self.lbZpTotalPrice.text = [NSString stringWithFormat:@"%0.001f",commitData.GIFT_TOTAL];
+    self.lbProductPrice.text = [NSString stringWithFormat:@"%0.001f",commitData.TOTAL_PRICE];
 }
 
-- (IBAction)handleBtnModifyClicked:(id)sender
-{
-    
+- (IBAction)handleBtnModifyClicked:(id)sender {
+    if(self.delegate && [self.delegate respondsToSelector:@selector(onBtnModifyClicked:)])
+    {
+        [self.delegate onBtnModifyClicked:self];
+    }
 }
 
-- (IBAction)handleBtnCancelClicked:(id)sender
-{
-    
+- (IBAction)handleBtnCancelClicked:(id)sender {
+    if(self.delegate && [self.delegate respondsToSelector:@selector(onBtnCancelClicked:)])
+    {
+        [self.delegate onBtnCancelClicked:self];
+    }
 }
 
 @end

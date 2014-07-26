@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DzPhotoViewController.h"
+#import "HideTabViewController.h"
 #import "KcEditCell.h"
+#import "DzPhotoViewController.h"
 
-@interface KcEditViewController : DzPhotoViewController<KcEditCellDelegate>
+@interface KcEditViewController : HideTabViewController<KcEditCellDelegate>
 {
     NSIndexPath *_selectIndex;
     NSMutableArray *_aryKcData;
+    KcEditCell *_cellForDate;
+    int _iExpandProdId;
 }
 
 
@@ -21,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnCommit;
 @property (weak, nonatomic) IBOutlet UIButton *btnPreview;
 @property (weak, nonatomic) NSArray *aryData;
+@property (weak, nonatomic) BNCustomerInfo *customerInfo;
+@property (weak, nonatomic) BNVistRecord *vistRecord;
 
 
 - (IBAction)handleBtnCommitClicked:(id)sender;

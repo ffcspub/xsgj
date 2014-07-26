@@ -11,7 +11,8 @@
 #import "CusVisitViewController.h"
 #import "InfoCollectViewController.h"
 #import <NSDate+Helper.h>
-
+#import <UIAlertView+Blocks.h>
+#import "SIAlertView.h"
 
 @interface TempVisitViewController ()
 {
@@ -41,6 +42,7 @@
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleNotifySelectFin:) name:NOTIFICATION_SELECT_FIN object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleNotifyViewClose) name:NOTIFICATION_INFOVIEW_CLOSE object:nil];
     // Do any additional setup after loading the view from its nib.
     
     [self initView];
@@ -55,6 +57,7 @@
 - (void)viewDidUnload
 {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIFICATION_SELECT_FIN object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIFICATION_INFOVIEW_CLOSE object:nil];
     [super viewDidUnload];
 }
 
@@ -82,16 +85,43 @@
 
 - (void)handleNavBarRight
 {
-    CusVisitViewController *cusVisitViewController = [[CusVisitViewController alloc] initWithNibName:@"CusVisitViewController" bundle:nil];
-    cusVisitViewController.customerInfo = self.customerInfoSelect;
-    NSString *visitDate = self.visitRecordSelect.VISIT_DATE;
-    if (visitDate.length > 10) {
-        visitDate = [visitDate substringToIndex:10];
+    if(_customerInfoSelect.LAT.intValue == 0 ||
+       _customerInfoSelect.LNG.intValue == 0 ||
+       _customerInfoSelect.PHOTO.length < 1)
+    {
+        SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"提示"
+                                                        message:@"该客户信息尚未采集，是否现在进行采集？"
+                                              cancelButtonTitle:@"取消"
+                                                  cancelHandler:^(SIAlertView *alertView) {}
+                                         destructiveButtonTitle:@"确定"
+                                             destructiveHandler:^(SIAlertView *alertView) {
+                                                 [self showCusInfoCollectView:YES];
+                                             }];
+        [alert show];
     }
-    if ( [visitDate isEqual:[[NSDate date]stringWithFormat:@"yyyy-MM-dd"]]) {
-        cusVisitViewController.vistRecord = self.visitRecordSelect;
+    else
+    {
+        CusVisitViewController *cusVisitViewController = [[CusVisitViewController alloc] initWithNibName:@"CusVisitViewController" bundle:nil];
+        cusVisitViewController.customerInfo = self.customerInfoSelect;
+        NSString *visitDate = self.visitRecordSelect.VISIT_DATE;
+        if (visitDate.length > 10) {
+            visitDate = [visitDate substringToIndex:10];
+        }
+        if ( [visitDate isEqual:[[NSDate date]stringWithFormat:@"yyyy-MM-dd"]]) {
+            cusVisitViewController.vistRecord = self.visitRecordSelect;
+        }
+        [self.navigationController pushViewController:cusVisitViewController animated:YES];
     }
-    [self.navigationController pushViewController:cusVisitViewController animated:YES];
+    
+
+}
+
+- (void)showCusInfoCollectView:(BOOL)bTag
+{
+    InfoCollectViewController *viewController = [[InfoCollectViewController alloc] initWithNibName:@"InfoCollectViewController" bundle:nil];
+    viewController.bEnterNextview = bTag;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [self presentModalViewController:nav animated:YES];
 }
 
 - (IBAction)handleBtnCusTypeClicked:(id)sender {
@@ -134,14 +164,34 @@
 }
 
 - (IBAction)handleBtnCusInfoClicked:(id)sender {
-    InfoCollectViewController *viewController = [[InfoCollectViewController alloc] initWithNibName:@"InfoCollectViewController" bundle:nil];
-    [self.navigationController pushViewController:viewController animated:YES];
+    [self showCusInfoCollectView:NO];
 }
 
 - (IBAction)handleBtnSmsClicked:(id)sender {
+    if (_lbMobile.text.length > 0)
+    {
+        NSString *telUrl = [NSString stringWithFormat:@"sms://%@",_lbMobile.text];
+        NSURL *url = [[NSURL alloc] initWithString:telUrl];
+        [[UIApplication sharedApplication] openURL:url];
+    }
+    else
+    {
+        [MBProgressHUD showError:@"电话号码不正确" toView:self.view];
+    }
+    
 }
 
 - (IBAction)handleBtnPhoneClicked:(id)sender {
+    if (_lbMobile.text.length > 0)
+    {
+        NSString *telUrl = [NSString stringWithFormat:@"tel://%@",_lbMobile.text];
+        NSURL *url = [[NSURL alloc] initWithString:telUrl];
+        [[UIApplication sharedApplication] openURL:url];
+    }
+    else
+    {
+        [MBProgressHUD showError:@"电话号码不正确" toView:self.view];
+    }
 }
 
 
@@ -328,6 +378,20 @@
 }
 
 #pragma mark - Notify
+
+- (void)handleNotifyViewClose
+{
+    CusVisitViewController *cusVisitViewController = [[CusVisitViewController alloc] initWithNibName:@"CusVisitViewController" bundle:nil];
+    cusVisitViewController.customerInfo = self.customerInfoSelect;
+    NSString *visitDate = self.visitRecordSelect.VISIT_DATE;
+    if (visitDate.length > 10) {
+        visitDate = [visitDate substringToIndex:10];
+    }
+    if ( [visitDate isEqual:[[NSDate date]stringWithFormat:@"yyyy-MM-dd"]]) {
+        cusVisitViewController.vistRecord = self.visitRecordSelect;
+    }
+    [self.navigationController pushViewController:cusVisitViewController animated:YES];
+}
 
 - (void)handleNotifySelectFin:(NSNotification *)note
 {

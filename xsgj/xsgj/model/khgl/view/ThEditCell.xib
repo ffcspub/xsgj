@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
+        <deployment defaultVersion="1280" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
@@ -88,11 +88,14 @@
                                         <color key="textColor" red="0.98039215690000003" green="0.21176470589999999" blue="0.0078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入数量" minimumFontSize="17" id="IGK-Qg-VgF">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入数量" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="IGK-Qg-VgF">
                                         <rect key="frame" x="165" y="0.0" width="155" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="KGk-i7-Jjw" id="Gur-Mi-0wy"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ubs-1e-Zlx">
                                         <rect key="frame" x="160" y="0.0" width="1" height="30"/>
@@ -121,12 +124,13 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" id="8dY-nx-YKa">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Czn-KO-CtP">
                                         <rect key="frame" x="165" y="0.0" width="155" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="dropbox.png" id="dfO-HR-KvS">
                                         <rect key="frame" x="292" y="6" width="17" height="20"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -175,12 +179,17 @@
                                         <color key="textColor" red="0.98039215690000003" green="0.21176470589999999" blue="0.0078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入日期" minimumFontSize="17" id="m5N-bp-WSZ">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="42A-3g-xQl">
                                         <rect key="frame" x="165" y="0.0" width="155" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="dropbox.png" id="0H2-vM-WLg">
+                                        <rect key="frame" x="292" y="6" width="17" height="20"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hyd-yB-HM6">
                                         <rect key="frame" x="160" y="0.0" width="1" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -195,6 +204,16 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PsI-Ri-D9g">
+                                        <rect key="frame" x="160" y="0.0" width="160" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="handleBtnDate:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="tGu-9V-5Re"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -215,11 +234,14 @@
                                         <color key="textColor" red="0.98039215690000003" green="0.21176470589999999" blue="0.0078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请说明原因" minimumFontSize="17" id="Xsd-5U-kNe">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请说明原因" clearsOnBeginEditing="YES" minimumFontSize="17" id="Xsd-5U-kNe">
                                         <rect key="frame" x="165" y="0.0" width="155" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="KGk-i7-Jjw" id="33S-YP-C5V"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zhH-sD-gT4">
                                         <rect key="frame" x="160" y="0.0" width="1" height="30"/>
@@ -284,12 +306,12 @@
                 <outlet property="btnPhoto" destination="Rn5-Qd-EaX" id="KVY-IC-dkL"/>
                 <outlet property="btnReduce" destination="vch-Fz-bZj" id="WIx-mJ-ETM"/>
                 <outlet property="ivPhoto" destination="MMF-k6-pBo" id="wEq-V1-Zgh"/>
+                <outlet property="lbDate" destination="42A-3g-xQl" id="leo-yq-TFi"/>
                 <outlet property="lbName" destination="2JG-QH-Zia" id="Vki-Pr-58t"/>
                 <outlet property="lbNumber" destination="OHk-2i-zZT" id="VFK-qS-v4A"/>
-                <outlet property="tfDate" destination="m5N-bp-WSZ" id="Jwx-iK-oTH"/>
+                <outlet property="lbUnit" destination="Czn-KO-CtP" id="4Tv-hm-Byw"/>
                 <outlet property="tfNumber" destination="IGK-Qg-VgF" id="aKm-3v-sRo"/>
                 <outlet property="tfReson" destination="Xsd-5U-kNe" id="Qpr-oJ-vSC"/>
-                <outlet property="tfUnit" destination="8dY-nx-YKa" id="fBb-Uc-5kO"/>
                 <outlet property="vDetail" destination="PdV-Pv-fu7" id="HtP-1i-6NI"/>
             </connections>
         </tableViewCell>

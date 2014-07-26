@@ -15,6 +15,7 @@
 #import "BNCustomerInfo.h"
 #import "LKDBHelper.h"
 #import "BNVistRecord.h"
+#import "MBProgressHUD+Add.h"
 
 typedef enum
 {

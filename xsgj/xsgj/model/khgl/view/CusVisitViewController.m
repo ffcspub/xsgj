@@ -243,6 +243,59 @@
     [_svContain setContentSize:CGSizeMake(_svContain.frame.size.width, _btnVisitEnd.frame.origin.y + _btnVisitEnd.frame.size.height + 10)];
 }
 
+- (void)sendVisitEndRequest
+{
+    RecordVisitHttpRequest *request = [[RecordVisitHttpRequest alloc]init];
+    // 基础用户信息
+    request.SESSION_ID  = [ShareValue shareInstance].userInfo.SESSION_ID;
+    request.CORP_ID     = [ShareValue shareInstance].userInfo.CORP_ID;
+    request.DEPT_ID     = [ShareValue shareInstance].userInfo.DEPT_ID;
+    request.USER_AUTH   = [ShareValue shareInstance].userInfo.USER_AUTH;
+    request.USER_ID     = [ShareValue shareInstance].userInfo.USER_ID;
+    // 附加信息
+    request.VISIT_DATE           = _vistRecord.VISIT_DATE;
+    request.VISIT_NO             = _vistRecord.VISIT_NO;
+    
+    
+    request.BEGIN_POS       = _vistRecord.BEGIN_POS;
+    request.END_POS         = @"结束地点";
+    request.BEGIN_TIME      = _vistRecord.BEGIN_TIME;
+    request.END_TIME        = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
+    request.CUST_ID         = _customerInfo.CUST_ID;
+    // chenzftodo: 数据确认
+//    request.VISIT_CONDITION_CODE = _vistRecord.VISIT_CONDITION_CODE;
+//    request.VISIT_TYPE      = 0;
+//    request.CONF_ID         = 0;
+//    request.SYNC_STATE      = 2;
+//    request.END_LNG         = (1.1927513E6);
+//    request.END_LNG2        = (0.0);
+//    request.END_LAT         = (2.6115058E7);
+//    request.END_LAT2        = (0.0);
+    
+    request.BEGIN_LNG       = [NSNumber numberWithDouble:_vistRecord.BEGIN_LNG];
+    request.BEGIN_LNG2      = [NSNumber numberWithDouble:_vistRecord.BEGIN_LNG2];
+    request.BEGIN_LAT       = [NSNumber numberWithDouble:_vistRecord.BEGIN_LAT];
+    request.BEGIN_LAT2      = [NSNumber numberWithDouble:_vistRecord.BEGIN_LAT2];
+    
+    
+    [KHGLAPI recordVisitByRequest:request success:^(RecordVisitHttpResponse *response){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showSuccess:@"拜访成功" toView:self.view];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            sleep(1);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        });
+        
+     }fail:^(BOOL notReachable, NSString *desciption){
+         [MBProgressHUD hideHUDForView:self.view animated:YES];
+         [MBProgressHUD showError:desciption toView:self.view];
+         
+     }];
+}
+
 - (void)handleCommitFin
 {
     // todo: 处理提交成功的通知
@@ -382,6 +435,8 @@
         case 35:
         {
             KcReportViewController *viewController = [[KcReportViewController alloc] initWithNibName:@"KcReportViewController" bundle:nil];
+            viewController.customerInfo = self.customerInfo;
+            viewController.vistRecord = self.vistRecord;
             controller = viewController;
         }
             break;
@@ -389,6 +444,8 @@
         case 36:
         {
             DhReportViewController *viewController = [[DhReportViewController alloc] initWithNibName:@"KcReportViewController" bundle:nil];
+            viewController.customerInfo = self.customerInfo;
+            viewController.vistRecord = self.vistRecord;
             controller = viewController;
         }
             break;
@@ -396,6 +453,8 @@
         case 37:
         {
             ThReportViewController *viewController = [[ThReportViewController alloc] initWithNibName:@"KcReportViewController" bundle:nil];
+            viewController.customerInfo = self.customerInfo;
+            viewController.vistRecord = self.vistRecord;
             controller = viewController;
         }
             
@@ -423,60 +482,6 @@
         default:
             break;
     }
-    
-//    if([cell.lbName.text isEqual:@"店招拍照"])
-//    {
-//        DzPhotoViewController *viewController = [[DzPhotoViewController alloc] initWithNibName:@"DzPhotoViewController" bundle:nil];
-//        viewController.customerInfo = self.customerInfo;
-//        viewController.vistRecord = self.vistRecord;
-//        controller = viewController;
-//    }
-//    else if([cell.lbName.text isEqual:@"陈列拍照"])
-//    {
-//        CLPhotoViewController *viewController = [[CLPhotoViewController alloc] initWithNibName:@"CLPhotoViewController" bundle:nil];
-//        viewController.customerInfo = self.customerInfo;
-//        viewController.vistRecord = self.vistRecord;
-//        controller = viewController;
-//    }
-//    else if([cell.lbName.text isEqual:@"陈列生动化"])
-//    {
-//        ClLivelyViewController *viewController = [[ClLivelyViewController alloc] initWithNibName:@"ClLivelyViewController" bundle:nil];
-//        viewController.customerInfo = self.customerInfo;
-//        viewController.vistRecord = self.vistRecord;
-//        controller = viewController;
-//    }
-//    else if([cell.lbName.text isEqual:@"陈列费用"])
-//    {
-//        ClCostViewController *viewController = [[ClCostViewController alloc] initWithNibName:@"ClCostViewController" bundle:nil];
-////        viewController.customerInfo = self.customerInfo;
-////        viewController.vistRecord = self.vistRecord;
-//        controller = viewController;
-//    }
-//    else if([cell.lbName.text isEqual:@"库存上报"])
-//    {
-//        KcReportViewController *viewController = [[KcReportViewController alloc] initWithNibName:@"KcReportViewController" bundle:nil];
-//        controller = viewController;
-//    }
-//    else if([cell.lbName.text isEqual:@"订货上报"])
-//    {
-//        DhReportViewController *viewController = [[DhReportViewController alloc] initWithNibName:@"KcReportViewController" bundle:nil];
-//        controller = viewController;
-//    }
-//    else if([cell.lbName.text isEqual:@"退货上报"])
-//    {
-//        ThReportViewController *viewController = [[ThReportViewController alloc] initWithNibName:@"KcReportViewController" bundle:nil];
-//        controller = viewController;
-//    }
-//    else if([cell.lbName.text isEqual:@"活动上报"])
-//    {
-//        HdReportViewController *viewController = [[HdReportViewController alloc] initWithNibName:@"HdReportViewController" bundle:nil];
-//        controller = viewController;
-//    }
-//    else if([cell.lbName.text isEqual:@"竞品上报"])
-//    {
-//        JpReportViewController *viewController = [[JpReportViewController alloc] initWithNibName:@"JpReportViewController" bundle:nil];
-//        controller = viewController;
-//    }
     
     if(!controller)
         return;

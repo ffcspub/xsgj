@@ -31,6 +31,8 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleNotifySelectProductFin:) name:NOTIFICATION_SELECTPRODUCT_FIN object:nil];
     // Do any additional setup after loading the view from its nib.
     
+    _aryProDataTemp = [[NSMutableArray alloc] init];
+    _aryTraversalRet = [[NSMutableArray alloc] init];
     _aryProductSelect = [[NSMutableArray alloc] init];
     _aryFilter = [[NSMutableArray alloc] init];
     _bSearch = NO;
@@ -70,13 +72,14 @@
 {
     KcEditViewController *viewController = [[KcEditViewController alloc] initWithNibName:@"KcEditViewController" bundle:nil];
     viewController.aryData = _aryProductSelect;
+    viewController.customerInfo = self.customerInfo;
+    viewController.vistRecord = self.vistRecord;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (IBAction)handleBtnTypeClicked:(id)sender {
-    NSArray *data = [self makeProTypeTreeData];
     KcSelectTreeViewController *selectTreeViewController = [[KcSelectTreeViewController alloc] initWithNibName:@"SelectTreeViewController" bundle:nil];
-    selectTreeViewController.data = data;
+    selectTreeViewController.data = _aryProTypeTreeData;
     [self.navigationController pushViewController:selectTreeViewController animated:YES];
 }
 
@@ -106,6 +109,7 @@
 {
     _aryProductTypeData = [BNProductType searchWithWhere:nil orderBy:@"ORDER_NO" offset:0 count:1000];
     _aryProductData = [BNProduct searchWithWhere:nil orderBy:nil offset:0 count:1000];
+    _aryProTypeTreeData = [self makeProTypeTreeData];
 }
 
 - (NSArray *)makeProTypeTreeData
@@ -155,12 +159,6 @@
     {
         [self makeSubCusTypeTreeData:arySourceData ParentTreeData:aryChildTree];
     }
-}
-
-- (void)showProductWithType:(int)type
-{
-    _aryProductData = [BNProduct searchWithWhere:[NSString stringWithFormat:@"CLASS_ID=%D",type] orderBy:nil offset:0 count:1000];
-    [_tvProduct reloadData];
 }
 
 - (void)handleSelectData:(BNProduct *)product ISAdd:(BOOL)bAdd
@@ -346,7 +344,75 @@
     _proTypeShow = productType;
     _tfType.text = productType.CLASS_NAME;
     
-    [self showProductWithType:productType.CLASS_ID];
+    [self proTypeFilter:productType];
+}
+
+- (TreeData *)foundRootTree:(TreeData *)treeData TargetType:(BNProductType *)targetType
+{
+    BNProductType *typeResource = (BNProductType *)treeData.dataInfo;
+    if(typeResource.CLASS_ID == targetType.CLASS_ID)
+    {
+        return treeData;
+    }
+    
+    if(treeData.children.count > 0)
+    {
+        for(TreeData *childTreeData in treeData.children)
+        {
+            [self foundRootTree:childTreeData TargetType:targetType];
+        }
+    }
+    
+    return nil;
+}
+
+- (void)traversalTreeDataForTypes:(TreeData *)treeData
+{
+    BNProductType *proType = (BNProductType *)treeData.dataInfo;
+    [_aryTraversalRet addObject:[NSNumber numberWithInt:proType.CLASS_ID]];
+    
+    if(treeData.children.count > 0)
+    {
+        for(TreeData *childTreeData in treeData.children)
+        {
+            [self traversalTreeDataForTypes:childTreeData];
+        }
+    }
+    
+}
+
+- (void)proTypeFilter:(BNProductType *)targetType
+{
+    TreeData *resultData = nil;
+    // found root tree
+    for(TreeData *treeData in _aryProTypeTreeData)
+    {
+        resultData = [self foundRootTree:treeData TargetType:targetType];
+        if(resultData)
+            break;
+    }
+    
+    // traversal tree for get class_id
+    if(resultData)
+    {
+        [_aryTraversalRet removeAllObjects];
+        [self traversalTreeDataForTypes:resultData];
+    }
+    
+    // get product by class_id
+    [_aryProDataTemp removeAllObjects];
+    for(NSNumber *typeNumber in _aryTraversalRet)
+    {
+        NSArray *aryProduct = [BNProduct searchWithWhere:[NSString stringWithFormat:@"CLASS_ID=%D",typeNumber.intValue] orderBy:nil offset:0 count:1000];
+        for(BNProduct *product in aryProduct)
+        {
+            [_aryProDataTemp addObject:product];
+        }
+    }
+    
+    _aryProductData = [NSArray arrayWithArray:_aryProDataTemp];
+    [_tvProduct reloadData];
+    
 }
 
 @end

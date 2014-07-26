@@ -8,8 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "ThPreviewDetailCell.h"
-#import "KcPreviewViewController.h"
+#import "HideTabViewController.h"
+#import "DzPhotoViewController.h"
+#import "PreviewNameCell.h"
+#import "PreviweDetailCell.h"
 
-@interface ThPreviewViewController : KcPreviewViewController
+@interface ThPreviewViewController : HideTabViewController<ThPreviewDetailCellDelegate>
+{
+    NSMutableArray *_arySourceData;
+}
+
+@property (weak, nonatomic) IBOutlet UIScrollView *svMainContain;
+@property (weak, nonatomic) IBOutlet UIScrollView *svSubContain;
+@property (weak, nonatomic) IBOutlet UITableView *tvTypeName;
+@property (weak, nonatomic) IBOutlet UITableView *tvDetail;
+@property (weak, nonatomic) NSArray *aryData;
+@property (weak, nonatomic) BNCustomerInfo *customerInfo;
+@property (weak, nonatomic) BNVistRecord *vistRecord;
 
 @end

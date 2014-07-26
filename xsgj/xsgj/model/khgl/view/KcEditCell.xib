@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
+        <deployment defaultVersion="1280" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
@@ -88,11 +88,14 @@
                                         <color key="textColor" red="0.98039215690000003" green="0.21176470589999999" blue="0.0078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入数量" minimumFontSize="17" id="2No-ck-ZiX">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入数量" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="2No-ck-ZiX">
                                         <rect key="frame" x="165" y="0.0" width="155" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="KGk-i7-Jjw" id="QEQ-95-NL2"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="loC-lQ-rXW">
                                         <rect key="frame" x="160" y="0.0" width="1" height="30"/>
@@ -121,12 +124,13 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" id="vS8-Hc-rJP">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="M3l-j0-Bdo">
                                         <rect key="frame" x="165" y="0.0" width="155" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="dropbox.png" id="EaP-Uy-Y85">
                                         <rect key="frame" x="292" y="6" width="17" height="20"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -168,15 +172,17 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入日前" minimumFontSize="17" id="1Ac-Ba-1ot">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yR4-9I-Yh9">
                                         <rect key="frame" x="165" y="0.0" width="155" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="-1" id="euy-FP-P7N"/>
-                                        </connections>
-                                    </textField>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="dropbox.png" id="zr9-IQ-PcG">
+                                        <rect key="frame" x="292" y="6" width="17" height="20"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AWx-bY-iKO">
                                         <rect key="frame" x="160" y="0.0" width="1" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -191,6 +197,16 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Bhs-yl-DvT">
+                                        <rect key="frame" x="160" y="0.0" width="160" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="handleBtnDate:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="QiE-RD-CxQ"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -240,11 +256,11 @@
                 <outlet property="btnPhoto" destination="kKd-Jj-D5J" id="lry-Jc-K7F"/>
                 <outlet property="btnReduce" destination="k1f-ba-eCa" id="D17-Se-dYD"/>
                 <outlet property="ivPhoto" destination="1ne-jb-Fv3" id="IRp-Vk-pPc"/>
+                <outlet property="lbDate" destination="yR4-9I-Yh9" id="REt-C5-2O7"/>
                 <outlet property="lbName" destination="ym9-jn-52n" id="YqK-ly-JXM"/>
                 <outlet property="lbNumber" destination="4dH-Oi-Frm" id="VV7-S6-P5k"/>
-                <outlet property="tfDate" destination="1Ac-Ba-1ot" id="mjD-cS-zqe"/>
+                <outlet property="lbUnit" destination="M3l-j0-Bdo" id="sS5-8c-w1z"/>
                 <outlet property="tfNumber" destination="2No-ck-ZiX" id="gag-Ea-Pik"/>
-                <outlet property="tfUnit" destination="vS8-Hc-rJP" id="BLQ-3u-dZe"/>
                 <outlet property="vDetail" destination="KVD-X1-kEo" id="YEp-bC-TMw"/>
             </connections>
         </tableViewCell>

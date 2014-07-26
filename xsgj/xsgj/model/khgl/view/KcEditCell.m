@@ -13,6 +13,8 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    [self.btnPhoto setBackgroundImage:IMG_BTN_BLUE forState:UIControlStateNormal];
+    [self.btnPhoto setBackgroundImage:IMG_BTN_BLUE_S forState:UIControlStateHighlighted];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -28,8 +30,8 @@
     self.lbName.text = [NSString stringWithFormat:@"%@(%@)",commitBean.PROD_NAME,commitBean.SPEC];
     self.lbNumber.text = [NSString stringWithFormat:@"%d",commitBean.STOCK_NUM];
     self.tfNumber.text = [NSString stringWithFormat:@"%d",commitBean.STOCK_NUM];
-    self.tfUnit.text = commitBean.PRODUCT_UNIT_NAME;
-    self.tfDate.text = commitBean.STOCK_NO;
+    self.lbUnit.text = commitBean.PRODUCT_UNIT_NAME;
+    self.lbDate.text = commitBean.STOCK_NO;
 }
 
 - (IBAction)handleBtnAddClicked:(id)sender {
@@ -62,21 +64,32 @@
     }
     
     LeveyPopListView *popView = [[LeveyPopListView alloc] initWithTitle:@"选择单位" options:unitNames handler:^(NSInteger anIndex) {
-        self.tfUnit.text = [unitNames objectAtIndex:anIndex];
+        self.lbUnit.text = [unitNames objectAtIndex:anIndex];
         self.commitData.PRODUCT_UNIT_NAME = [unitNames objectAtIndex:anIndex];
     }];
     
     [popView showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view animated:NO];
 }
 
-//#pragma mark - UITextFieldDelegate
-//
-//- (void)textFieldDidEndEditing:(UITextField *)textField
-//{
-//    if(textField == _tfNumber)
-//    {
-//        NSLog(@"_tfNumber:%@",textField.text);
-//    }
-//}
+- (IBAction)handleBtnDate:(id)sender {
+    if(self.delegate && [self.delegate respondsToSelector:@selector(onBtnDateClicked:)])
+    {
+        [self.delegate onBtnDateClicked:self];
+    }
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    self.commitData.STOCK_NUM = textField.text.intValue;
+    self.lbNumber.text = textField.text;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.tfNumber resignFirstResponder];
+    return NO;
+}
 
 @end

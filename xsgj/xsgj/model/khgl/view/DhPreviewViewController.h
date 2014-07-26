@@ -10,8 +10,12 @@
 #import "HideTabViewController.h"
 #import "PreviewNameCell.h"
 #import "DhPreviweDetailCell.h"
+#import "DzPhotoViewController.h"
 
-@interface DhPreviewViewController : HideTabViewController
+@interface DhPreviewViewController : HideTabViewController<DhPreviweDetailCellDelegate>
+{
+    NSMutableArray *_arySourceData;
+}
 
 @property (weak, nonatomic) IBOutlet UIScrollView *svMainContain;
 @property (weak, nonatomic) IBOutlet UIScrollView *svSubContain;
@@ -20,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *lbCooperation;
 @property (weak, nonatomic) IBOutlet UILabel *lbTotal;
 @property (weak, nonatomic) NSArray *aryData;
+@property (weak, nonatomic) BNCustomerInfo *customerInfo;
+@property (weak, nonatomic) BNVistRecord *vistRecord;
 
 @end
 

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "KcEditCell.h"
 #import "OrderBackDetailBean.h"
+#import <NSDate+Helper.h>
+#import "LK_EasySignal.h"
 
 @interface ThEditCell : KcEditCell
 

@@ -60,23 +60,6 @@
     [self showRightBarButtonItemWithTitle:@"确定" target:self action:@selector(handleNavBarRight)];
     self.navigationItem.rightBarButtonItem.enabled = NO;
     
-//    // test data
-//    TreeViewData *item1 = [TreeViewData dataObjectWithName:@"item 1" children:nil];
-//    TreeViewData *item2 = [TreeViewData dataObjectWithName:@"item 2" children:nil];
-//    TreeViewData *item3 = [TreeViewData dataObjectWithName:@"item 3" children:nil];
-//    TreeViewData *item4 = [TreeViewData dataObjectWithName:@"item 4" children:nil];
-//    TreeViewData *items = [TreeViewData dataObjectWithName:@"items"
-//                                                  children:[NSArray arrayWithObjects:item1, item2, item3, item4, nil]];
-//    
-//    TreeViewData *other1 = [TreeViewData dataObjectWithName:@"other 1" children:nil];
-//    TreeViewData *other2 = [TreeViewData dataObjectWithName:@"other 2" children:nil];
-//    TreeViewData *others = [TreeViewData dataObjectWithName:@"others"
-//                                                   children:[NSArray arrayWithObjects:other1,other2, nil]];
-//    TreeViewData *oneItem = [TreeViewData dataObjectWithName:@"oneItem" children:nil];
-//
-//    
-//    self.data = @[items,oneItem,others,others,others,others,others];
-    
     RATreeView *treeView = [[RATreeView alloc] initWithFrame:self.view.frame];
     treeView.delegate = self;
     treeView.dataSource = self;

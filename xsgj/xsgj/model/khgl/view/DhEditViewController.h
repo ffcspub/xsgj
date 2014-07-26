@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "HideTabViewController.h"
 #import "DhEditCell.h"
+#import "DzPhotoViewController.h"
 
 @interface DhEditViewController : HideTabViewController<DhEditCellDelegate>
 {
     NSIndexPath *_selectIndex;
     NSMutableArray *_aryDhData;
+    int _iExpandProdId;
 }
 
 
@@ -25,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnPreview;
 @property (weak, nonatomic) IBOutlet UIButton *btnCommit;
 @property (weak, nonatomic) NSArray *aryData;
+@property (weak, nonatomic) BNCustomerInfo *customerInfo;
+@property (weak, nonatomic) BNVistRecord *vistRecord;
 
 
 - (IBAction)handleBtnTypeClicked:(id)sender;

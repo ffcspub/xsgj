@@ -11,6 +11,9 @@
 #import "ThEditCell.h"
 
 @interface ThEditViewController : KcEditViewController
+{
+    ThEditCell *_thCellForDate;
+}
 
 
 @end

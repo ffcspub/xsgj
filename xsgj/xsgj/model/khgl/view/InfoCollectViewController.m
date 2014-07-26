@@ -87,6 +87,20 @@
 
 #pragma mark - navBarButton
 
+-(void)backAction
+{
+    if(_bEnterNextview)
+    {
+        [self dismissViewControllerAnimated:NO completion:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INFOVIEW_CLOSE object:nil];
+        }];
+    }
+    else
+    {
+        [self dismissModalViewControllerAnimated:YES];
+    }
+}
+
 - (void)setRightBarButtonItem{
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -94,7 +108,7 @@
     [rightButton setFrame:CGRectMake(0, 2.f, 70.f, 33.f)];
     [rightButton setBackgroundColor:[UIColor clearColor]];
     
-    [rightButton setTitle:@"提交" forState:UIControlStateNormal];
+    [rightButton setTitle:@"确定" forState:UIControlStateNormal];
     
     [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateNormal];
     [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_press"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateHighlighted];
@@ -125,38 +139,85 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)signUpRequest
+- (void)addCustomerRequest
 {
-    SignUpHttpRequest *request = [[SignUpHttpRequest alloc] init];
-    request.LNG = [ShareValue shareInstance].currentLocation.longitude;
-    request.LAT = [ShareValue shareInstance].currentLocation.latitude;
-    request.POSITION = _lb_currentLocation.text;
-    request.SIGN_FLAG = @"i";
+    // chenzftodo: 确认提交接口
+    AddCustomerCommitHttpRequest *request = [[AddCustomerCommitHttpRequest alloc]init];
+    // 基础用户信息
+    request.SESSION_ID  = [ShareValue shareInstance].userInfo.SESSION_ID;
+    request.CORP_ID     = [ShareValue shareInstance].userInfo.CORP_ID;
+    request.DEPT_ID     = [ShareValue shareInstance].userInfo.DEPT_ID;
+    request.USER_AUTH   = [ShareValue shareInstance].userInfo.USER_AUTH;
+    request.USER_ID     = [ShareValue shareInstance].userInfo.USER_ID;
     
-//    NSString *imageString = [[NSString alloc] initWithData:_imageData encoding:NSUTF8StringEncoding];
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    [formatter setNumberStyle:NSNumberFormatterScientificStyle];
-    NSNumber *imageNum = [formatter numberFromString:_photoId];
-    request.PHOTO = imageNum;
+    request.CLASS_ID = _customerInfo.TYPE_ID;
+    request.CUST_NAME = _customerInfo.CUST_NAME;
+    request.CUST_CODE = [NSString stringWithFormat:@"%d",_customerInfo.CUST_ID];
+    request.LINKMAN	= _customerInfo.LINKMAN;
+    request.TEL	= _customerInfo.TEL;
+    request.ADDRESS	= _customerInfo.ADDRESS;
+    request.REMARK = _tf_Mark.text;
+    request.PHOTO = _photoId;
+    request.LNG	= [NSNumber numberWithFloat:[ShareValue shareInstance].currentLocation.longitude];
+    request.LAT	= [NSNumber numberWithFloat:[ShareValue shareInstance].currentLocation.latitude];
+    request.POSITION = _lb_currentLocation.text;
+    request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     
     if (_isManualLocation) {
-        request.LNG2 = [NSNumber numberWithFloat:manualCoordinate.longitude];
-        request.LAT2 = [NSNumber numberWithFloat:manualCoordinate.latitude];
-        request.POSITION2 = _lb_manualAdjust.text;
+        request.LNG = [NSNumber numberWithFloat:manualCoordinate.longitude];
+        request.LAT = [NSNumber numberWithFloat:manualCoordinate.latitude];
+        request.POSITION = _lb_manualAdjust.text;
     }
     
-    [XZGLAPI signupByRequest:request success:^(SignUpHttpReponse *response) {
-        
+    [KHGLAPI addCustomerCommitByRequest:request success:^(AddCustomerCommitHttpResponse *response) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        [MBProgressHUD showSuccess:@"提交成功" toView:self.view];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            sleep(1);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+            });
+        });
         
-        [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
     } fail:^(BOOL notReachable, NSString *desciption) {
-        
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showError:desciption toView:self.view];
+        
     }];
 }
+
+//- (void)signUpRequest
+//{
+//    SignUpHttpRequest *request = [[SignUpHttpRequest alloc] init];
+//    request.LNG = [ShareValue shareInstance].currentLocation.longitude;
+//    request.LAT = [ShareValue shareInstance].currentLocation.latitude;
+//    request.POSITION = _lb_currentLocation.text;
+//    request.SIGN_FLAG = @"i";
+//    
+////    NSString *imageString = [[NSString alloc] initWithData:_imageData encoding:NSUTF8StringEncoding];
+//    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+//    [formatter setNumberStyle:NSNumberFormatterScientificStyle];
+//    NSNumber *imageNum = [formatter numberFromString:_photoId];
+//    request.PHOTO = imageNum;
+//    
+//    if (_isManualLocation) {
+//        request.LNG2 = [NSNumber numberWithFloat:manualCoordinate.longitude];
+//        request.LAT2 = [NSNumber numberWithFloat:manualCoordinate.latitude];
+//        request.POSITION2 = _lb_manualAdjust.text;
+//    }
+//    
+//    [XZGLAPI signupByRequest:request success:^(SignUpHttpReponse *response) {
+//        
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        [MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+//        
+//        [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
+//    } fail:^(BOOL notReachable, NSString *desciption) {
+//        
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        [MBProgressHUD showError:desciption toView:self.view];
+//    }];
+//}
 
 - (void)uploadPhoto
 {
@@ -170,7 +231,7 @@
     [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
         
         _photoId = fileId;
-        [self signUpRequest];
+        [self addCustomerRequest];
         
     } fail:^(BOOL notReachable, NSString *desciption) {
         
@@ -192,7 +253,7 @@
     if (![self isValidData]) {
         return;
     }
-    
+
     [self uploadPhoto];
 }
 

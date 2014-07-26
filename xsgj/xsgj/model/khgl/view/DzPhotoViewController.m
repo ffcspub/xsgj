@@ -7,7 +7,6 @@
 //
 
 #import "DzPhotoViewController.h"
-#import "BNVisitStepRecord.h"
 
 #define MAXPHOTONUMBER   5
 
@@ -278,6 +277,7 @@
         step.OPER_NUM =  step.OPER_NUM + 1;
         step.OPER_MENU = 31;
     }
+    
     StoreCameraCommitHttpRequest *request = [[StoreCameraCommitHttpRequest alloc]init];
     // 基础用户信息
     request.SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;

@@ -24,15 +24,24 @@
 
 - (void)setCellValue:(StockCommitBean *)commitData
 {
+    self.cellCommitBean = commitData;
     self.lbNumber.text = [NSString stringWithFormat:@"%d",commitData.STOCK_NUM];
     self.lbUnit.text = commitData.PRODUCT_UNIT_NAME;
     self.lbDate.text = commitData.STOCK_NO;
 }
 
 - (IBAction)handleBtnModifyClicked:(id)sender {
+    if(self.delegate && [self.delegate respondsToSelector:@selector(onBtnModifyClicked:)])
+    {
+        [self.delegate onBtnModifyClicked:self];
+    }
 }
 
 - (IBAction)handleBtnCancelClicked:(id)sender {
+    if(self.delegate && [self.delegate respondsToSelector:@selector(onBtnCancelClicked:)])
+    {
+        [self.delegate onBtnCancelClicked:self];
+    }
 }
 
 @end

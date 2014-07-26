@@ -27,9 +27,15 @@
     self.commitData = commitBean;
     self.lbName.text = commitBean.PROD_NAME;
     self.lbNumber.text = [NSString stringWithFormat:@"%d",commitBean.ITEM_NUM];
-    self.tfPrice.text = [NSString stringWithFormat:@"%f",commitBean.ITEM_PRICE];
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    numberFormatter.numberStyle = kCFNumberFormatterRoundFloor;
+    [numberFormatter setPositiveFormat:@"0.00;"];
+    NSString *formattedNumberString = [numberFormatter stringFromNumber:[NSNumber numberWithDouble:0.99696]];
+    
+    self.tfPrice.text = [NSString stringWithFormat:@"%0.001f",commitBean.ITEM_PRICE];
     self.tfSubNum.text = [NSString stringWithFormat:@"%d",commitBean.ITEM_NUM];
-    self.tfUnit.text = commitBean.UNIT_NAME;
+    self.lbUnit.text = commitBean.UNIT_NAME;
     self.tfZpName.text = commitBean.GIFT_NAME;
     self.tfZpPrice.text = [NSString stringWithFormat:@"%d",commitBean.GIFT_PRICE];
     self.tfZpNum.text = [NSString stringWithFormat:@"%d",commitBean.GIFT_NUM];
@@ -51,11 +57,50 @@
     }
     
     LeveyPopListView *popView = [[LeveyPopListView alloc] initWithTitle:@"选择单位" options:unitNames handler:^(NSInteger anIndex) {
-        self.tfUnit.text = [unitNames objectAtIndex:anIndex];
+        self.lbUnit.text = [unitNames objectAtIndex:anIndex];
         self.commitData.UNIT_NAME = [unitNames objectAtIndex:anIndex];
     }];
     
     [popView showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view animated:NO];
 }
+
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField == _tfPrice)
+    {
+        self.commitData.ITEM_PRICE = textField.text.doubleValue;
+        
+    }
+    else if(textField == _tfSubNum)
+    {
+        self.commitData.ITEM_NUM = textField.text.intValue;
+        self.lbNumber.text = textField.text;
+    }
+    else if(textField == _tfZpName)
+    {
+        self.commitData.GIFT_NAME = textField.text;
+    }
+    else if(textField == _tfZpPrice)
+    {
+        self.commitData.GIFT_PRICE = textField.text.intValue;
+    }
+    else if(textField == _tfZpNum)
+    {
+        self.commitData.GIFT_NUM = textField.text.intValue;
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [_tfPrice resignFirstResponder];
+    [_tfSubNum resignFirstResponder];
+    [_tfZpName resignFirstResponder];
+    [_tfZpPrice resignFirstResponder];
+    [_tfZpNum resignFirstResponder];
+    return NO;
+}
+
 
 @end

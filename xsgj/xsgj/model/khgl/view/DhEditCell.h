@@ -15,7 +15,7 @@
 
 @protocol DhEditCellDelegate;
 
-@interface DhEditCell : UITableViewCell
+@interface DhEditCell : UITableViewCell<UITextFieldDelegate>
 
 
 @property (weak, nonatomic) id<DhEditCellDelegate>delegate;
@@ -24,7 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lbNumber;
 @property (weak, nonatomic) IBOutlet UITextField *tfPrice;
 @property (weak, nonatomic) IBOutlet UITextField *tfSubNum;
-@property (weak, nonatomic) IBOutlet UITextField *tfUnit;
+@property (weak, nonatomic) IBOutlet UILabel *lbUnit;
 @property (weak, nonatomic) IBOutlet UITextField *tfZpName;
 @property (weak, nonatomic) IBOutlet UITextField *tfZpPrice;
 @property (weak, nonatomic) IBOutlet UITextField *tfZpNum;

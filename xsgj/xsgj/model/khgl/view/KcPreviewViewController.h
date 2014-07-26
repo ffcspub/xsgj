@@ -10,15 +10,20 @@
 #import "HideTabViewController.h"
 #import "PreviweDetailCell.h"
 #import "PreviewNameCell.h"
+#import "DzPhotoViewController.h"
 
-@interface KcPreviewViewController : HideTabViewController
+@interface KcPreviewViewController : HideTabViewController<PreviweDetailCellDelegate>
+{
+    NSMutableArray *_arySourceData;
+}
 
 @property (weak, nonatomic) IBOutlet UIScrollView *svMainContain;
 @property (weak, nonatomic) IBOutlet UIScrollView *svSubContain;
 @property (weak, nonatomic) IBOutlet UITableView *tvTypeName;
 @property (weak, nonatomic) IBOutlet UITableView *tvDetail;
 @property (weak, nonatomic) NSArray *aryData;
-
+@property (weak, nonatomic) BNCustomerInfo *customerInfo;
+@property (weak, nonatomic) BNVistRecord *vistRecord;
 
 
 @end

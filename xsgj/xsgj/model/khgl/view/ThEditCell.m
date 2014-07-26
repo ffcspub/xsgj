@@ -13,6 +13,8 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    [self.btnPhoto setBackgroundImage:IMG_BTN_BLUE forState:UIControlStateNormal];
+    [self.btnPhoto setBackgroundImage:IMG_BTN_BLUE_S forState:UIControlStateHighlighted];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -28,8 +30,8 @@
     self.lbName.text = [NSString stringWithFormat:@"%@(%@)",commitBean.PRODUCT_NAME,commitBean.SPEC];
     self.lbNumber.text = [NSString stringWithFormat:@"%d",commitBean.ITEM_NUM];
     self.tfNumber.text = [NSString stringWithFormat:@"%d",commitBean.ITEM_NUM];
-    self.tfUnit.text = commitBean.PRODUCT_UNIT_NAME;
-    self.tfDate.text = commitBean.BATCH;
+    self.lbUnit.text = commitBean.PRODUCT_UNIT_NAME;
+    self.lbDate.text = commitBean.BATCH;
     self.tfReson.text = commitBean.REMARK;
 }
 
@@ -42,32 +44,34 @@
     }
     
     LeveyPopListView *popView = [[LeveyPopListView alloc] initWithTitle:@"选择单位" options:unitNames handler:^(NSInteger anIndex) {
-        self.tfUnit.text = [unitNames objectAtIndex:anIndex];
+        self.lbUnit.text = [unitNames objectAtIndex:anIndex];
         self.thCommitData.PRODUCT_UNIT_NAME = [unitNames objectAtIndex:anIndex];
     }];
     
     [popView showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view animated:NO];
 }
 
-//- (IBAction)handleBtnAddClicked:(id)sender {
-//    if(self.delegate && [self.delegate respondsToSelector:@selector(onBtnAddClicked:)])
-//    {
-//        [self.delegate onBtnAddClicked:self];
-//    }
-//}
-//
-//- (IBAction)handleBtnReduceClicked:(id)sender {
-//    if(self.delegate && [self.delegate respondsToSelector:@selector(onBtnDelClicked:)])
-//    {
-//        [self.delegate onBtnDelClicked:self];
-//    }
-//}
-//
-//- (IBAction)handleBtnPhotoClicked:(id)sender {
-//    if(self.delegate && [self.delegate respondsToSelector:@selector(onBtnPhotoClicked:)])
-//    {
-//        [self.delegate onBtnPhotoClicked:self];
-//    }
-//}
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField == self.tfNumber)
+    {
+        self.thCommitData.ITEM_NUM = textField.text.intValue;
+        self.lbNumber.text = textField.text;
+    }
+    else if(textField == self.tfReson)
+    {
+        self.thCommitData.REMARK = textField.text;
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.tfNumber resignFirstResponder];
+    [self.tfReson resignFirstResponder];
+    return NO;
+}
+
 
 @end

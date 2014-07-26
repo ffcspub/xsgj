@@ -155,6 +155,15 @@
 
 - (void)sendStoreCameraRequest
 {
+    BNVisitStepRecord *step = [BNVisitStepRecord searchSingleWithWhere:[NSString stringWithFormat:@"VISIT_NO='%@' and OPER_MENU='32'",self.vistRecord.VISIT_NO] orderBy:nil];
+    step.SYNC_STATE = 1;
+    if (!step) {
+        step = [[BNVisitStepRecord alloc]init];
+        step.VISIT_NO = self.vistRecord.VISIT_NO;
+        step.OPER_NUM =  step.OPER_NUM + 1;
+        step.OPER_MENU = 32;
+    }
+    
     DisplayCameraCommitHttpRequest *request = [[DisplayCameraCommitHttpRequest alloc]init];
     // 基础用户信息
     request.SESSION_ID  = [ShareValue shareInstance].userInfo.SESSION_ID;
@@ -207,6 +216,8 @@
     }
     
     [KHGLAPI displayCameraCommitByRequest:request success:^(DisplayCameraCommitHttpResponse *response){
+        step.SYNC_STATE = 2;
+        [step save];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showSuccess:@"提交成功" toView:self.view];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -218,6 +229,7 @@
         });
         
      }fail:^(BOOL notReachable, NSString *desciption){
+         [step save];
          [MBProgressHUD hideHUDForView:self.view animated:YES];
          [MBProgressHUD showError:desciption toView:self.view];
          
