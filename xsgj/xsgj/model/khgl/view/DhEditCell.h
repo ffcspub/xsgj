@@ -7,6 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OrderItemBean.h"
+#import "BNProduct.h"
+#import "BNUnitBean.h"
+#import "LeveyPopListView.h"
+#import "LKDBHelper.h"
 
 @protocol DhEditCellDelegate;
 
@@ -24,8 +29,11 @@
 @property (weak, nonatomic) IBOutlet UITextField *tfZpPrice;
 @property (weak, nonatomic) IBOutlet UITextField *tfZpNum;
 @property (weak, nonatomic) NSIndexPath *indexPath;
+@property (weak, nonatomic) OrderItemBean *commitData;
 
+- (void)setCellWithValue:(OrderItemBean *)commitBean;
 - (IBAction)handleDelete:(id)sender;
+- (IBAction)handleBtnUnitClicked:(id)sender;
 
 @end
 

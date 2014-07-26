@@ -8,7 +8,7 @@
 
 #import "DzPhotoViewController.h"
 
-#define MAXPHOTONUMBER   6
+#define MAXPHOTONUMBER   5
 
 @implementation ImageFileInfo
 
@@ -18,6 +18,7 @@
         if (image) {
             _name = @"file";
             _mimeType = @"image/jpg";
+            _image = image;
             _fileData = UIImageJPEGRepresentation(image, 0.5);
             if (_fileData == nil)
             {
@@ -59,10 +60,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    _totalfilesize = 0;
+    _iSendImgCount = 0;
+    _aryFileId = [[NSMutableArray alloc] init];
+    _aryfileDatas = [[NSMutableArray alloc] init];
     _aryImages = [[NSMutableArray alloc] init];
     _ivCurrentTap = nil;
     [self initView];
+    [self loadTypeData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,31 +79,54 @@
 {
     self.title = @"店招拍照";
     [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(handleNavBarRight)];
-    [_svImgContain setContentSize:CGSizeMake(_ivPhoto6.frame.origin.x + _ivPhoto6.frame.size.width, 0)];
+    [_svImgContain setContentSize:CGSizeMake(_ivPhoto5.frame.origin.x + _ivPhoto5.frame.size.width, 0)];
 }
 
 #pragma mark - functions
 
 - (void)handleNavBarRight
 {
+    if(_tfPhotoType.text.length < 1)
+    {
+        [MBProgressHUD showError:@"请填写拍照类型" toView:self.view];
+        return;
+    }
     
+    if(_tfMark.text.length < 1)
+    {
+        [MBProgressHUD showError:@"请填写备注" toView:self.view];
+        return;
+    }
+    
+    _iSendImgCount = 0;
+    [_aryFileId removeAllObjects];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self commitData];
 }
 
 - (IBAction)handleBtnTypeSelectClicked:(id)sender {
-    // todo:根据查询数据显示照片类型
-    NSArray *aryCusNames = @[@"照片类型1",@"照片类型2",@"照片类型3"];
-    _actionSheet = [[IBActionSheet alloc] initWithTitle:@"选择照片类型"
-                                               delegate:self
-                                      cancelButtonTitle:@"取消"
-                                 destructiveButtonTitle:nil
-                                      otherButtonTitles:nil, nil];
-    _actionSheet.tag = 10;
-    for(NSString *cusName in aryCusNames)
+    NSMutableArray *aryItems = [[NSMutableArray alloc] init];
+    
+    for(BNCameraType *cameraType in _aryCameraTypeData)
     {
-        [_actionSheet addButtonWithTitle:cusName];
+        [aryItems addObject:cameraType.TYPE_NAME];
     }
     
-    [_actionSheet showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view];
+    _popListView = [[LeveyPopListView alloc] initWithTitle:@"选择照片类型" options:aryItems handler:^(NSInteger anIndex) {
+        NSString *strSelect = [aryItems objectAtIndex:anIndex];
+        _tfPhotoType.text = strSelect;
+        
+        for(BNCameraType *cameraType in _aryCameraTypeData)
+        {
+            if([cameraType.TYPE_NAME isEqualToString:strSelect])
+            {
+                self.cameratypeSelect = cameraType;
+                break;
+            }
+        }
+        
+    }];
+    [_popListView showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view animated:NO];
 }
 
 - (IBAction)handleBtnTakePhotoClicked:(id)sender {
@@ -133,7 +160,15 @@
     {
         [_aryImages removeObject:_ivCurrentTap.image];
         _ivCurrentTap = nil;
+        
         [self reloadScrollView];
+        
+        [_aryfileDatas removeAllObjects];
+        for(UIImage *image in _aryImages)
+        {
+            ImageFileInfo *imageInfo = [[ImageFileInfo alloc]initWithImage:image];
+            [_aryfileDatas addObject:imageInfo];
+        }
     }
 }
 
@@ -185,6 +220,10 @@
     {
         _btnTakePhoto.enabled = NO;
     }
+    else
+    {
+        _btnTakePhoto.enabled = YES;
+    }
 }
 
 - (UIImageView *)imageViewWithTag:(int)tag
@@ -198,10 +237,99 @@
     return nil;
 }
 
+- (void)loadTypeData
+{
+    _aryCameraTypeData = [BNCameraType searchWithWhere:nil orderBy:@"ORDER_NO" offset:0 count:100];
+}
+
+- (void)commitData
+{
+    if(_aryfileDatas.count > 0)
+    {
+        ImageFileInfo *fileInfo = [_aryfileDatas objectAtIndex:_iSendImgCount];
+        [SystemAPI uploadPhotoByFileName:self.title data:fileInfo.fileData success:^(NSString *fileId) {
+            [_aryFileId addObject:fileId];
+            _iSendImgCount ++;
+            if(_iSendImgCount < _aryfileDatas.count)
+            {
+                [self commitData];
+            }
+            else
+            {
+                [self sendStoreCameraRequest];
+            }
+                
+        } fail:^(BOOL notReachable, NSString *desciption) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+            return;
+        }];
+    }
+}
+
+- (void)sendStoreCameraRequest
+{
+    StoreCameraCommitHttpRequest *request = [[StoreCameraCommitHttpRequest alloc]init];
+    // 基础用户信息
+    request.SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
+    request.CORP_ID = [ShareValue shareInstance].userInfo.CORP_ID;
+    request.DEPT_ID = [ShareValue shareInstance].userInfo.DEPT_ID;
+    request.USER_AUTH = [ShareValue shareInstance].userInfo.USER_AUTH;
+    request.USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
+    // 附加信息
+    request.CUST_ID = self.customerInfo.CUST_ID;
+    request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
+    request.OPER_MENU = @"31";
+    request.TYPE_ID = self.cameratypeSelect.TYPE_ID;
+    request.VISIT_NO = self.vistRecord.VISIT_NO;
+    request.REMARK = self.tfMark.text;
+    
+    if(_aryFileId.count >= 1)
+    {
+        request.PHOTO1 = [_aryFileId objectAtIndex:0];
+    }
+    
+    if(_aryFileId.count >= 2)
+    {
+        request.PHOTO2 = [_aryFileId objectAtIndex:1];
+    }
+    
+    if(_aryFileId.count >= 3)
+    {
+        request.PHOTO3 = [_aryFileId objectAtIndex:2];
+    }
+    
+    if(_aryFileId.count >= 4)
+    {
+        request.PHOTO4 = [_aryFileId objectAtIndex:3];
+    }
+    
+    if(_aryFileId.count >= 5)
+    {
+        request.PHOTO5 = [_aryFileId objectAtIndex:4];
+    }
+    
+    [KHGLAPI storeCameraCommitByRequest:request success:^(StoreCameraCommitHttpResponse *response){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showSuccess:@"提交成功" toView:self.view];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            sleep(1);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        });
+        
+     }fail:^(BOOL notReachable, NSString *desciption){
+         [MBProgressHUD hideHUDForView:self.view animated:YES];
+         [MBProgressHUD showError:desciption toView:self.view];
+     }];
+}
+
 #pragma mark - UIImagePickerControllerDelegate
 
 //当选择一张图片后进入这里
--(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
     //当选择的类型是图片
@@ -216,11 +344,10 @@
         
         ImageFileInfo *imageInfo = [[ImageFileInfo alloc]initWithImage:image];
         [_aryfileDatas addObject:imageInfo];
-        _totalfilesize += imageInfo.filesize;
         
         [self reloadScrollView];
     }
-    [picker dismissModalViewControllerAnimated:YES];
+    [_picker dismissModalViewControllerAnimated:YES];
     _picker = nil;
 }
 

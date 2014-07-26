@@ -15,4 +15,6 @@
     NSArray *_aryClCaseData;
 }
 
+@property (weak, nonatomic) BNDisplayCase *clCaseSelect;
+
 @end

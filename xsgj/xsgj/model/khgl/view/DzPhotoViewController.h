@@ -11,6 +11,16 @@
 #import "IBActionSheet.h"
 #import "UIImage+External.h"
 #import "LKDBHelper.h"
+#import "LeveyPopListView.h"
+#import "KHGLAPI.h"
+#import "NSDate+Helper.h"
+#import "BNCustomerInfo.h"
+#import "BNCameraType.h"
+#import "SystemAPI.h"
+#import "MBProgressHUD+Add.h"
+#import "LK_HttpRequest.h"
+
+#define NOTIFICATION_COMMITDATA_FIN @"NOTIFICATION_COMMITDATA_FIN"
 
 @interface DzPhotoViewController : HideTabViewController<IBActionSheetDelegate,UIImagePickerControllerDelegate,UIGestureRecognizerDelegate>
 {
@@ -18,8 +28,11 @@
     IBActionSheet *_delActionSheet;
     UIImagePickerController *_picker;
     NSMutableArray *_aryfileDatas;
-    long long _totalfilesize;
+    NSMutableArray *_aryFileId;
+    int _iSendImgCount;
     UIImageView *_ivCurrentTap;
+    NSArray *_aryCameraTypeData;
+    LeveyPopListView *_popListView;
 }
 
 
@@ -34,8 +47,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *ivPhoto3;
 @property (weak, nonatomic) IBOutlet UIImageView *ivPhoto4;
 @property (weak, nonatomic) IBOutlet UIImageView *ivPhoto5;
-@property (weak, nonatomic) IBOutlet UIImageView *ivPhoto6;
 @property(nonatomic,strong) NSMutableArray *aryImages;
+@property (weak, nonatomic) BNCustomerInfo *customerInfo;
+@property (weak, nonatomic) BNVistRecord *vistRecord;
+@property (weak, nonatomic) BNCameraType *cameratypeSelect;
 
 -(void)takePhoto;
 -(void)delPhoto;
@@ -52,6 +67,7 @@
 @property(nonatomic,strong) NSString *mimeType;
 @property(nonatomic,assign) long long filesize;
 @property(nonatomic,strong) NSData *fileData;
+@property(nonatomic,strong) UIImage *image;
 
 -(id)initWithImage:(UIImage *)image;
 

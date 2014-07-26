@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "HideTabViewController.h"
 #import "IBActionSheet.h"
+#import "LeveyPopListView.h"
+#import "BNCustomerType.h"
+#import "BNAreaInfo.h"
+#import "BNCustomerInfo.h"
+#import "LKDBHelper.h"
+#import "BNVistRecord.h"
 
 typedef enum
 {
@@ -31,8 +37,8 @@ typedef enum
 @property (weak, nonatomic) IBOutlet UILabel *lbMobile;
 @property (weak, nonatomic) IBOutlet UILabel *lbAddress;
 @property (weak, nonatomic) IBOutlet UILabel *lbLastVisit;
-
-
+@property (strong, nonatomic) BNCustomerInfo *customerInfoSelect;
+@property (strong, nonatomic) BNVistRecord *visitRecordSelect;
 
 - (IBAction)handleBtnCusTypeClicked:(id)sender;
 - (IBAction)handleBtnCusAreaClicked:(id)sender;

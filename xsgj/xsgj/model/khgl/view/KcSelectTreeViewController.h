@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SelectTreeViewController.h"
 
+#define NOTIFICATION_SELECTPRODUCT_FIN @"NOTIFICATION_SELECTPRODUCT_FIN"
+
 @interface KcSelectTreeViewController : SelectTreeViewController
 
 @end

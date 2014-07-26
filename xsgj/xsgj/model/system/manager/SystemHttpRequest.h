@@ -39,6 +39,19 @@
 
 @end
 
+@interface InsertMobileStateHttpRequest : LK_HttpBaseRequest
+
+@property(nonatomic,assign) int USER_ID	;//	用户标识
+@property(nonatomic,strong) NSString * 	SESSION_ID	;//	会话标识
+@property(nonatomic,assign) int         CORP_ID	;//	企业标识
+@property(nonatomic,assign) int         DEPT_ID 	;//	部门标识
+@property(nonatomic,strong) NSString * 	CUST_NAME	;//	客户姓名
+@property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
+@property(nonatomic,assign) int         STATE;//状态
+@property(nonatomic,assign) NSString  * COMMITTIME;//上报时间(yyyy-MM-dd HH:mm:ss)
+
+@end
+
 
 @interface UploadPhotoHttpRequest : LK_HttpBaseRequest
 

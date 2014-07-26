@@ -14,10 +14,11 @@
 #import "ServerConfig.h"
 #import "NSObject+EasyCopy.h"
 #import "NSData+Base64.h"
+#import "OfflineRequestCache.h"
+#import <LKDBHelper.h>
+
 
 @implementation SystemAPI
-
-
 
 +(void)loginByCorpcode:(NSString *)corpcode username:(NSString *)username password:(NSString *)password  success:(void(^)(BNUserInfo *userinfo))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;{
     NSString *rsapassword = [[CRSA shareInstance]encryptByRsa:password withKeyType:KeyTypePublic];
@@ -62,9 +63,6 @@
     } fail:^(BOOL NotReachable, NSString *descript) {
         fail(NotReachable,descript);
     } class:[UpdateConfigHttpResponse class]];
-
-    
-    
 }
 
 //定时定位上报
@@ -77,9 +75,25 @@
     [LK_APIUtil getHttpRequest:request apiPath:URL_locateCommit Success:^(LK_HttpBaseResponse *response) {
         success();
     } fail:^(BOOL NotReachable, NSString *descript) {
+        OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"实时定位上报"];
+        [cache saveToDB];
         fail(NotReachable,descript);
     } class:[LocateCommitHttpResponse class]];
 
+}
+
+//手机状态上报
++(void)insertMobileSuccess:(void(^)())success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    InsertMobileStateHttpRequest *request = [[InsertMobileStateHttpRequest alloc]init];
+    [LK_APIUtil getHttpRequest:request apiPath:URL_insertMobileState Success:^(LK_HttpBaseResponse *response) {
+        success();
+    } fail:^(BOOL NotReachable, NSString *descript) {
+        //存储离线数据，等待下次上传
+        request.STATE = 0;
+        OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"手机状态上报"];
+        [cache saveToDB];
+        fail(NotReachable,descript);
+    } class:[InsertMobileStateHttpResponse class]];
 }
 
 /**

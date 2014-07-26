@@ -14,7 +14,6 @@
                 <outlet property="ivPhoto3" destination="8mq-BK-N3a" id="SBY-uk-hN8"/>
                 <outlet property="ivPhoto4" destination="xP6-F1-rEo" id="F3b-4A-Pkr"/>
                 <outlet property="ivPhoto5" destination="0SO-2W-cNZ" id="hgb-jf-bqk"/>
-                <outlet property="ivPhoto6" destination="THN-Yq-GvR" id="Qd9-Tb-dOz"/>
                 <outlet property="ivShowBig" destination="kgD-xm-6q2" id="NUk-29-uAz"/>
                 <outlet property="svImgContain" destination="dL4-ga-rnM" id="rNc-vk-Vhx"/>
                 <outlet property="tfMark" destination="7eC-0E-DLM" id="Kwc-0c-KeX"/>
@@ -191,14 +190,6 @@
                                     <connections>
                                         <outletCollection property="gestureRecognizers" destination="9vr-Jz-eIE" appends="YES" id="eR4-Kq-PMn"/>
                                         <outletCollection property="gestureRecognizers" destination="vyF-0N-z4d" appends="YES" id="Eb4-ij-xvG"/>
-                                    </connections>
-                                </imageView>
-                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="5" contentMode="scaleAspectFill" image="Photo_addPhoto.png" id="THN-Yq-GvR" userLabel="Image View6 - Photo_addPhoto.png">
-                                    <rect key="frame" x="392" y="0.0" width="72" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <connections>
-                                        <outletCollection property="gestureRecognizers" destination="9vr-Jz-eIE" appends="YES" id="0LV-k6-O81"/>
-                                        <outletCollection property="gestureRecognizers" destination="vyF-0N-z4d" appends="YES" id="5w8-ia-m21"/>
                                     </connections>
                                 </imageView>
                             </subviews>

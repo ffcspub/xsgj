@@ -40,7 +40,7 @@
 #define URL_QUERY_ORDER_BACK @"orderBack/queryOrderBack.shtml"// 退货查询
 #define URL_ORDER_BACK_DETAIL @"orderBack/queryOrderBackDetail.shtml" // 退货详情
 #define URL_ANNOUNCEMENT @"notice/noticeQuery.shtml" // 企业公告
-#define URL_ANNOUNCEMENT_TYPE @"/notice/noticeTypes.shtml" // 公告类型
+#define URL_ANNOUNCEMENT_TYPE @"notice/noticeTypes.shtml" // 公告类型
 #define URL_ANNOUNCEMENT_DETAIL @"notice/noticeDetail.shtml"// 公告详情
 #define URL_CONTACT_DEPT @"userdept/myDeptInfo.shtml"
 #define URL_ADDRESS_BOOK @"user/queryContacts.shtml"
@@ -94,6 +94,7 @@
 #define URL_insertUserCamera @"usercamera/insertUserCamera.shtml"//日常拍照上报
 #define URL_uploadPhoto @"uploadPhoto.shtml" //照片上传
 #define URL_locateCommit @"locate/locateCommit.shtml"//实时定位上传
+#define URL_insertMobileState @"mobilestate/insertMobileState.shtml"//手机状态上报
 #define URL_getWorkRange @"sign/getWorkRange.shtml"//读取手机状态上报工作范围
 #define URL_getTimeInterval @"mobilestate/getTimeInterval.shtml"
 #define URL_getMobbileDisInfo @"mobileDis/getMobileDisInfo.shtml"//配送查询

@@ -126,7 +126,6 @@
     return [SaleTaskInfoBean class];
 }
 
-
 @end
 
 @implementation LeaveTypeHttpResponse

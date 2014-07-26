@@ -22,11 +22,11 @@
     // Configure the view for the selected state
 }
 
-- (void)setCellValue:(NSArray *)test
+- (void)setCellValue:(StockCommitBean *)commitData
 {
-    self.lbNumber.text = [test objectAtIndex:0];
-    self.lbUnit.text = [test objectAtIndex:1];
-    self.lbDate.text = [test objectAtIndex:2];
+    self.lbNumber.text = [NSString stringWithFormat:@"%d",commitData.STOCK_NUM];
+    self.lbUnit.text = commitData.PRODUCT_UNIT_NAME;
+    self.lbDate.text = commitData.STOCK_NO;
 }
 
 - (IBAction)handleBtnModifyClicked:(id)sender {

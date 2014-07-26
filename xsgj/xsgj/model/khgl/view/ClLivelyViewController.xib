@@ -13,7 +13,6 @@
                 <outlet property="ivPhoto3" destination="Ux7-Fn-6L0" id="ExN-te-Nvo"/>
                 <outlet property="ivPhoto4" destination="ema-Yf-ety" id="NLd-hu-CD6"/>
                 <outlet property="ivPhoto5" destination="VFU-wS-9vM" id="AXl-Bs-Qwt"/>
-                <outlet property="ivPhoto6" destination="uak-RQ-wOA" id="qP7-qr-uF2"/>
                 <outlet property="ivShowBig" destination="SLK-75-dSJ" id="bW6-s0-C6K"/>
                 <outlet property="svContain" destination="pNq-FR-aVA" id="Idh-Yi-deR"/>
                 <outlet property="svImgContain" destination="cw1-6L-TQ6" id="EeP-lJ-fD1"/>
@@ -195,14 +194,6 @@
                                             <connections>
                                                 <outletCollection property="gestureRecognizers" destination="Jbu-zU-U7O" appends="YES" id="gnm-Lv-oMq"/>
                                                 <outletCollection property="gestureRecognizers" destination="Riw-eR-CIz" appends="YES" id="daU-LK-xUe"/>
-                                            </connections>
-                                        </imageView>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="5" contentMode="scaleAspectFill" image="Photo_addPhoto.png" id="uak-RQ-wOA" userLabel="Image View6 - Photo_addPhoto.png">
-                                            <rect key="frame" x="392" y="0.0" width="72" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <connections>
-                                                <outletCollection property="gestureRecognizers" destination="Jbu-zU-U7O" appends="YES" id="bZt-Lb-CRL"/>
-                                                <outletCollection property="gestureRecognizers" destination="Riw-eR-CIz" appends="YES" id="FrB-Pq-j0C"/>
                                             </connections>
                                         </imageView>
                                     </subviews>

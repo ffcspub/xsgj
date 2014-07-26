@@ -95,6 +95,7 @@
     NSLog(@"请求参数:%@", paramString);
     
     path = [NSString stringWithFormat:@"%@?data=%@",path,[paramString URLEncodedString]];
+    request.requestPath = path;
     AFHTTPClient *client = LK_APIUtil.client;
     [client getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if(responseObject){

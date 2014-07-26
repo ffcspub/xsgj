@@ -154,6 +154,7 @@
 @property(nonatomic,strong) NSString *	PHOTO5	;//	照片ID
 @property(nonatomic,strong) NSString *	VISIT_NO	;//	拜访编号
 @property(nonatomic,strong) NSString *	OPER_MENU	;//	操作菜单
+@property(nonatomic,strong) NSString *	TOPIC       ;//	活动主题
 
 @end
 
@@ -178,7 +179,8 @@
 @property(nonatomic,strong) NSString *	PHOTO3	;//	照片
 @property(nonatomic,strong) NSString *	PHOTO4	;//	照片
 @property(nonatomic,strong) NSString *	PHOTO5	;//	照片
-
+@property(nonatomic,strong) NSString *	VISIT_NO	;//	拜访编号
+@property(nonatomic,strong) NSString *	OPER_MENU	;//	操作菜单
 
 @end
 
@@ -300,6 +302,7 @@
 @property(nonatomic,strong) NSString *	VISIT_NO	;//	拜访编号
 @property(nonatomic,strong) NSString *	OPER_MENU	;//	操作菜单
 @property(nonatomic,assign) int TYPE_ID;//拍照类型
+@property(nonatomic,strong) NSString *	REMARK	;//	备注
 
 @end
 
@@ -323,6 +326,7 @@
 @property(nonatomic,strong) NSString *	COMMITTIME	;//	上报时间
 @property(nonatomic,strong) NSString *	VISIT_NO	;//	拜访编号
 @property(nonatomic,strong) NSString *	OPER_MENU	;//	操作菜单
+@property(nonatomic,strong) NSString *	REMARK	;//	备注
 
 @end
 
@@ -359,6 +363,8 @@
 @property(nonatomic,strong) NSString *	COMMITTIME	;//	上报时间
 @property(nonatomic,strong) NSString *	VISIT_NO	;//	拜访编号
 @property(nonatomic,strong) NSString *	OPER_MENU	;//	操作菜单
+@property(nonatomic,strong) NSString *	BEGIN_TIME	;//	开始时间
+@property(nonatomic,strong) NSString *	END_TIME	;//	结束时间
 
 @end
 

@@ -7,6 +7,7 @@
 //
 
 #import "KcPreviewViewController.h"
+#import "StockCommitBean.h"
 
 @interface KcPreviewViewController ()
 
@@ -55,13 +56,12 @@
 
 - (void)adjustTableViewHeight
 {
-    // todo: 根据数据计算
     CGRect frame = self.tvTypeName.frame;
-    frame.size.height = (5 + 1) * 44;
+    frame.size.height = (_aryData.count + 1) * 44;
     self.tvTypeName.frame = frame;
     
     frame = self.tvDetail.frame;
-    frame.size.height = (5 + 1) * 44;
+    frame.size.height = (_aryData.count + 1) * 44;
     self.tvDetail.frame = frame;
     
     [self.svMainContain setContentSize:CGSizeMake(0, self.tvTypeName.frame.origin.y + self.tvTypeName.frame.size.height + 10)];
@@ -72,7 +72,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
     return self.aryData.count;
 }
 
@@ -90,7 +89,12 @@
             [tableView registerNib:[UINib nibWithNibName:@"PreviewNameCell" bundle:nil] forCellReuseIdentifier:@"PREVIEWNAMECELL"];
             nameCell = [tableView dequeueReusableCellWithIdentifier:@"PREVIEWNAMECELL"];
         }
-        nameCell.lbName.text = @"产品名字";
+        
+        if(self.aryData.count > 0)
+        {
+            StockCommitBean *commitBean = [self.aryData objectAtIndex:indexPath.row];
+            [nameCell setCellValue:commitBean];
+        }
         
         nameCell.selectionStyle=UITableViewCellSelectionStyleNone;
         return nameCell;
@@ -103,8 +107,12 @@
             detailCell = [tableView dequeueReusableCellWithIdentifier:@"PREVIEWDETAILCELL"];
         }
         
-        NSArray *arytest = @[@"100",@"箱",@"2014-08-20"];
-        [detailCell setCellValue:arytest];
+        if(self.aryData.count > 0)
+        {
+            StockCommitBean *commitBean = [self.aryData objectAtIndex:indexPath.row];
+            [detailCell setCellValue:commitBean];
+        }
+        
         detailCell.selectionStyle=UITableViewCellSelectionStyleNone;
         return detailCell;
     }

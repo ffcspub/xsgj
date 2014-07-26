@@ -13,7 +13,8 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *ivBg;
 @property (weak, nonatomic) IBOutlet UILabel *lblTitle;
-@property (weak, nonatomic) IBOutlet UILabel *lblDetail;
+@property (weak, nonatomic) IBOutlet UILabel *lblRealName;
+@property (weak, nonatomic) IBOutlet UILabel *lblDate;
 @property (weak, nonatomic) IBOutlet UILabel *lblEnterTime;
 @property (weak, nonatomic) IBOutlet UILabel *lblLeaveTime;
 
@@ -64,9 +65,10 @@
     // TODO: 设置数据
     VisistRecordVO *bean = (VisistRecordVO *)data;
     self.lblTitle.text = bean.CUST_NAME;
-    self.lblDetail.text = bean.END_TIME_M;
-    self.lblEnterTime.text = bean.START_TIME_M;
-    self.lblLeaveTime.text = bean.END_TIME_M;
+    self.lblDate.text = bean.START_DATE;
+    self.lblEnterTime.text = [NSString stringWithFormat:@"进店:%@", bean.START_TIME_M];
+    self.lblLeaveTime.text = [NSString stringWithFormat:@"进店:%@", bean.END_TIME_M];
+    self.lblRealName.text = bean.REALNAME;
 }
 
 @end

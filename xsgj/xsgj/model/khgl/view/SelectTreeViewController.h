@@ -11,6 +11,7 @@
 #import "RATreeView.h"
 #import "TreeViewCell.h"
 
+#define NOTIFICATION_SELECT_FIN @"NOTIFICATION_SELECT_FIN"
 
 @interface SelectTreeViewController : HideTabViewController<RATreeViewDelegate, RATreeViewDataSource,TreeViewCellDelegate>
 

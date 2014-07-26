@@ -68,7 +68,7 @@
 - (void)loadQuitGoodsDetail
 {
     QueryOrderBackDetailHttpRequest *request = [[QueryOrderBackDetailHttpRequest alloc] init];
-    // request.ORDER_ID = [NSNumber numberWithInt:self.quitBean.ORDER_ID];
+    request.ORDER_ID = [NSNumber numberWithInt:self.quitBean.ORDER_ID];
     
     MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [KHGLAPI queryOrderBackDetailByRequest:request success:^(QueryOrderBackDetailHttpResponse *response) {

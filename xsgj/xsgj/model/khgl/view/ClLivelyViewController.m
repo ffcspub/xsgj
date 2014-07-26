@@ -43,34 +43,143 @@
     self.title = @"陈列生动化";
     [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(handleNavBarRight)];
     [super.svContain setContentSize:CGSizeMake(0, super.svImgContain.frame.origin.y + super.svImgContain.frame.size.height + 150)];
-    [super.svImgContain setContentSize:CGSizeMake(super.ivPhoto6.frame.origin.x + super.ivPhoto6.frame.size.width, 0)];
+    [super.svImgContain setContentSize:CGSizeMake(super.ivPhoto5.frame.origin.x + super.ivPhoto5.frame.size.width, 0)];
 }
 
 #pragma mark - functions
 
 - (void)handleNavBarRight
 {
+    if(self.tfPhotoType.text.length < 1)
+    {
+        [MBProgressHUD showError:@"请填写陈列情况" toView:self.view];
+        return;
+    }
     
+    if(self.tfMark.text.length < 1)
+    {
+        [MBProgressHUD showError:@"请填写备注" toView:self.view];
+        return;
+    }
+    
+    _iSendImgCount = 0;
+    [_aryFileId removeAllObjects];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self commitData];
 }
 
 - (IBAction)handleBtnTypeSelectClicked:(id)sender {
-    _actionSheet = [[IBActionSheet alloc] initWithTitle:@"选择陈列情况"
-                                               delegate:self
-                                      cancelButtonTitle:@"取消"
-                                 destructiveButtonTitle:nil
-                                      otherButtonTitles:nil, nil];
-    _actionSheet.tag = 10;
+    NSMutableArray *aryItems = [[NSMutableArray alloc] init];
     for(BNDisplayCase *displayType in _aryClCaseData)
     {
-        [_actionSheet addButtonWithTitle:displayType.CASE_NAME];
+        [aryItems addObject:displayType.CASE_NAME];
     }
     
-    [_actionSheet showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view];
+    _popListView = [[LeveyPopListView alloc] initWithTitle:@"选择陈列情况" options:aryItems handler:^(NSInteger anIndex) {
+        NSString *strSelect = [aryItems objectAtIndex:anIndex];
+        self.tfPhotoType.text = strSelect;
+        
+        for(BNDisplayCase *displayType in _aryClCaseData)
+        {
+            if([displayType.CASE_NAME isEqualToString:strSelect])
+            {
+                self.clCaseSelect = displayType;
+                break;
+            }
+        }
+        
+    }];
+    [_popListView showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view animated:NO];
 }
 
 - (void)loadTypeData
 {
     _aryClCaseData = [BNDisplayCase searchWithWhere:nil orderBy:nil offset:0 count:100];
+}
+
+- (void)commitData
+{
+    if(_aryfileDatas.count > 0)
+    {
+        ImageFileInfo *fileInfo = [_aryfileDatas objectAtIndex:_iSendImgCount];
+        [SystemAPI uploadPhotoByFileName:self.title data:fileInfo.fileData success:^(NSString *fileId) {
+            [_aryFileId addObject:fileId];
+            _iSendImgCount ++;
+            if(_iSendImgCount < _aryfileDatas.count)
+            {
+                [self commitData];
+            }
+            else
+            {
+                [self sendStoreCameraRequest];
+            }
+            
+        } fail:^(BOOL notReachable, NSString *desciption) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+            return;
+        }];
+    }
+}
+
+- (void)sendStoreCameraRequest
+{
+    InsertDisplayVividHttpRequest *request = [[InsertDisplayVividHttpRequest alloc]init];
+    // 基础用户信息
+    request.SESSION_ID  = [ShareValue shareInstance].userInfo.SESSION_ID;
+    request.CORP_ID     = [ShareValue shareInstance].userInfo.CORP_ID;
+    request.DEPT_ID     = [ShareValue shareInstance].userInfo.DEPT_ID;
+    request.USER_AUTH   = [ShareValue shareInstance].userInfo.USER_AUTH;
+    request.USER_ID     = [ShareValue shareInstance].userInfo.USER_ID;
+    // 附加信息
+    request.CASE_ID    = self.clCaseSelect.CASE_ID;
+    request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
+    request.CUST_ID    = self.customerInfo.CUST_ID;
+    request.OPER_MENU  = @"33";
+    request.REMARK     = self.tfMark.text;
+    request.VISIT_NO   = self.vistRecord.VISIT_NO;
+    
+    if(_aryFileId.count >= 1)
+    {
+        request.PHOTO1 = [_aryFileId objectAtIndex:0];
+    }
+    
+    if(_aryFileId.count >= 2)
+    {
+        request.PHOTO2 = [_aryFileId objectAtIndex:1];
+    }
+    
+    if(_aryFileId.count >= 3)
+    {
+        request.PHOTO3 = [_aryFileId objectAtIndex:2];
+    }
+    
+    if(_aryFileId.count >= 4)
+    {
+        request.PHOTO4 = [_aryFileId objectAtIndex:3];
+    }
+    
+    if(_aryFileId.count >= 5)
+    {
+        request.PHOTO5 = [_aryFileId objectAtIndex:4];
+    }
+    
+    [KHGLAPI insertDisplayVividByRequest:request success:^(InsertDisplayVividHttpResponse *response){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showSuccess:@"提交成功" toView:self.view];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            sleep(1);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        });
+        
+     }fail:^(BOOL notReachable, NSString *desciption){
+         [MBProgressHUD hideHUDForView:self.view animated:YES];
+         [MBProgressHUD showError:desciption toView:self.view];
+         
+     }];
 }
 
 #pragma mark - IBActionSheetDelegate

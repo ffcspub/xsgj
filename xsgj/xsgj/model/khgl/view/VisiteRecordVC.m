@@ -40,6 +40,8 @@ static int const pageSize = 10;
     
     // 表格设置
     [self.tbvQuery registerNib:[VisitRecordCell nib] forCellReuseIdentifier:VisiteRecordCellIdentifier];
+    [self.tbvQuery setSeparatorColor:[UIColor clearColor]];
+    self.tbvQuery.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // 上提加载更多
     __weak VisiteRecordVC *weakSelf = self;
@@ -72,7 +74,7 @@ static int const pageSize = 10;
     MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [KHGLAPI queryVisitRecordByRequest:request success:^(QueryVistitRecordHttpResponse *response) {
         
-        int resultCount = [response.VISIT_RECORDS count];
+        int resultCount = [response.rows count];
         if (resultCount < pageSize) {
             self.tbvQuery.showsInfiniteScrolling = NO;
         } else {
@@ -83,7 +85,7 @@ static int const pageSize = 10;
         }
         
         [self.tbvQuery.infiniteScrollingView stopAnimating];
-        [self.arrData addObjectsFromArray:response.VISIT_RECORDS];
+        [self.arrData addObjectsFromArray:response.rows];
         [self.tbvQuery reloadData];
         
         [hub removeFromSuperview];

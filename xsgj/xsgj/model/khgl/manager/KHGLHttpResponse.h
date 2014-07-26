@@ -32,7 +32,7 @@
 
 @interface QueryVistitRecordHttpResponse : LK_HttpBaseResponse
 
-@property(nonatomic,strong) NSArray *VISIT_RECORDS;
+@property(nonatomic,strong) NSArray *rows;
 
 @end
 

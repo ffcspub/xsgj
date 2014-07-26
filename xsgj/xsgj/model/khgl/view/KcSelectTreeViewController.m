@@ -29,6 +29,7 @@
     // Do any additional setup after loading the view.
     
     [self showRightBarButtonItemWithTitle:@"确认" target:self action:@selector(handleNavBarRight)];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 - (void)didReceiveMemoryWarning

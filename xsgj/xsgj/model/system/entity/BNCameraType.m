@@ -10,4 +10,11 @@
 
 @implementation BNCameraType
 
+
+//表名
++(NSString *)getTableName
+{
+    return [NSString stringWithFormat:@"t_%d_BNCameraType",[ShareValue shareInstance].userInfo.USER_ID];
+}
+
 @end

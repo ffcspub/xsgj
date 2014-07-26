@@ -13,6 +13,7 @@
 @interface DhEditViewController : HideTabViewController<DhEditCellDelegate>
 {
     NSIndexPath *_selectIndex;
+    NSMutableArray *_aryDhData;
 }
 
 

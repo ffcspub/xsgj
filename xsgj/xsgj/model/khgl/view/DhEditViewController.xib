@@ -139,7 +139,7 @@
                     <rect key="frame" x="0.0" y="528" width="160" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <state key="normal" title="提交" backgroundImage="CommonBtn_nor.png">
+                    <state key="normal" title="提交">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -150,7 +150,7 @@
                     <rect key="frame" x="160" y="528" width="160" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <state key="normal" title="预览" backgroundImage="CommonBtn_nor.png">
+                    <state key="normal" title="预览">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -164,7 +164,6 @@
         </view>
     </objects>
     <resources>
-        <image name="CommonBtn_nor.png" width="16" height="32"/>
         <image name="dropbox.png" width="17" height="17"/>
         <image name="part1-nor.png" width="20" height="40"/>
         <image name="part2.png" width="20" height="40"/>

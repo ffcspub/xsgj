@@ -52,7 +52,7 @@
 
 @implementation QueryVistitRecordHttpResponse
 
-+(Class)__VISIT_RECORDSClass{
++(Class)__rowsClass{
     return [VisistRecordVO class];
 }
 

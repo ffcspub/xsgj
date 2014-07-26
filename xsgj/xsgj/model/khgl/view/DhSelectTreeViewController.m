@@ -7,7 +7,6 @@
 //
 
 #import "DhSelectTreeViewController.h"
-#import "DhEditViewController.h"
 
 @interface DhSelectTreeViewController ()
 
@@ -34,16 +33,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-    
-//    [self showRightBarButtonItemWithTitle:@"添加" target:self action:@selector(handleNavBarRight)];
-}
-
-#pragma mark - functions
-
-- (void)handleNavBarRight
-{
-    DhEditViewController *viewController = [[DhEditViewController alloc] initWithNibName:@"DhEditViewController" bundle:nil];
-    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 @end

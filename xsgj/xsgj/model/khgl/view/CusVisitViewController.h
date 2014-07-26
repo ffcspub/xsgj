@@ -11,21 +11,29 @@
 #import "HideTabViewController.h"
 #import "IBActionSheet.h"
 #import "BNCustomerInfo.h"
+#import "BNVistRecord.h"
+#import "LeveyPopListView.h"
+#import "BNVisitCondition.h"
 
 @interface CusVisitViewController : HideTabViewController<IBActionSheetDelegate>
+{
+    NSArray *_aryVisitType;
+}
 
 
 @property (weak, nonatomic) IBOutlet UIScrollView *svContain;
 @property (weak, nonatomic) IBOutlet UITableView *tvFuncBg;
 @property (weak, nonatomic) IBOutlet UILabel *lbCusName;
+@property (weak, nonatomic) IBOutlet UILabel *lbVisitType;
 @property (weak, nonatomic) IBOutlet UILabel *lbCurrentLocation;
 @property (weak, nonatomic) IBOutlet UILabel *lbAdjustLocation;
 @property (weak, nonatomic) IBOutlet UIButton *btnVisitBegin;
 @property (weak, nonatomic) IBOutlet UIButton *btnVisitEnd;
+@property (weak, nonatomic) IBOutlet UIButton *btnRefresh;
 @property (weak, nonatomic) IBOutlet UIImageView *ivIconOver;
 @property (weak, nonatomic) IBOutlet UILabel *lbVisitTime;
 @property (weak, nonatomic) BNCustomerInfo *customerInfo;
-
+@property (weak, nonatomic) BNVistRecord *vistRecord;
 
 - (IBAction)handleBtnRefreshClicked:(id)sender;
 - (IBAction)handleBtnMapClicked:(id)sender;
