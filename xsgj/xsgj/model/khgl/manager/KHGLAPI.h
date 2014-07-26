@@ -12,6 +12,19 @@
 
 @interface KHGLAPI : NSObject
 
+
+
+/**
+ *  客户信息采集接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)allTypeInfoByRequest:(AllTypeHttpRequest *)request success:(void(^)(AllTypeHttpRequest *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+
+
 /**
  *  客户类型信息读取接口
  *
@@ -203,6 +216,8 @@
  *  @param fail    失败返回结果
  */
 +(void)insertDisplayCostByRequest:(InsertDisplayCostHttpRequest *)request success:(void(^)(InsertDisplayCostHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
+
 
 
 @end;
