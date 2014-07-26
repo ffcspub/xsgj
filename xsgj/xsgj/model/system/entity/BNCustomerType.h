@@ -18,4 +18,7 @@
 // 类型名
 @property (nonatomic,strong)      NSString* TYPE_NAME;
 
+
++(NSString *)getOwnerAndChildTypeIds:(int)typeid;
+
 @end

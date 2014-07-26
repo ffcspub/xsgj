@@ -112,4 +112,8 @@
 @property (nonatomic,assign)    int  USER_ID;
 /** 用户数据权限 */
 @property (nonatomic,strong)      NSString* USER_AUTH;
+
+
+-(void)save;
+
 @end

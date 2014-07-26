@@ -227,7 +227,8 @@
 @property(nonatomic,assign) int         USER_ID	;//	用户ID
 @property(nonatomic,strong) NSString *	TYPE_ID	;//	类型
 @property(nonatomic,strong) NSString *	CONTENT	;//	内容
-@property(nonatomic,strong) NSString *	COMMITTIME	;//	上报时间
+@property(nonatomic,strong) NSString *	COMMITTIME	;//	上报时间(yyyy-MM-dd HH:mm:ss)
+@property(nonatomic,strong) NSString *  PHOTO1;//图片1
 
 @end
 

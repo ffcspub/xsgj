@@ -196,6 +196,7 @@
 @property(nonatomic,strong) NSString *	VISIT_NO	;//	拜访编号
 @property(nonatomic,strong) NSString *	OPER_MENU	;//	菜单id
 @property(nonatomic,strong) NSMutableArray *	DATA	;//	订单明细
+@property(nonatomic,assign) int PARTNER_ID;//合作商标识
 
 @end
 
@@ -240,6 +241,7 @@
 @property(nonatomic,strong) NSString *	VISIT_NO	;//	拜访编号
 @property(nonatomic,strong) NSString *	OPER_MENU	;//	操作菜单
 @property(nonatomic,strong) NSMutableArray *	DATA	;//	明细
+@property(nonatomic,strong) NSString *  PHOTO1;//图片
 
 @end
 

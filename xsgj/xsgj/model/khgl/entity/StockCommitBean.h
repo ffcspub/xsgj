@@ -17,5 +17,6 @@
 @property(nonatomic,strong) NSString *SPEC;//
 @property(nonatomic,strong) NSString *PROD_NAME;//产品名
 @property(nonatomic,strong) NSString *PRODUCT_UNIT_NAME;//产品单位名
+@property(nonatomic,strong) NSString *PHOTO1;//图片
 
 @end

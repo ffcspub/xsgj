@@ -9,6 +9,7 @@
 #import "CusVisitViewController.h"
 #import "LKDBHelper.h"
 #import "BNMobileMenu.h"
+#import "BNVisitStepRecord.h"
 #import "DzPhotoViewController.h"
 #import "CLPhotoViewController.h"
 #import "ClLivelyViewController.h"
@@ -30,6 +31,8 @@
     BOOL _isLocationSuccess;
     BOOL _isManualLocation;
     CLLocationCoordinate2D manualCoordinate;
+    BNVisitCondition *_condition;
+    NSString *_address;
 }
 
 @end
@@ -60,17 +63,42 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(locationAddressUpdateErro) name:NOTIFICATION_ADDRESS_UPDATEERROR object:nil];
     
     // Do any additional setup after loading the view from its nib.
+    if (!_vistRecord) {
+        BNVistRecord *record = [BNVistRecord searchSingleWithWhere:[NSString stringWithFormat:@"CUST_ID=%d and VISIT_TYPE=0",_customerInfo.CUST_ID] orderBy:@"BEGIN_TIME desc"];
+        if (record) {
+            NSString *visitDate = record.BEGIN_TIME;
+            if (visitDate.length > 10) {
+                visitDate = [visitDate substringToIndex:10];
+            }
+            if ( [visitDate isEqual:[[NSDate date]stringWithFormat:@"yyyy-MM-dd"]]) {
+                self.vistRecord = record;
+            }else {
+               _vistRecord = [[BNVistRecord alloc]init];
+            }
+        }else{
+            _vistRecord = [[BNVistRecord alloc]init];
+        }
+        
+    }
+
     
     [self initView];
     [self LoadFunctionItems];
     [self loadVisitTypeData];
     [self handleBtnRefreshClicked:nil];
+    
+    
 }
 
 -(void)viewDidUnload{
     //[[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIFICATION_COMMITDATA_FIN object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [super viewDidUnload];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [_tvFuncBg reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -139,17 +167,34 @@
     LeveyPopListView *popListView = [[LeveyPopListView alloc] initWithTitle:@"选择拜访情况" options:aryItems handler:^(NSInteger anIndex) {
         NSString *strSelect = [aryItems objectAtIndex:anIndex];
         _lbVisitType.text = strSelect;
-
     }];
     [popListView showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view animated:NO];
 }
 
 - (IBAction)handleBtnVisitBeginClicked:(id)sender {
-    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-    [timeFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString *strCurrentTime = [timeFormatter stringFromDate:[NSDate date]];
+    NSString *strCurrentTime = [[NSDate date]stringWithFormat:@"yyyy-MM-dd HH:mm:ss" ];
     _lbVisitTime.text = strCurrentTime;
     _btnVisitBegin.enabled = NO;
+    _vistRecord.VISIT_TYPE = 0;
+    _vistRecord.VISIT_DATE = [[NSDate date]stringWithFormat:@"yyyy-MM-dd 00:00:00"];
+    _vistRecord.VISIT_CONDITION_CODE = _condition.CONDITION_CODE;
+    _vistRecord.VISIT_CONDITION_NAME = _condition.CONDITION_NAME;
+    _vistRecord.BEGIN_TIME = strCurrentTime;
+    _vistRecord.BEGIN_LAT = [ShareValue shareInstance].currentLocation.latitude;
+    _vistRecord.BEGIN_LNG = [ShareValue shareInstance].currentLocation.longitude;
+    _vistRecord.CUST_ID = _customerInfo.CUST_ID;
+    _vistRecord.CUST_NAME = _customerInfo.CUST_NAME;
+    _vistRecord.BEGIN_POS = [ShareValue shareInstance].address;
+    _vistRecord.BEGIN_POS2 = _address;
+    if (manualCoordinate.longitude > 0) {
+        _vistRecord.BEGIN_LAT2 = manualCoordinate.latitude;
+        _vistRecord.BEGIN_LNG2 = manualCoordinate.longitude;
+    }
+    _aryVisitType = [NSMutableArray arrayWithObjects: _condition,nil];
+    [_vistRecord save];
+    
+    BNVistRecord *record = [BNVistRecord searchSingleWithWhere:[NSString stringWithFormat:@"CUST_ID=%d and VISIT_TYPE=0",_customerInfo.CUST_ID] orderBy:@"BEGIN_TIME"];
+    NSLog(@"%@",record.VISIT_NO);
 }
 
 - (IBAction)handleBtnVisitEndClicked:(id)sender {
@@ -167,11 +212,15 @@
 
 - (void)loadVisitTypeData
 {
-    _aryVisitType = [BNVisitCondition searchWithWhere:[NSString stringWithFormat:@"CONDITION_CODE=%@",self.vistRecord.VISIT_CONDITION_CODE] orderBy:nil offset:0 count:100];
+    if (self.vistRecord.VISIT_CONDITION_CODE) {
+        _aryVisitType = [BNVisitCondition searchWithWhere:[NSString stringWithFormat:@"CONDITION_CODE=%@",self.vistRecord.VISIT_CONDITION_CODE] orderBy:@"CONDITION_NAME" offset:0 count:100];
+    }else{
+        _aryVisitType = [BNVisitCondition searchWithWhere:nil orderBy:@"CONDITION_NAME" offset:0 count:100];
+    }
     if(_aryVisitType.count > 0)
     {
-        BNVisitCondition *visitCondition = [_aryVisitType objectAtIndex:0];
-        _lbVisitType.text = visitCondition.CONDITION_NAME;
+        _condition = [_aryVisitType objectAtIndex:0];
+        _lbVisitType.text = _condition.CONDITION_NAME;
     }
 }
 
@@ -232,6 +281,7 @@
     _lbAdjustLocation.text = address;
     manualCoordinate = coordinate;
     _isManualLocation = YES;
+    _address = address;
 }
 
 
@@ -262,6 +312,14 @@
         cell.mobileMenu = funcItem;
         cell.lbName.text = funcItem.MENU_NAME;
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        
+        BNVisitStepRecord *step = [BNVisitStepRecord searchSingleWithWhere:[NSString stringWithFormat:@"VISIT_NO='%@' and OPER_MENU='%d'",self.vistRecord.VISIT_NO,funcItem.MENU_CODE] orderBy:nil];
+        if (step) {
+            [cell setSyncState:step.SYNC_STATE];
+        }else{
+            [cell setSyncState:0];
+        }
+        
     }
     
     return cell;

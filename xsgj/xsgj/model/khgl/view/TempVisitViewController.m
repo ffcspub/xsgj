@@ -10,6 +10,7 @@
 #import "SelectTreeViewController.h"
 #import "CusVisitViewController.h"
 #import "InfoCollectViewController.h"
+#import <NSDate+Helper.h>
 
 
 @interface TempVisitViewController ()
@@ -46,6 +47,11 @@
     [self loadCustomerData];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+}
+
 - (void)viewDidUnload
 {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIFICATION_SELECT_FIN object:nil];
@@ -78,7 +84,13 @@
 {
     CusVisitViewController *cusVisitViewController = [[CusVisitViewController alloc] initWithNibName:@"CusVisitViewController" bundle:nil];
     cusVisitViewController.customerInfo = self.customerInfoSelect;
-    cusVisitViewController.vistRecord = self.visitRecordSelect;
+    NSString *visitDate = self.visitRecordSelect.VISIT_DATE;
+    if (visitDate.length > 10) {
+        visitDate = [visitDate substringToIndex:10];
+    }
+    if ( [visitDate isEqual:[[NSDate date]stringWithFormat:@"yyyy-MM-dd"]]) {
+        cusVisitViewController.vistRecord = self.visitRecordSelect;
+    }
     [self.navigationController pushViewController:cusVisitViewController animated:YES];
 }
 
@@ -132,9 +144,13 @@
 - (IBAction)handleBtnPhoneClicked:(id)sender {
 }
 
+
 - (void)loadCustomerInfoWithType:(int)typeid Area:(int)areaid
 {
-    _aryCusInfoData = [BNCustomerInfo searchWithWhere:[NSString stringWithFormat:@"TYPE_ID=%D and AREA_ID=%D",typeid,areaid] orderBy:nil offset:0 count:100];
+    
+    NSString *typeids = [BNCustomerType getOwnerAndChildTypeIds:typeid];
+    NSString *areaids = [BNAreaInfo getOwnerAndChildAreaIds:areaid];
+    _aryCusInfoData = [BNCustomerInfo searchWithWhere:[NSString stringWithFormat:@"TYPE_ID in (%@) and AREA_ID in (%@)",typeids,areaids] orderBy:@"ORDER_NO,CUST_NAME" offset:0 count:100];
     if(_aryCusInfoData.count > 0)
     {
         BNCustomerInfo *customerInfo = [_aryCusInfoData objectAtIndex:0];
@@ -161,7 +177,7 @@
 
 - (void)loadCustomerData
 {
-    _aryCusTypeData = [BNCustomerType searchWithWhere:nil orderBy:nil offset:0 count:1000];
+    _aryCusTypeData = [BNCustomerType searchWithWhere:nil orderBy:@"ORDER_NO" offset:0 count:1000];
     if(_aryCusTypeData.count > 0)
     {
         BNCustomerType *customerType = [_aryCusTypeData objectAtIndex:0];
@@ -169,7 +185,7 @@
         _lbCusTypeSelect.text = customerType.TYPE_NAME;
     }
     
-    _aryCusAreaData = [BNAreaInfo searchWithWhere:nil orderBy:@"ORDER_NO" offset:0 count:1000];
+    _aryCusAreaData = [BNAreaInfo searchWithWhere:nil orderBy:@"ORDER_NO,AREA_ID" offset:0 count:1000];
     if(_aryCusAreaData.count > 0)
     {
         BNAreaInfo *areaInfo = [_aryCusAreaData objectAtIndex:0];
@@ -198,11 +214,11 @@
 //        
 //    }
 
-    _lbCusType.text = _cusTypeShow.TYPE_NAME;
+    _lbCusType.text = customerInfo.TYPE_NAME;
     _lbContacts.text = customerInfo.LINKMAN;
     _lbMobile.text = customerInfo.TEL;
     _lbAddress.text = customerInfo.ADDRESS;
-    NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D",customerInfo.CUST_ID] orderBy:nil offset:0 count:100];
+    NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D and VISIT_TYPE=0",customerInfo.CUST_ID] orderBy:nil offset:0 count:100];
     if(aryRecord.count > 0)
     {
         self.visitRecordSelect = [aryRecord objectAtIndex:0];

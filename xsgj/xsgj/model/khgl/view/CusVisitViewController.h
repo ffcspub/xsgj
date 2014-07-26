@@ -32,8 +32,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnRefresh;
 @property (weak, nonatomic) IBOutlet UIImageView *ivIconOver;
 @property (weak, nonatomic) IBOutlet UILabel *lbVisitTime;
-@property (weak, nonatomic) BNCustomerInfo *customerInfo;
-@property (weak, nonatomic) BNVistRecord *vistRecord;
+@property (strong, nonatomic) BNCustomerInfo *customerInfo;
+@property (strong, nonatomic) BNVistRecord *vistRecord;
 
 - (IBAction)handleBtnRefreshClicked:(id)sender;
 - (IBAction)handleBtnMapClicked:(id)sender;

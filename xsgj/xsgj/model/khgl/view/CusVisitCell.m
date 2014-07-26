@@ -22,4 +22,15 @@
     // Configure the view for the selected state
 }
 
+-(void)setSyncState:(int)syncState{
+    _syncState = syncState;
+    if (syncState == 1) {
+        _ivStatus.image = [UIImage imageNamed:@"stateicon_nopass"];
+    }else if (syncState == 2){
+        _ivStatus.image = [UIImage imageNamed:@"CheckBox_Selected"];
+    }else{
+        _ivStatus.image = [UIImage imageNamed:@"CheckBox_unSelected"];
+    }
+}
+
 @end
