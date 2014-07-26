@@ -22,19 +22,13 @@
 
 @interface SelectInfoCell : UITableViewCell{
     UIButton *btn_last;
-    UIButton *btn_firstSelected;
-    UIButton *btn_secondSelected;
+    UIScrollView *sv_tab;
     UIButton *btn_sure;
     UIView *line1;
     UIView *line2;
-    UIImageView *breakLine1;
-    UIImageView *breakLine2;
 }
 
-@property(nonatomic,strong) NSString *firstSelected;
-@property(nonatomic,strong) NSString *secondSelected;
 @property(nonatomic,strong) NSObject *currentObject;
-
 @property(nonatomic,assign) id<SelectInfoCellDelegate> delegate;
 
 +(CGFloat)height;
@@ -43,7 +37,7 @@
 
 @protocol SelectInfoCellDelegate <NSObject>
 
--(void)lastAction:(SelectInfoCell *)cell;
+-(void)lastAction:(SelectInfoCell *)cell selecteId:(int)selecteId;
 -(void)sureAction:(SelectInfoCell *)cell;
 
 @end
@@ -57,19 +51,9 @@
         btn_last = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 55, 44)];
         [btn_last addTarget:self action:@selector(lastChooseAction) forControlEvents:UIControlEventTouchUpInside];
         [btn_last setImage:[UIImage imageNamed:@"action_bar_back"] forState:UIControlStateNormal];
-        btn_firstSelected = [[UIButton alloc]initWithFrame:CGRectMake(62, 0, 72, 44)];
-        [btn_firstSelected setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        [btn_firstSelected addTarget:self action:@selector(lastChooseAction) forControlEvents:UIControlEventTouchUpInside];
+        sv_tab = [[UIScrollView alloc]initWithFrame:CGRectMake(57, 0, 260, 44)];
         line1 = [[UIView alloc]initWithFrame:CGRectMake(56, 0, 1, 44)];
         line1.backgroundColor = HEX_RGB(0xe7e7e7);
-        btn_secondSelected = [[UIButton alloc]initWithFrame:CGRectMake(142, 0, 72, 44)];
-        [btn_secondSelected setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        breakLine1 = [[UIImageView alloc]initWithFrame:CGRectMake(126, 0, 20, 44)];
-        breakLine1.image = [UIImage imageNamed:@"file_path_icon"];
-        breakLine1.contentMode = UIViewContentModeCenter;
-        breakLine2 = [[UIImageView alloc]initWithFrame:CGRectMake(207, 0, 22, 44)];
-        breakLine2.image = [UIImage imageNamed:@"file_path_icon"];
-        breakLine2.contentMode = UIViewContentModeCenter;
         line2 = [[UIView alloc]initWithFrame:CGRectMake(260, 0, 1, 44)];
         line2.backgroundColor = HEX_RGB(0xe7e7e7);
         btn_sure = [[UIButton alloc]initWithFrame:CGRectMake(260, 0, 60, 44)];
@@ -77,10 +61,7 @@
         [btn_sure addTarget:self action:@selector(sureAction) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:btn_last];
         [self.contentView addSubview:line1];
-        [self.contentView addSubview:btn_firstSelected];
-        [self.contentView addSubview:breakLine1];
-        [self.contentView addSubview:btn_secondSelected];
-        [self.contentView addSubview:breakLine2];
+        [self.contentView addSubview:sv_tab];
         [self.contentView addSubview:line2];
         [self.contentView addSubview:btn_sure];
         self.backgroundColor = [UIColor whiteColor];
@@ -88,37 +69,112 @@
     return self;
 }
 
-
--(void)setFirstSelected:(NSString *)firstSelected{
-    _firstSelected = firstSelected;
-    [btn_firstSelected setTitle:firstSelected forState:UIControlStateNormal];
-    if (!_firstSelected) {
-        breakLine1.hidden = YES;
-        btn_firstSelected.hidden = YES;
-    }else{
-        breakLine1.hidden = NO;
-        btn_firstSelected.hidden = NO;
+-(void)selectObject:(UIButton *)btn{
+    if (_delegate) {
+        if (btn.tag > -1) {
+            [_delegate lastAction:self selecteId:btn.tag];
+        }
+        
     }
 }
 
--(void)setSecondSelected:(NSString *)secondSelected{
-    _secondSelected = secondSelected;
-    [btn_secondSelected setTitle:secondSelected forState:UIControlStateNormal];
-    if (_secondSelected == nil) {
-        breakLine2.hidden = YES;
-        btn_secondSelected.hidden = YES;
-    }else{
-        breakLine2.hidden = NO;
-        btn_secondSelected.hidden = NO;
+
+-(void)setCurrentObject:(NSObject *)currentObject{
+    _currentObject = currentObject;
+    for (UIView *view in sv_tab.subviews) {
+        [view removeFromSuperview];
+    }
+    sv_tab.contentSize = sv_tab.frame.size;
+    if ([currentObject isKindOfClass:[BNAreaInfo class]]) {
+        int beginX = 5;
+        BNAreaInfo *area = (BNAreaInfo *)currentObject;
+        NSArray *array = [area getFamilySequence];
+        NSEnumerator *enumerator =  array.reverseObjectEnumerator;
+        BNAreaInfo *info;
+        NSMutableArray *reverseArray = [NSMutableArray array];
+        while ((info = enumerator.nextObject)) {
+            [reverseArray addObject:info];
+        }
+        int i = 0;
+        for (BNAreaInfo *info in reverseArray) {
+            UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(beginX, 0, 70, 44)];
+            [btn setTitleColor:MCOLOR_BLACK forState:UIControlStateNormal];
+            [btn setTitle:info.AREA_NAME forState:UIControlStateNormal];
+            BNAreaInfo *nextArea;
+            if (i < reverseArray.count - 1) {
+                nextArea = [reverseArray objectAtIndex:i+1];
+                btn.tag = nextArea.AREA_ID;
+            }else{
+                btn.tag = -1;
+            }
+            
+            [sv_tab addSubview:btn];
+            [btn addTarget:self action:@selector(selectObject:) forControlEvents:UIControlEventTouchUpInside];
+            beginX += 70;
+//            if (i < array.count-1) {
+                UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"file_path_icon"]];
+                imageView.frame = CGRectMake(beginX, 0, 20, 44);
+                [sv_tab addSubview:imageView];
+                beginX += 20;
+//            }
+            i++;
+        }
+        CGSize size = sv_tab.frame.size;
+        size.width = beginX + 5;
+        sv_tab.contentSize = size;
+    }else if([currentObject isKindOfClass:[BNCustomerType class]]){
+        int beginX = 5;
+        BNCustomerType *type = (BNCustomerType *)currentObject;
+        NSArray *array = [type getFamilySequence];
+        NSEnumerator *enumerator =  array.reverseObjectEnumerator;
+        BNAreaInfo *info;
+        NSMutableArray *reverseArray = [NSMutableArray array];
+        while ((info = enumerator.nextObject)) {
+            [reverseArray addObject:info];
+        }
+        int i = 0;
+        for (BNCustomerType *info in reverseArray) {
+            UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(beginX, 0, 70, 44)];
+            [btn setTitleColor:MCOLOR_BLACK forState:UIControlStateNormal];
+            [btn setTitle:info.TYPE_NAME forState:UIControlStateNormal];
+            BNCustomerType *nextType;
+            if (i < reverseArray.count - 1) {
+                nextType = [reverseArray objectAtIndex:i+1];
+                btn.tag = nextType.TYPE_ID;
+            }else{
+                btn.tag = -1;
+            }
+            
+            [sv_tab addSubview:btn];
+            [btn addTarget:self action:@selector(selectObject:) forControlEvents:UIControlEventTouchUpInside];
+            beginX += 70;
+            //            if (i < array.count-1) {
+            UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"file_path_icon"]];
+            imageView.frame = CGRectMake(beginX, 0, 20, 44);
+            [sv_tab addSubview:imageView];
+            beginX += 20;
+            //            }
+            i++;
+        }
+        CGSize size = sv_tab.frame.size;
+        size.width = beginX + 5;
+        sv_tab.contentSize = size;
     }
 }
+
 
 
 #pragma mark - Action
 
 -(void)lastChooseAction{
     if (_delegate) {
-        [_delegate lastAction:self];
+        if ([_currentObject isKindOfClass:[BNAreaInfo class]]) {
+            BNAreaInfo *area = (BNAreaInfo *)_currentObject;
+            [_delegate lastAction:self selecteId:area.AREA_ID];
+        }else if([_currentObject isKindOfClass:[BNCustomerType class]]){
+            BNCustomerType *type = (BNCustomerType *)_currentObject;
+            [_delegate lastAction:self selecteId:type.TYPE_ID];
+        }
     }
 }
 
@@ -932,14 +988,15 @@
             return cell;
         }else{
             static NSString *cellIdentifier = @"CHOOSECELL";
+            BNCustomerType *type = [_customerTypeArray objectAtIndex:indexPath.row];
             SelectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
                 cell = [[SelectInfoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.delegate = self;
             }
-            cell.secondSelected = _secondTypeName;
-            cell.firstSelected = _firstTypeName;
+            BNCustomerType *parent = [BNCustomerType searchSingleWithWhere:[NSString stringWithFormat:@"TYPE_ID=%d",type.TYPE_PID ] orderBy:nil];
+            cell.currentObject = parent;
             return cell;
         }
     }
@@ -964,19 +1021,19 @@
             }else{
                 cell.isSelected = NO;
             }
-            
             cell.area = area;
             return cell;
         }else{
             static NSString *cellIdentifier = @"CHOOSECELL";
             SelectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            BNAreaInfo *area = [_areaArray objectAtIndex:0];
             if (!cell) {
                 cell = [[SelectInfoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.delegate = self;
             }
-            cell.secondSelected = _secondAreaName;
-            cell.firstSelected = _firstAreaName;
+            BNAreaInfo *parent = [BNAreaInfo searchSingleWithWhere:[NSString stringWithFormat:@"AREA_ID=%d",area.AREA_PID ] orderBy:nil];
+            cell.currentObject = parent;
             return cell;
         }
     }
@@ -1127,26 +1184,16 @@
 }
 
 #pragma mark - SelectInfoCellDelegate
--(void)lastAction:(SelectInfoCell *)cell{
+-(void)lastAction:(SelectInfoCell *)cell selecteId:(int)selecteId;{
     if (_tv_customerType.hidden == NO) {
         if (TYPE_PID != 0) {
-            if (_secondTypeName) {
-                _secondTypeName = nil;
-            }else if (_firstTypeName){
-                _firstTypeName = nil;
-            }
-            BNCustomerType *type = [BNCustomerType searchSingleWithWhere:[NSString stringWithFormat:@"TYPE_ID=%d",TYPE_PID] orderBy:nil];
+            BNCustomerType *type = [BNCustomerType searchSingleWithWhere:[NSString stringWithFormat:@"TYPE_ID=%d",selecteId] orderBy:nil];
             TYPE_PID = type.TYPE_PID;
             [self loadCustomerTypes];
         }
     }else{
         if (AREA_PID != 0) {
-            if (_secondAreaName) {
-                _secondAreaName = nil;
-            }else if(_firstAreaName){
-                _firstAreaName = nil;
-            }
-            BNAreaInfo *area = [BNAreaInfo searchSingleWithWhere:[NSString stringWithFormat:@"AREA_ID=%d",AREA_PID] orderBy:nil];
+            BNAreaInfo *area = [BNAreaInfo searchSingleWithWhere:[NSString stringWithFormat:@"AREA_ID=%d",selecteId] orderBy:nil];
             AREA_PID = area.AREA_PID;
             [self loadAreas];
         }

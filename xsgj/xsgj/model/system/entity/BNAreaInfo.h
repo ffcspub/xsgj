@@ -17,4 +17,6 @@
 
 +(NSString *)getOwnerAndChildAreaIds:(int)areaId;
 
+-(NSMutableArray *)getFamilySequence;
+
 @end

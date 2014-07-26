@@ -32,4 +32,20 @@
     return [typeids substringToIndex:typeids.length - 1];
 }
 
+-(void)getParentByArray:(NSMutableArray *)array{
+    BNCustomerType *info = [BNCustomerType searchSingleWithWhere:[NSString stringWithFormat:@"TYPE_ID=%d",_TYPE_PID] orderBy:nil];
+    if (info) {
+        [array addObject:info];
+        [info getParentByArray:array];
+    }
+}
+
+-(NSMutableArray *)getFamilySequence{
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObject:self];
+    [self getParentByArray:array];
+    return array;
+}
+
+
 @end

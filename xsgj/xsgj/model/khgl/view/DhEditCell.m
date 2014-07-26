@@ -37,8 +37,8 @@
     self.tfSubNum.text = [NSString stringWithFormat:@"%d",commitBean.ITEM_NUM];
     self.lbUnit.text = commitBean.UNIT_NAME;
     self.tfZpName.text = commitBean.GIFT_NAME;
-    self.tfZpPrice.text = [NSString stringWithFormat:@"%d",commitBean.GIFT_PRICE];
-    self.tfZpNum.text = [NSString stringWithFormat:@"%d",commitBean.GIFT_NUM];
+    self.tfZpPrice.text = [NSString stringWithFormat:@"%@",commitBean.GIFT_PRICE];
+    self.tfZpNum.text = [NSString stringWithFormat:@"%@",commitBean.GIFT_NUM];
 }
 
 - (IBAction)handleDelete:(id)sender {
@@ -84,11 +84,11 @@
     }
     else if(textField == _tfZpPrice)
     {
-        self.commitData.GIFT_PRICE = textField.text.intValue;
+        self.commitData.GIFT_PRICE = textField.text;
     }
     else if(textField == _tfZpNum)
     {
-        self.commitData.GIFT_NUM = textField.text.intValue;
+        self.commitData.GIFT_NUM = textField.text;
     }
 }
 
