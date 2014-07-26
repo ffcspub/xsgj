@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "LK_HttpResponse.h"
 
+@interface TempVisitHttpResponse : LK_HttpBaseResponse
+
+@end
+
 
 @interface AllTypeHttpResponse : LK_HttpBasePageResponse
 

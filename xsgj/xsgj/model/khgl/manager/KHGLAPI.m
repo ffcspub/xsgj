@@ -10,16 +10,33 @@
 #import "LK_API.h"
 #import "ServerConfig.h"
 #import "NSData+Base64.h"
+#import "KHGLHttpRequest.h"
+#import "KHGLHttpResponse.h"
 
 
 @implementation KHGLAPI
 
-+(void)allTypeInfoByRequest:(AllTypeHttpRequest *)request success:(void(^)(AllTypeHttpRequest *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
-    [LK_APIUtil getHttpRequest:request apiPath:URL_allTypeinfo Success:^(LK_HttpBaseResponse *response) {
-        success((AllTypeHttpRequest *)response);
+/**
+ *  客户信息采集接口
+ *
+ *  @param request 请求参数
+ *  @param success 成功block
+ *  @param fail    失败返回结果
+ */
++(void)tempVisitByRequest:(TempVisitHttpRequest *)request success:(void(^)(TempVisitHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_tempVisit Success:^(LK_HttpBaseResponse *response) {
+        success((TempVisitHttpResponse *)response);
     } fail:^(BOOL NotReachable, NSString *desciption) {
         fail(NotReachable,desciption);
-    } class:[AllTypeHttpRequest class]];
+    } class:[TempVisitHttpResponse class]];
+}
+
++(void)allTypeInfoByRequest:(AllTypeHttpRequest *)request success:(void(^)(AllTypeHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_allTypeinfo Success:^(LK_HttpBaseResponse *response) {
+        success((AllTypeHttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[AllTypeHttpResponse class]];
 }
 
 /**

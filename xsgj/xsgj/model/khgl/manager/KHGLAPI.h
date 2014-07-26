@@ -21,7 +21,7 @@
  *  @param success 成功block
  *  @param fail    失败返回结果
  */
-+(void)allTypeInfoByRequest:(AllTypeHttpRequest *)request success:(void(^)(AllTypeHttpRequest *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
++(void)tempVisitByRequest:(TempVisitHttpRequest *)request success:(void(^)(TempVisitHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 
 
@@ -32,7 +32,7 @@
  *  @param success 成功block
  *  @param fail    失败返回结果
  */
-+(void)allTypeInfoByRequest:(AllTypeHttpRequest *)request success:(void(^)(AllTypeHttpRequest *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
++(void)allTypeInfoByRequest:(AllTypeHttpRequest *)request success:(void(^)(AllTypeHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 /**
  *  新客户信息上报
