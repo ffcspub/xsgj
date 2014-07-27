@@ -126,7 +126,7 @@
         }
         
     }];
-    [_popListView showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view animated:NO];
+    [_popListView showInView:[UIApplication sharedApplication].delegate.window animated:NO];
 }
 
 - (IBAction)handleBtnTakePhotoClicked:(id)sender {

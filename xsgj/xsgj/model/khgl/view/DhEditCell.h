@@ -26,8 +26,11 @@
 @property (weak, nonatomic) IBOutlet UITextField *tfSubNum;
 @property (weak, nonatomic) IBOutlet UILabel *lbUnit;
 @property (weak, nonatomic) IBOutlet UITextField *tfZpName;
-@property (weak, nonatomic) IBOutlet UITextField *tfZpPrice;
 @property (weak, nonatomic) IBOutlet UITextField *tfZpNum;
+@property (weak, nonatomic) IBOutlet UITextField *tfZpUnit;
+
+@property (weak, nonatomic) IBOutlet UITextField *tfZpPrice;
+@property (weak, nonatomic) IBOutlet UILabel *lbTotalPrice;
 @property (weak, nonatomic) NSIndexPath *indexPath;
 @property (weak, nonatomic) OrderItemBean *commitData;
 

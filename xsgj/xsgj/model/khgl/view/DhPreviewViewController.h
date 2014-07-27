@@ -11,6 +11,7 @@
 #import "PreviewNameCell.h"
 #import "DhPreviweDetailCell.h"
 #import "DzPhotoViewController.h"
+#import "BNPartnerInfoBean.h"
 
 @interface DhPreviewViewController : HideTabViewController<DhPreviweDetailCellDelegate>
 {
@@ -26,6 +27,7 @@
 @property (weak, nonatomic) NSArray *aryData;
 @property (weak, nonatomic) BNCustomerInfo *customerInfo;
 @property (weak, nonatomic) BNVistRecord *vistRecord;
+@property (weak, nonatomic) BNPartnerInfoBean *partnerInfo;
 
 @end
 

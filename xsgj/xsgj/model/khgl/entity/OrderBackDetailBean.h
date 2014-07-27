@@ -18,6 +18,6 @@
 @property(nonatomic,strong) NSString *  SPEC;
 @property(nonatomic,strong) NSString *  PRODUCT_UNIT_NAME;
 @property(nonatomic,strong) NSString *  PRODUCT_NAME;
-
+@property(nonatomic,strong) NSString *  PHOTO1;
 
 @end

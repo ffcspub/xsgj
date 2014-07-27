@@ -16,7 +16,9 @@
     NSIndexPath *_selectIndex;
     NSMutableArray *_aryKcData;
     KcEditCell *_cellForDate;
+    KcEditCell *_cellForPhoto;
     int _iExpandProdId;
+    int _iSendImgCount;
 }
 
 

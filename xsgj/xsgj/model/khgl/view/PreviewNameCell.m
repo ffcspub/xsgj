@@ -22,7 +22,7 @@
     // Configure the view for the selected state
 }
 
-- (void)setCellValue:(StockCommitBean *)commitData
+- (void)setCellValue:(KcCommitData *)commitData
 {
     self.lbName.text = commitData.PROD_NAME;
 }

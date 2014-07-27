@@ -44,7 +44,19 @@
     self.title = @"订货预览";
     [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(handleNavBarRight)];
     
-    [self.svSubContain setContentSize:CGSizeMake(640, 0)];
+    [self.svSubContain setContentSize:CGSizeMake(740, 0)];
+    
+    self.lbCooperation.text = _partnerInfo.PARTNER_NAME;
+    // chenzftodo: 计算总计
+    double total = 0;
+    for(OrderItemBean *commitBean  in _arySourceData)
+    {
+        total = total + commitBean.TOTAL_PRICE;
+    }
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setPositiveFormat:@"###0.##"];
+    self.lbTotal.text = [numberFormatter stringFromNumber:[NSNumber numberWithDouble:total]];
     
 }
 
@@ -109,7 +121,7 @@
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
-                [self.navigationController popViewControllerAnimated:YES];
+                [self.navigationController popToRootViewControllerAnimated:YES];
             });
         });
         

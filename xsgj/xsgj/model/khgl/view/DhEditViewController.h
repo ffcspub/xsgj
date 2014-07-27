@@ -10,12 +10,21 @@
 #import "HideTabViewController.h"
 #import "DhEditCell.h"
 #import "DzPhotoViewController.h"
+#import "BNPartnerInfoBean.h"
+#import "BNPartnerType.h"
+#import "DhEditSelectTreeViewController.h"
+#import "LeveyPopListView.h"
 
 @interface DhEditViewController : HideTabViewController<DhEditCellDelegate>
 {
+    NSArray *_aryPartnerInfoData;
+    NSArray *_aryPartnerTypeData;
+    NSArray *_aryPartnerTreeData;
     NSIndexPath *_selectIndex;
     NSMutableArray *_aryDhData;
     int _iExpandProdId;
+    int _iMakeTreeCount;
+    BNPartnerInfoBean *_PartnerSelect;
 }
 
 

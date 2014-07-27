@@ -8,6 +8,9 @@
 
 #import "ThEditCell.h"
 
+@implementation ThCommitData
+@end
+
 @implementation ThEditCell
 
 - (void)awakeFromNib
@@ -24,7 +27,7 @@
     // Configure the view for the selected state
 }
 
-- (void)setCellWithValue:(OrderBackDetailBean *)commitBean
+- (void)setCellWithValue:(ThCommitData *)commitBean
 {
     self.thCommitData = commitBean;
     self.lbName.text = [NSString stringWithFormat:@"%@(%@)",commitBean.PRODUCT_NAME,commitBean.SPEC];
@@ -33,6 +36,13 @@
     self.lbUnit.text = commitBean.PRODUCT_UNIT_NAME;
     self.lbDate.text = commitBean.BATCH;
     self.tfReson.text = commitBean.REMARK;
+    self.ivPhoto.image = commitBean.PhotoImg;
+    
+    if(commitBean.ITEM_NUM < 0)
+    {
+        self.lbNumber.text = @"0";
+        self.tfNumber.text = @"";
+    }
 }
 
 - (IBAction)handleBtnUnitClicked:(id)sender {
@@ -52,6 +62,24 @@
 }
 
 #pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSCharacterSet *cs;
+    if(textField == self.tfNumber)
+    {
+        cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789\n"] invertedSet];
+        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+        BOOL bNumber = [string isEqualToString:filtered];
+        
+        if(!bNumber)
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {

@@ -28,16 +28,19 @@
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleNotifyModifyData:) name:NOTIFICATION_MODIFY_DATA object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleNotifySelectPartner:) name:NOTIFICATION_SELECTPARTNER_FIN object:nil];
     // Do any additional setup after loading the view from its nib.
     
     _aryDhData = [[NSMutableArray alloc] init];
     [self initView];
     [self loadOrderItemBean];
+    [self loadPartnerTypeData];
 }
 
 - (void)viewDidUnload
 {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIFICATION_MODIFY_DATA object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIFICATION_SELECTPARTNER_FIN object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,7 +51,7 @@
 
 - (void)initView
 {
-    self.title = @"订货编辑";
+    self.title = @"订货上报";
     
     [_btnCommit setBackgroundImage:IMG_BTN_BLUE forState:UIControlStateNormal];
     [_btnCommit setBackgroundImage:IMG_BTN_BLUE_S forState:UIControlStateHighlighted];
@@ -59,23 +62,51 @@
 #pragma mark - functions
 
 - (IBAction)handleBtnTypeClicked:(id)sender {
+    DhEditSelectTreeViewController *selectTreeViewController = [[DhEditSelectTreeViewController alloc] initWithNibName:@"SelectTreeViewController" bundle:nil];
+    selectTreeViewController.data = _aryPartnerTreeData;
+    [self.navigationController pushViewController:selectTreeViewController animated:YES];
 }
 
 - (IBAction)handleBtnNameClicked:(id)sender {
+    NSMutableArray *aryItems = [[NSMutableArray alloc] init];
+    for(BNPartnerInfoBean *info in _aryPartnerInfoData)
+    {
+        [aryItems addObject:info.PARTNER_NAME];
+    }
+    
+    LeveyPopListView *popListView = [[LeveyPopListView alloc] initWithTitle:@"选择合作商" options:aryItems handler:^(NSInteger anIndex) {
+        NSString *strSelect = [aryItems objectAtIndex:anIndex];
+        _tfName.text = strSelect;
+        
+        for(BNPartnerInfoBean *info in _aryPartnerInfoData)
+        {
+            if([info.PARTNER_NAME isEqualToString:strSelect])
+            {
+                _PartnerSelect = info;
+            }
+        }
+    }];
+    [popListView showInView:[UIApplication sharedApplication].delegate.window animated:NO];
 }
 
 - (IBAction)handleCommit:(id)sender {
-    for(OrderItemBean *commitData in _aryDhData)
+    BOOL bValid = [self checkCommitDataValid];
+    if(!bValid)
     {
-//        commitData.GIFT_TOTAL = commitData.GIFT_NUM * commitData.GIFT_PRICE;
-        commitData.TOTAL_PRICE = commitData.ITEM_NUM * commitData.ITEM_PRICE;
+        return;
     }
-    
+
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self sendReportRequest];
 }
 
 - (IBAction)handlePreview:(id)sender {
+    BOOL bValid = [self checkCommitDataValid];
+    if(!bValid)
+    {
+        return;
+    }
+    
     DhPreviewViewController *viewController = [[DhPreviewViewController alloc] initWithNibName:@"DhPreviewViewController" bundle:nil];
     viewController.aryData = _aryDhData;
     viewController.customerInfo = self.customerInfo;
@@ -98,19 +129,130 @@
             bean.SPEC = product.SPEC;
             bean.PROD_NAME = product.PROD_NAME;
             bean.GIFT_UNIT_NAME = @"";
-            
             bean.TOTAL_PRICE = 0;
             bean.ITEM_PRICE = unitBean.PROD_PRICE;
             bean.PRODUCT_UNIT_ID = unitBean.PRODUCT_UNIT_ID;
             bean.PROD_ID = unitBean.PROD_ID;
-            bean.GIFT_TOTAL = 0;
-            bean.GIFT_PRICE =0;
-            bean.ITEM_NUM = 0;
-            bean.GIFT_NUM = 0;
+            bean.GIFT_TOTAL = @"";
+            bean.GIFT_PRICE =@"";
+            bean.ITEM_NUM = -1;
+            bean.GIFT_NUM = @"";
             
             [_aryDhData addObject:bean];
         }
     }
+}
+
+- (void)loadPartnerInfoData:(int)typeId
+{
+    _aryPartnerInfoData = [BNPartnerInfoBean searchWithWhere:[NSString stringWithFormat:@"TYPE_ID=%D",typeId] orderBy:nil offset:0 count:1000];
+}
+
+- (void)loadPartnerTypeData
+{
+    _aryPartnerTypeData = [BNPartnerType searchWithWhere:nil orderBy:@"ORDER_NO" offset:0 count:1000];
+    _aryPartnerTreeData = [self makePartnerTreeData];
+}
+
+- (NSArray *)makePartnerTreeData
+{
+    NSMutableArray *parentTree = [[NSMutableArray alloc] init];
+    NSMutableArray *arySourceData = [[NSMutableArray alloc] initWithArray:_aryPartnerTypeData];
+    for(BNPartnerType *partnerType in _aryPartnerTypeData)
+    {
+        NSLog(@"%d,%d",partnerType.TYPE_PID,partnerType.TYPE_ID);
+    }
+    
+    
+    for(BNPartnerType *partnerType in _aryPartnerTypeData)
+    {
+        if(partnerType.TYPE_PID == 0)
+        {
+            TreeData *aryData = [[TreeData alloc] init];
+            aryData.name = partnerType.TYPE_NAME;
+            aryData.dataInfo = partnerType;
+            [parentTree addObject:aryData];
+            
+            [arySourceData removeObject:partnerType];
+        }
+    }
+    
+    _iMakeTreeCount = 0;
+    [self makeSubCusTypeTreeData:arySourceData ParentTreeData:parentTree];
+    return parentTree;
+}
+
+- (void)makeSubCusTypeTreeData:(NSArray *)sourceData ParentTreeData:(NSMutableArray *)parentTree
+{
+    NSMutableArray *aryChildTree = [[NSMutableArray alloc] init];
+    NSMutableArray *arySourceData = [[NSMutableArray alloc] initWithArray:sourceData];
+    for(BNPartnerType *partnerType in sourceData)
+    {
+        for(TreeData *parentData in parentTree)
+        {
+            BNPartnerType *parentPartnerType = (BNPartnerType *)parentData.dataInfo;
+            if(partnerType.TYPE_PID == parentPartnerType.TYPE_ID)
+            {
+                TreeData *aryData = [[TreeData alloc] init];
+                aryData.name = partnerType.TYPE_NAME;
+                aryData.dataInfo = partnerType;
+                [parentData.children addObject:aryData];
+                
+                [aryChildTree addObject:aryData];
+                [arySourceData removeObject:partnerType];
+            }
+        }
+    }
+    
+    if(arySourceData.count > 0 && _iMakeTreeCount <= 6)
+    {
+        _iMakeTreeCount ++;
+        [self makeSubCusTypeTreeData:arySourceData ParentTreeData:aryChildTree];
+    }
+}
+
+- (BOOL)checkCommitDataValid
+{
+    if(_aryDhData.count < 1)
+    {
+        [MBProgressHUD showError:@"请添加产品" toView:self.view];
+        return NO;
+    }
+    
+    if(_tfType.text.length < 1)
+    {
+        [MBProgressHUD showError:@"请填写合作商类型" toView:self.view];
+        return NO;
+    }
+    
+    if(_tfName.text.length < 1)
+    {
+        [MBProgressHUD showError:@"请填写合作商名称" toView:self.view];
+        return NO;
+    }
+    
+    for(OrderItemBean * bean in _aryDhData)
+    {
+        if(bean.ITEM_PRICE < 0)
+        {
+            [MBProgressHUD showError:@"请填写单价" toView:self.view];
+            return NO;
+        }
+        
+        if(bean.ITEM_NUM < 0)
+        {
+            [MBProgressHUD showError:@"请填写数量" toView:self.view];
+            return NO;
+        }
+        
+        if(bean.UNIT_NAME.length < 1)
+        {
+            [MBProgressHUD showError:@"请填写单位" toView:self.view];
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 - (void)sendReportRequest
@@ -147,7 +289,7 @@
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
-                [self.navigationController popViewControllerAnimated:YES];
+                [self.navigationController popToRootViewControllerAnimated:YES];
             });
         });
         
@@ -171,7 +313,7 @@
 {
     if (indexPath.row == _selectIndex.row && _selectIndex != nil)
     {
-        return 224;
+        return 284;
     }
     else
     {
@@ -241,6 +383,14 @@
     }
     
     [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
+}
+
+
+- (void)handleNotifySelectPartner:(NSNotification *)note
+{
+    BNPartnerType *partnerType = [note object];
+    _tfType.text = partnerType.TYPE_NAME;
+    [self loadPartnerInfoData:partnerType.TYPE_ID];
 }
 
 - (void)handleNotifyModifyData:(NSNotification *)note

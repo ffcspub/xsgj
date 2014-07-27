@@ -32,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnRefresh;
 @property (weak, nonatomic) IBOutlet UIImageView *ivIconOver;
 @property (weak, nonatomic) IBOutlet UILabel *lbVisitTime;
+@property (weak, nonatomic) IBOutlet UILabel *lbEndVisitTime;
 @property (strong, nonatomic) BNCustomerInfo *customerInfo;
 @property (strong, nonatomic) BNVistRecord *vistRecord;
 

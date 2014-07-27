@@ -44,7 +44,7 @@
     self.title = @"退货预览";
     [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(handleNavBarRight)];
     
-    [self.svSubContain setContentSize:CGSizeMake(440, 0)];
+    [self.svSubContain setContentSize:CGSizeMake(520, 0)];
     
 }
 
@@ -52,8 +52,9 @@
 
 - (void)handleNavBarRight
 {
+    _iSendImgCount = 0;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [self sendReportRequest];
+    [self commitData];
 }
 
 - (void)adjustTableViewHeight
@@ -72,6 +73,31 @@
     
     [self.svMainContain setContentSize:CGSizeMake(0, self.tvTypeName.frame.origin.y + self.tvTypeName.frame.size.height + 70)];
     
+}
+
+- (void)commitData
+{
+    if(_arySourceData.count > 0)
+    {
+        ThCommitData *kcCommitBean = [_arySourceData objectAtIndex:_iSendImgCount];
+        [SystemAPI uploadPhotoByFileName:self.title data:kcCommitBean.PhotoData success:^(NSString *fileId) {
+            kcCommitBean.PHOTO1 = fileId;
+            _iSendImgCount ++;
+            if(_iSendImgCount < _arySourceData.count)
+            {
+                [self commitData];
+            }
+            else
+            {
+                [self sendReportRequest];
+            }
+            
+        } fail:^(BOOL notReachable, NSString *desciption) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+            return;
+        }];
+    }
 }
 
 - (void)sendReportRequest
@@ -97,7 +123,23 @@
     request.VISIT_NO   = self.vistRecord.VISIT_NO;
     request.CUST_ID    = self.customerInfo.CUST_ID;
     request.OPER_MENU  = @"37";
-    request.DATA  = _arySourceData;
+    
+    NSMutableArray *aryCommit = [[NSMutableArray alloc] init];
+    for(ThCommitData *commitBean in _arySourceData)
+    {
+        OrderBackDetailBean *thCommitBean = [[OrderBackDetailBean alloc] init];
+        thCommitBean.PROD_ID = commitBean.PROD_ID;
+        thCommitBean.PRODUCT_UNIT_ID = commitBean.PRODUCT_UNIT_ID;
+        thCommitBean.ITEM_NUM = commitBean.ITEM_NUM;
+        thCommitBean.REMARK = commitBean.REMARK;
+        thCommitBean.BATCH = commitBean.BATCH;
+        thCommitBean.SPEC = commitBean.SPEC;
+        thCommitBean.PRODUCT_UNIT_NAME = commitBean.PRODUCT_UNIT_NAME;
+        thCommitBean.PRODUCT_NAME = commitBean.PRODUCT_NAME;
+        thCommitBean.PHOTO1 = commitBean.PHOTO1;
+        [aryCommit addObject:thCommitBean];
+    }
+    request.DATA  = aryCommit;
     
     [KHGLAPI insertOrderBackByRequest:request success:^(InsertOrderBackHttpResponse *response){
         step.SYNC_STATE = 2;
@@ -108,7 +150,7 @@
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
-                [self.navigationController popViewControllerAnimated:YES];
+                [self.navigationController popToRootViewControllerAnimated:YES];
             });
         });
         
@@ -119,7 +161,6 @@
         
     }];
 }
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -144,7 +185,7 @@
         
         if(_arySourceData.count > 0)
         {
-            OrderBackDetailBean *commitBean = [_arySourceData objectAtIndex:indexPath.row];
+            ThCommitData *commitBean = [_arySourceData objectAtIndex:indexPath.row];
             nameCell.lbName.text = commitBean.PRODUCT_NAME;
         }
         
@@ -161,7 +202,7 @@
         
         if(_arySourceData.count > 0)
         {
-            OrderBackDetailBean *commitBean = [_arySourceData objectAtIndex:indexPath.row];
+            ThCommitData *commitBean = [_arySourceData objectAtIndex:indexPath.row];
             [detailCell setCellValue:commitBean];
         }
         

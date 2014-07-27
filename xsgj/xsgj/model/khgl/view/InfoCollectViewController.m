@@ -141,40 +141,31 @@
 
 - (void)addCustomerRequest
 {
-    // chenzftodo: 确认提交接口
-    AddCustomerCommitHttpRequest *request = [[AddCustomerCommitHttpRequest alloc]init];
+    
+    TempVisitHttpRequest *request = [[TempVisitHttpRequest alloc]init];
     // 基础用户信息
     request.SESSION_ID  = [ShareValue shareInstance].userInfo.SESSION_ID;
     request.CORP_ID     = [ShareValue shareInstance].userInfo.CORP_ID;
     request.DEPT_ID     = [ShareValue shareInstance].userInfo.DEPT_ID;
     request.USER_AUTH   = [ShareValue shareInstance].userInfo.USER_AUTH;
     request.USER_ID     = [ShareValue shareInstance].userInfo.USER_ID;
-    
-    request.CLASS_ID = _customerInfo.TYPE_ID;
-    request.CUST_NAME = _customerInfo.CUST_NAME;
-    request.CUST_CODE = [NSString stringWithFormat:@"%d",_customerInfo.CUST_ID];
-    request.LINKMAN	= _customerInfo.LINKMAN;
-    request.TEL	= _customerInfo.TEL;
-    request.ADDRESS	= _customerInfo.ADDRESS;
+    //
+    request.LAT = [ShareValue shareInstance].currentLocation.latitude;
+    request.LNG = [ShareValue shareInstance].currentLocation.longitude;
     request.REMARK = _tf_Mark.text;
     request.PHOTO = _photoId;
-    request.LNG	= [NSNumber numberWithFloat:[ShareValue shareInstance].currentLocation.longitude];
-    request.LAT	= [NSNumber numberWithFloat:[ShareValue shareInstance].currentLocation.latitude];
-    request.POSITION = _lb_currentLocation.text;
-    request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
-    
     if (_isManualLocation) {
-        request.LNG = [NSNumber numberWithFloat:manualCoordinate.longitude];
-        request.LAT = [NSNumber numberWithFloat:manualCoordinate.latitude];
-        request.POSITION = _lb_manualAdjust.text;
+        request.LNG = manualCoordinate.longitude;
+        request.LAT = manualCoordinate.latitude;
     }
     
-    [KHGLAPI addCustomerCommitByRequest:request success:^(AddCustomerCommitHttpResponse *response) {
+    [KHGLAPI tempVisitByRequest:request success:^(TempVisitHttpResponse *response) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showSuccess:@"提交成功" toView:self.view];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
+                [self backAction];
                 
             });
         });
@@ -290,6 +281,7 @@
 -(void)locationUpdateError{
     _lb_currentLocation.text = @"定位失败";
     _isLocationSuccess = NO;
+    _btn_update.enabled = YES;
 }
 
 -(void)locationAddressUpdate{

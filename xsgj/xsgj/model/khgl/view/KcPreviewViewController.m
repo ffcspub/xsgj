@@ -7,7 +7,7 @@
 //
 
 #import "KcPreviewViewController.h"
-#import "StockCommitBean.h"
+#import "KcEditCell.h"
 
 @interface KcPreviewViewController ()
 
@@ -45,7 +45,7 @@
     self.title = @"库存预览";
     [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(handleNavBarRight)];
     
-    [self.svSubContain setContentSize:CGSizeMake(360, 0)];
+    [self.svSubContain setContentSize:CGSizeMake(440, 0)];
     
 }
 
@@ -53,8 +53,14 @@
 
 - (void)handleNavBarRight
 {
+    BOOL bValid = [self checkCommitDataValid];
+    if(!bValid)
+    {
+        return;
+    }
+    _iSendImgCount = 0;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [self sendReportRequest];
+    [self commitData];
 }
 
 - (void)adjustTableViewHeight
@@ -73,6 +79,63 @@
     
     [self.svMainContain setContentSize:CGSizeMake(0, self.tvTypeName.frame.origin.y + self.tvTypeName.frame.size.height + 70)];
     
+}
+
+- (BOOL)checkCommitDataValid
+{
+    if(_arySourceData.count < 1)
+    {
+        [MBProgressHUD showError:@"请添加产品" toView:self.view];
+        return NO;
+    }
+    
+    for(KcCommitData * bean in _arySourceData)
+    {
+        if(bean.STOCK_NUM < 0)
+        {
+            [MBProgressHUD showError:@"请填写数量" toView:self.view];
+            return NO;
+        }
+        
+        if(bean.PRODUCT_UNIT_NAME.length < 1)
+        {
+            [MBProgressHUD showError:@"请填写单位" toView:self.view];
+            return NO;
+        }
+        
+        if(bean.STOCK_NO.length < 1)
+        {
+            [MBProgressHUD showError:@"请填写日期" toView:self.view];
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
+- (void)commitData
+{
+    if(_arySourceData.count > 0)
+    {
+        KcCommitData *kcCommitBean = [_arySourceData objectAtIndex:_iSendImgCount];
+        [SystemAPI uploadPhotoByFileName:self.title data:kcCommitBean.PhotoData success:^(NSString *fileId) {
+            kcCommitBean.PHOTO1 = fileId;
+            _iSendImgCount ++;
+            if(_iSendImgCount < _arySourceData.count)
+            {
+                [self commitData];
+            }
+            else
+            {
+                [self sendReportRequest];
+            }
+            
+        } fail:^(BOOL notReachable, NSString *desciption) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+            return;
+        }];
+    }
 }
 
 - (void)sendReportRequest
@@ -99,7 +162,21 @@
     request.CUST_ID    = self.customerInfo.CUST_ID;
     request.OPER_MENU  = @"35";
     // StockCommitBean
-    request.DATA = _arySourceData ;
+    NSMutableArray *aryCommit = [[NSMutableArray alloc] init];
+    for(KcCommitData *kcCommitBean in _arySourceData)
+    {
+        StockCommitBean *stockCommitBean = [[StockCommitBean alloc] init];
+        stockCommitBean.PROD_ID = kcCommitBean.PROD_ID;
+        stockCommitBean.STOCK_NUM = kcCommitBean.STOCK_NUM;
+        stockCommitBean.STOCK_NO = kcCommitBean.STOCK_NO;
+        stockCommitBean.PRODUCT_UNIT_ID = kcCommitBean.PRODUCT_UNIT_ID;
+        stockCommitBean.SPEC = kcCommitBean.SPEC;
+        stockCommitBean.PROD_NAME = kcCommitBean.PROD_NAME;
+        stockCommitBean.PRODUCT_UNIT_NAME = kcCommitBean.PRODUCT_UNIT_NAME;
+        stockCommitBean.PHOTO1 = kcCommitBean.PHOTO1;
+        [aryCommit addObject:stockCommitBean];
+    }
+    request.DATA = aryCommit ;
     
     [KHGLAPI commitStockByRequest:request success:^(StockCommitHttpResponse *response){
         step.SYNC_STATE = 2;
@@ -110,7 +187,7 @@
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
-                [self.navigationController popViewControllerAnimated:YES];
+                [self.navigationController popToRootViewControllerAnimated:YES];
             });
         });
         
@@ -146,7 +223,7 @@
         
         if(_arySourceData.count > 0)
         {
-            StockCommitBean *commitBean = [_arySourceData objectAtIndex:indexPath.row];
+            KcCommitData *commitBean = [_arySourceData objectAtIndex:indexPath.row];
             [nameCell setCellValue:commitBean];
         }
         
@@ -163,7 +240,7 @@
         
         if(_arySourceData.count > 0)
         {
-            StockCommitBean *commitBean = [_arySourceData objectAtIndex:indexPath.row];
+            KcCommitData *commitBean = [_arySourceData objectAtIndex:indexPath.row];
             [detailCell setCellValue:commitBean];
         }
         

@@ -7,22 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OrderBackDetailBean.h"
+#import "ThEditCell.h"
 
 @protocol ThPreviewDetailCellDelegate;
 
 @interface ThPreviewDetailCell : UITableViewCell
 
 @property (weak, nonatomic) id<ThPreviewDetailCellDelegate>delegate;
+@property (weak, nonatomic) IBOutlet UILabel *lbSpec;
 @property (weak, nonatomic) IBOutlet UILabel *lbNumber;
 @property (weak, nonatomic) IBOutlet UILabel *lbUnit;
 @property (weak, nonatomic) IBOutlet UILabel *lbDate;
 @property (weak, nonatomic) IBOutlet UILabel *lbReson;
 @property (weak, nonatomic) IBOutlet UIImageView *ivPhoto;
-@property (strong, nonatomic) OrderBackDetailBean *cellCommitBean;
+@property (strong, nonatomic) ThCommitData *cellCommitBean;
 
 
-- (void)setCellValue:(OrderBackDetailBean *)commitData;
+- (void)setCellValue:(ThCommitData *)commitData;
 - (IBAction)handleBtnModifyClicked:(id)sender;
 - (IBAction)handleBtnCancelClicked:(id)sender;
 

@@ -15,6 +15,7 @@
 @interface KcPreviewViewController : HideTabViewController<PreviweDetailCellDelegate>
 {
     NSMutableArray *_arySourceData;
+    int _iSendImgCount;
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *svMainContain;

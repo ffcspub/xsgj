@@ -22,12 +22,14 @@
     // Configure the view for the selected state
 }
 
-- (void)setCellValue:(StockCommitBean *)commitData
+- (void)setCellValue:(KcCommitData *)commitData
 {
     self.cellCommitBean = commitData;
+    self.lbSpec.text = commitData.SPEC;
     self.lbNumber.text = [NSString stringWithFormat:@"%d",commitData.STOCK_NUM];
     self.lbUnit.text = commitData.PRODUCT_UNIT_NAME;
     self.lbDate.text = commitData.STOCK_NO;
+    self.ivPhoto.image = commitData.PhotoImg;
 }
 
 - (IBAction)handleBtnModifyClicked:(id)sender {

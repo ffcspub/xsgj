@@ -9,7 +9,7 @@
 #import "ThEditViewController.h"
 #import "ThPreviewViewController.h"
 
-@interface ThEditViewController ()
+@interface ThEditViewController ()<UIImagePickerControllerDelegate>
 
 @end
 
@@ -41,12 +41,24 @@
 #pragma mark - functions
 
 - (IBAction)handleBtnCommitClicked:(id)sender {
+    BOOL bValid = [self checkCommitDataValid];
+    if(!bValid)
+    {
+        return;
+    }
+    _iSendImgCount = 0;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [self sendReportRequest];
+    [self commitData];
     
 }
 
 - (IBAction)handleBtnPreviewClicked:(id)sender {
+    BOOL bValid = [self checkCommitDataValid];
+    if(!bValid)
+    {
+        return;
+    }
+    
     ThPreviewViewController *viewController = [[ThPreviewViewController alloc] initWithNibName:@"ThPreviewViewController" bundle:nil];
     viewController.aryData = _aryKcData;
     viewController.customerInfo = self.customerInfo;
@@ -54,7 +66,7 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (void)loadStockCommitBean
+- (void)loadKcCommitData
 {
     for(BNProduct *product in super.aryData)
     {
@@ -66,16 +78,80 @@
             unitBean = [aryUnitBean objectAtIndex:0];
         }
    
-        OrderBackDetailBean *ThCommitBean = [[OrderBackDetailBean alloc] init];
+        ThCommitData *ThCommitBean = [[ThCommitData alloc] init];
         ThCommitBean.BATCH = @"";
         ThCommitBean.SPEC = product.SPEC;;
         ThCommitBean.REMARK = @"";
         ThCommitBean.PRODUCT_UNIT_NAME = unitBean.UNITNAME;
         ThCommitBean.PRODUCT_NAME = product.PROD_NAME;
-        ThCommitBean.ITEM_NUM = 0;
+        ThCommitBean.ITEM_NUM = -1;
         ThCommitBean.PRODUCT_UNIT_ID = unitBean.PRODUCT_UNIT_ID;
         ThCommitBean.PROD_ID = product.PROD_ID;
+        ThCommitBean.PhotoImg = [UIImage imageNamed:@"defaultPhoto"];
         [_aryKcData addObject:ThCommitBean];
+    }
+}
+
+- (BOOL)checkCommitDataValid
+{
+    if(_aryKcData.count < 1)
+    {
+        [MBProgressHUD showError:@"请添加产品" toView:self.view];
+        return NO;
+    }
+    
+    for(ThCommitData * bean in _aryKcData)
+    {
+        if(bean.ITEM_NUM < 0)
+        {
+            [MBProgressHUD showError:@"请填写数量" toView:self.view];
+            return NO;
+        }
+        
+        if(bean.PRODUCT_UNIT_NAME.length < 1)
+        {
+            [MBProgressHUD showError:@"请填写单位" toView:self.view];
+            return NO;
+        }
+        
+        if(bean.BATCH.length < 1)
+        {
+            [MBProgressHUD showError:@"请填写日期" toView:self.view];
+            return NO;
+        }
+        
+        if(bean.REMARK.length < 1)
+        {
+            [MBProgressHUD showError:@"请填写退货" toView:self.view];
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
+- (void)commitData
+{
+    if(_aryKcData.count > 0)
+    {
+        ThCommitData *kcCommitBean = [_aryKcData objectAtIndex:_iSendImgCount];
+        [SystemAPI uploadPhotoByFileName:self.title data:kcCommitBean.PhotoData success:^(NSString *fileId) {
+            kcCommitBean.PHOTO1 = fileId;
+            _iSendImgCount ++;
+            if(_iSendImgCount < _aryKcData.count)
+            {
+                [self commitData];
+            }
+            else
+            {
+                [self sendReportRequest];
+            }
+            
+        } fail:^(BOOL notReachable, NSString *desciption) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+            return;
+        }];
     }
 }
 
@@ -102,7 +178,24 @@
     request.VISIT_NO   = self.vistRecord.VISIT_NO;
     request.CUST_ID    = self.customerInfo.CUST_ID;
     request.OPER_MENU  = @"37";
-    request.DATA  = _aryKcData;
+    
+    NSMutableArray *aryCommit = [[NSMutableArray alloc] init];
+    for(ThCommitData *commitBean in _aryKcData)
+    {
+        OrderBackDetailBean *thCommitBean = [[OrderBackDetailBean alloc] init];
+        thCommitBean.PROD_ID = commitBean.PROD_ID;
+        thCommitBean.PRODUCT_UNIT_ID = commitBean.PRODUCT_UNIT_ID;
+        thCommitBean.ITEM_NUM = commitBean.ITEM_NUM;
+        thCommitBean.REMARK = commitBean.REMARK;
+        thCommitBean.BATCH = commitBean.BATCH;
+        thCommitBean.SPEC = commitBean.SPEC;
+        thCommitBean.PRODUCT_UNIT_NAME = commitBean.PRODUCT_UNIT_NAME;
+        thCommitBean.PRODUCT_NAME = commitBean.PRODUCT_NAME;
+        thCommitBean.PHOTO1 = commitBean.PHOTO1;
+        [aryCommit addObject:thCommitBean];
+    }
+    
+    request.DATA  = aryCommit;
     
     [KHGLAPI insertOrderBackByRequest:request success:^(InsertOrderBackHttpResponse *response){
         step.SYNC_STATE = 2;
@@ -113,7 +206,7 @@
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
-                [self.navigationController popViewControllerAnimated:YES];
+                [self.navigationController popToRootViewControllerAnimated:YES];
             });
         });
         
@@ -124,6 +217,58 @@
          
      }];
 }
+
+-(void)takePhoto
+{
+    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])
+    {
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = NO;
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:nil];
+    }else
+    {
+        [MBProgressHUD showError:@"无法打开照相机,请检查设备" toView:self.view];
+    }
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+//当选择一张图片后进入这里
+-(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+    //当选择的类型是图片
+    if ([type isEqualToString:@"public.image"])
+    {
+        //先把图片转成NSData
+        UIImage* image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+        image = [image imageByScaleForSize:CGSizeMake(self.view.frame.size.width * 1.5, self.view.frame.size.height * 1.5)];
+        if(_thCellForPhoto)
+        {
+            _thCellForPhoto.ivPhoto.image = image;
+            _thCellForPhoto.thCommitData.PhotoImg = image;
+            
+            
+            NSData *data;
+            if (UIImagePNGRepresentation(image) == nil)
+            {
+                data = UIImageJPEGRepresentation(image, 1.0);
+            }
+            else
+            {
+                data = UIImagePNGRepresentation(image);
+            }
+            _thCellForPhoto.thCommitData.PhotoData = data;
+        }
+    }
+    
+    [picker dismissModalViewControllerAnimated:YES];
+    picker = nil;
+}
+
 
 #pragma mark - UITableViewDataSource
 
@@ -150,7 +295,7 @@
     
     if(_aryKcData.count > 0)
     {
-        OrderBackDetailBean * bean = [_aryKcData objectAtIndex:indexPath.row];
+        ThCommitData * bean = [_aryKcData objectAtIndex:indexPath.row];
         cell.indexPath = indexPath;
         [cell setCellWithValue:bean];
     }
@@ -173,7 +318,7 @@
 
 - (void)onBtnAddClicked:(ThEditCell *)cell
 {
-    OrderBackDetailBean *ThCommitBean = [[OrderBackDetailBean alloc] init];
+    ThCommitData *ThCommitBean = [[ThCommitData alloc] init];
     ThCommitBean.BATCH = cell.thCommitData.BATCH;
     ThCommitBean.SPEC = cell.thCommitData.SPEC;;
     ThCommitBean.REMARK = cell.thCommitData.REMARK;
@@ -195,7 +340,8 @@
 
 - (void)onBtnPhotoClicked:(ThEditCell *)cell
 {
-    //[super takePhoto];
+    _thCellForPhoto = cell;
+    [self takePhoto];
 }
 
 - (void)onBtnDateClicked:(ThEditCell *)cell

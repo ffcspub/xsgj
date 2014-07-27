@@ -23,22 +23,28 @@
 }
 
 - (void)setCellWithValue:(OrderItemBean *)commitBean
-{    
-    self.commitData = commitBean;
-    self.lbName.text = commitBean.PROD_NAME;
-    self.lbNumber.text = [NSString stringWithFormat:@"%d",commitBean.ITEM_NUM];
-    
+{
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    numberFormatter.numberStyle = kCFNumberFormatterRoundFloor;
-    [numberFormatter setPositiveFormat:@"0.00;"];
-    NSString *formattedNumberString = [numberFormatter stringFromNumber:[NSNumber numberWithDouble:0.99696]];
+    [numberFormatter setPositiveFormat:@"###0.##"];
     
-    self.tfPrice.text = [NSString stringWithFormat:@"%0.001f",commitBean.ITEM_PRICE];
+    self.commitData = commitBean;
+    self.lbName.text = [NSString stringWithFormat:@"%@(%@)",commitBean.PROD_NAME,commitBean.SPEC];
+    self.lbNumber.text = [NSString stringWithFormat:@"%d",commitBean.ITEM_NUM];
+    self.tfPrice.text = [numberFormatter stringFromNumber:[NSNumber numberWithDouble:commitBean.ITEM_PRICE]];
     self.tfSubNum.text = [NSString stringWithFormat:@"%d",commitBean.ITEM_NUM];
     self.lbUnit.text = commitBean.UNIT_NAME;
     self.tfZpName.text = commitBean.GIFT_NAME;
-    self.tfZpPrice.text = [NSString stringWithFormat:@"%@",commitBean.GIFT_PRICE];
-    self.tfZpNum.text = [NSString stringWithFormat:@"%@",commitBean.GIFT_NUM];
+    self.tfZpNum.text = commitBean.GIFT_NUM;
+    self.tfZpUnit.text = commitBean.GIFT_UNIT_NAME;
+    self.tfZpPrice.text = commitBean.GIFT_PRICE;
+    self.lbTotalPrice.text = [numberFormatter stringFromNumber:[NSNumber numberWithDouble:commitBean.TOTAL_PRICE]];
+    
+    if(commitBean.ITEM_NUM < 0)
+    {
+        self.lbNumber.text = @"0";
+        self.tfSubNum.text = @"";
+    }
+    
 }
 
 - (IBAction)handleDelete:(id)sender {
@@ -61,10 +67,63 @@
         self.commitData.UNIT_NAME = [unitNames objectAtIndex:anIndex];
     }];
     
-    [popView showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view animated:NO];
+    [popView showInView:[UIApplication sharedApplication].delegate.window animated:NO];
 }
 
 #pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(textField == _tfPrice ||
+       textField == _tfZpPrice ||
+       textField == _tfSubNum ||
+       textField == _tfZpNum)
+    {
+        NSString *strRule = @"0123456789.\n";
+        if(textField == _tfSubNum || textField == _tfZpNum)
+        {
+            strRule = @"0123456789\n";
+        }
+        
+        NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:strRule] invertedSet];
+        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+        BOOL bNumber = [string isEqualToString:filtered];
+        if(!bNumber)
+        {
+            return NO;
+        }
+        
+        if([textField.text rangeOfString:@"."].length > 0)
+        {
+            if([string isEqualToString:@"."])
+            {
+                return NO;
+            }
+        }
+    }
+    
+    
+    NSMutableString * futureString = [NSMutableString stringWithString:textField.text];
+    [futureString  insertString:string atIndex:range.location];
+    NSInteger flag=0;
+    if(textField == _tfPrice || textField == _tfZpPrice)
+    {
+        const NSInteger limited = 2;
+        for (int i = futureString.length-1; i>=0; i--) {
+            if ([futureString characterAtIndex:i] == '.') {
+            
+                if (flag > limited) {
+                    return NO;
+                }
+                
+                break;
+            }
+            flag++;
+        }
+    }
+
+    return YES;
+}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -82,14 +141,24 @@
     {
         self.commitData.GIFT_NAME = textField.text;
     }
-    else if(textField == _tfZpPrice)
-    {
-        self.commitData.GIFT_PRICE = textField.text;
-    }
     else if(textField == _tfZpNum)
     {
         self.commitData.GIFT_NUM = textField.text;
     }
+    else if(textField == _tfZpUnit)
+    {
+        self.commitData.GIFT_UNIT_NAME = textField.text;
+    }
+    else if(textField == _tfZpPrice)
+    {
+        self.commitData.GIFT_PRICE = textField.text;
+    }
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setPositiveFormat:@"###0.##"];
+    
+    self.commitData.TOTAL_PRICE  = self.commitData.ITEM_PRICE * self.commitData.ITEM_NUM + self.commitData.GIFT_PRICE.doubleValue * self.commitData.GIFT_NUM.intValue;
+    self.lbTotalPrice.text = [numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.commitData.TOTAL_PRICE]];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -97,6 +166,7 @@
     [_tfPrice resignFirstResponder];
     [_tfSubNum resignFirstResponder];
     [_tfZpName resignFirstResponder];
+    [_tfZpUnit resignFirstResponder];
     [_tfZpPrice resignFirstResponder];
     [_tfZpNum resignFirstResponder];
     return NO;

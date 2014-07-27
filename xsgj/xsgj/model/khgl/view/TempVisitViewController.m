@@ -110,7 +110,8 @@
         if ( [visitDate isEqual:[[NSDate date]stringWithFormat:@"yyyy-MM-dd"]]) {
             cusVisitViewController.vistRecord = self.visitRecordSelect;
         }
-        [self.navigationController pushViewController:cusVisitViewController animated:YES];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:cusVisitViewController];
+        [self presentModalViewController:nav animated:YES];
     }
     
 
@@ -160,7 +161,7 @@
             }
         }
     }];
-    [popListView showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view animated:NO];
+    [popListView showInView:[UIApplication sharedApplication].delegate.window animated:NO];
 }
 
 - (IBAction)handleBtnCusInfoClicked:(id)sender {
@@ -390,7 +391,9 @@
     if ( [visitDate isEqual:[[NSDate date]stringWithFormat:@"yyyy-MM-dd"]]) {
         cusVisitViewController.vistRecord = self.visitRecordSelect;
     }
-    [self.navigationController pushViewController:cusVisitViewController animated:YES];
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:cusVisitViewController];
+    [self presentModalViewController:nav animated:YES];
 }
 
 - (void)handleNotifySelectFin:(NSNotification *)note

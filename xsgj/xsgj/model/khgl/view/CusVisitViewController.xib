@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1280" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CusVisitViewController">
@@ -14,6 +14,7 @@
                 <outlet property="lbAdjustLocation" destination="HAF-DY-wVa" id="Cwh-Wm-MQ3"/>
                 <outlet property="lbCurrentLocation" destination="Xjd-od-Mq4" id="UP5-ZX-dat"/>
                 <outlet property="lbCusName" destination="P0N-EI-Au3" id="9QA-If-qAJ"/>
+                <outlet property="lbEndVisitTime" destination="wyh-TO-6Ra" id="up4-a1-Dse"/>
                 <outlet property="lbVisitTime" destination="LBX-ok-cIP" id="j5t-Wf-kss"/>
                 <outlet property="lbVisitType" destination="ynp-IM-KF5" id="Cgj-Lr-MrU"/>
                 <outlet property="svContain" destination="OZb-fr-2Oj" id="W60-3O-r2r"/>
@@ -224,6 +225,13 @@
                         </button>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LBX-ok-cIP">
                             <rect key="frame" x="142" y="233" width="160" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wyh-TO-6Ra">
+                            <rect key="frame" x="142" y="519" width="160" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>

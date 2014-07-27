@@ -22,14 +22,15 @@
     // Configure the view for the selected state
 }
 
-- (void)setCellValue:(OrderBackDetailBean *)commitData
+- (void)setCellValue:(ThCommitData *)commitData
 {
     self.cellCommitBean = commitData;
+    self.lbSpec.text = commitData.SPEC;
     self.lbNumber.text = [NSString stringWithFormat:@"%d",commitData.ITEM_NUM];
     self.lbUnit.text = commitData.PRODUCT_UNIT_NAME;
     self.lbDate.text = commitData.BATCH;
     self.lbReson.text = commitData.REMARK;
-    //self.ivPhoto;
+    self.ivPhoto.image = commitData.PhotoImg;
 }
 
 - (IBAction)handleBtnModifyClicked:(id)sender {

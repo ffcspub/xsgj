@@ -151,7 +151,7 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
         }
         
     }];
-    [popListView showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view animated:NO];
+    [popListView showInView:[UIApplication sharedApplication].delegate.window animated:NO];
 }
 
 - (void)loadTypeData

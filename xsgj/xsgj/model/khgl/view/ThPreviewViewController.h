@@ -16,6 +16,7 @@
 @interface ThPreviewViewController : HideTabViewController<ThPreviewDetailCellDelegate>
 {
     NSMutableArray *_arySourceData;
+    int _iSendImgCount;
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *svMainContain;

@@ -15,6 +15,16 @@
 #import <NSDate+Helper.h>
 #import "LK_EasySignal.h"
 
+
+@interface KcCommitData : StockCommitBean
+
+// add by chenzf 20140727
+@property(nonatomic,strong) UIImage *PhotoImg;//非api数据，仅用于UI存储
+@property(nonatomic,strong) NSData *PhotoData;//非api数据，仅用于UI存储
+
+@end
+
+
 @protocol KcEditCellDelegate;
 
 @interface KcEditCell : UITableViewCell<UITextFieldDelegate>
@@ -31,9 +41,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnReduce;
 @property (weak, nonatomic) IBOutlet UIImageView *ivPhoto;
 @property (strong, nonatomic) NSIndexPath *indexPath;
-@property (strong, nonatomic) StockCommitBean *commitData;
+@property (strong, nonatomic) KcCommitData *commitData;
 
-- (void)setCellWithValue:(StockCommitBean *)commitBean;
+- (void)setCellWithValue:(KcCommitData *)commitBean;
 - (IBAction)handleBtnAddClicked:(id)sender;
 - (IBAction)handleBtnReduceClicked:(id)sender;
 - (IBAction)handleBtnPhotoClicked:(id)sender;

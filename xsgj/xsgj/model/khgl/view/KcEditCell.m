@@ -8,6 +8,10 @@
 
 #import "KcEditCell.h"
 
+@implementation KcCommitData
+@end
+
+
 @implementation KcEditCell
 
 - (void)awakeFromNib
@@ -24,7 +28,7 @@
     // Configure the view for the selected state
 }
 
-- (void)setCellWithValue:(StockCommitBean *)commitBean
+- (void)setCellWithValue:(KcCommitData *)commitBean
 {
     self.commitData = commitBean;
     self.lbName.text = [NSString stringWithFormat:@"%@(%@)",commitBean.PROD_NAME,commitBean.SPEC];
@@ -32,6 +36,13 @@
     self.tfNumber.text = [NSString stringWithFormat:@"%d",commitBean.STOCK_NUM];
     self.lbUnit.text = commitBean.PRODUCT_UNIT_NAME;
     self.lbDate.text = commitBean.STOCK_NO;
+    self.ivPhoto.image = commitBean.PhotoImg;
+    
+    if(commitBean.STOCK_NUM < 0)
+    {
+        self.lbNumber.text = @"0";
+        self.tfNumber.text = @"";
+    }
 }
 
 - (IBAction)handleBtnAddClicked:(id)sender {
@@ -79,6 +90,24 @@
 }
 
 #pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSCharacterSet *cs;
+    if(textField == self.tfNumber)
+    {
+        cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789\n"] invertedSet];
+        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+        BOOL bNumber = [string isEqualToString:filtered];
+        
+        if(!bNumber)
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {

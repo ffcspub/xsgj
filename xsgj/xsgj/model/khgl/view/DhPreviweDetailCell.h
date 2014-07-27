@@ -16,6 +16,8 @@
 
 
 @property (weak, nonatomic) id<DhPreviweDetailCellDelegate>delegate;
+@property (weak, nonatomic) IBOutlet UILabel *lbSpec;
+
 @property (weak, nonatomic) IBOutlet UILabel *lbPrice;
 @property (weak, nonatomic) IBOutlet UILabel *lbNumber;
 @property (weak, nonatomic) IBOutlet UILabel *lbUnit;

@@ -12,11 +12,20 @@
 #import <NSDate+Helper.h>
 #import "LK_EasySignal.h"
 
+
+@interface ThCommitData : OrderBackDetailBean
+
+// add by chenzf 20140727
+@property(nonatomic,strong) UIImage *PhotoImg;//非api数据，仅用于UI存储
+@property(nonatomic,strong) NSData *PhotoData;//非api数据，仅用于UI存储
+
+@end
+
 @interface ThEditCell : KcEditCell
 
 @property (weak, nonatomic) IBOutlet UITextField *tfReson;
-@property (strong, nonatomic) OrderBackDetailBean *thCommitData;
+@property (strong, nonatomic) ThCommitData *thCommitData;
 
-- (void)setCellWithValue:(OrderBackDetailBean *)commitBean;
+- (void)setCellWithValue:(ThCommitData *)commitBean;
 
 @end

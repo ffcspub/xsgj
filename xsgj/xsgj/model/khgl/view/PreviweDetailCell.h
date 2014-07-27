@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "StockCommitBean.h"
+#import "KcEditCell.h"
 
 #define NOTIFICATION_MODIFY_DATA @"NOTIFICATION_MODIFY_DATA"
 
@@ -17,13 +17,14 @@
 
 
 @property (weak, nonatomic) id<PreviweDetailCellDelegate>delegate;
+@property (weak, nonatomic) IBOutlet UILabel *lbSpec;
 @property (weak, nonatomic) IBOutlet UILabel *lbNumber;
 @property (weak, nonatomic) IBOutlet UILabel *lbUnit;
 @property (weak, nonatomic) IBOutlet UILabel *lbDate;
 @property (weak, nonatomic) IBOutlet UIImageView *ivPhoto;
-@property (strong, nonatomic) StockCommitBean *cellCommitBean;
+@property (strong, nonatomic) KcCommitData *cellCommitBean;
 
-- (void)setCellValue:(StockCommitBean *)commitData;
+- (void)setCellValue:(KcCommitData *)commitData;
 - (IBAction)handleBtnModifyClicked:(id)sender;
 - (IBAction)handleBtnCancelClicked:(id)sender;
 

@@ -85,9 +85,6 @@
     [self initView];
     [self LoadFunctionItems];
     [self loadVisitTypeData];
-    [self handleBtnRefreshClicked:nil];
-    
-    
 }
 
 -(void)viewDidUnload{
@@ -99,6 +96,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [_tvFuncBg reloadData];
+    [self handleBtnRefreshClicked:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -140,9 +138,24 @@
         _btnVisitBegin.enabled = YES;
         _lbVisitTime.text = @"";
     }
+    
+    if(_vistRecord.END_TIME.length > 0)
+    {
+        _btnVisitEnd.enabled = NO;
+        _lbEndVisitTime.text = _vistRecord.END_TIME;
+    }
+    else
+    {
+        _btnVisitEnd.enabled = YES;
+        _lbEndVisitTime.text = @"";
+    }
 }
 
 #pragma mark - functions
+
+-(void)backAction{
+    [self dismissModalViewControllerAnimated:YES];
+}
 
 - (IBAction)handleBtnRefreshClicked:(id)sender {
     [_btnRefresh setEnabled:NO];
@@ -168,7 +181,7 @@
         NSString *strSelect = [aryItems objectAtIndex:anIndex];
         _lbVisitType.text = strSelect;
     }];
-    [popListView showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view animated:NO];
+    [popListView showInView:[UIApplication sharedApplication].delegate.window animated:NO];
 }
 
 - (IBAction)handleBtnVisitBeginClicked:(id)sender {
@@ -198,16 +211,8 @@
 }
 
 - (IBAction)handleBtnVisitEndClicked:(id)sender {
-    if (!_isLocationSuccess)
-    {
-        // chenzftodo: 判断定位过
-    }
-    
-    if (_isManualLocation) {
-//        request.LNG2 = [NSNumber numberWithFloat:manualCoordinate.longitude];
-//        request.LAT2 = [NSNumber numberWithFloat:manualCoordinate.latitude];
-//        request.POSITION2 = _lb_manualAdjust.text;
-    }
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self sendVisitEndRequest];
 }
 
 - (void)loadVisitTypeData
@@ -256,36 +261,38 @@
     request.VISIT_DATE           = _vistRecord.VISIT_DATE;
     request.VISIT_NO             = _vistRecord.VISIT_NO;
     
-    
-    request.BEGIN_POS       = _vistRecord.BEGIN_POS;
-    request.END_POS         = @"结束地点";
     request.BEGIN_TIME      = _vistRecord.BEGIN_TIME;
     request.END_TIME        = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     request.CUST_ID         = _customerInfo.CUST_ID;
     // chenzftodo: 数据确认
-//    request.VISIT_CONDITION_CODE = _vistRecord.VISIT_CONDITION_CODE;
-//    request.VISIT_TYPE      = 0;
-//    request.CONF_ID         = 0;
-//    request.SYNC_STATE      = 2;
-//    request.END_LNG         = (1.1927513E6);
-//    request.END_LNG2        = (0.0);
-//    request.END_LAT         = (2.6115058E7);
-//    request.END_LAT2        = (0.0);
-    
+    //request.VISIT_CONDITION_CODE = _vistRecord.VISIT_CONDITION_CODE;
+    request.VISIT_TYPE      = 0;
+    request.CONF_ID         = 0;
+    //request.SYNC_STATE      = 2;
     request.BEGIN_LNG       = [NSNumber numberWithDouble:_vistRecord.BEGIN_LNG];
     request.BEGIN_LNG2      = [NSNumber numberWithDouble:_vistRecord.BEGIN_LNG2];
     request.BEGIN_LAT       = [NSNumber numberWithDouble:_vistRecord.BEGIN_LAT];
     request.BEGIN_LAT2      = [NSNumber numberWithDouble:_vistRecord.BEGIN_LAT2];
-    
-    
+    request.BEGIN_POS       = _vistRecord.BEGIN_POS;
+    request.BEGIN_POS2      = _vistRecord.BEGIN_POS2;
+    request.END_LAT         = [NSNumber numberWithDouble:[ShareValue shareInstance].currentLocation.latitude];
+    request.END_LNG         = [NSNumber numberWithDouble:[ShareValue shareInstance].currentLocation.longitude];
+    request.END_POS         = [ShareValue shareInstance].address;
+    if (manualCoordinate.longitude > 0) {
+        request.END_LAT2 = [NSNumber numberWithDouble:manualCoordinate.latitude];
+        request.END_LNG2 = [NSNumber numberWithDouble:manualCoordinate.longitude];
+        request.END_POS2 = _address;
+    }
+
     [KHGLAPI recordVisitByRequest:request success:^(RecordVisitHttpResponse *response){
+        _lbEndVisitTime.text = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:@"拜访成功" toView:self.view];
+        [MBProgressHUD showSuccess:@"提交成功" toView:self.view];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
-                [self.navigationController popViewControllerAnimated:YES];
+                [self dismissModalViewControllerAnimated:YES];
             });
         });
         
@@ -386,7 +393,7 @@
     
     if(_btnVisitBegin.enabled)
     {
-        // 提示尚未到访登记
+        [MBProgressHUD showError:@"尚未到访登记" toView:self.view];
         return;
     }
     

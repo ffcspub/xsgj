@@ -13,6 +13,7 @@
 @interface ThEditViewController : KcEditViewController
 {
     ThEditCell *_thCellForDate;
+    ThEditCell *_thCellForPhoto;
 }
 
 
