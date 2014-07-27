@@ -188,7 +188,7 @@
     NSString *strCurrentTime = [[NSDate date]stringWithFormat:@"yyyy-MM-dd HH:mm:ss" ];
     _lbVisitTime.text = strCurrentTime;
     _btnVisitBegin.enabled = NO;
-    _vistRecord.VISIT_TYPE = 0;
+    _vistRecord.VISIT_TYPE = _strVisitType.intValue;
     _vistRecord.VISIT_DATE = [[NSDate date]stringWithFormat:@"yyyy-MM-dd 00:00:00"];
     _vistRecord.VISIT_CONDITION_CODE = _condition.CONDITION_CODE;
     _vistRecord.VISIT_CONDITION_NAME = _condition.CONDITION_NAME;
@@ -206,7 +206,7 @@
     _aryVisitType = [NSMutableArray arrayWithObjects: _condition,nil];
     [_vistRecord save];
     
-    BNVistRecord *record = [BNVistRecord searchSingleWithWhere:[NSString stringWithFormat:@"CUST_ID=%d and VISIT_TYPE=0",_customerInfo.CUST_ID] orderBy:@"BEGIN_TIME"];
+    BNVistRecord *record = [BNVistRecord searchSingleWithWhere:[NSString stringWithFormat:@"CUST_ID=%d and VISIT_TYPE=%@",_customerInfo.CUST_ID,_strVisitType] orderBy:@"BEGIN_TIME"];
     NSLog(@"%@",record.VISIT_NO);
 }
 
@@ -245,6 +245,10 @@
     frame.origin.y = _ivIconOver.frame.origin.y + 8;
     _btnVisitEnd.frame = frame;
     
+    frame = _lbEndVisitTime.frame;
+    frame.origin.y = _btnVisitEnd.frame.origin.y + 9;
+    _lbEndVisitTime.frame = frame;
+    
     [_svContain setContentSize:CGSizeMake(_svContain.frame.size.width, _btnVisitEnd.frame.origin.y + _btnVisitEnd.frame.size.height + 10)];
 }
 
@@ -266,7 +270,7 @@
     request.CUST_ID         = _customerInfo.CUST_ID;
     // chenzftodo: 数据确认
     //request.VISIT_CONDITION_CODE = _vistRecord.VISIT_CONDITION_CODE;
-    request.VISIT_TYPE      = 0;
+    request.VISIT_TYPE      = _strVisitType;
     request.CONF_ID         = 0;
     //request.SYNC_STATE      = 2;
     request.BEGIN_LNG       = [NSNumber numberWithDouble:_vistRecord.BEGIN_LNG];

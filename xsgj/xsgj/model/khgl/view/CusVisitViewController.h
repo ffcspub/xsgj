@@ -34,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lbVisitTime;
 @property (weak, nonatomic) IBOutlet UILabel *lbEndVisitTime;
 @property (strong, nonatomic) BNCustomerInfo *customerInfo;
+@property (strong, nonatomic) NSString *strVisitType;
 @property (strong, nonatomic) BNVistRecord *vistRecord;
 
 - (IBAction)handleBtnRefreshClicked:(id)sender;

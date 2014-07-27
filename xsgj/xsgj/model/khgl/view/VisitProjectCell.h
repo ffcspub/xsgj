@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BNCustomerInfo.h"
+#import "BNVistRecord.h"
 
 @interface VisitProjectCell : UITableViewCell
 
@@ -15,5 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *lbAddress;
 @property (weak, nonatomic) IBOutlet UILabel *lbStatus;
 
+- (void)setCellWithValue:(BNCustomerInfo *)customerInfo VistRecord:(NSArray *)visitRecord;
 
 @end

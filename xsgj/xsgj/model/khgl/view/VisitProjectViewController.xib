@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
+        <deployment defaultVersion="1280" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="lbDate" destination="DlK-Uh-gEp" id="8cr-zE-nlU"/>
                 <outlet property="lbWeekday" destination="Bg1-x3-uYb" id="FeA-JC-vKk"/>
+                <outlet property="tvContain" destination="lF7-fH-I3Q" id="B7h-Gv-h0h"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" id="wQw-Yf-EfW">
-                    <rect key="frame" x="10" y="0.0" width="300" height="50"/>
+                    <rect key="frame" x="10" y="5" width="300" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="part1-nor.png" id="cAX-yL-qHS">
@@ -53,6 +54,10 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="icon_cellright_s.png" id="lDx-OX-1TL">
+                            <rect key="frame" x="267" y="15" width="10" height="19"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="o53-rS-9Sj">
                             <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -63,17 +68,17 @@
                                 <action selector="handleBtnWeek:" destination="-1" eventType="touchUpInside" id="jEe-GG-pME"/>
                             </connections>
                         </button>
-                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="icon_cellright_s.png" id="lDx-OX-1TL">
-                            <rect key="frame" x="267" y="15" width="10" height="19"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="lF7-fH-I3Q">
-                    <rect key="frame" x="10" y="60" width="300" height="510"/>
+                    <rect key="frame" x="10" y="65" width="300" height="503"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="shP-id-alc"/>
+                        <outlet property="delegate" destination="-1" id="gvR-Ba-p0D"/>
+                    </connections>
                 </tableView>
             </subviews>
             <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
