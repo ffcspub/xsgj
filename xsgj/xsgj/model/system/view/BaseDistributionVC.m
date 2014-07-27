@@ -16,6 +16,7 @@
 #import "MBProgressHUD+Add.h"
 #import "IBActionSheet.h"
 #import "DistributionDetailVC.h"
+#import "DistributionHandleDetailVC.h"
 
 static NSString * const DistributionQueryCellIdentifier = @"DistributionQueryCellIdentifier";
 
@@ -75,6 +76,11 @@ static int const pageSize = 20;
         self.currentPage += 1;
         [weakSelf loadDistribution];
     }];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     self.currentPage = 1;
     [self loadDistribution];
@@ -148,16 +154,18 @@ static int const pageSize = 20;
             if (self.type == DistrubutionTypeQuery) {
                 IBActionSheet *sheet = [[IBActionSheet alloc] initWithTitle:@"请选择类型"
                                                                    delegate:self
-                                                          cancelButtonTitle:@"取消"
+                                                          cancelButtonTitle:nil
                                                      destructiveButtonTitle:nil
                                                           otherButtonTitles:@"查询详情", nil];
+                sheet.shouldCancelOnTouch = YES;
                 [sheet showInView:self.navigationController.view];
             } else {
                 IBActionSheet *sheet = [[IBActionSheet alloc] initWithTitle:@"请选择类型"
                                                                    delegate:self
-                                                          cancelButtonTitle:@"取消"
+                                                          cancelButtonTitle:nil
                                                      destructiveButtonTitle:nil
                                                           otherButtonTitles:@"查询详情", @"配送处理", nil];
+                sheet.shouldCancelOnTouch = YES;
                 [sheet showInView:self.navigationController.view];
             }
         }
@@ -236,6 +244,30 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
         DistributionDetailVC *vc = [[DistributionDetailVC alloc] initWithNibName:nil bundle:nil];
         vc.disBean = self.arrData[tempIndex];
         [self.navigationController pushViewController:vc animated:YES];
+    } else if (buttonIndex == 1){
+        if (self.type == DistrubutionTypeHandle) {
+            
+            MobileInfoDisBean *bean = self.arrData[tempIndex];
+            DistributionHandleDetailVC *vc;
+            if ([bean.STATE intValue] == 1) {
+                vc = [[DistributionHandleDetailVC alloc] initWithNibName:@"DistributionHandleDetailVC-One" bundle:nil];
+                vc.currentState = DistributionHandleStateReceive; // 已下单下一步操作为接单
+                vc.arrResult = @[@"已接单"];
+            } else if ([bean.STATE intValue] == 2) {
+                vc = [[DistributionHandleDetailVC alloc] initWithNibName:@"DistributionHandleDetailVC-One" bundle:nil];
+                vc.currentState = DistributionHandleStateTransport; // 已接单下一步操作为配送中
+                vc.arrResult = @[@"配送中"];
+            } else if ([bean.STATE intValue] == 3) {
+                vc = [[DistributionHandleDetailVC alloc] initWithNibName:@"DistributionHandleDetailVC-Two" bundle:nil];
+                vc.currentState = DistributionHandleStateResult; // 配送中下一步操作为配送结果(配送成功或者配送失败)
+                vc.arrResult = @[@"配送完成", @"配送失败"];
+            } else {
+                [MBProgressHUD showError:@"单据已处理完毕，无法再次处理!" toView:self.view];
+                return;
+            }
+            vc.DISTRIBUTION_ID = bean.DISTRIBUTION_ID;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
 }
 

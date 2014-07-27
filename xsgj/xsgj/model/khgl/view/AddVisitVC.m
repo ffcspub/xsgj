@@ -7,6 +7,7 @@
 //
 
 #import "AddVisitVC.h"
+#import <NSDate+Helper.h>
 #import "UIColor+External.h"
 #import "MapUtils.h"
 #import "MapAddressVC.h"
@@ -14,6 +15,7 @@
 #import "MBProgressHUD+Add.h"
 #import "SystemAPI.h"
 #import "SIAlertView.h"
+#import "ShareValue.h"
 
 @interface AddVisitVC () <MapAddressVCDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
@@ -166,7 +168,34 @@
  */
 - (void)addVisiterAction
 {
+    AddCustomerCommitHttpRequest *request = [[AddCustomerCommitHttpRequest alloc] init];
+    request.CLASS_ID = 1;
+    request.CUST_NAME = @"客户姓名";
+    request.LINKMAN = @"联系人";
+    request.TEL = @"联系电话";
+    request.ADDRESS = @"联系地址";
+    request.REMARK = self.tfRemark.text;
+    request.PHOTO = _photoId;
+    request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     
+    // chenzftodo: 数据确认
+    request.LNG = @([ShareValue shareInstance].currentLocation.longitude);
+    request.LAT = @([ShareValue shareInstance].currentLocation.latitude);
+    request.POSITION = self.lblAutoLocation.text;
+    
+    [KHGLAPI addCustomerCommitByRequest:request success:^(AddCustomerCommitHttpResponse *response) {
+        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        
+        [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
+        
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:desciption toView:self.view];
+        
+    }];
 }
 
 - (IBAction)submitAction:(id)sender
@@ -193,10 +222,17 @@
 
 - (void)showCamera
 {
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.delegate = self;
-    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-    [self presentViewController:imagePickerController animated:YES completion:NULL];
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        imagePickerController.delegate = self;
+        imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:imagePickerController animated:YES completion:NULL];
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"无法启用相机" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 - (IBAction)takePhotoAction:(id)sender
