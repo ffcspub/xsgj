@@ -111,6 +111,8 @@
 
 @interface GetMobileDisInfoHttpResponse : LK_HttpBasePageResponse
 
+@property(nonatomic,strong) NSArray *DATAT;
+
 @end
 @interface MobileDisUpdateStateHttpResponse : LK_HttpBaseResponse
 

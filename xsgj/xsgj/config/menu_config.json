@@ -52,7 +52,7 @@
  {"id":"29","name":"关于","icon":"icon_about","parentId":"2","childClass":"AboutViewController","leftShow":"true", "rightShow":"true"},
  {"id":"49","name":"用户反馈", "icon":"icon_advicereport","parentId":"3","childClass":"FXAdviceReportVC","leftShow":"true", "rightShow":"true"},
  {"id":"57","name":"日常拍照", "icon":"icon_customerquery","parentId":"0","childClass":"","leftShow":"true", "rightShow":"true"},
-  {"id":"54","name":"配送管理", "icon":"icon_trip","parentId":"0","childClass":"","leftShow":"true", "rightShow":"true"},
- {"id":"55","name":"配送查询", "icon":"icon_querytrip","parentId":"54","childClass":"","leftShow":"true", "rightShow":"true"},
-  {"id":"56","name":"配送处理", "icon":"icon_tripapproval","parentId":"54","childClass":"","leftShow":"true", "rightShow":"true"}
+ {"id":"54","name":"配送管理", "icon":"icon_trip","parentId":"0","childClass":"","leftShow":"true", "rightShow":"true"},
+ {"id":"55","name":"配送查询", "icon":"icon_querytrip","parentId":"54","childClass":"DistributionQueryVC","leftShow":"true", "rightShow":"true"},
+ {"id":"56","name":"配送处理", "icon":"icon_tripapproval","parentId":"54","childClass":"DistributionHandleVC","leftShow":"true", "rightShow":"true"}
 ]

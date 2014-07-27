@@ -16,9 +16,11 @@
 @property(nonatomic,strong) NSString *	ADDRESS;	;//	配送地址
 @property(nonatomic,strong) NSString *	LINKMAN;	;//	联系人
 @property(nonatomic,strong) NSString *	PHONE;	;//	联系电话
-@property(nonatomic,strong) NSString *	STATE;	;//	订单状态id
+@property(nonatomic,strong) NSString *	STATE;	;//	订单状态id STATE状态有7种，1已下单2已接单3配送中4配送完成5配送失败6作废7归档
 @property(nonatomic,strong) NSString *	YY_TIME;	;//	预约时间
 @property(nonatomic,strong) NSString *	PROD_NAME;	;//	配送产品
 @property(nonatomic,strong) NSString *	REMARK;	;//	备注
+
+@property(nonatomic,strong) NSString * STATE_NAME;
 
 @end

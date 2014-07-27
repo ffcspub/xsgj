@@ -142,7 +142,7 @@
 
 @implementation GetMobileDisInfoHttpResponse
 
-+(Class)__DATAClass{
++(Class)__DATATClass{
     return [MobileInfoDisBean class];
 }
 
