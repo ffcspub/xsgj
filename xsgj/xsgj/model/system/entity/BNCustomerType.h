@@ -21,4 +21,6 @@
 
 +(NSString *)getOwnerAndChildTypeIds:(int)typeid;
 
+-(NSMutableArray *)getFamilySequence;
+
 @end

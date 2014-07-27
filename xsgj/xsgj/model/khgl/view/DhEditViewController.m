@@ -67,7 +67,7 @@
 - (IBAction)handleCommit:(id)sender {
     for(OrderItemBean *commitData in _aryDhData)
     {
-        commitData.GIFT_TOTAL = commitData.GIFT_NUM * commitData.GIFT_PRICE;
+//        commitData.GIFT_TOTAL = commitData.GIFT_NUM * commitData.GIFT_PRICE;
         commitData.TOTAL_PRICE = commitData.ITEM_NUM * commitData.ITEM_PRICE;
     }
     

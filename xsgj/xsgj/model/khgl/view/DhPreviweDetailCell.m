@@ -24,7 +24,7 @@
 
 - (void)setCellValue:(OrderItemBean *)commitData
 {
-    commitData.GIFT_TOTAL = commitData.GIFT_NUM * commitData.GIFT_PRICE;
+//    commitData.GIFT_TOTAL = commitData.GIFT_NUM * commitData.GIFT_PRICE;
     commitData.TOTAL_PRICE = commitData.ITEM_NUM * commitData.ITEM_PRICE;
     
     self.cellCommitBean = commitData;

@@ -34,5 +34,19 @@
     return [areaids substringToIndex:areaids.length - 1];
 }
 
+-(void)getParentByArray:(NSMutableArray *)array{
+    BNAreaInfo *areainfo = [BNAreaInfo searchSingleWithWhere:[NSString stringWithFormat:@"AREA_ID=%d",_AREA_PID] orderBy:nil];
+    if (areainfo) {
+        [array addObject:areainfo];
+        [areainfo getParentByArray:array];
+    }
+}
+
+-(NSMutableArray *)getFamilySequence{
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObject:self];
+    [self getParentByArray:array];
+    return array;
+}
 
 @end
