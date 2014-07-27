@@ -152,7 +152,7 @@ static int const pageSize = 20;
             
             // 配送查询
             if (self.type == DistrubutionTypeQuery) {
-                IBActionSheet *sheet = [[IBActionSheet alloc] initWithTitle:@"请选择类型"
+                IBActionSheet *sheet = [[IBActionSheet alloc] initWithTitle:@"提示"
                                                                    delegate:self
                                                           cancelButtonTitle:nil
                                                      destructiveButtonTitle:nil
@@ -160,7 +160,7 @@ static int const pageSize = 20;
                 sheet.shouldCancelOnTouch = YES;
                 [sheet showInView:self.navigationController.view];
             } else {
-                IBActionSheet *sheet = [[IBActionSheet alloc] initWithTitle:@"请选择类型"
+                IBActionSheet *sheet = [[IBActionSheet alloc] initWithTitle:@"提示"
                                                                    delegate:self
                                                           cancelButtonTitle:nil
                                                      destructiveButtonTitle:nil

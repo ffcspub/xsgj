@@ -85,17 +85,20 @@
 
 - (IBAction)selectResultAction:(id)sender
 {
-    IBActionSheet *sheet = [[IBActionSheet alloc] initWithTitle:@"请选择类型"
+    IBActionSheet *sheet = [[IBActionSheet alloc] initWithTitle:@"请选择处理结果"
                                                        delegate:self
-                                              cancelButtonTitle:@"取消"
+                                              cancelButtonTitle:nil
                                          destructiveButtonTitle:nil
-                                              otherButtonTitles:@"查询详情", nil];
+                                              otherButtonTitles:nil];
+    for (NSString *btn in self.arrResult) {
+        [sheet addButtonWithTitle:btn];
+    }
     [sheet showInView:self.navigationController.view];
 }
 
 -(void)actionSheet:(IBActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    
+    self.lblResult.text = self.arrResult[buttonIndex];
 }
 
 - (void)showCamera

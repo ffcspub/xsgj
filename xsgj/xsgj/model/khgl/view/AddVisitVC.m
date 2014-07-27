@@ -16,6 +16,10 @@
 #import "SystemAPI.h"
 #import "SIAlertView.h"
 #import "ShareValue.h"
+#import "IBActionSheet.h"
+#import "SIAlertView.h"
+#import "SelectTreeViewController.h"
+#import "BNCustomerType.h"
 
 @interface AddVisitVC () <MapAddressVCDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
@@ -24,7 +28,12 @@
     NSData *_imageData;
     CLLocationCoordinate2D manualCoordinate;
     NSString *_photoId;
+    
+    BOOL _isTypeSuccess; // 临时记录客户类型是否加载成功
+    int _currentCustomerTypeID; // 记录客户类型ID
 }
+
+@property (nonatomic, strong) NSMutableArray *arrType;
 
 @property (weak, nonatomic) IBOutlet UIView *vContaintLocation; // 地图根视图
 @property (weak, nonatomic) IBOutlet UIScrollView *svRoot;
@@ -88,6 +97,11 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(locationAddressUpdateErro) name:NOTIFICATION_ADDRESS_UPDATEERROR object:nil];
     
     [[MapUtils shareInstance] startLocationUpdate];
+    
+    // 加载客户类型数据
+    [self getCustomerType];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleNotifySelectFin:) name:NOTIFICATION_SELECT_FIN object:nil];
 }
 
 -(void)viewDidUnload
@@ -101,6 +115,17 @@
 {
     [super didReceiveMemoryWarning];
 
+}
+
+#pragma mark - Getter & Setter
+
+- (NSMutableArray *)arrType
+{
+    if (!_arrType) {
+        _arrType = [[NSMutableArray alloc] init];
+    }
+    
+    return _arrType;
 }
 
 #pragma mark - 事件
@@ -142,6 +167,32 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+/**
+ *  获取客户类型
+ */
+- (void)getCustomerType
+{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    AllTypeHttpRequest *request = [[AllTypeHttpRequest alloc] init];
+    [KHGLAPI allTypeInfoByRequest:request success:^(AllTypeHttpResponse *response) {
+        
+        _isTypeSuccess = YES;
+        
+        NSLog(@"当前返回的类型总数:%d", [response.DATA count]);
+        [self.arrType removeAllObjects];
+        [self.arrType addObjectsFromArray:response.DATA];
+        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:desciption toView:self.view];
+        
+    }];
+}
+
 - (void)uploadPhoto
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -169,16 +220,15 @@
 - (void)addVisiterAction
 {
     AddCustomerCommitHttpRequest *request = [[AddCustomerCommitHttpRequest alloc] init];
-    request.CLASS_ID = 1;
-    request.CUST_NAME = @"客户姓名";
-    request.LINKMAN = @"联系人";
-    request.TEL = @"联系电话";
-    request.ADDRESS = @"联系地址";
+    request.CLASS_ID = _currentCustomerTypeID;
+    request.CUST_NAME = self.tfName.text;
+    request.LINKMAN = self.tfLinkMan.text;
+    request.TEL = self.tfPhone.text;
+    request.ADDRESS = self.tvAddr.text;
     request.REMARK = self.tfRemark.text;
     request.PHOTO = _photoId;
     request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
-    
-    // chenzftodo: 数据确认
+
     request.LNG = @([ShareValue shareInstance].currentLocation.longitude);
     request.LAT = @([ShareValue shareInstance].currentLocation.latitude);
     request.POSITION = self.lblAutoLocation.text;
@@ -238,6 +288,88 @@
 - (IBAction)takePhotoAction:(id)sender
 {
     [self performSelector:@selector(showCamera) withObject:nil afterDelay:0.3];
+}
+
+- (IBAction)chooseCustomerType:(id)sender
+{
+    if (!_isTypeSuccess) {
+        [self getCustomerType];
+        return;
+    }
+    
+    if ([self.arrType count] > 0) {
+        
+        //TODO: 进去类型选择界面
+        NSArray *data = [self makeCusTypeTreeData];
+        SelectTreeViewController *selectTreeViewController = [[SelectTreeViewController alloc] initWithNibName:@"SelectTreeViewController" bundle:nil];
+        selectTreeViewController.data = data;
+        [self.navigationController pushViewController:selectTreeViewController animated:YES];
+        
+    } else {
+        SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"提示"
+                                                        message:@"当前无客户类型选择"
+                                              cancelButtonTitle:nil
+                                                  cancelHandler:nil
+                                         destructiveButtonTitle:@"确定"
+                                             destructiveHandler:^(SIAlertView *alertView) {}];
+        [alert show];
+    }
+}
+
+- (NSArray *)makeCusTypeTreeData
+{
+    NSMutableArray *parentTree = [[NSMutableArray alloc] init];
+    NSMutableArray *arySourceData = [[NSMutableArray alloc] initWithArray:self.arrType];
+    for(BNCustomerType *customerType in self.arrType)
+    {
+        if(customerType.TYPE_PID == 0)
+        {
+            TreeData *aryData = [[TreeData alloc] init];
+            aryData.name = customerType.TYPE_NAME;
+            aryData.dataInfo = customerType;
+            [parentTree addObject:aryData];
+            
+            [arySourceData removeObject:customerType];
+        }
+    }
+    
+    [self makeSubCusTypeTreeData:arySourceData ParentTreeData:parentTree];
+    return parentTree;
+}
+
+- (void)makeSubCusTypeTreeData:(NSArray *)sourceData ParentTreeData:(NSMutableArray *)parentTree
+{
+    NSMutableArray *aryChildTree = [[NSMutableArray alloc] init];
+    NSMutableArray *arySourceData = [[NSMutableArray alloc] initWithArray:sourceData];
+    for(BNCustomerType *customerType in sourceData)
+    {
+        for(TreeData *parentData in parentTree)
+        {
+            BNCustomerType *parentCusType = (BNCustomerType *)parentData.dataInfo;
+            if(customerType.TYPE_PID == parentCusType.TYPE_ID)
+            {
+                TreeData *aryData = [[TreeData alloc] init];
+                aryData.name = customerType.TYPE_NAME;
+                aryData.dataInfo = customerType;
+                [parentData.children addObject:aryData];
+                
+                [aryChildTree addObject:aryData];
+                [arySourceData removeObject:customerType];
+            }
+        }
+    }
+    
+    if(arySourceData.count > 0)
+    {
+        [self makeSubCusTypeTreeData:arySourceData ParentTreeData:aryChildTree];
+    }
+}
+
+- (void)handleNotifySelectFin:(NSNotification *)note
+{
+    BNCustomerType *cusType = [note object];
+    self.lblType.text = cusType.TYPE_NAME;
+    _currentCustomerTypeID = cusType.TYPE_ID;
 }
 
 #pragma mark - MapNotification

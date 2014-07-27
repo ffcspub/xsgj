@@ -116,6 +116,9 @@
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="string" keyPath="leftTitle" value="客户类型"/>
                             </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="chooseCustomerType:" destination="-1" eventType="touchUpInside" id="l6H-fX-zRn"/>
+                            </connections>
                         </button>
                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="dropbox.png" id="Ccs-xy-3Pm">
                             <rect key="frame" x="283" y="150" width="17" height="19"/>

@@ -39,6 +39,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    /*
     if([[[[UIDevice currentDevice] systemVersion] componentsSeparatedByString:@"."][0] intValue] >= 7) {
         CGRect statusBarViewRect = [[UIApplication sharedApplication] statusBarFrame];
         float heightPadding = statusBarViewRect.size.height+self.navigationController.navigationBar.frame.size.height;
@@ -46,6 +48,7 @@
         self.treeView.contentOffset = CGPointMake(0.0, -heightPadding);
     }
     self.treeView.frame = self.view.bounds;
+    */
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,7 +63,8 @@
     [self showRightBarButtonItemWithTitle:@"确定" target:self action:@selector(handleNavBarRight)];
     self.navigationItem.rightBarButtonItem.enabled = NO;
     
-    RATreeView *treeView = [[RATreeView alloc] initWithFrame:self.view.frame];
+    RATreeView *treeView = [[RATreeView alloc] initWithFrame:self.view.bounds];
+    treeView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     treeView.delegate = self;
     treeView.dataSource = self;
     treeView.separatorStyle = RATreeViewCellSeparatorStyleNone;
