@@ -16,7 +16,7 @@
  {"id":"15","name":"出差审批","icon":"icon_tripapproval","parentId":"5","childClass":"TripApprovalVC","leftShow":"true", "rightShow":"true"},
  {"id":"50","name":"我要审批","icon":"icon_approval","parentId":"0","childClass":"ApproveListViewController","leftShow":"true", "rightShow":"false"},
  {"id":"6","name":"工作汇报","icon":"icon_work_report","parentId":"0","childClass":"WorkReportViewController","leftShow":"true", "rightShow":"true"},
- {"id":"16","name":"计划拜访","icon":"icon_planvisit","parentId":"1","childClass":"customer.visit.PlanVisit","leftShow":"true", "rightShow":"true"},
+ {"id":"16","name":"计划拜访","icon":"icon_planvisit","parentId":"1","childClass":"VisitProjectViewController","leftShow":"true", "rightShow":"true"},
  {"id":"40","name":"店招拍照","icon":"ic_launcher","parentId":"16","childClass":"customer.visitContent.photo.SignagephotosActivity","leftShow":"true", "rightShow":"true"},
  {"id":"41","name":"陈列拍照","icon":"ic_launcher","parentId":"16","childClass":"customer.visitContent.display.ExhibitPhotosActivity","leftShow":"true", "rightShow":"true"},
  {"id":"42","name":"陈列生动化","icon":"ic_launcher","parentId":"16","childClass":"customer.visitContent.display.ExhibitLivelyActivity","leftShow":"true", "rightShow":"true"},
