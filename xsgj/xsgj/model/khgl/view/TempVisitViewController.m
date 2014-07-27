@@ -103,6 +103,7 @@
     {
         CusVisitViewController *cusVisitViewController = [[CusVisitViewController alloc] initWithNibName:@"CusVisitViewController" bundle:nil];
         cusVisitViewController.customerInfo = self.customerInfoSelect;
+        cusVisitViewController.strVisitType = @"0";
         NSString *visitDate = self.visitRecordSelect.VISIT_DATE;
         if (visitDate.length > 10) {
             visitDate = [visitDate substringToIndex:10];
@@ -384,6 +385,7 @@
 {
     CusVisitViewController *cusVisitViewController = [[CusVisitViewController alloc] initWithNibName:@"CusVisitViewController" bundle:nil];
     cusVisitViewController.customerInfo = self.customerInfoSelect;
+    cusVisitViewController.strVisitType = @"0";
     NSString *visitDate = self.visitRecordSelect.VISIT_DATE;
     if (visitDate.length > 10) {
         visitDate = [visitDate substringToIndex:10];
