@@ -14,6 +14,7 @@
 #import <NSDate+Helper.h>
 #import "NoticeTypeBean.h"
 #import "NoticeInfoBean.h"
+#import "AnnouncementInfoViewController.h"
 
 typedef  enum : NSUInteger {
     TOP = 0,
@@ -378,6 +379,13 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    AnnouncementInfoViewController *vlc = [[AnnouncementInfoViewController alloc] initWithNibName:@"AnnouncementInfoViewController" bundle:nil];
+    
+    NoticeInfoBean *info = [_announces objectAtIndex:indexPath.row];
+    vlc.noticeInfo = info;
+    
+    [self.navigationController pushViewController:vlc animated:YES];
 }
 
 @end
