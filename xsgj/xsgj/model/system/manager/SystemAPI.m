@@ -54,6 +54,10 @@
     [LK_APIUtil getHttpRequest:request apiPath:URL_UPDATE_CONFIG Success:^(LK_HttpBaseResponse *response) {
         if ([DEFINE_SUCCESSCODE isEqual:response.MESSAGE.MESSAGECODE]) {
             UpdateConfigHttpResponse *tResponse = (UpdateConfigHttpResponse *)response;
+            if (tResponse.CORP_NOTICE_UPDATE_STATE) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"企业公告有新的信息" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+            }
             [tResponse saveCacheDB];
             [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithUnsignedLongLong:[ShareValue shareInstance].userInfo.LAST_UPDATE_TIME] forKey:[NSString stringWithFormat:@"LASTUPDATE_%D",[ShareValue shareInstance].userInfo.USER_ID]];
             Success();

@@ -207,6 +207,7 @@
         [ShareValue shareInstance].userName = _tf_username.text;
         [ShareValue shareInstance].userPass = _tf_pwd.text;
     }
+    
     [ShareAppDelegate showTabViewController];
     [[AsnyTaskManager shareInstance]loadConfig];
     [[AsnyTaskManager shareInstance]startTask];//开始定时传送

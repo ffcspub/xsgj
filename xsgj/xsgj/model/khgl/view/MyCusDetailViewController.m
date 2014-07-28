@@ -72,9 +72,10 @@
 - (void)handleNavBarRight
 {
     MyCusMapAddressVC *myCusMapAddressVC = [[MyCusMapAddressVC alloc] initWithNibName:@"MyCusMapAddressVC" bundle:nil];
+    myCusMapAddressVC.title = @"客户详情";
     CLLocationCoordinate2D coordinate;
-    coordinate.latitude = self.custDetailBean.LAT.doubleValue;
-    coordinate.longitude = self.custDetailBean.LNG.doubleValue;
+    coordinate.latitude = self.custDetailBean.LAT.doubleValue/1000000;
+    coordinate.longitude = self.custDetailBean.LNG.doubleValue/1000000;
     myCusMapAddressVC.cusCoordinate = coordinate;
     myCusMapAddressVC.strAddress = self.custDetailBean.ADDRESS;
     [self.navigationController pushViewController:myCusMapAddressVC animated:YES];

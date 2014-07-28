@@ -53,6 +53,7 @@
 @property(nonatomic,assign) int         DEPT_ID;//	部门ID
 @property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限
 @property(nonatomic,assign) int         USER_ID;//	用户ID
+@property(nonatomic,strong) NSString *  QUERY_USERID;//查询用名id
 @property(nonatomic,strong) NSNumber *  QUERY_DEPTID;//	查询部门标识
 @property(nonatomic,strong) NSString *	USER_NAME;//	登录名
 @property(nonatomic,strong) NSString *	REALNAME;//	姓名

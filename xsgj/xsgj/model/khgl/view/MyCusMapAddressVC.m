@@ -32,7 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"客户详情";
+    
 
     _mapView.delegate = self;
     self.lb_address.text = self.strAddress;
@@ -43,10 +43,18 @@
 //    
 //    [_mapView setRegion:adjustedRegion animated:YES];
     
+    BMKCoordinateRegion viewRegion = BMKCoordinateRegionMake(_coordinate, BMKCoordinateSpanMake(0.01, 0.01));
+    
+    BMKCoordinateRegion adjustedRegion = [_mapView regionThatFits:viewRegion];
+    
+    [_mapView setRegion:adjustedRegion animated:YES];
+    
     _annotation = [[BMKPointAnnotation alloc]init];
     _annotation.coordinate = self.cusCoordinate;
     [_mapView addAnnotation:_annotation];
     _mapView.centerCoordinate = _annotation.coordinate;
+    
+    
 //    _search = [[BMKGeoCodeSearch alloc]init];
 //    _search.delegate = self;
     // Do any additional setup after loading the view from its nib.

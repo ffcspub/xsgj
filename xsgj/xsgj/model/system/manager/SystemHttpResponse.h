@@ -58,6 +58,7 @@
 @property(nonatomic,assign) int CAMERA_TYPE_UPDATE_STATE;//拍照类型是否有更新
 @property(nonatomic,assign) int PARTNER_UPDATE_STATE;//	合作商是否有更新
 @property(nonatomic,assign) int PARTNER_TYPE_UPDATE_STATE;//	合作商类型是否有更新
+@property(nonatomic,assign) int CORP_NOTICE_UPDATE_STATE;//是否有企业公告消息
 
 
 -(void)saveCacheDB;
