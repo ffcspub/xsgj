@@ -61,7 +61,15 @@
     // reset
     self.btnExpand.frame = CGRectMake(10, 12, 20, 20);
     self.btnSelected.frame = CGRectMake(35, 0, 44, 44);
-    self.lbName.frame = CGRectMake(87, 10, 120, 26);
+    if(self.bMyCustomer)
+    {
+        self.lbName.frame = CGRectMake(40, 10, 120, 26);
+    }
+    else
+    {
+        self.lbName.frame = CGRectMake(87, 10, 120, 26);
+    }
+    
     
     CGRect frame = self.btnExpand.frame;
     if(frame.origin.x == 10)

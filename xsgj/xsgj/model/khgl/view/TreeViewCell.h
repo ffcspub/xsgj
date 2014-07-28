@@ -42,6 +42,7 @@
 @property (weak, nonatomic) TreeData *treeData;
 @property (weak, nonatomic) TreeViewData *treeViewData;
 @property (assign, nonatomic) int iDepthLevel;
+@property (assign, nonatomic) BOOL bMyCustomer;
 
 - (IBAction)handlebtnSelected:(id)sender;
 

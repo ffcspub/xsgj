@@ -41,7 +41,7 @@
  {"id":"20","name":"订货查询","icon":"icon_orderquery","parentId":"1","childClass":"OrderGoodsVC","leftShow":"true", "rightShow":"true"},
  {"id":"21","name":"退货查询","icon":"icon_returnitemquery","parentId":"1","childClass":"QuitGoodsVC","leftShow":"true", "rightShow":"true"},
  {"id":"22","name":"新增客户","icon":"icon_addcustomercommit","parentId":"1","childClass":"AddVisitVC","leftShow":"true", "rightShow":"true"},
- {"id":"23","name":"我的客户","icon":"icon_customerquery","parentId":"1","childClass":"customer.customerInfo.CustomerQueryActivity","leftShow":"true", "rightShow":"true"},
+ {"id":"23","name":"我的客户","icon":"icon_customerquery","parentId":"1","childClass":"MyCustomerViewController","leftShow":"true", "rightShow":"true"},
  {"id":"51","name":"拜访规划","icon":"icon_customerquery","parentId":"1","childClass":"VisitPlansViewController","leftShow":"true", "rightShow":"true", "rightText":"操作"},
  {"id":"30","name":"企业公告","icon":"icon_announcement","parentId":"2","childClass":"AnnouncementViewController","leftShow":"true", "rightShow":"true"},
  {"id":"24","name":"企业通讯录","icon":"icon_addressbook","parentId":"2","childClass":"CorpAddressBookViewController","leftShow":"true", "rightShow":"true"},
