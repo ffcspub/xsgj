@@ -20,7 +20,7 @@
 
 static NSString * const DistributionQueryCellIdentifier = @"DistributionQueryCellIdentifier";
 
-static int const pageSize = 20;
+static int const pageSize = 10;
 
 @interface BaseDistributionVC () <IBActionSheetDelegate>
 {

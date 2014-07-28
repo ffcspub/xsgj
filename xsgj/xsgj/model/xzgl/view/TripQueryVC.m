@@ -24,7 +24,7 @@
 
 static NSString * const TripQueryCellIdentifier = @"TripQueryCellIdentifier";
 
-static int const pageSize = 20;
+static int const pageSize = 10;
 
 @interface TripQueryVC ()
 

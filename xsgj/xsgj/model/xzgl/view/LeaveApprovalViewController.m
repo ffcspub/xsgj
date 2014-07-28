@@ -128,7 +128,7 @@ typedef  enum : NSUInteger {
 
 @end
 
-static int const pageSize = 20;
+static int const pageSize = 10;
 
 @interface LeaveApprovalViewController ()
 {

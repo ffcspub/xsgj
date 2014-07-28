@@ -23,7 +23,7 @@
 
 static NSString * const TripApprovalCellIdentifier = @"TripApprovalCellIdentifier";
 
-static int const pageSize = 20;
+static int const pageSize = 10;
 
 @interface TripApprovalVC ()
 

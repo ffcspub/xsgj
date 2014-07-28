@@ -208,8 +208,10 @@
     if ([self.lblResult.text length] == 0) {
         errorMessage = @"请选择处理结果";
     } else if (self.currentState == DistributionHandleStateResult) {
-        if ([self.tfMoney.text length] == 0) {
+        if ([self.lblResult.text isEqualToString:@"配送完成"] && [self.tfMoney.text length] == 0) {
             errorMessage = @"请填写收费信息";
+        } else if ([self.lblResult.text isEqualToString:@"配送失败"] && [self.tfMoney.text length] > 0) {
+            errorMessage = @"请删除收费信息";
         } else if ([self.tvRemark.text length] == 0) {
             errorMessage = @"请填写备注信息";
         } else if (!_imageData) {
