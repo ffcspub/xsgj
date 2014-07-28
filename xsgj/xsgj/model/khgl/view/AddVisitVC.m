@@ -21,7 +21,7 @@
 #import "SelectTreeViewController.h"
 #import "BNCustomerType.h"
 
-@interface AddVisitVC () <MapAddressVCDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface AddVisitVC () <MapAddressVCDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate>
 {
     BOOL _isLocationSuccess;
     BOOL _isManualLocation;
@@ -126,6 +126,69 @@
     }
     
     return _arrType;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.tfName)
+    {
+        if (range.location >= 15)
+        {
+            return NO;
+        }
+    } else if (textField == self.tfLinkMan) {
+        if (range.location >= 10)
+        {
+            return NO;
+        }
+    } else if (textField == self.tfPhone) {
+        if (range.location >= 20)
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
+    
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if (textView == self.tvAddr) {
+        NSString *new = [textView.text stringByReplacingCharactersInRange:range withString:text];
+        NSInteger res = 25 - [new length];
+        if(res >= 0)
+        {
+            return YES;
+        }
+        else
+        {
+            NSRange rg = {0,[text length]+res};
+            if (rg.length>0) {
+                NSString *s = [text substringWithRange:rg];
+                [textView setText:[textView.text stringByReplacingCharactersInRange:range withString:s]];
+            }
+            return NO;
+        }
+    } else if (textView == self.tfRemark) {
+        NSString *new = [textView.text stringByReplacingCharactersInRange:range withString:text];
+        NSInteger res = 20 - [new length];
+        if(res >= 0)
+        {
+            return YES;
+        }
+        else
+        {
+            NSRange rg = {0,[text length]+res};
+            if (rg.length>0) {
+                NSString *s = [text substringWithRange:rg];
+                [textView setText:[textView.text stringByReplacingCharactersInRange:range withString:s]];
+            }
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 #pragma mark - 事件
@@ -403,10 +466,11 @@
 -(void)onAddressReturn:(NSString *)address coordinate:(CLLocationCoordinate2D)coordinate
 {
     NSLog(@"解析的地址为:%@", address);
-    
-    self.lblManualLocation.text = address;
-    manualCoordinate = coordinate;
-    _isManualLocation = YES;
+    if ([address length] > 0) {
+        self.lblManualLocation.text = address;
+        manualCoordinate = coordinate;
+        _isManualLocation = YES;
+    }
 }
 
 #pragma mark - UIImagePickerControllerDelegate

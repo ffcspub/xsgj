@@ -8,6 +8,7 @@
 
 #import "MapAddressVC.h"
 #import "MapUtils.h"
+#import "MBProgressHUD+Add.h"
 
 @interface MapAddressVC ()<BMKGeoCodeSearchDelegate>{
    CLLocationCoordinate2D _coordinate;
@@ -44,8 +45,9 @@
     longPress.minimumPressDuration = 1.0;
     //将长按手势添加到需要实现长按操作的视图里
     [_mapView addGestureRecognizer:longPress];
-    
     _mapView.delegate = self;
+    
+    _lb_address.text = @"请在地图中长按进行定位!";
     
     _coordinate = (CLLocationCoordinate2D){119.279601,26.112961};
     if ([ShareValue shareInstance].currentLocation.latitude >0 ) {
@@ -54,7 +56,7 @@
             _address = [ShareValue shareInstance].address;
             _lb_address.text = _address;
         }else{
-            [[MapUtils shareInstance]startGeoCodeSearch];
+            [[MapUtils shareInstance] startGeoCodeSearch];
         }
         
     }
@@ -82,6 +84,8 @@
 }
 
 -(void)startGeoCodeSearch{
+
+    self.lb_address.text = @"正在执行反GEO检索···";
     BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
     reverseGeocodeSearchOption.reverseGeoPoint = _coordinate;
     BOOL flag = [_search reverseGeoCode:reverseGeocodeSearchOption];
@@ -104,16 +108,26 @@
 
 
 -(void)handleTableviewCellLongPressed:(UIGestureRecognizer *)gestureRecognizer{
-    CGPoint touchPoint = [gestureRecognizer locationInView:_mapView];//这里touchPoint是点击的某点在地图控件中的位置
-    CLLocationCoordinate2D touchMapCoordinate =
-    [_mapView convertPoint:touchPoint toCoordinateFromView:_mapView];//这里touchMapCoordinate就是该点的经纬度了
-    _coordinate = touchMapCoordinate;
-    [_mapView removeAnnotation:_annotation];
-    _annotation = [[BMKPointAnnotation alloc]init];
-    _annotation.coordinate = touchMapCoordinate;
-    [_mapView addAnnotation:_annotation ];
     
-    [self startGeoCodeSearch];
+    if(gestureRecognizer.state == UIGestureRecognizerStateBegan){
+
+        CGPoint touchPoint = [gestureRecognizer locationInView:_mapView];//这里touchPoint是点击的某点在地图控件中的位置
+        CLLocationCoordinate2D touchMapCoordinate = [_mapView convertPoint:touchPoint toCoordinateFromView:_mapView];//这里touchMapCoordinate就是该点的经纬度了
+        _coordinate = touchMapCoordinate;
+        [_mapView removeAnnotation:_annotation];
+        
+        _annotation = [[BMKPointAnnotation alloc]init];
+        _annotation.coordinate = touchMapCoordinate;
+        [_mapView addAnnotation:_annotation ];
+        
+        
+        [self startGeoCodeSearch];
+        
+    } else if(gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+
+    } else if(gestureRecognizer.state == UIGestureRecognizerStateChanged) {
+
+    }
 }
 
 //根据anntation生成对应的View
@@ -143,7 +157,7 @@
 - (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error;
 {
     if (error) {
-        
+        _lb_address.text = @"GEO检索失败，请长按重新定位!";
     }else{
         _address = result.address;
         _lb_address.text = _address;
