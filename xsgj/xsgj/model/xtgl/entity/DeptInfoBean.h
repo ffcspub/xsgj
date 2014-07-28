@@ -14,4 +14,5 @@
 @property(nonatomic,assign) int DEPT_PID;//部门父标识
 @property(nonatomic,strong) NSString *DEPT_NAME;//部门名称
 
++(NSString *)getOwnerAndChildDeptIds:(int)deptId;
 @end
