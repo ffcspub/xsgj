@@ -16,7 +16,7 @@
 #import "SIAlertView.h"
 #import <NSDate+Helper.h>
 
-@interface RegisterVC ()
+@interface RegisterVC () <UITextFieldDelegate>
 
 @end
 
@@ -61,6 +61,7 @@
     CGFloat wTitle = 80.f;
     CGFloat xTitle = xOffset+titleOffset;
     CGRect rectTitle  = CGRectMake(xTitle, topOffset, wTitle, rowHeight);
+    CGRect rectStar   = CGRectMake(xTitle + wTitle - 12, topOffset + 14, 10.f, 20.f);
     
     CGFloat xContent = CGRectGetMaxX(rectTitle) + titleOffset;
     CGFloat wContent = width - 2*xOffset - wTitle - 2*titleOffset;
@@ -75,6 +76,10 @@
     lblCropName.frame = rectTitle;
     lblCropName.text = @"企业名称";
     [self.svRoot addSubview:lblCropName];
+    
+    UILabel *lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = rectStar;
+    [self.svRoot addSubview:lblStart];
     
     UITextField *tfCropName = [ShareValue getDefaultTextField];
     tfCropName.frame = rectContent;
@@ -94,11 +99,17 @@
     lblCropCode.text = @"企业编码";
     [self.svRoot addSubview:lblCropCode];
     
+    rectStar = CGRectOffset(rectStar, 0.f, rowHeight + yOffset);
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = rectStar;
+    [self.svRoot addSubview:lblStart];
+    
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfCropCode = [ShareValue getDefaultTextField];
     tfCropCode.placeholder = @"用英文或数字组成，长度不能超过20";
     tfCropCode.frame = rectContent;
-    tfCropCode.maxLength = 5;
+    tfCropCode.maxLength = 20;
+    tfCropCode.delegate = self;
     [self.svRoot addSubview:tfCropCode];
     self.tfCropCode = tfCropCode;
     
@@ -113,6 +124,11 @@
     lblAddr.frame = rectTitle;
     lblAddr.text = @"所属区域";
     [self.svRoot addSubview:lblAddr];
+    
+    rectStar = CGRectOffset(rectStar, 0.f, rowHeight + yOffset);
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = rectStar;
+    [self.svRoot addSubview:lblStart];
     
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     CGRect rectProvince = CGRectMake(rectContent.origin.x, rectContent.origin.y, CGRectGetWidth(rectContent) / 2 - 20, CGRectGetHeight(rectContent));
@@ -155,6 +171,11 @@
     lblType.text = @"行业类型";
     [self.svRoot addSubview:lblType];
     
+    rectStar = CGRectOffset(rectStar, 0.f, rowHeight + yOffset);
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = rectStar;
+    [self.svRoot addSubview:lblStart];
+    
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfType = [ShareValue getDefaultTextField];
     tfType.frame = rectContent;
@@ -173,6 +194,11 @@
     lblLinkMan.text = @"联  系  人";
     [self.svRoot addSubview:lblLinkMan];
     
+    rectStar = CGRectOffset(rectStar, 0.f, rowHeight + yOffset);
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = rectStar;
+    [self.svRoot addSubview:lblStart];
+    
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfLinkMan = [ShareValue getDefaultTextField];
     tfLinkMan.frame = rectContent;
@@ -190,6 +216,11 @@
     lblTel.frame = rectTitle;
     lblTel.text = @"手机号码";
     [self.svRoot addSubview:lblTel];
+    
+    rectStar = CGRectOffset(rectStar, 0.f, rowHeight + yOffset);
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = rectStar;
+    [self.svRoot addSubview:lblStart];
     
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfTel = [ShareValue getDefaultTextField];
@@ -210,6 +241,11 @@
     lblEmail.text = @"电子邮箱";
     [self.svRoot addSubview:lblEmail];
     
+    rectStar = CGRectOffset(rectStar, 0.f, rowHeight + yOffset);
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = rectStar;
+    [self.svRoot addSubview:lblStart];
+    
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfEmail = [ShareValue getDefaultTextField];
     tfEmail.frame = rectContent;
@@ -220,6 +256,21 @@
     // 初始化
     self.svRoot.backgroundColor = HEX_RGB(0xefeff4);
     self.svRoot.contentSize = CGSizeMake(CGRectGetWidth(self.svRoot.bounds), CGRectGetMaxY(rect) + yOffset); // 设置可滚动区域
+}
+
+#pragma mark - UITextField Delegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.tfCropCode)
+    {
+        if (![ShareValue legalTextFieldInputWithLegalString:NumberAndCharacters checkedString:string] || range.location >= 20)
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning

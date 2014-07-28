@@ -18,6 +18,7 @@
 #define SET_USERID @"SET_USERID"
 
 
+
 static ShareValue *_shareValue;
 static UIImage *_imageTablePart1;
 static UIImage *_imageTablePart2;
@@ -211,6 +212,30 @@ static UIImage *_imageTablePart3;
     label.font = [UIFont systemFontOfSize:FONT_SIZE_DETAIL_CONTENT];
     label.backgroundColor = [UIColor clearColor];
     return label;
+}
+
++ (UILabel *)getStarMarkPrompt
+{
+    UILabel *label = [[UILabel alloc] init];
+    label.text = @"*";
+    label.textColor = [UIColor redColor];
+    label.font = [UIFont systemFontOfSize:17];
+    label.backgroundColor = [UIColor clearColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    
+    return label;
+}
+
++ (BOOL)legalTextFieldInputWithLegalString:(NSString *)legalString checkedString:(NSString *)checkedString
+{
+    NSCharacterSet *cst = [[NSCharacterSet characterSetWithCharactersInString:legalString] invertedSet];
+    NSString *filted = [[checkedString componentsSeparatedByCharactersInSet:cst] componentsJoinedByString:@""];
+    BOOL basicTest = [checkedString isEqualToString:filted];
+    if (!basicTest)
+    {
+        return NO;
+    }
+    return YES;
 }
 
 @end

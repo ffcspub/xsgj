@@ -21,6 +21,8 @@
 
 #define DEFINE_SUCCESSCODE @"00000000"
 
+#define NumberAndCharacters @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" // 限制字符和数字
+
 #define MCOLOR_GREEN HEX_RGB(0x4cd964)
 #define MCOLOR_BLUE HEX_RGB(0x409BE4)
 #define MCOLOR_ORGLE HEX_RGB(0xffd599)
@@ -92,7 +94,10 @@
 + (UITextField *)getDefaultTextField;// 右侧用户输入的文本框
 + (UILabel *)getDefaultContent;      // 右侧用于显示信息的文本
 + (UILabel *)getDefaultDetailContent;// 用于显示明细的文本
++ (UILabel *)getStarMarkPrompt; // 提示必须输入
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
++ (BOOL)legalTextFieldInputWithLegalString:(NSString *)legalString checkedString:(NSString *)checkedString;
 
 @end
