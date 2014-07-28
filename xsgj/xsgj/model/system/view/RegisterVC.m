@@ -225,7 +225,7 @@
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfTel = [ShareValue getDefaultTextField];
     tfTel.frame = rectContent;
-    tfTel.keyboardType = UIKeyboardTypeNumberPad;
+    tfTel.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     [self.svRoot addSubview:tfTel];
     self.tfTel = tfTel;
     

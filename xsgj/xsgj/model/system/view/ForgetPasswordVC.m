@@ -77,13 +77,23 @@
     MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在提交···" toView:self.view];
     [hud showAnimated:YES whileExecutingBlock:^{
         [XTGLAPI forgetPwdByRequest:request success:^(ForgetPwdHttpResponse *response) {
+            
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
+            
+            // 成功后退回登陆界面
+            [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
+            
         } fail:^(BOOL notReachable, NSString *desciption) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [MBProgressHUD showError:desciption toView:self.view];
         }];
     }];
+}
+
+- (void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
