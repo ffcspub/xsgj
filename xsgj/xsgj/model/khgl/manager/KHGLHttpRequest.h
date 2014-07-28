@@ -225,8 +225,8 @@
 @property(nonatomic,strong) NSString *	USER_NAME	;//	登录名
 @property(nonatomic,strong) NSString *	REALNAME	;//	姓名
 @property(nonatomic,strong) NSString *	MOBILENO	;//	手机号码
-@property(nonatomic,strong) NSString *	BEGIN_TIME	;//	上报开始时间
-@property(nonatomic,strong) NSString *	END_TIME	;//	上报结束时间
+@property(nonatomic,strong) NSString *	BEGIN_DATE	;//	上报开始时间
+@property(nonatomic,strong) NSString *	END_DATE	;//	上报结束时间
 @property(nonatomic,strong) NSString *	CUST_NAME	;//	客户名称
 
 @end

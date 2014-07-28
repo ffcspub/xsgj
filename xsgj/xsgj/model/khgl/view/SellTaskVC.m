@@ -96,16 +96,20 @@ static int const pageSize = 10;
     [self.btnEndTime setBackgroundImage:[[UIImage imageNamed:@"日期选择控件背板"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateNormal];
     [self.btnEndTime setBackgroundImage:[[UIImage imageNamed:@"日期选择控件背板_s"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateHighlighted];
     
+    // 默认不设置时间
+    /*
     NSDate *date = [NSDate date];
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     
     self.lblBeginTime.text = [formatter stringFromDate:date];
+    self.lblEndTime.text = [formatter stringFromDate:date];
+    */
+    
     self.lblBeginTime.font = [UIFont systemFontOfSize:15];
     self.lblBeginTime.textColor = HEX_RGB(0x000000);
     self.lblBeginTime.backgroundColor = [UIColor clearColor];
     
-    self.lblEndTime.text = [formatter stringFromDate:date];
     self.lblEndTime.font = [UIFont systemFontOfSize:15];
     self.lblEndTime.textColor = HEX_RGB(0x000000);
     self.lblEndTime.backgroundColor = [UIColor clearColor];
@@ -147,8 +151,13 @@ static int const pageSize = 10;
 - (void)loadSellTask
 {
     QuerySaleTaskHttpRequest *request = [[QuerySaleTaskHttpRequest alloc] init];
-    request.BEGIN_MONTH = self.lblBeginTime.text;
-    request.END_MONTH = self.lblEndTime.text;
+    // 如果是空串就不上传
+    if (![self.lblBeginTime.text isEmptyOrWhitespace]) {
+        request.BEGIN_MONTH = self.lblBeginTime.text;
+    }
+    if (![self.lblEndTime.text isEmptyOrWhitespace]) {
+        request.END_MONTH = self.lblEndTime.text;
+    }
     
     MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [XZGLAPI QuerySaleTaskByRequest:request success:^(QuerySaleTaskHttpResponse *response) {
