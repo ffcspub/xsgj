@@ -28,7 +28,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="未计划拜访拜访" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lfV-8o-fVY">
-                        <rect key="frame" x="163" y="10" width="120" height="30"/>
+                        <rect key="frame" x="156" y="10" width="120" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="highlightedColor"/>
@@ -38,7 +38,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </imageView>
                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="icon_cellright_s.png" id="jlH-iw-AIu">
-                        <rect key="frame" x="290" y="15" width="10" height="19"/>
+                        <rect key="frame" x="283" y="15" width="10" height="19"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </imageView>
                 </subviews>

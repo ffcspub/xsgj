@@ -10,7 +10,7 @@
 #import "CusVisitViewController.h"
 #import "SIAlertView.h"
 #import "InfoCollectViewController.h"
-
+#import <UIImageView+WebCache.h>
 @interface CusDetailViewController ()
 
 @end
@@ -50,9 +50,17 @@
     {
         self.lbVisitTime.text = self.visitRecord.END_TIME;
     }
+    else
+    {
+        self.lbVisitTime.text = @"七天前";
+    }
     
-    // chenzftodo: 图片如何获取
-    //self.ivPhoto = self.customerInfo.CUST_NAME;;
+    if(self.customerInfo.PHOTO.length > 1)
+    {
+        NSString *strUrl = [ShareValue getFileUrlByFileId:self.customerInfo.PHOTO];
+        [self.ivPhoto sd_setImageWithURL:[NSURL URLWithString:strUrl] placeholderImage:[UIImage imageNamed:@"defaultPhoto"]];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning

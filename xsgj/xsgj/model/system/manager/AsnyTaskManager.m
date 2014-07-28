@@ -49,9 +49,12 @@ static AsnyTaskManager *_shareValue;
 
 
 -(void)locationUpdated{
+    if (![self isWantUpdate]) {
+        return;
+    }
     [SystemAPI commitLocateSuccess:^{
         
-    } LOC_TYPE:@"1" LNG:[ShareValue shareInstance].currentLocation.latitude LAT:[ShareValue shareInstance].currentLocation.longitude fail:^(BOOL notReachable, NSString *desciption) {
+    } LOC_TYPE:@"1" LNG:[ShareValue shareInstance].currentLocation.longitude LAT:[ShareValue shareInstance].currentLocation.latitude fail:^(BOOL notReachable, NSString *desciption) {
         
     }];
 }
@@ -63,7 +66,7 @@ static AsnyTaskManager *_shareValue;
 }
 
 
--(void)doTask{
+-(BOOL) isWantUpdate{
     NSString *dateTime = [[NSDate date]stringWithFormat:@"HHmm"];
     int time = [dateTime integerValue];
     BOOL flag = NO;
@@ -73,7 +76,11 @@ static AsnyTaskManager *_shareValue;
             break;
         }
     }
-    if (!flag) {
+    return flag;
+}
+
+-(void)doTask{
+    if (![self isWantUpdate]) {
         return;
     }
     [SystemAPI insertMobileSuccess:^{

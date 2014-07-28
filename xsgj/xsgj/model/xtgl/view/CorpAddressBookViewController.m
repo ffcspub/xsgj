@@ -17,15 +17,25 @@
 #import "MBProgressHUD+Add.h"
 #import "OAChineseToPinyin.h"
 #import "NSObject+LKDBHelper.h"
+#import "TreeViewCell.h"
+#import "SelectTreeViewController.h"
 
 @interface CorpAddressBookViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 {
     // A-Z段落列表
-    NSMutableArray *mSectionArray;
-    // 分段联系人-二维
-    NSMutableArray *mLocalSectionContact;
-    // 部门选择表格
-    UITableView *tableDept;
+    NSMutableArray *mAzArray;
+    // 原始部门数据
+    NSArray        *arraySourceDept;
+    // 原始联系人数据
+    NSArray        *arraySourceContact;
+    // 选定的部门
+    DeptInfoBean   *selectedDept;
+    // 联系人查询条件
+    NSString       *sqlDeptId;
+    // 综合查询条件
+    NSString       *sqlDeptIdAndSerach;
+    // UI实际填充-二维
+    NSMutableArray *mUIdataArray;
 }
 @end
 
@@ -36,42 +46,36 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        mLocalSectionContact = [[NSMutableArray alloc]init];
+        arraySourceDept      = [NSArray array];
+        mAzArray             = [NSMutableArray array];
+        mUIdataArray         = [NSMutableArray array];
         [DeptInfoBean deleteWithWhere:nil];
         [ContactBean deleteWithWhere:nil];
     }
     return self;
 }
 
-- (void)viewDidLoad
+// 设置标题栏上的按钮
+-(void)setTitleButtonStyle
 {
-    [super viewDidLoad];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setTitle:@"部门选择⬇️" forState:UIControlStateNormal];
-    [button setTitle:@"部门选择⬇️" forState:UIControlStateHighlighted];
+    [button setTitle:@"部门选择▼" forState:UIControlStateNormal];
+    [button setTitle:@"部门选择▼" forState:UIControlStateHighlighted];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
     [button addTarget:self action:@selector(selectDept) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = button;
-    
-    CGRect rect = _tabContact.frame;
-    rect.origin.y    -= _schBar.frame.size.height;
-    rect.size.height += _schBar.frame.size.height;
-    
-    tableDept = [[UITableView alloc]initWithFrame:rect];
-    tableDept.backgroundColor = RGBA(0, 0, 0, 0.5);
-    tableDept.separatorStyle = UITableViewCellSeparatorStyleNone;
-    tableDept.hidden = YES;
-    tableDept.delegate = self;
-    tableDept.dataSource = self;
-    [self.view addSubview:tableDept];
-    
-    
-    // 部门信息
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleNotifySelectFin:) name:NOTIFICATION_SELECT_FIN object:nil];
+    // 标题按钮
+    [self setTitleButtonStyle];
+    // 部门信息获取
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     GetUserAllDeptHttpRequest *deptRequest = [[GetUserAllDeptHttpRequest alloc]init];
-    // 基本信息
     deptRequest.SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
     deptRequest.CORP_ID    = [ShareValue shareInstance].userInfo.CORP_ID;
     deptRequest.DEPT_ID    = [ShareValue shareInstance].userInfo.DEPT_ID;
@@ -87,6 +91,8 @@
                 [bean saveToDB];
             }
         }
+        // 保存部门原始数据
+        arraySourceDept = [DeptInfoBean searchWithWhere:nil orderBy:nil offset:0 count:1000];
     }
     fail:^(BOOL notReachable, NSString *desciption)
     {
@@ -113,35 +119,10 @@
                 bean.USER_NAME_HEAD   = [bean.USER_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
                 [bean saveToDB];
             }
-            
-            // 获取A-Z分段列表
-            NSMutableArray *mSearch = [ContactBean searchWithWhere:nil orderBy:nil offset:0 count:500];
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            for (ContactBean *bean in mSearch)
-            {
-                [dict setObject:bean.USER_NAME_HEAD forKey:bean.USER_NAME_HEAD];
-            }
-            mSectionArray = (NSMutableArray*)[dict allValues];
-            NSStringCompareOptions comparisonOptions = NSCaseInsensitiveSearch|NSNumericSearch|
-            NSWidthInsensitiveSearch|NSForcedOrderingSearch;
-            NSComparator sort = ^(NSString *obj1,NSString *obj2)
-            {
-                NSRange range = NSMakeRange(0,obj1.length);
-                return [obj1 compare:obj2 options:comparisonOptions range:range];
-            };
-            mSectionArray = (NSMutableArray*)[mSectionArray sortedArrayUsingComparator:sort];
-            //
-            for (NSString*s in mSectionArray)
-            {
-                NSString *sql = [NSString stringWithFormat:@"USER_NAME_HEAD = '%@'",s];
-                NSMutableArray *mN = [ContactBean searchWithWhere:sql orderBy:nil offset:0 count:100];
-                NSLog(@"mN = %@",mN);
-                [mLocalSectionContact addObject:mN];
-            }
-            NSLog(@"mLocalSectionContact = %@",mLocalSectionContact);
-            // 刷新table
-            [_tabContact reloadData];
-
+            // 获取原始联系人数据
+            arraySourceContact = [ContactBean searchWithWhere:nil orderBy:nil offset:0 count:1000];
+            // 分段处理
+            [self filltheTable:arraySourceContact];
         }
     }
     fail:^(BOOL notReachable, NSString *desciption)
@@ -149,20 +130,69 @@
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showError:@"网络不给力" toView:self.view];
     }];
-    
-    
+}
+
+-(void)handleNotifySelectFin:(NSNotification*)note
+{
+    if (note)
+    {
+       selectedDept =  [note object];
+    }
+    // 合并取值条件
+    NSString *deptids = [DeptInfoBean getOwnerAndChildDeptIds:selectedDept.DEPT_ID];
+    sqlDeptId = [NSString stringWithFormat:@"DEPT_ID IN (%@)",deptids];
+    arraySourceContact = [ContactBean searchWithWhere:sqlDeptId orderBy:nil offset:0 count:1000];
+    [self filltheTable:arraySourceContact];
+}
+
+-(void)filltheTable:(NSArray*)array
+{
+    mUIdataArray = nil;
+    mAzArray     = nil;
+    mUIdataArray = [NSMutableArray array];
+    mAzArray     = [NSMutableArray array];
+    // 获取分段信息
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    for (ContactBean *bean in array)
+    {
+        [dict setObject:bean.USER_NAME_HEAD forKey:bean.USER_NAME_HEAD];
+    }
+    mAzArray = (NSMutableArray*)[dict allValues];
+    NSStringCompareOptions comparisonOptions = NSCaseInsensitiveSearch|NSNumericSearch|
+    NSWidthInsensitiveSearch|NSForcedOrderingSearch;
+    NSComparator sort = ^(NSString *obj1,NSString *obj2)
+    {
+        NSRange range = NSMakeRange(0,obj1.length);
+        return [obj1 compare:obj2 options:comparisonOptions range:range];
+    };
+    mAzArray = (NSMutableArray*)[mAzArray sortedArrayUsingComparator:sort];
+    // 表格数据填充
+    for (NSString*s in mAzArray)
+    {
+        NSMutableString *sql = [NSMutableString stringWithFormat:@"USER_NAME_HEAD = '%@'",s];
+        if ([[_schBar text] length] <= 0 && sqlDeptIdAndSerach)
+        {
+            [sql appendFormat:@" AND (%@)",sqlDeptId];
+        }
+        if ([[_schBar text] length] > 0  && sqlDeptIdAndSerach)
+        {
+            [sql appendFormat:@" AND (%@)",sqlDeptIdAndSerach];
+        }
+        NSMutableArray *list = [ContactBean searchWithWhere:sql orderBy:nil offset:0 count:1000];
+        NSLog(@"sql!!! = %@",sql);
+        [mUIdataArray addObject:list];
+    }
+    NSLog(@"%@",mUIdataArray);
+    // 刷新表格
+    [_tabContact reloadData];
 }
 
 -(void)selectDept
 {
-    if (tableDept.hidden == NO)
-    {
-        tableDept.hidden = YES;
-    }
-    else
-    {
-        tableDept.hidden = NO;
-    }
+    NSArray *data = [self makeCusTypeTreeData];
+    SelectTreeViewController *selectTreeViewController = [[SelectTreeViewController alloc] initWithNibName:@"SelectTreeViewController" bundle:nil];
+    selectTreeViewController.data = data;
+    [self.navigationController pushViewController:selectTreeViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -173,13 +203,14 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([mLocalSectionContact count] == 0)
+    if ([mAzArray count] == 0)
     {
         return 0;
     }
     else
     {
-        return [mLocalSectionContact[section] count];
+        NSLog(@"numberOfRowsInSection = %d",[mUIdataArray[section] count]);
+        return [mUIdataArray[section] count];
     }
 }
 
@@ -191,7 +222,7 @@
     {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ContactTableViewCell"  owner:self options:nil] lastObject];
     }
-    ContactBean *bean = mLocalSectionContact[indexPath.section][indexPath.row];
+    ContactBean *bean = mUIdataArray[indexPath.section][indexPath.row];
     cell.labName.text = bean.REALNAME;
     cell.btnMsg.tag  = indexPath.section*10000 +indexPath.row;
     cell.btnDail.tag = indexPath.section*10000 +indexPath.row;
@@ -200,57 +231,123 @@
     return cell;
 
 }
+
 -(void)clkMsg:(id)sender
 {
+    
     UIButton *btn = sender;
     ContactBean *bean = [[ContactBean alloc]init];
-    bean =  mLocalSectionContact[btn.tag/10000][btn.tag%10000];
+    bean =  mUIdataArray[btn.tag/10000][btn.tag%10000];
     NSString *str = [NSString stringWithFormat:@"sms://%@",bean.MOBILENO];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    
 }
 -(void)clkDail:(id)sender
 {
     UIButton *btn = sender;
     ContactBean *bean = [[ContactBean alloc]init];
-
-    bean =  mLocalSectionContact[btn.tag/10000][btn.tag%10000];
-
+    bean =  mUIdataArray[btn.tag/10000][btn.tag%10000];
     NSString *str = [NSString stringWithFormat:@"tel://%@",bean.MOBILENO];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [_schBar resignFirstResponder];
     [_tabContact reloadData];
 }
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [mSectionArray count];
+    NSLog(@"numberOfSectionsInTableView = %d",[mAzArray count]);
+    return [mAzArray count];
 }
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return mSectionArray[section];
+    NSLog(@"titleForHeaderInSection = %@",mAzArray[section]);
+    return mAzArray[section];
 }
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    return mSectionArray;
+    for (NSString *s in mAzArray)
+    {
+        NSLog(@"sectionIndexTitlesForTableView = %@ ",s);
+    }
+    return mAzArray;
 }
 
-//-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-//{
-//    [self filterBySubString:searchText];
-//}
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSString *text = [searchBar text];
+    NSMutableString *sql =  [NSMutableString stringWithFormat:@"(USER_NAME_PINYIN LIKE '%%%@%%' OR REALNAME LIKE '%%%@%%' OR MOBILENO LIKE '%%%@%%')",text,text,text];
+    if (sqlDeptId!= nil)
+    {
+        [sql appendFormat:@" AND %@",sqlDeptId];
+    }
+    sqlDeptIdAndSerach = sql;
+    arraySourceContact = [ContactBean searchWithWhere:sqlDeptIdAndSerach orderBy:nil offset:0 count:1000];
+    [self filltheTable:arraySourceContact];
+}
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-//    [self filterBySubString:searchBar.text];
     [searchBar resignFirstResponder];
+    NSString *text = [searchBar text];
+    NSMutableString *sql =  [NSMutableString stringWithFormat:@"(USER_NAME_PINYIN LIKE '%%%@%%' OR REALNAME LIKE '%%%@%%' OR MOBILENO LIKE '%%%@%%')",text,text,text];
+    if (sqlDeptId!= nil)
+    {
+        [sql appendFormat:@" AND %@",sqlDeptId];
+    }
+    arraySourceContact = [ContactBean searchWithWhere:sql orderBy:nil offset:0 count:1000];
+    [self filltheTable:arraySourceContact];
 }
 
--(void)filterBySubString:(NSString*)subStr
+
+- (NSArray *)makeCusTypeTreeData
 {
-//    NSString *sql = @"REALNAME like '林%'";
-//    searchData = [ContactBean searchWithWhere:sql orderBy:nil offset:0 count:100];
-    [_tabContact reloadData];
+    NSMutableArray *parentTree = [[NSMutableArray alloc] init];
+    NSMutableArray *arySourceData = [[NSMutableArray alloc] initWithArray:arraySourceDept];
+    for(DeptInfoBean *customerType in arraySourceDept)
+    {
+        if(customerType.DEPT_PID == 0)
+        {
+            TreeData *aryData = [[TreeData alloc] init];
+            aryData.name = customerType.DEPT_NAME;
+            aryData.dataInfo = customerType;
+            [parentTree addObject:aryData];
+            [arySourceData removeObject:customerType];
+        }
+    }
+    
+    [self makeSubCusTypeTreeData:arySourceData ParentTreeData:parentTree];
+    return parentTree;
+}
+
+- (void)makeSubCusTypeTreeData:(NSArray *)sourceData ParentTreeData:(NSMutableArray *)parentTree
+{
+    NSMutableArray *aryChildTree = [[NSMutableArray alloc] init];
+    NSMutableArray *arySourceData = [[NSMutableArray alloc] initWithArray:sourceData];
+    for(DeptInfoBean *customerType in sourceData)
+    {
+        for(TreeData *parentData in parentTree)
+        {
+            DeptInfoBean *parentCusType = (DeptInfoBean *)parentData.dataInfo;
+            if(customerType.DEPT_PID == parentCusType.DEPT_ID)
+            {
+                TreeData *aryData = [[TreeData alloc] init];
+                aryData.name = customerType.DEPT_NAME;
+                aryData.dataInfo = customerType;
+                [parentData.children addObject:aryData];
+                
+                [aryChildTree addObject:aryData];
+                [arySourceData removeObject:customerType];
+            }
+        }
+    }
+    
+    if(arySourceData.count > 0)
+    {
+        [self makeSubCusTypeTreeData:arySourceData ParentTreeData:aryChildTree];
+    }
 }
 @end

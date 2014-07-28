@@ -11,8 +11,6 @@
 
 @interface CorpAddressBookViewController : HideTabViewController
 
-@property (weak, nonatomic) IBOutlet UIView *btnBack;
-@property (weak, nonatomic) IBOutlet UIButton *btnDeptSelect;
 @property (weak, nonatomic) IBOutlet UISearchBar *schBar;
 @property (weak, nonatomic) IBOutlet UITableView *tabContact;
 

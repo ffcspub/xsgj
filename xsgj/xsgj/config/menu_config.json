@@ -41,7 +41,7 @@
  {"id":"20","name":"订货查询","icon":"icon_orderquery","parentId":"1","childClass":"OrderGoodsVC","leftShow":"true", "rightShow":"true"},
  {"id":"21","name":"退货查询","icon":"icon_returnitemquery","parentId":"1","childClass":"QuitGoodsVC","leftShow":"true", "rightShow":"true"},
  {"id":"22","name":"新增客户","icon":"icon_addcustomercommit","parentId":"1","childClass":"AddVisitVC","leftShow":"true", "rightShow":"true"},
- {"id":"23","name":"我的客户","icon":"icon_customerquery","parentId":"1","childClass":"customer.customerInfo.CustomerQueryActivity","leftShow":"true", "rightShow":"true"},
+ {"id":"23","name":"我的客户","icon":"icon_customerquery","parentId":"1","childClass":"MyCustomerViewController","leftShow":"true", "rightShow":"true"},
  {"id":"51","name":"拜访规划","icon":"icon_customerquery","parentId":"1","childClass":"VisitPlansViewController","leftShow":"true", "rightShow":"true", "rightText":"操作"},
  {"id":"30","name":"企业公告","icon":"icon_announcement","parentId":"2","childClass":"AnnouncementViewController","leftShow":"true", "rightShow":"true"},
  {"id":"24","name":"企业通讯录","icon":"icon_addressbook","parentId":"2","childClass":"CorpAddressBookViewController","leftShow":"true", "rightShow":"true"},
@@ -51,7 +51,7 @@
  {"id":"28","name":"流量统计","icon":"icon_flowcount","parentId":"2","childClass":"system.message.FlowCount","leftShow":"true", "rightShow":"true"},
  {"id":"29","name":"关于","icon":"icon_about","parentId":"2","childClass":"AboutViewController","leftShow":"true", "rightShow":"true"},
  {"id":"49","name":"用户反馈", "icon":"icon_advicereport","parentId":"3","childClass":"FXAdviceReportVC","leftShow":"true", "rightShow":"true"},
- {"id":"57","name":"日常拍照", "icon":"icon_customerquery","parentId":"0","childClass":"","leftShow":"true", "rightShow":"true"},
+ {"id":"57","name":"日常拍照", "icon":"icon_customerquery","parentId":"0","childClass":"DailyPhotoViewController","leftShow":"true", "rightShow":"true"},
  {"id":"54","name":"配送管理", "icon":"icon_trip","parentId":"0","childClass":"","leftShow":"true", "rightShow":"true"},
  {"id":"55","name":"配送查询", "icon":"icon_querytrip","parentId":"54","childClass":"DistributionQueryVC","leftShow":"true", "rightShow":"true"},
  {"id":"56","name":"配送处理", "icon":"icon_tripapproval","parentId":"54","childClass":"DistributionHandleVC","leftShow":"true", "rightShow":"true"}

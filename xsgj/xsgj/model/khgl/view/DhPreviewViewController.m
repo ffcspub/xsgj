@@ -47,7 +47,6 @@
     [self.svSubContain setContentSize:CGSizeMake(740, 0)];
     
     self.lbCooperation.text = _partnerInfo.PARTNER_NAME;
-    // chenzftodo: 计算总计
     double total = 0;
     for(OrderItemBean *commitBean  in _arySourceData)
     {
