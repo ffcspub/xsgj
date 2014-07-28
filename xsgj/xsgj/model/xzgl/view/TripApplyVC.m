@@ -331,34 +331,23 @@
             isHaveDian=NO;
         }
         
-        // 长度过滤
-        if (isHaveDian) {
-            if (range.location >= 5) {
-                return NO;
-            }
-        } else {
-            if (range.location >= 3) {
-                return NO;
-            }
-        }
-        
         // 小数点控制
         if ([string length] > 0)
         {
             unichar single=[string characterAtIndex:0];//当前输入的字符
             if ((single >='0' && single<='9') || single=='.')//数据格式正确
             {
-                //首字母不能为0和小数点
+                //首字母不能为小数点,当前如果第一个为0，之后只允许输入点
                 if([textField.text length]==0){
                     if(single == '.'){
                         [textField.text stringByReplacingCharactersInRange:range withString:@""];
                         return NO;
                         
                     }
-                    if (single == '0') {
+                } else if ([textField.text isEqualToString:@"0"]) {
+                    if (single != '.') {
                         [textField.text stringByReplacingCharactersInRange:range withString:@""];
                         return NO;
-                        
                     }
                 }
                 if (single=='.')
@@ -367,7 +356,8 @@
                     {
                         isHaveDian=YES;
                         return YES;
-                    }else
+                    }
+                    else
                     {
                         [textField.text stringByReplacingCharactersInRange:range withString:@""];
                         return NO;
@@ -375,6 +365,17 @@
                 }
                 else
                 {
+                    // 长度过滤
+                    if (isHaveDian) {
+                        if (range.location >= 5) {
+                            return NO;
+                        }
+                    } else {
+                        if (range.location >= 3) {
+                            return NO;
+                        }
+                    }
+                    
                     if (isHaveDian)//存在小数点
                     {
                         //判断小数点的位数
