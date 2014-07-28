@@ -19,7 +19,7 @@
 #import "NSString+URL.h"
 #import "ShareValue.h"
 
-@interface TripApplyVC ()
+@interface TripApplyVC () <UITextFieldDelegate, UITextViewDelegate>
 {
     
 }
@@ -84,6 +84,7 @@
     CGFloat wTitle = 80.f;
     CGFloat xTitle = xOffset+titleOffset;
     CGRect rectTitle  = CGRectMake(xTitle, topOffset, wTitle, rowHeight);
+    CGRect rectStar   = CGRectMake(xTitle + wTitle - 12, topOffset + 14, 10.f, 20.f);
     
     CGFloat xContent = CGRectGetMaxX(rectTitle) + titleOffset;
     CGFloat wContent = width - 2*xOffset - wTitle - 2*titleOffset;
@@ -99,10 +100,15 @@
     lblTheme.text = @"主      题";
     [self.svTripApply addSubview:lblTheme];
     
+    UILabel *lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = rectStar;
+    [self.svTripApply addSubview:lblStart];
+    
     UITextField *tfTheme = [ShareValue getDefaultTextField];
     tfTheme.frame = rectContent;
     tfTheme.maxLength = 50;
     tfTheme.keyboardType = UIKeyboardTypeDefault;
+    tfTheme.delegate = self;
     [self.svTripApply addSubview:tfTheme];
     self.tfTheme = tfTheme;
     
@@ -118,11 +124,17 @@
     lblDays.text = @"出差天数";
     [self.svTripApply addSubview:lblDays];
     
+    rectStar = CGRectOffset(rectStar, 0.f, rowHeight + yOffset);
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = rectStar;
+    [self.svTripApply addSubview:lblStart];
+    
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfDays = [ShareValue getDefaultTextField];
     tfDays.frame = rectContent;
     tfDays.keyboardType = UIKeyboardTypeDecimalPad; // 0 ～ 9 .
     tfDays.maxLength = 5.f;
+    tfDays.delegate = self;
     [self.svTripApply addSubview:tfDays];
     self.tfDayNumber = tfDays;
     
@@ -144,6 +156,11 @@
     lblBeginTitle.frame = rectTitle;
     lblBeginTitle.text = @"起始时间";
     [self.svTripApply addSubview:lblBeginTitle];
+    
+    rectStar = CGRectOffset(rectStar, 0.f, rowHeight + yOffset);
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = rectStar;
+    [self.svTripApply addSubview:lblStart];
     
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UILabel *lblBeginTime = [[UILabel alloc] init];
@@ -172,6 +189,11 @@
     lblEndTitle.text = @"结束时间";
     [self.svTripApply addSubview:lblEndTitle];
     
+    rectStar = CGRectOffset(rectStar, 0.f, rowHeight + yOffset);
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = rectStar;
+    [self.svTripApply addSubview:lblStart];
+    
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UILabel *lblEndTime = [[UILabel alloc] init];
     lblEndTime.frame = rectContent;
@@ -198,6 +220,11 @@
     lblStarting.text = @"出发地点";
     [self.svTripApply addSubview:lblStarting];
     
+    rectStar = CGRectOffset(rectStar, 0.f, rowHeight + yOffset);
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = rectStar;
+    [self.svTripApply addSubview:lblStart];
+    
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfStarting = [ShareValue getDefaultTextField];
     tfStarting.frame = rectContent;
@@ -216,6 +243,11 @@
     lblDestination.text = @"出差地点";
     [self.svTripApply addSubview:lblDestination];
     
+    rectStar = CGRectOffset(rectStar, 0.f, rowHeight + yOffset);
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = rectStar;
+    [self.svTripApply addSubview:lblStart];
+    
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tflblDestination = [ShareValue getDefaultTextField];
     tflblDestination.frame = rectContent;
@@ -229,6 +261,11 @@
     lblDescription.text = @"详情描述";
     [self.svTripApply addSubview:lblDescription];
     
+    rectStar = CGRectOffset(rectStar, 0.f, rowHeight);
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = rectStar;
+    [self.svTripApply addSubview:lblStart];
+    
     rect = CGRectOffset(rect, 0.f, rowHeight + 3*yOffset);
     rect.size.height = 2*rowHeight;
     UIView *ivDescription = [ShareValue getDefaultInputBorder];
@@ -241,6 +278,7 @@
     tvDescription.textColor = COLOR_INPUT_CONTENT;
     tvDescription.font = [UIFont systemFontOfSize:FONT_SIZE_INPUT_CONTENT];
     tvDescription.backgroundColor = [UIColor whiteColor];
+    tvDescription.delegate = self;
     [self.svTripApply addSubview:tvDescription];
     self.tvDescription = tvDescription;
     
@@ -271,6 +309,126 @@
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     self.lblBeginTime.text = [formatter stringFromDate:date];
     self.lblEndTime.text = [formatter stringFromDate:date];
+}
+
+#pragma mark - UITextField Delegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.tfTheme)
+    {
+        if (range.location >= 15)
+        {
+            return NO;
+        }
+    }
+    // 出差天数限制
+    else if (textField == self.tfDayNumber) {
+        
+        // 判断是否存在点
+        BOOL isHaveDian = YES;
+        if ([textField.text rangeOfString:@"."].location==NSNotFound) {
+            isHaveDian=NO;
+        }
+        
+        // 长度过滤
+        if (isHaveDian) {
+            if (range.location >= 5) {
+                return NO;
+            }
+        } else {
+            if (range.location >= 3) {
+                return NO;
+            }
+        }
+        
+        // 小数点控制
+        if ([string length] > 0)
+        {
+            unichar single=[string characterAtIndex:0];//当前输入的字符
+            if ((single >='0' && single<='9') || single=='.')//数据格式正确
+            {
+                //首字母不能为0和小数点
+                if([textField.text length]==0){
+                    if(single == '.'){
+                        [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                        return NO;
+                        
+                    }
+                    if (single == '0') {
+                        [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                        return NO;
+                        
+                    }
+                }
+                if (single=='.')
+                {
+                    if(!isHaveDian)//text中还没有小数点
+                    {
+                        isHaveDian=YES;
+                        return YES;
+                    }else
+                    {
+                        [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                        return NO;
+                    }
+                }
+                else
+                {
+                    if (isHaveDian)//存在小数点
+                    {
+                        //判断小数点的位数
+                        NSRange ran=[textField.text rangeOfString:@"."];
+                        int tt=range.location-ran.location;
+                        if (tt <= 1){
+                            return YES;
+                        }else{
+                            return NO;
+                        }
+                    }
+                    else
+                    {
+                        return YES;
+                    }
+                }
+            }
+            //输入的数据格式不正确
+            else
+            {
+                [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                return NO;
+            }
+        }
+        else
+        {
+            return YES;
+        }
+    }
+    
+    return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if (textView == self.tvDescription) {
+        NSString *new = [textView.text stringByReplacingCharactersInRange:range withString:text];
+        NSInteger res = 200 - [new length];
+        if(res >= 0)
+        {
+            return YES;
+        }
+        else
+        {
+            NSRange rg = {0,[text length]+res};
+            if (rg.length>0) {
+                NSString *s = [text substringWithRange:rg];
+                [textView setText:[textView.text stringByReplacingCharactersInRange:range withString:s]];
+            }
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 #pragma mark - 事件

@@ -21,7 +21,7 @@
 
 #define DEFINE_SUCCESSCODE @"00000000"
 
-#define NumberAndCharacters @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" // 限制字符和数字
+#define NumberAndCharacters @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\n" // 限制字符和数字
 
 #define MCOLOR_GREEN HEX_RGB(0x4cd964)
 #define MCOLOR_BLUE HEX_RGB(0x409BE4)
