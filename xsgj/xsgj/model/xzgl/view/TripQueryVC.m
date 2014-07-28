@@ -49,9 +49,6 @@ static int const pageSize = 20;
     [super viewDidLoad];
 
     [self UI_setup];
-    
-    self.currentPage = 1;
-    [self loadTripList];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -59,6 +56,8 @@ static int const pageSize = 20;
     [super viewDidAppear:animated];
     
     // 每次进入页面重新加载
+    self.currentPage = 1;
+    [self loadTripList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -98,20 +97,24 @@ static int const pageSize = 20;
     [self.btnEndTime setBackgroundImage:[[UIImage imageNamed:@"日期选择控件背板"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateNormal];
     [self.btnEndTime setBackgroundImage:[[UIImage imageNamed:@"日期选择控件背板_s"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateHighlighted];
     
+
+    self.lblBeginTime.font = [UIFont systemFontOfSize:15];
+    self.lblBeginTime.textColor = HEX_RGB(0x000000);
+    self.lblBeginTime.backgroundColor = [UIColor clearColor];
+
+    self.lblEndTime.font = [UIFont systemFontOfSize:15];
+    self.lblEndTime.textColor = HEX_RGB(0x000000);
+    self.lblEndTime.backgroundColor = [UIColor clearColor];
+    
     // 设置默认时间
+    /*
     NSDate *date = [NSDate date];
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     
     self.lblBeginTime.text = [formatter stringFromDate:date];
-    self.lblBeginTime.font = [UIFont systemFontOfSize:15];
-    self.lblBeginTime.textColor = HEX_RGB(0x000000);
-    self.lblBeginTime.backgroundColor = [UIColor clearColor];
-    
     self.lblEndTime.text = [formatter stringFromDate:date];
-    self.lblEndTime.font = [UIFont systemFontOfSize:15];
-    self.lblEndTime.textColor = HEX_RGB(0x000000);
-    self.lblEndTime.backgroundColor = [UIColor clearColor];
+    */
     
     // 列表
     self.tbvQuery.backgroundColor = HEX_RGB(0xefeff4);
@@ -152,8 +155,14 @@ static int const pageSize = 20;
 - (void)loadTripList
 {
     QueryTripHttpRequest *request = [[QueryTripHttpRequest alloc] init];
-    request.BEGIN_TIME = self.lblBeginTime.text;
-    request.END_TIME = self.lblEndTime.text;
+    // 如果是空串就不上传
+    if (![self.lblBeginTime.text isEmptyOrWhitespace]) {
+        request.BEGIN_TIME = self.lblBeginTime.text;
+    }
+    if (![self.lblEndTime.text isEmptyOrWhitespace]) {
+        request.END_TIME = self.lblEndTime.text;
+    }
+
     request.PAGE = self.currentPage;
     request.ROWS = pageSize;
     

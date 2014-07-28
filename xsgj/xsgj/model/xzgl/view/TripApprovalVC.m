@@ -50,9 +50,6 @@ static int const pageSize = 20;
     [super viewDidLoad];
     
     [self UI_setup];
-    
-    self.currentPage = 1;
-    [self loadTripList];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -60,6 +57,8 @@ static int const pageSize = 20;
     [super viewDidAppear:animated];
     
     // 每次进入页面重新加载
+    self.currentPage = 1;
+    [self loadTripList];
 }
 
 - (void)didReceiveMemoryWarning
