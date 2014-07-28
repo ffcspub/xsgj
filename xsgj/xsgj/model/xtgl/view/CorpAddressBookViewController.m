@@ -24,8 +24,11 @@
     NSMutableArray *mSectionArray;
     // 分段联系人-二维
     NSMutableArray *mLocalSectionContact;
+    
     // 部门选择表格
     UITableView *tableDept;
+    // 部门数据内容
+    NSArray     *arrayDept;
 }
 @end
 
@@ -37,6 +40,7 @@
     if (self)
     {
         mLocalSectionContact = [[NSMutableArray alloc]init];
+        arrayDept            = [NSArray array];
         [DeptInfoBean deleteWithWhere:nil];
         [ContactBean deleteWithWhere:nil];
     }
@@ -135,13 +139,34 @@
             {
                 NSString *sql = [NSString stringWithFormat:@"USER_NAME_HEAD = '%@'",s];
                 NSMutableArray *mN = [ContactBean searchWithWhere:sql orderBy:nil offset:0 count:100];
-                NSLog(@"mN = %@",mN);
                 [mLocalSectionContact addObject:mN];
             }
-            NSLog(@"mLocalSectionContact = %@",mLocalSectionContact);
             // 刷新table
             [_tabContact reloadData];
-
+            
+            /*
+            NSMutableArray *temp = [DeptInfoBean searchWithWhere:@"DEPT_PID = 0" orderBy:nil offset:0 count:100];
+            for (int i = 0 ; i< [temp count]; i++)
+            {
+                DeptInfoBean *bean = temp[i];
+                TRDeptInfoBean *trBean = [[TRDeptInfoBean alloc]init];
+                trBean.DEPT_ID    = bean.DEPT_ID;
+                trBean.DEPT_PID   = bean.DEPT_PID;
+                trBean.DEPT_NAME  = bean.DEPT_NAME;
+                NSString *sql = [NSString stringWithFormat:@"DEPT_PID = %d",bean.DEPT_ID];
+                NSMutableArray *subArray = [DeptInfoBean searchWithWhere:sql orderBy:nil offset:0 count:100];
+                trBean.SUB_BEAN   = subArray;
+                for (int i = 0 ; i < [trBean.SUB_BEAN count]; i++)
+                {
+                    DeptInfoBean *bean = trBean.SUB_BEAN[i];
+                    TRDeptInfoBean *sbBean = [[TRDeptInfoBean alloc]init];
+                    sbBean.DEPT_ID    = bean.DEPT_ID;
+                    sbBean.DEPT_PID   = bean.DEPT_PID;
+                    sbBean.DEPT_NAME  = bean.DEPT_NAME;
+                }
+            }
+            */
+            
         }
     }
     fail:^(BOOL notReachable, NSString *desciption)
