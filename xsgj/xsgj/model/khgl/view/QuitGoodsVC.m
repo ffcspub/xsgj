@@ -62,10 +62,10 @@ static int const pageSize = 10;
     
     // 如果是空串就不上传
     if (![self.lblBeginTime.text isEmptyOrWhitespace]) {
-        request.BEGIN_TIME = self.lblBeginTime.text;
+        request.BEGINTIME = self.lblBeginTime.text;
     }
     if (![self.lblEndTime.text isEmptyOrWhitespace]) {
-        request.END_TIME = self.lblEndTime.text;
+        request.ENDTIME = self.lblEndTime.text;
     }
 
     request.CUST_NAME = self.tfVisiterName.text;

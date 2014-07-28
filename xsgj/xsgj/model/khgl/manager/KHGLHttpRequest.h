@@ -268,8 +268,8 @@
 @property(nonatomic,assign) int 	USER_ID	;//	用户ID
 @property(nonatomic,strong) NSNumber *	QUERY_DEPTID	;//	查询部门标识
 @property(nonatomic,strong) NSString *	CUST_NAME	;//	客户名称
-@property(nonatomic,strong) NSString *	BEGIN_TIME	;//	上报开始时间
-@property(nonatomic,strong) NSString *	END_TIME	;//	上报结束时间
+@property(nonatomic,strong) NSString *	BEGINTIME	;//	上报开始时间
+@property(nonatomic,strong) NSString *	ENDTIME	;//	上报结束时间
 
 @end
 
