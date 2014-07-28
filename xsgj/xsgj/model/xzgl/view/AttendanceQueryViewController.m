@@ -13,6 +13,8 @@
 #import "LK_EasySignal.h"
 #import <NSDate+Helper.h>
 #import "SVPullToRefresh.h"
+#import "SignDetailBean.h"
+#import "MyCusMapAddressVC.h"
 
 typedef  enum : NSUInteger {
     TOP = 0,
@@ -189,15 +191,16 @@ static int const pageSize = 10;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     page++;
-    QueryAttendanceHttpRequest *request = [[QueryAttendanceHttpRequest alloc] init];
+    DetailAttendanceHttpRequest *request = [[DetailAttendanceHttpRequest alloc] init];
     UILabel *lb_starttime = (UILabel *)[_btn_starttime viewWithTag:301];
     UILabel *lb_endtime = (UILabel *)[_btn_endtime viewWithTag:302];
     request.BEGIN_TIME = lb_starttime.text;
     request.END_TIME = lb_endtime.text;
+    request.QUERY_USERID = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.USER_ID];
     request.PAGE = page;
     request.ROWS = pageSize;
     
-    [XZGLAPI queryAttendanceByRequest:request success:^(QueryAttendanceHttpReponse *response) {
+    [XZGLAPI detailAttendanceByRequest:request success:^(DetailAttendanceHttpResponse *response) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
         int resultCount = [response.DATA count];
@@ -301,7 +304,7 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
         cell = [[AttendanceQueryCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    SigninfoBean *info = [_attendances objectAtIndex:indexPath.row];
+    SignDetailBean *info = [_attendances objectAtIndex:indexPath.row];
     
     if ([info.SIGN_FLAG isEqualToString:@"i"]) {
         cell.name = @"签到";
@@ -329,6 +332,17 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    SignDetailBean *info = [_attendances objectAtIndex:indexPath.row];
+    
+    MyCusMapAddressVC *myCusMapAddressVC = [[MyCusMapAddressVC alloc] initWithNibName:@"MyCusMapAddressVC" bundle:nil];
+    myCusMapAddressVC.title = @"考勤详情";
+    CLLocationCoordinate2D coordinate;
+    coordinate.latitude = info.LAT/1000000;
+    coordinate.longitude = info.LNG/1000000;
+    myCusMapAddressVC.cusCoordinate = coordinate;
+    myCusMapAddressVC.strAddress = info.POSITION;
+    [self.navigationController pushViewController:myCusMapAddressVC animated:YES];
 }
 
 #pragma mark - scrollViewDelegate
