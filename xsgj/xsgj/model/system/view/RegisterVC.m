@@ -106,9 +106,10 @@
     
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfCropCode = [ShareValue getDefaultTextField];
-    tfCropCode.placeholder = @"用英文或数字组成，长度不能超过20";
+    tfCropCode.placeholder = @"英文或数字组成，长度小于20";
     tfCropCode.frame = rectContent;
     tfCropCode.maxLength = 20;
+    tfCropCode.keyboardType = UIKeyboardTypeASCIICapable;
     tfCropCode.delegate = self;
     [self.svRoot addSubview:tfCropCode];
     self.tfCropCode = tfCropCode;
