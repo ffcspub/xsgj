@@ -47,7 +47,7 @@
     [_mapView addGestureRecognizer:longPress];
     _mapView.delegate = self;
     
-    _lb_address.text = @"请在地图中长按进行定位!";
+    _lb_address.text = @"长按进行定位!";
     
     _coordinate = (CLLocationCoordinate2D){119.279601,26.112961};
     if ([ShareValue shareInstance].currentLocation.latitude >0 ) {
@@ -85,7 +85,7 @@
 
 -(void)startGeoCodeSearch{
 
-    self.lb_address.text = @"正在执行反GEO检索···";
+    self.lb_address.text = @"正在定位···";
     BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
     reverseGeocodeSearchOption.reverseGeoPoint = _coordinate;
     BOOL flag = [_search reverseGeoCode:reverseGeocodeSearchOption];
@@ -157,7 +157,7 @@
 - (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error;
 {
     if (error) {
-        _lb_address.text = @"GEO检索失败，请长按重新定位!";
+        _lb_address.text = @"定位失败，请重新定位!";
     }else{
         _address = result.address;
         _lb_address.text = _address;
