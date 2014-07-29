@@ -188,11 +188,11 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </imageView>
                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Photo外框Part2.png" id="GaL-eV-IT3">
-                                    <rect key="frame" x="0.0" y="201" width="306" height="57"/>
+                                    <rect key="frame" x="0.0" y="201" width="300" height="57"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jb2-ve-etd">
-                                    <rect key="frame" x="124" y="171" width="58" height="58"/>
+                                    <rect key="frame" x="121" y="171" width="58" height="58"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="btnPhoto_nor.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -204,7 +204,7 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="拍照" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qn6-I4-LPn">
-                                    <rect key="frame" x="132" y="225" width="42" height="21"/>
+                                    <rect key="frame" x="129" y="225" width="42" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
