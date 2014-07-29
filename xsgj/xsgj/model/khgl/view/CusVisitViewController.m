@@ -146,7 +146,7 @@
     }
     else
     {
-        _btnVisitEnd.enabled = YES;
+        _btnVisitEnd.enabled = !_btnVisitBegin.enabled;
         _lbEndVisitTime.text = @"";
     }
 }
@@ -189,7 +189,7 @@
     _lbVisitTime.text = strCurrentTime;
     _btnVisitBegin.enabled = NO;
     _vistRecord.VISIT_TYPE = _strVisitType.intValue;
-    _vistRecord.VISIT_DATE = [[NSDate date]stringWithFormat:@"yyyy-MM-dd 00:00:00"];
+    _vistRecord.VISIT_DATE = [[NSDate date]stringWithFormat:@"yyyy-MM-dd"];
     _vistRecord.VISIT_CONDITION_CODE = _condition.CONDITION_CODE;
     _vistRecord.VISIT_CONDITION_NAME = _condition.CONDITION_NAME;
     _vistRecord.BEGIN_TIME = strCurrentTime;
@@ -207,6 +207,8 @@
     [_vistRecord save];
     
     BNVistRecord *record = [BNVistRecord searchSingleWithWhere:[NSString stringWithFormat:@"CUST_ID=%d and VISIT_TYPE=%@",_customerInfo.CUST_ID,_strVisitType] orderBy:@"BEGIN_TIME"];
+    
+    _btnVisitEnd.enabled = YES;
     NSLog(@"%@",record.VISIT_NO);
 }
 
@@ -268,27 +270,26 @@
     request.BEGIN_TIME      = _vistRecord.BEGIN_TIME;
     request.END_TIME        = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     request.CUST_ID         = _customerInfo.CUST_ID;
-    // chenzftodo: 数据确认
-    //request.VISIT_CONDITION_CODE = _vistRecord.VISIT_CONDITION_CODE;
+    request.VISIT_CONDITION_CODE = _vistRecord.VISIT_CONDITION_CODE;
     request.VISIT_TYPE      = _strVisitType;
     request.CONF_ID         = 0;
-    //request.SYNC_STATE      = 2;
-    request.BEGIN_LNG       = [NSNumber numberWithDouble:_vistRecord.BEGIN_LNG];
-    request.BEGIN_LNG2      = [NSNumber numberWithDouble:_vistRecord.BEGIN_LNG2];
-    request.BEGIN_LAT       = [NSNumber numberWithDouble:_vistRecord.BEGIN_LAT];
-    request.BEGIN_LAT2      = [NSNumber numberWithDouble:_vistRecord.BEGIN_LAT2];
+    request.BEGIN_LNG       = [NSNumber numberWithDouble:_vistRecord.BEGIN_LNG * 1000000];
+    request.BEGIN_LNG2      = [NSNumber numberWithDouble:_vistRecord.BEGIN_LNG2 * 1000000];
+    request.BEGIN_LAT       = [NSNumber numberWithDouble:_vistRecord.BEGIN_LAT * 1000000];
+    request.BEGIN_LAT2      = [NSNumber numberWithDouble:_vistRecord.BEGIN_LAT2 * 1000000];
     request.BEGIN_POS       = _vistRecord.BEGIN_POS;
     request.BEGIN_POS2      = _vistRecord.BEGIN_POS2;
-    request.END_LAT         = [NSNumber numberWithDouble:[ShareValue shareInstance].currentLocation.latitude];
-    request.END_LNG         = [NSNumber numberWithDouble:[ShareValue shareInstance].currentLocation.longitude];
+    request.END_LAT         = [NSNumber numberWithDouble:[ShareValue shareInstance].currentLocation.latitude  * 1000000];
+    request.END_LNG         = [NSNumber numberWithDouble:[ShareValue shareInstance].currentLocation.longitude * 1000000];
     request.END_POS         = [ShareValue shareInstance].address;
     if (manualCoordinate.longitude > 0) {
-        request.END_LAT2 = [NSNumber numberWithDouble:manualCoordinate.latitude];
-        request.END_LNG2 = [NSNumber numberWithDouble:manualCoordinate.longitude];
+        request.END_LAT2 = [NSNumber numberWithDouble:manualCoordinate.latitude * 1000000];
+        request.END_LNG2 = [NSNumber numberWithDouble:manualCoordinate.longitude * 1000000];
         request.END_POS2 = _address;
     }
 
     [KHGLAPI recordVisitByRequest:request success:^(RecordVisitHttpResponse *response){
+        _btnVisitEnd.enabled = NO;
         _lbEndVisitTime.text = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showSuccess:@"提交成功" toView:self.view];
