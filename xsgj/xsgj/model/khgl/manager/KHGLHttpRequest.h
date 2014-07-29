@@ -90,6 +90,7 @@
 @property(nonatomic,assign) int         CONF_ID;//	线路配置id
 @property(nonatomic,assign) int         CUST_ID;//	客户标识
 @property(nonatomic,strong) NSString *  VISIT_NO;//	拜访编号(随机生成的uuid)
+@property(nonatomic,strong) NSString *  VISIT_CONDITION_CODE;//拜访情况编码
 @property(nonatomic,strong) NSString *	VISIT_TYPE	;//	拜访类型(0表示临时拜访 1表示计划拜访)
 @property(nonatomic,strong) NSString *	VISIT_DATE	;//	计划拜访日期
 @property(nonatomic,strong) NSString *	BEGIN_TIME	;//	开始时间
