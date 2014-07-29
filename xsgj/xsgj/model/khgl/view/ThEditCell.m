@@ -58,7 +58,7 @@
         self.thCommitData.PRODUCT_UNIT_NAME = [unitNames objectAtIndex:anIndex];
     }];
     
-    [popView showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view animated:NO];
+    [popView showInView:[UIApplication sharedApplication].delegate.window animated:NO];
 }
 
 #pragma mark - UITextFieldDelegate

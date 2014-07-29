@@ -407,6 +407,27 @@
 
 #pragma mark - DhEditCellDelegate
 
+- (void)onBtnAddClicked:(DhEditCell *)cell
+{
+    OrderItemBean *orderItemBean = [[OrderItemBean alloc] init];
+    orderItemBean.GIFT_NAME = cell.commitData.GIFT_NAME;
+    orderItemBean.UNIT_NAME = cell.commitData.UNIT_NAME;
+    orderItemBean.SPEC = cell.commitData.SPEC;
+    orderItemBean.PROD_NAME = cell.commitData.PROD_NAME;
+    orderItemBean.GIFT_UNIT_NAME = cell.commitData.GIFT_UNIT_NAME;
+    orderItemBean.TOTAL_PRICE = cell.commitData.TOTAL_PRICE;
+    orderItemBean.ITEM_PRICE = cell.commitData.ITEM_PRICE;
+    orderItemBean.PRODUCT_UNIT_ID = cell.commitData.PRODUCT_UNIT_ID;
+    orderItemBean.PROD_ID = cell.commitData.PROD_ID;
+    orderItemBean.GIFT_TOTAL = cell.commitData.GIFT_TOTAL;
+    orderItemBean.GIFT_PRICE =cell.commitData.GIFT_PRICE;
+    orderItemBean.ITEM_NUM = cell.commitData.ITEM_NUM;
+    orderItemBean.GIFT_NUM = cell.commitData.GIFT_NUM;
+    [_aryDhData insertObject:orderItemBean atIndex:cell.indexPath.row + 1];
+    
+    [_tvContain reloadData];
+}
+
 - (void)onBtnDelClicked:(DhEditCell *)cell
 {
     [_aryDhData removeObjectAtIndex:cell.indexPath.row];

@@ -221,4 +221,21 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
     }
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(textField == self.tfClCost)
+    {
+        if(textField.text.length < 12 || [string isEqualToString:@""])
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 @end

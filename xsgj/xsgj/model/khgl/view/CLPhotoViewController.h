@@ -11,7 +11,7 @@
 #import "BNDisplayType.h"
 #import "BNAssetType.h"
 
-@interface CLPhotoViewController : DzPhotoViewController
+@interface CLPhotoViewController : DzPhotoViewController<UITextFieldDelegate>
 {
     NSArray *_aryClTypeData;
     NSArray *_aryZcTypeData;

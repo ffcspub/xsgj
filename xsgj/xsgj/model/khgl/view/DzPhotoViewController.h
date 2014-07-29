@@ -37,7 +37,7 @@
     LeveyPopListView *_popListView;
 }
 
-
+@property (weak, nonatomic) IBOutlet UIScrollView *svMainContain;
 @property (weak, nonatomic) IBOutlet UITextField *tfPhotoType;
 @property (weak, nonatomic) IBOutlet UIButton *btnTypeSelect;
 @property (weak, nonatomic) IBOutlet UIButton *btnTakePhoto;
@@ -60,6 +60,7 @@
 - (IBAction)handleBtnTakePhotoClicked:(id)sender;
 - (IBAction)handleTapImageView:(id)sender;
 - (IBAction)handleLongPressImageView:(id)sender;
+-(IBAction)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer;
 
 @end
 

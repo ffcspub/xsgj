@@ -223,8 +223,7 @@
     {
         bEnter = YES;
     }
-    // todo: test
-    //self.navigationItem.rightBarButtonItem.enabled = bEnter;
+    self.navigationItem.rightBarButtonItem.enabled = bEnter;
 }
 
 - (void)loadCustomerData

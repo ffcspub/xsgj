@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
+        <deployment defaultVersion="1280" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
@@ -58,6 +58,9 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="wr3-hB-YJy"/>
+                                    </connections>
                                 </textField>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＊" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Evi-f8-fxH">
                                     <rect key="frame" x="77" y="14" width="20" height="21"/>
@@ -76,6 +79,10 @@
                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="defaultPhoto.png" id="tQ7-nS-3gp">
                                     <rect key="frame" x="7" y="0.0" width="306" height="229"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="tyj-OD-F9H" appends="YES" id="lgF-4h-SEY"/>
+                                        <outletCollection property="gestureRecognizers" destination="MHM-mJ-cOH" appends="YES" id="PXv-2Z-Tnv"/>
+                                    </connections>
                                 </imageView>
                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Photo外框Part2.png" id="kGD-0Q-0ti">
                                     <rect key="frame" x="7" y="204" width="306" height="43"/>
@@ -186,6 +193,16 @@
                 <outlet property="delegate" destination="-1" id="TP8-Ut-Aj9"/>
             </connections>
         </tapGestureRecognizer>
+        <swipeGestureRecognizer direction="left" id="tyj-OD-F9H">
+            <connections>
+                <action selector="handleSwipeFrom:" destination="-1" id="gZ2-t8-cW1"/>
+            </connections>
+        </swipeGestureRecognizer>
+        <swipeGestureRecognizer direction="right" id="MHM-mJ-cOH">
+            <connections>
+                <action selector="handleSwipeFrom:" destination="-1" id="fem-i1-geK"/>
+            </connections>
+        </swipeGestureRecognizer>
     </objects>
     <resources>
         <image name="Photo_addPhoto.png" width="72" height="50"/>

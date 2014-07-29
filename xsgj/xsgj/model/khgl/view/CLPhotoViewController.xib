@@ -162,6 +162,9 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="j9Q-UK-N2q"/>
+                                    </connections>
                                 </textField>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＊" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LkJ-z8-75f">
                                     <rect key="frame" x="77" y="14" width="20" height="21"/>
@@ -180,6 +183,10 @@
                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="defaultPhoto.png" id="OAs-mi-FGa">
                                     <rect key="frame" x="7" y="0.0" width="306" height="229"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="gaO-Ub-de8" appends="YES" id="AO0-rb-6yG"/>
+                                        <outletCollection property="gestureRecognizers" destination="y5m-rL-Ew0" appends="YES" id="6fR-Vu-dL2"/>
+                                    </connections>
                                 </imageView>
                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Photo外框Part2.png" id="nxW-SP-223">
                                     <rect key="frame" x="7" y="204" width="306" height="43"/>
@@ -273,6 +280,16 @@
                 <outlet property="delegate" destination="-1" id="ZlB-Qz-0px"/>
             </connections>
         </tapGestureRecognizer>
+        <swipeGestureRecognizer direction="left" id="gaO-Ub-de8">
+            <connections>
+                <action selector="handleSwipeFrom:" destination="-1" id="Rk7-lG-pwL"/>
+            </connections>
+        </swipeGestureRecognizer>
+        <swipeGestureRecognizer direction="right" id="y5m-rL-Ew0">
+            <connections>
+                <action selector="handleSwipeFrom:" destination="-1" id="LGQ-Nq-i52"/>
+            </connections>
+        </swipeGestureRecognizer>
     </objects>
     <resources>
         <image name="Photo_addPhoto.png" width="72" height="50"/>

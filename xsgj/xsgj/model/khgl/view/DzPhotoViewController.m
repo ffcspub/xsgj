@@ -79,6 +79,7 @@
 {
     self.title = @"店招拍照";
     [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(handleNavBarRight)];
+    [_svMainContain setContentSize:CGSizeMake(0, 140 + _svImgContain.frame.origin.y + _svImgContain.frame.size.height + 10)];
     [_svImgContain setContentSize:CGSizeMake(_ivPhoto5.frame.origin.x + _ivPhoto5.frame.size.width, 0)];
 }
 
@@ -137,12 +138,30 @@
     if(_ivCurrentTap.highlighted)
     {
         _ivShowBig.image = _ivCurrentTap.image;
+        _ivShowBig.tag = _ivCurrentTap.tag;
     }
 }
 
 - (IBAction)handleLongPressImageView:(id)sender {
     UILongPressGestureRecognizer *recognizer = (UILongPressGestureRecognizer *)sender;
-    if(_ivCurrentTap.highlighted && recognizer.state == UIGestureRecognizerStateEnded)
+//    if(_ivCurrentTap.highlighted)
+//    {
+//        NSLog(@"highlighted");
+//        if(recognizer.state == UIGestureRecognizerStateBegan)
+//        {
+//            NSLog(@"UIGestureRecognizerStateBegan");
+//        }
+//        if(recognizer.state == UIGestureRecognizerStateChanged)
+//        {
+//            NSLog(@"UIGestureRecognizerStateChanged");
+//        }
+//        if(recognizer.state == UIGestureRecognizerStateEnded)
+//        {
+//            NSLog(@"UIGestureRecognizerStateEnded");
+//        }
+//    }
+    
+    if(_ivCurrentTap.highlighted && recognizer.state == UIGestureRecognizerStateBegan)
     {
         _delActionSheet = [[IBActionSheet alloc]initWithTitle:nil
                                                      delegate:self
@@ -150,7 +169,7 @@
                                        destructiveButtonTitle:@"删除"
                                             otherButtonTitles:nil];
         _delActionSheet.tag = 100;
-        [_delActionSheet showInView:[UIApplication sharedApplication].delegate.window.rootViewController.view];
+        [_delActionSheet showInView:[UIApplication sharedApplication].delegate.window];
     }
 }
 
@@ -200,6 +219,8 @@
         }
     }
     
+    _ivShowBig.image = [UIImage imageNamed:@"defaultPhoto"];
+    _ivShowBig.tag = 10;
     UIImageView *lastImageView = nil;
     for(int i=0; i<_aryImages.count; i++)
     {
@@ -209,6 +230,12 @@
         imageView.highlighted = YES;
         lastImageView = imageView;
     }
+    if(lastImageView)
+    {
+        _ivShowBig.image = lastImageView.image;
+        _ivShowBig.tag = lastImageView.tag;
+    }
+    
     
     float fOffset = lastImageView.frame.origin.x + 72 - _svImgContain.frame.size.width;
     if(fOffset > 0)
@@ -351,7 +378,6 @@
         //image = [image fixOrientation];
         image = [image imageByScaleForSize:CGSizeMake(self.view.frame.size.width * 1.5, self.view.frame.size.height * 1.5)];
         [_aryImages addObject:image];
-        _ivShowBig.image = image;
         
         ImageFileInfo *imageInfo = [[ImageFileInfo alloc]initWithImage:image];
         [_aryfileDatas addObject:imageInfo];
@@ -373,6 +399,34 @@
 {
     _ivCurrentTap = (UIImageView *)touch.view;
     return YES;
+}
+
+-(IBAction)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer{
+    if(recognizer.direction==UISwipeGestureRecognizerDirectionLeft) {
+        if(_ivShowBig.tag >= 0 && _ivShowBig.tag <4)
+        {
+            UIImageView * imageview = [self imageViewWithTag:_ivShowBig.tag + 1];
+            if(imageview && imageview.highlighted)
+            {
+                _ivShowBig.image = imageview.image;
+                _ivShowBig.tag = imageview.tag;
+            }
+        }
+
+    }
+    else if(recognizer.direction==UISwipeGestureRecognizerDirectionRight) {
+
+        if(_ivShowBig.tag > 0 && _ivShowBig.tag <=4)
+        {
+            UIImageView * imageview = [self imageViewWithTag:_ivShowBig.tag - 1];
+            if(imageview && imageview.highlighted)
+            {
+                _ivShowBig.image = imageview.image;
+                _ivShowBig.tag = imageview.tag;
+            }
+        }
+
+    }
 }
 
 

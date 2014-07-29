@@ -200,5 +200,77 @@
      }];
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(textField == self.tfPrice)
+    {
+        NSString *strRule = @"0123456789.\n";
+        NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:strRule] invertedSet];
+        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+        BOOL bNumber = [string isEqualToString:filtered];
+        if(!bNumber)
+        {
+            return NO;
+        }
+        
+        if([textField.text rangeOfString:@"."].length > 0)
+        {
+            if([string isEqualToString:@"."])
+            {
+                return NO;
+            }
+        }
+        
+        NSMutableString * futureString = [NSMutableString stringWithString:textField.text];
+        [futureString  insertString:string atIndex:range.location];
+        NSInteger flag=0;
+        const NSInteger limited = 2;
+        for (int i = futureString.length-1; i>=0; i--) {
+            if ([futureString characterAtIndex:i] == '.') {
+                
+                if (flag > limited) {
+                    return NO;
+                }
+                
+                break;
+            }
+            flag++;
+        }
+        
+        if(textField.text.length < 9 || [string isEqualToString:@""])
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    else if (textField == self.tfMark)
+    {
+        if(textField.text.length < 200 || [string isEqualToString:@""])
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    else
+    {
+        if(textField.text.length < 20 || [string isEqualToString:@""])
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 
 @end

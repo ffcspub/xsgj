@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
+        <deployment defaultVersion="1280" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
@@ -105,10 +105,13 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="puC-Iw-j9l">
-                                    <rect key="frame" x="58" y="10" width="226" height="30"/>
+                                    <rect key="frame" x="59" y="10" width="226" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="uLc-B4-fBF"/>
+                                    </connections>
                                 </textField>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＊" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="p8Z-Ir-wR8">
                                     <rect key="frame" x="44" y="14" width="20" height="21"/>
@@ -127,6 +130,10 @@
                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="defaultPhoto.png" id="SLK-75-dSJ">
                                     <rect key="frame" x="7" y="0.0" width="306" height="229"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="OPW-sd-Ly6" appends="YES" id="5aF-nc-KTl"/>
+                                        <outletCollection property="gestureRecognizers" destination="tK2-W9-4c3" appends="YES" id="5hZ-8b-KOn"/>
+                                    </connections>
                                 </imageView>
                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Photo外框Part2.png" id="XJw-VL-6AT">
                                     <rect key="frame" x="7" y="204" width="306" height="43"/>
@@ -220,6 +227,16 @@
                 <outlet property="delegate" destination="-1" id="4Yj-bH-9qp"/>
             </connections>
         </tapGestureRecognizer>
+        <swipeGestureRecognizer direction="left" id="OPW-sd-Ly6">
+            <connections>
+                <action selector="handleSwipeFrom:" destination="-1" id="QlI-YE-4GH"/>
+            </connections>
+        </swipeGestureRecognizer>
+        <swipeGestureRecognizer direction="right" id="tK2-W9-4c3">
+            <connections>
+                <action selector="handleSwipeFrom:" destination="-1" id="1FS-Nv-WuQ"/>
+            </connections>
+        </swipeGestureRecognizer>
     </objects>
     <resources>
         <image name="Photo_addPhoto.png" width="72" height="50"/>

@@ -35,8 +35,19 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qCt-Mr-Smk">
+                                <rect key="frame" x="248" y="0.0" width="35" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="tableCtrlBtnIcon_add-nor.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="tableCtrlBtnIcon_add-press.png"/>
+                                <connections>
+                                    <action selector="handleBtnAddClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Qoe-1r-0TU"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cFx-az-eJU">
-                                <rect key="frame" x="282" y="0.0" width="35" height="44"/>
+                                <rect key="frame" x="283" y="0.0" width="35" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="tablectrlbtnicon_jian_nor.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -401,6 +412,8 @@
     </objects>
     <resources>
         <image name="dropbox.png" width="17" height="17"/>
+        <image name="tableCtrlBtnIcon_add-nor.png" width="26" height="26"/>
+        <image name="tableCtrlBtnIcon_add-press.png" width="26" height="26"/>
         <image name="tablectrlbtnicon_jian_nor.png" width="26" height="26"/>
         <image name="tablectrlbtnicon_jian_press.png" width="26" height="26"/>
     </resources>

@@ -47,6 +47,14 @@
     
 }
 
+- (IBAction)handleBtnAddClicked:(id)sender
+{
+    if(self.delegate && [self.delegate respondsToSelector:@selector(onBtnAddClicked:)])
+    {
+        [self.delegate onBtnAddClicked:self];
+    }
+}
+
 - (IBAction)handleDelete:(id)sender {
     if(self.delegate && [self.delegate respondsToSelector:@selector(onBtnDelClicked:)])
     {

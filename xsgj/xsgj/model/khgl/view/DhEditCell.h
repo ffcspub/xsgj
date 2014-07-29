@@ -35,6 +35,7 @@
 @property (weak, nonatomic) OrderItemBean *commitData;
 
 - (void)setCellWithValue:(OrderItemBean *)commitBean;
+- (IBAction)handleBtnAddClicked:(id)sender;
 - (IBAction)handleDelete:(id)sender;
 - (IBAction)handleBtnUnitClicked:(id)sender;
 
@@ -43,6 +44,7 @@
 
 @protocol DhEditCellDelegate <NSObject>
 
+- (void)onBtnAddClicked:(DhEditCell *)cell;
 - (void)onBtnDelClicked:(DhEditCell *)cell;
 
 @end

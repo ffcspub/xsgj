@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CLPhotoViewController.h"
 
-@interface HdReportViewController : CLPhotoViewController
+@interface HdReportViewController : CLPhotoViewController<UITextViewDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UITextField *tfHdName;
