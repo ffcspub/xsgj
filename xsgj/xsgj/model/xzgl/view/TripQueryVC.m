@@ -157,10 +157,10 @@ static int const pageSize = 10;
     QueryTripHttpRequest *request = [[QueryTripHttpRequest alloc] init];
     // 如果是空串就不上传
     if (![self.lblBeginTime.text isEmptyOrWhitespace]) {
-        request.BEGIN_TIME = self.lblBeginTime.text;
+        request.BEGIN_DATE = self.lblBeginTime.text;
     }
     if (![self.lblEndTime.text isEmptyOrWhitespace]) {
-        request.END_TIME = self.lblEndTime.text;
+        request.END_DATE = self.lblEndTime.text;
     }
 
     request.PAGE = self.currentPage;

@@ -190,8 +190,8 @@
 @property(nonatomic,assign) int         USER_ID;//	用户ID
 @property(nonatomic,assign) int         TRIP_ID	;//	出差标识
 @property(nonatomic,strong) NSString *	TITLE	;//	主题
-@property(nonatomic,strong) NSString *	BEGIN_TIME	;//	出差开始时间
-@property(nonatomic,strong) NSString *	END_TIME	;//	出差结束时间
+@property(nonatomic,strong) NSString *	BEGIN_DATE	;//	出差开始时间
+@property(nonatomic,strong) NSString *	END_DATE	;//	出差结束时间
 @property(nonatomic,strong) NSString *	TRIP_FROM	;//	出差始发地
 @property(nonatomic,strong) NSString *	TRIP_TO	;//	出差目的地
 @property(nonatomic,strong) NSString *	APPLY_TIME	;//	申请时间
