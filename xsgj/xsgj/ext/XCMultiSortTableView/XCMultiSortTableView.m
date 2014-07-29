@@ -61,6 +61,8 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 	BOOL responseTopHeaderHeight;
 	BOOL responseBgColorForColumn;
 	BOOL responseHeaderBgColorForColumn;
+    
+    UIView *vTopSeperator;
 }
 
 @synthesize cellWidth, cellHeight, topHeaderHeight, leftHeaderWidth, sectionHeaderHeight, boldSeperatorLineWidth, normalSeperatorLineWidth;
@@ -116,7 +118,13 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 		topHeaderScrollView.showsHorizontalScrollIndicator = NO;
 		topHeaderScrollView.showsVerticalScrollIndicator = NO;
 		topHeaderScrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        topHeaderScrollView.bounces = NO;
 		[self addSubview:topHeaderScrollView];
+        
+        vTopSeperator = [[UIView alloc] initWithFrame:CGRectZero];
+        vTopSeperator.backgroundColor = self.normalSeperatorLineColor;
+        vTopSeperator.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+        [self addSubview:vTopSeperator];
 
 		leftHeaderTableView = [[UITableView alloc] initWithFrame:CGRectZero];
 		leftHeaderTableView.dataSource = self;
@@ -126,24 +134,37 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 		leftHeaderTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		leftHeaderTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		leftHeaderTableView.backgroundColor = [UIColor clearColor];
+        leftHeaderTableView.bounces = NO;
 		[self addSubview:leftHeaderTableView];
 
 		contentScrollView = [[XCMultiTableViewBGScrollView alloc] initWithFrame:CGRectZero];
 		contentScrollView.backgroundColor = [UIColor clearColor];
 		contentScrollView.parent = self;
 		contentScrollView.delegate = self;
+        contentScrollView.showsVerticalScrollIndicator = NO;
+        contentScrollView.showsHorizontalScrollIndicator = NO;
 		contentScrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        contentScrollView.bounces = NO;
 		[self addSubview:contentScrollView];
 
 		contentTableView = [[UITableView alloc] initWithFrame:contentScrollView.bounds];
 		contentTableView.dataSource = self;
 		contentTableView.delegate = self;
+        contentTableView.showsVerticalScrollIndicator = NO;
+        contentTableView.showsHorizontalScrollIndicator = NO;
 		contentTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		contentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		contentTableView.backgroundColor = [UIColor clearColor];
+        contentTableView.bounces = NO;
 		[contentScrollView addSubview:contentTableView];
 	}
 	return self;
+}
+
+- (void)setNormalSeperatorLineColor:(UIColor *)color
+{
+    normalSeperatorLineColor = color;
+    vTopSeperator.backgroundColor = color;
 }
 
 - (void)layoutSubviews {
@@ -155,11 +176,13 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 		vertexView.frame = CGRectMake(0, 0, leftHeaderWidth, topHeaderHeight);
         lblLeftHeader.frame = vertexView.bounds;
 		topHeaderScrollView.frame = CGRectMake(leftHeaderWidth + boldSeperatorLineWidth, 0, superWidth - leftHeaderWidth - boldSeperatorLineWidth, topHeaderHeight);
+        vTopSeperator.frame = CGRectMake(0, CGRectGetMaxY(topHeaderScrollView.frame) - self.normalSeperatorLineWidth, superWidth, self.normalSeperatorLineWidth);
 		leftHeaderTableView.frame = CGRectMake(0, topHeaderHeight + boldSeperatorLineWidth, leftHeaderWidth, superHeight - topHeaderHeight - boldSeperatorLineWidth);
 		contentScrollView.frame = CGRectMake(leftHeaderWidth + boldSeperatorLineWidth, topHeaderHeight + boldSeperatorLineWidth, superWidth - leftHeaderWidth - boldSeperatorLineWidth, superHeight - topHeaderHeight - boldSeperatorLineWidth);
 	}
 	else {
 		topHeaderScrollView.frame = CGRectMake(0, 0, superWidth, topHeaderHeight);
+        vTopSeperator.frame = CGRectMake(0, CGRectGetMaxY(topHeaderScrollView.frame) - self.normalSeperatorLineWidth, superWidth, self.normalSeperatorLineWidth);
 		contentScrollView.frame = CGRectMake(0, topHeaderHeight + boldSeperatorLineWidth, superWidth, superHeight - topHeaderHeight - boldSeperatorLineWidth);
 	}
 
@@ -177,7 +200,8 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 - (void)drawRect:(CGRect)rect {
 	// Drawing code
 	[super drawRect:rect];
-
+    
+    /*
 	CGContextRef context = UIGraphicsGetCurrentContext();
 
 	CGContextSetLineWidth(context, boldSeperatorLineWidth);
@@ -199,6 +223,7 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 	}
 
 	CGContextStrokePath(context);
+    */
 }
 
 - (void)dealloc {
@@ -244,6 +269,7 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 	[target selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
+/*
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
 	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, [tableView rectForHeaderInSection:section].size.height)];
@@ -257,6 +283,7 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 	}
 	else {
 		NSUInteger count = [datasource arrayDataForTopHeaderInTableView:self].count;
+        CGFloat x = 0.f;
 		for (int i = 0; i < count; i++) {
 			CGFloat cellW = [self accessContentTableViewCellWidth:i];
 			CGFloat cellH = [tableView rectForHeaderInSection:section].size.height;
@@ -290,11 +317,15 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 			[subView addGestureRecognizer:contentHeaderGecognizer];
 
 			[view addSubview:subView];
+            
+            [view addVerticalLineWithWidth:self.normalSeperatorLineWidth height:40.f bgColor:self.normalSeperatorLineColor atX:x];
+            x += 100 + self.normalSeperatorLineWidth;
 		}
 	}
     
 	return view;
 }
+*/
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -416,6 +447,7 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 
 - (void)setUpTopHeaderScrollView {
 	NSUInteger count = [datasource arrayDataForTopHeaderInTableView:self].count;
+    CGFloat x = 0.0f;
 	for (int i = 0; i < count; i++) {
 		CGFloat topHeaderW = [self accessContentTableViewCellWidth:i];
 		CGFloat topHeaderH = [self accessTopHeaderHeight];
@@ -450,6 +482,9 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
         }
 
 		[topHeaderScrollView addSubview:view];
+        
+        [topHeaderScrollView addVerticalLineWithWidth:self.normalSeperatorLineWidth height:topHeaderH bgColor:self.normalSeperatorLineColor atX:x];
+        x += topHeaderW;
 	}
 
 	[topHeaderScrollView reDraw];
@@ -476,6 +511,7 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 }
 
 - (UITableViewCell *)leftHeaderTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
 	static NSString *inde = @"leftHeaderTableViewCell";
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:inde];
 	if (cell == nil) {
@@ -523,7 +559,7 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 	[[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
 	NSMutableArray *ary = [[contentDataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-
+    CGFloat x = 0.0f;
 	for (int i = 0; i < count; i++) {
 		CGFloat cellW = [self accessContentTableViewCellWidth:i];
 		CGFloat cellH = [self cellHeightInIndexPath:indexPath];
@@ -547,6 +583,9 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 		view.backgroundColor = color;
         
 		[cell.contentView addSubview:view];
+        
+        [cell.contentView addVerticalLineWithWidth:self.normalSeperatorLineWidth height:cell.frame.size.height + self.normalSeperatorLineWidth bgColor:self.normalSeperatorLineColor atX:x];
+        x += cellW;
 	}
 
 	AddHeightTo(cell, normalSeperatorLineWidth);

@@ -239,7 +239,7 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
     
     // 配置Cell
     [cell configureForData:self.arrData[indexPath.row]];
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryNone;
     
     return cell;

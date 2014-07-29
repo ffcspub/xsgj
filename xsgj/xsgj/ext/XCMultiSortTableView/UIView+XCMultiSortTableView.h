@@ -12,6 +12,6 @@
 
 - (void)addBottomLineWithWidth:(CGFloat)width bgColor:(UIColor *)color;
 
-- (UIView *)addVerticalLineWithWidth:(CGFloat)width bgColor:(UIColor *)color atX:(CGFloat)x;
+- (UIView *)addVerticalLineWithWidth:(CGFloat)width height:(CGFloat)height bgColor:(UIColor *)color atX:(CGFloat)x;
 
 @end

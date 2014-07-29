@@ -21,8 +21,8 @@
     [self addSubview:bottomLine];
 }
 
-- (UIView *)addVerticalLineWithWidth:(CGFloat)width bgColor:(UIColor *)color atX:(CGFloat)x {
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(x, 0.0f, width, self.bounds.size.height)];
+- (UIView *)addVerticalLineWithWidth:(CGFloat)width height:(CGFloat)height bgColor:(UIColor *)color atX:(CGFloat)x {
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(x, 0.0f, width, height)];
     line.backgroundColor = color;
     line.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleRightMargin;
     [self addSubview:line];

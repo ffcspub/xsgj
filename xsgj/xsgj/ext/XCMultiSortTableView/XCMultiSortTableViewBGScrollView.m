@@ -27,6 +27,7 @@
 
 - (void)reDraw
 {
+    /*
     if (lines == nil) lines = [[NSMutableArray alloc] initWithCapacity:10];
     
     for (UIView *view in lines) {
@@ -44,6 +45,21 @@
 
     UIView *line = nil;
     CGFloat x = 0.0f;
+    CGFloat height = 0.f;
+    
+    if ([parent.datasource respondsToSelector:@selector(topHeaderHeightInTableView:)]) {
+        height = [parent.datasource topHeaderHeightInTableView:parent];
+    }
+    NSLog(@"height:%f", height);
+    
+    // 这里应该遍历所有的分区，由于我们的项目需求默认只需要一个分区，所以暂时不管这些
+    int rows = 0;
+    if ([parent.datasource respondsToSelector:@selector(arrayDataForContentInTableView:InSection:)]) {
+        rows = [parent.datasource arrayDataForContentInTableView:parent InSection:0].count;
+    }
+    NSLog(@"rows:%d", rows);
+    height += rows *40.f;
+    
     NSUInteger columnCount = [parent.datasource arrayDataForTopHeaderInTableView:parent].count;
     for (int i = 0; i < columnCount; i++) {
         CGFloat width;
@@ -54,10 +70,11 @@
         }
         
         x += width + parent.normalSeperatorLineWidth;
-        
-        line = [self addVerticalLineWithWidth:parent.normalSeperatorLineWidth bgColor:parent.normalSeperatorLineColor atX:x];
+
+        line = [self addVerticalLineWithWidth:parent.normalSeperatorLineWidth height:height bgColor:parent.normalSeperatorLineColor atX:x];
         [lines addObject:line];
     }
+    */
 }
 
 - (void)dealloc
