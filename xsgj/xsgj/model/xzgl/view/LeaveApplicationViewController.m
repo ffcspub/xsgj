@@ -208,7 +208,7 @@
     UITextField *tf_day = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
     tf_day.font = [UIFont boldSystemFontOfSize:17];
     tf_day.textColor = HEX_RGB(0x000000);
-    tf_day.keyboardType = UIKeyboardTypeNumberPad;
+    tf_day.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     tf_day.delegate = self;
     tf_day.tag = 405;
     [btn_leaveday addSubview:tf_day];

@@ -9,6 +9,7 @@
 #import "ApprovalInfoViewController.h"
 #import "LeaveInfoBean.h"
 #import <NSDate+Helper.h>
+#import <MBProgressHUD.h>
 #import "UIColor+External.h"
 #import "MBProgressHUD+Add.h"
 #import "XZGLAPI.h"
@@ -59,15 +60,32 @@
     
     self.title = @"请假详情";
     
-    [self UI_setup];
+    [self queryLeaveDetail];
     
-    [self updateTripInfo];
+    
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)queryLeaveDetail{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"正在加载详情";
+    QueryLeaveDetailHttpRequest *request = [[QueryLeaveDetailHttpRequest alloc]init];
+    request.LEAVE_ID = _leaveInfo.LEAVE_ID;
+    [XZGLAPI queryLeaveDetailByRequest:request success:^(QueryLeaveDetailHttpResponse *response) {
+        if (response.LEAVEINFOBEAN.count > 0) {
+            self.leaveInfo = response.LEAVEINFOBEAN[0];
+        }
+        [hud hide:YES];
+        [self UI_setup];
+        [self updateTripInfo];
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        
+    }];
 }
 
 #pragma mark - UI
@@ -342,7 +360,7 @@
     self.lblType.text = self.leaveInfo.TYPE_NAME;
     self.lblApprovalMan.text = [ShareValue shareInstance].userInfo.LEADER_NAME;
     self.tvApplyDesc.text = self.leaveInfo.REMARK;
-    self.tvApprovalDesc.text = self.leaveInfo.APPROVE_REAMRK;
+    self.tvApprovalDesc.text = self.leaveInfo.APPROVE_REMARK;
     
     // 0:未审批 1:已通过 2:未通过
     if (self.leaveInfo.APPROVE_STATE == 0) {
@@ -357,7 +375,14 @@
     }
 }
 
-#pragma mark - UITextView Delegate
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if (range.location > 200) {
+        return NO;
+    }
+    return YES;
+}
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
@@ -430,9 +455,13 @@
     [XZGLAPI approvalLeaveByRequest:request success:^(ApprovalLeaveHttpResponse *response) {
         
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self.navigationController popViewControllerAnimated:YES];
+        });
         
-        [self.navigationController popViewControllerAnimated:YES];
     } fail:^(BOOL notReachable, NSString *desciption) {
         
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
