@@ -11,7 +11,7 @@
 #import "MBProgressHUD+Add.h"
 #import "CRSA.h"
 
-@interface ChangePasswordViewController ()
+@interface ChangePasswordViewController ()<UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *tf_oldpwd;
 @property (weak, nonatomic) IBOutlet UITextField *tf_newpwd;
@@ -176,9 +176,13 @@
     [XTGLAPI updatePwdByRequest:request success:^(UpdatePwdHttpResponse *response) {
         
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:@"修改成功" toView:self.view];
+//        [MBProgressHUD showSuccess:@"修改成功" toView:self.view];
         
-        [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"修改成功" message:@"密码修改成功，确定后跳转到登录页面" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        alert.tag = 101;
+        [alert show];
+        
+//        [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
         
     } fail:^(BOOL notReachable, NSString *desciption) {
         
@@ -191,6 +195,9 @@
 
 - (void)submitAction:(id)sender
 {
+    [_tf_oldpwd resignFirstResponder];
+    [_tf_newpwd resignFirstResponder];
+    [_tf_confirmpwd resignFirstResponder];
     if (![self isValidData]) {
         return;
     }
@@ -200,6 +207,16 @@
 - (void)back
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 101) {
+        [ShareValue shareInstance].userPass = _tf_newpwd.text;
+        [ShareAppDelegate showLoginViewController];
+    }
 }
 
 @end
