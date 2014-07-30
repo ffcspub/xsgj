@@ -36,6 +36,8 @@
 @property (weak, nonatomic) IBOutlet UITextView *tvApplyDesc;
 @property (weak, nonatomic) IBOutlet UITextView *tvApprovalDesc;
 
+@property (nonatomic, assign) BOOL isNeedToApproval;
+
 @end
 
 @implementation TripDetailVC
@@ -64,6 +66,11 @@
                                                object:nil];
     
     self.title = @"出差详情";
+    
+    // 待审标识
+    if ([self.tripInfo.APPROVE_STATE isEqualToString:@"0"]) {
+        self.isNeedToApproval = YES;
+    }
     
     [self UI_setup];
     
@@ -214,42 +221,47 @@
     [self.svRoot addSubview:lblDestinationValue];
     self.lblDestination = lblDestinationValue;
     
-    // 审批人
-    rect = CGRectOffset(rect, 0.f, rowHeight + yOffset);
-    UIView *vApprovalMan = [ShareValue getDefaultShowBorder];
-    vApprovalMan.frame = rect;
-    [self.svRoot addSubview:vApprovalMan];
-    
-    rectTitle = CGRectOffset(rectTitle, 0.f, rowHeight + yOffset);
-    UILabel *lblApprovalManTitle = [ShareValue getDefaultInputTitle];
-    lblApprovalManTitle.frame = rectTitle;
-    lblApprovalManTitle.text = @"审  批  人";
-    [self.svRoot addSubview:lblApprovalManTitle];
-    
-    rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
-    UILabel *lblApprovalManValue = [ShareValue getDefaultDetailContent];
-    lblApprovalManValue.frame = rectContent;
-    [self.svRoot addSubview:lblApprovalManValue];
-    self.lblApprovalMan = lblApprovalManValue;
-    
-    // 审批状态
-    rect = CGRectOffset(rect, 0.f, rowHeight + yOffset);
-    UIView *vApprovalState = [ShareValue getDefaultShowBorder];
-    vApprovalState.frame = rect;
-    [self.svRoot addSubview:vApprovalState];
-    
-    rectTitle = CGRectOffset(rectTitle, 0.f, rowHeight + yOffset);
-    UILabel *lblApprovalStateTitle = [ShareValue getDefaultInputTitle];
-    lblApprovalStateTitle.frame = rectTitle;
-    lblApprovalStateTitle.text = @"审批状态";
-    [self.svRoot addSubview:lblApprovalStateTitle];
-    
-    rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
-    UILabel *lblApprovalStateValue = [ShareValue getDefaultDetailContent];
-    lblApprovalStateValue.frame = rectContent;
-    [self.svRoot addSubview:lblApprovalStateValue];
-    self.lblApprovalState = lblApprovalStateValue;
-    
+    // 当不用审批的时候才显示
+    if (!self.isNeedToApproval) {
+        
+        // 审批人
+        rect = CGRectOffset(rect, 0.f, rowHeight + yOffset);
+        UIView *vApprovalMan = [ShareValue getDefaultShowBorder];
+        vApprovalMan.frame = rect;
+        [self.svRoot addSubview:vApprovalMan];
+        
+        rectTitle = CGRectOffset(rectTitle, 0.f, rowHeight + yOffset);
+        UILabel *lblApprovalManTitle = [ShareValue getDefaultInputTitle];
+        lblApprovalManTitle.frame = rectTitle;
+        lblApprovalManTitle.text = @"审  批  人";
+        [self.svRoot addSubview:lblApprovalManTitle];
+        
+        rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
+        UILabel *lblApprovalManValue = [ShareValue getDefaultDetailContent];
+        lblApprovalManValue.frame = rectContent;
+        [self.svRoot addSubview:lblApprovalManValue];
+        self.lblApprovalMan = lblApprovalManValue;
+        
+        // 审批状态
+        rect = CGRectOffset(rect, 0.f, rowHeight + yOffset);
+        UIView *vApprovalState = [ShareValue getDefaultShowBorder];
+        vApprovalState.frame = rect;
+        [self.svRoot addSubview:vApprovalState];
+        
+        rectTitle = CGRectOffset(rectTitle, 0.f, rowHeight + yOffset);
+        UILabel *lblApprovalStateTitle = [ShareValue getDefaultInputTitle];
+        lblApprovalStateTitle.frame = rectTitle;
+        lblApprovalStateTitle.text = @"审批状态";
+        [self.svRoot addSubview:lblApprovalStateTitle];
+        
+        rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
+        UILabel *lblApprovalStateValue = [ShareValue getDefaultDetailContent];
+        lblApprovalStateValue.frame = rectContent;
+        [self.svRoot addSubview:lblApprovalStateValue];
+        self.lblApprovalState = lblApprovalStateValue;
+        
+    }
+
     // 详情描述
     rectTitle = CGRectOffset(rectTitle, 0.f, rowHeight + 10.f);
     UILabel *lblDetailDescTitle = [ShareValue getDefaultInputTitle];

@@ -85,6 +85,8 @@ static int const pageSize = 10;
     QueryTripHttpRequest *request = [[QueryTripHttpRequest alloc] init];
     request.PAGE = self.currentPage;
     request.ROWS = pageSize;
+    request.APPROVE_STATE = @"";
+    request.LEADER_ID = [NSString stringWithFormat:@"%d", [ShareValue shareInstance].userInfo.LEADER_ID];
     
     MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [XZGLAPI queryTripByRequest:request success:^(QueryTripHttpResponse *response) {
@@ -162,6 +164,7 @@ static int const pageSize = 10;
     TripQueryCell *cell = [tableView dequeueReusableCellWithIdentifier:TripApprovalCellIdentifier];
     
     // 配置Cell
+    cell.isApproval = YES; // 设置出差审批的标识，cell的标题显示的内容不同
     [cell configureForData:self.arrTrips[indexPath.row]];
 
     // 配置背景

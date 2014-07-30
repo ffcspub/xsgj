@@ -188,7 +188,7 @@
 @property(nonatomic,assign) int         DEPT_ID;//	部门ID
 @property(nonatomic,strong) NSString *	USER_AUTH;//	数据权限
 @property(nonatomic,assign) int         USER_ID;//	用户ID
-@property(nonatomic,assign) int         TRIP_ID	;//	出差标识
+//@property(nonatomic,assign) int         TRIP_ID	;//	出差标识
 @property(nonatomic,strong) NSString *	TITLE	;//	主题
 @property(nonatomic,strong) NSString *	BEGIN_DATE	;//	出差开始时间
 @property(nonatomic,strong) NSString *	END_DATE	;//	出差结束时间
@@ -198,6 +198,8 @@
 @property(nonatomic,strong) NSString *	APPROVE_USER	;//	审批人
 @property(nonatomic,strong) NSString *	APPROVE_STATE	;//	审批状态0:未审批 1:已通过 2:未通过
 @property(nonatomic,strong) NSString *	APPROVE_TIME	;//	审批时间
+@property(nonatomic,assign) int	QUERY_USERID	;// 此处传user_id
+@property(nonatomic,strong) NSString * LEADER_ID;// 直属领导ID
 
 @end
 

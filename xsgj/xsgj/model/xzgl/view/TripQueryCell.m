@@ -135,7 +135,11 @@
 {
     // TODO: 设置数据
     TripInfoBean *bean = (TripInfoBean *)data;
-    self.lblTitle.text = bean.USER_NAME;
+    if (self.isApproval) {
+        self.lblTitle.text = bean.USER_NAME;
+    } else {
+        self.lblTitle.text = bean.TITLE;
+    }
     self.lblDetail.text = bean.APPLY_TIME;
     
     // 0:未审批 1:已通过 2:未通过

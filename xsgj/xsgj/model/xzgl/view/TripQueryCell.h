@@ -29,6 +29,8 @@ typedef NS_OPTIONS(NSUInteger, TripQueryCellStyle) {
 
 @property (nonatomic, assign) TripQueryCellStyle cellStyle;
 
+@property (nonatomic, assign) BOOL isApproval;
+
 + (UINib *)nib;
 
 + (CGFloat)cellHeight;
