@@ -61,6 +61,10 @@
 
 @implementation QueryLeaveDetailHttpResponse
 
++(Class)__LEAVEINFOBEANClass{
+    return [LeaveinfoBean class];
+}
+
 @end
 
 @implementation ApplyTripHttpResponse

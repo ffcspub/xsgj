@@ -77,7 +77,9 @@
     MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在提交···" toView:self.view];
     [hud showAnimated:YES whileExecutingBlock:^{
         [XTGLAPI forgetPwdByRequest:request success:^(ForgetPwdHttpResponse *response) {
-            
+            if ([self.tfCorpCode.text isEqual:[ShareValue shareInstance].corpCode] && [self.tfUserName.text isEqual:[ShareValue shareInstance].userName]) {
+                [ShareValue shareInstance].userPass = nil;
+            }
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
             
