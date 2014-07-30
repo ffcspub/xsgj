@@ -164,7 +164,7 @@
 @property(nonatomic,assign) NSString *  TRIP_DAYS;//出差天数
 @property(nonatomic,strong) NSString *	REMARK	;//	出差说明
 @property(nonatomic,strong) NSString *	APPLY_TIME	;//	申请时间
-@property(nonatomic,strong) NSString *	APPROVE_USER	;//	审批人
+@property(nonatomic,assign) int	APPROVE_USER	    ;//	审批人
 @end
 
 @interface ApproveTripHttpRequst : LK_HttpBaseRequest
