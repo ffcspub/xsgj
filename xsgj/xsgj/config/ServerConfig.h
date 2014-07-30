@@ -18,10 +18,10 @@
 #define BASE_SERVERLURL @"http://202.101.116.77:8082/xsgj_ws/"
 
 // 图片上传路径
-#define UPLOAD_PIC_URL @"http://202.101.116.77:8088/xsgj_up/"
+#define UPLOAD_PIC_URL @"http://202.101.116.77:8082/xsgj_up/"
 
 // 图片根路径
-#define IMAGE_PREFIX_URL @"http://202.101.116.77:8088/xsgj_up/photo.shtml?corpId=%d&fileId=%@"
+#define IMAGE_PREFIX_URL @"http://202.101.116.77:8082/xsgj_up/photo.shtml?corpId=%d&fileId=%@"
 
 
 // gmm

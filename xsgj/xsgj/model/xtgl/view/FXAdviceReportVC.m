@@ -88,7 +88,13 @@
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
-//        [self.navigationController popViewControllerAnimated:YES];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            sleep(1);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        });
+        
     }
     fail:^(BOOL notReachable, NSString *desciption)
     {
