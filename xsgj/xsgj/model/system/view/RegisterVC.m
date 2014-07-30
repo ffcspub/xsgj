@@ -64,7 +64,7 @@
     CGRect rectStar   = CGRectMake(xTitle + wTitle - 12, topOffset + 14, 10.f, 20.f);
     
     CGFloat xContent = CGRectGetMaxX(rectTitle) + titleOffset;
-    CGFloat wContent = width - 2*xOffset - wTitle - 2*titleOffset;
+    CGFloat wContent = width - xOffset - wTitle - 2*titleOffset;
     CGRect rectContent  = CGRectMake(xContent, topOffset, wContent, rowHeight);
     
     // 主题
@@ -84,6 +84,7 @@
     UITextField *tfCropName = [ShareValue getDefaultTextField];
     tfCropName.frame = rectContent;
     tfCropName.keyboardType = UIKeyboardTypeDefault;
+    tfCropName.delegate = self;
     [self.svRoot addSubview:tfCropName];
     self.tfCropName = tfCropName;
     
@@ -106,9 +107,10 @@
     
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfCropCode = [ShareValue getDefaultTextField];
-    tfCropCode.placeholder = @"英文或数字组成，长度小于20";
+    tfCropCode.placeholder = @"用英文或数字组成,长度不能超过20";
     tfCropCode.frame = rectContent;
     tfCropCode.maxLength = 20;
+    tfCropCode.font = [UIFont systemFontOfSize:12.f];
     tfCropCode.keyboardType = UIKeyboardTypeASCIICapable;
     tfCropCode.delegate = self;
     [self.svRoot addSubview:tfCropCode];
@@ -137,6 +139,7 @@
     tfProvince.frame = rectProvince;
     tfProvince.textAlignment = NSTextAlignmentCenter;
     tfProvince.maxLength = 5;
+    tfProvince.delegate = self;
     [self.svRoot addSubview:tfProvince];
     self.tfProvince = tfProvince;
     
@@ -151,6 +154,7 @@
     tfCity.frame = rectCity;
     tfCity.textAlignment = NSTextAlignmentCenter;
     tfCity.maxLength = 5;
+    tfCity.delegate = self;
     [self.svRoot addSubview:tfCity];
     self.tfCity = tfCity;
     
@@ -180,6 +184,7 @@
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfType = [ShareValue getDefaultTextField];
     tfType.frame = rectContent;
+    tfType.delegate = self;
     [self.svRoot addSubview:tfType];
     self.tfType = tfType;
     
@@ -203,10 +208,11 @@
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfLinkMan = [ShareValue getDefaultTextField];
     tfLinkMan.frame = rectContent;
+    tfLinkMan.delegate = self;
     [self.svRoot addSubview:tfLinkMan];
     self.tfLinkMan = tfLinkMan;
     
-    // 联系人
+    // 手机号码
     rect = CGRectOffset(rect, 0.f, rowHeight + yOffset);
     UIButton *btnTel = [ShareValue getDefaulBorder];
     btnTel.frame = rect;
@@ -227,10 +233,11 @@
     UITextField *tfTel = [ShareValue getDefaultTextField];
     tfTel.frame = rectContent;
     tfTel.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    tfTel.delegate = self;
     [self.svRoot addSubview:tfTel];
     self.tfTel = tfTel;
     
-    // 联系人
+    // 邮箱
     rect = CGRectOffset(rect, 0.f, rowHeight + yOffset);
     UIButton *btnEmail = [ShareValue getDefaulBorder];
     btnEmail.frame = rect;
@@ -251,6 +258,7 @@
     UITextField *tfEmail = [ShareValue getDefaultTextField];
     tfEmail.frame = rectContent;
     tfEmail.keyboardType = UIKeyboardTypeEmailAddress;
+    tfEmail.delegate = self;
     [self.svRoot addSubview:tfEmail];
     self.tfEmail = tfEmail;
     
@@ -263,10 +271,37 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (textField == self.tfCropCode)
+    // 企业编码限制长度20
+    if (textField == self.tfCropCode || textField == self.tfCropName || textField == self.tfTel)
     {
+        if (textField == self.tfCropCode) {
+            if ([textField.text length] > 0) {
+                textField.font = [UIFont systemFontOfSize:FONT_SIZE_INPUT_CONTENT];
+            } else {
+                textField.font = [UIFont systemFontOfSize:12.f];
+            }
+        }
+        
         if (![ShareValue legalTextFieldInputWithLegalString:NumberAndCharacters checkedString:string] || range.location >= 20)
         {
+            return NO;
+        }
+    }
+    // 电子邮箱限制长度20
+    else if (textField == self.tfEmail) {
+        if (range.location >= 20) {
+            return NO;
+        }
+    }
+    // 省市限制长度为5
+    else if (textField == self.tfProvince || textField == self.tfCity) {
+        if (range.location >= 5) {
+            return NO;
+        }
+    }
+    // 行业类型和联系人显示10
+    else if (textField == self.tfType || textField == self.tfLinkMan) {
+        if (range.location >= 10) {
             return NO;
         }
     }
@@ -342,11 +377,14 @@
         return NO;
 	}
     
+    // 需求不需要电话号码验证
+    /*
     if (![self.tfTel.text isTelephone]) {
         
         [MBProgressHUD showError:@"联系电话输入有误!" toView:self.view];
         return NO;
     }
+    */
     
     if (![self.tfEmail.text isEmail]) {
         
