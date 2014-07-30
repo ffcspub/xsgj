@@ -89,13 +89,13 @@
     [self resetBtns];
     
     
-    /*************测试时为方便暂时关闭****************
+    
     if (![ShareValue shareInstance].noRemberFlag) {
         _tf_companycode.text = [ShareValue shareInstance].corpCode;
         _tf_username.text = [ShareValue shareInstance].userName;
         _tf_pwd.text = [ShareValue shareInstance].userPass;
     }
-     */
+    
     NSMutableAttributedString *hintString1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"客服电话：%@",@"0591-83518200" ]];
     [hintString1 addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor blueColor] CGColor] range:NSMakeRange(5,hintString1.length - 5)];
     [hintString1 addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont systemFontOfSize:15] range:NSMakeRange(0,hintString1.length )];
