@@ -48,6 +48,10 @@
 	// Do any additional setup after loading the view.
 }
 
+-(void)setLeftButtonTitle:(NSString *)title;{
+    UIButton *button = (UIButton *)self.navigationItem.leftBarButtonItem.customView;
+    [button setTitle:title forState:UIControlStateNormal];
+}
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -87,14 +91,8 @@
 }
 
 -(UIButton *)defaultBackButtonWithTitle:(NSString *)title{
-    UIImage *image = [[UIImage imageNamed:@"Bg_BtnBack&BtnExit-nor"]resizableImageWithCapInsets:UIEdgeInsetsMake(5, 17, 5, 5)];
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 70, 35)];
-    [btn setBackgroundImage:image forState:UIControlStateNormal];
-    
-    btn.titleEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 0);
-    [btn setTitle:title forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    return btn;
+    UIButton *button = [self defaultRightButtonWithTitle:title];
+    return button;
 }
 
 -(UIButton *)defaultRightButtonWithTitle:(NSString *)title{

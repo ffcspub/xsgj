@@ -8,6 +8,7 @@
 
 #import "BNProduct.h"
 #import "BNUnitBean.h"
+#import "OAChineseToPinyin.h"
 
 @implementation BNProduct
 
@@ -15,6 +16,16 @@
 +(NSString *)getTableName
 {
     return [NSString stringWithFormat:@"t_%d_BNProduct",[ShareValue shareInstance].userInfo.USER_ID];
+}
+
+
+-(void)setPROD_NAME:(NSString *)PROD_NAME{
+    _PROD_NAME = PROD_NAME;
+    if (PROD_NAME) {
+        self.PROD_NAME_PINYIN = [OAChineseToPinyin pinyinFromChiniseString:PROD_NAME];
+        self.PROD_NAME_HEAD   = [self.PROD_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
+    }
+    
 }
 
 

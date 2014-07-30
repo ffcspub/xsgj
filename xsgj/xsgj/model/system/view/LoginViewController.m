@@ -88,7 +88,7 @@
     [_btn_login configOrgleStyle];
     [self resetBtns];
     
-    
+    [self setLeftButtonTitle:@"退出"];
     
     if (![ShareValue shareInstance].noRemberFlag) {
         _tf_companycode.text = [ShareValue shareInstance].corpCode;
@@ -108,7 +108,9 @@
 //     [_lb_tel addLinkToPhoneNumber:@"0591-83518200"  withRange:NSMakeRange(5,hintString1.length - 5)];
 //    [((UIScrollView *)self.view) setScrollEnabled:NO];
     
-    
+    _tf_companycode.maxLength = 30;
+    _tf_username.maxLength = 30;
+    _tf_pwd.maxLength = 30;
 }
 
 
@@ -206,6 +208,10 @@
         [ShareValue shareInstance].corpCode = _tf_companycode.text;
         [ShareValue shareInstance].userName = _tf_username.text;
         [ShareValue shareInstance].userPass = _tf_pwd.text;
+    }else{
+        [ShareValue shareInstance].corpCode = nil;
+        [ShareValue shareInstance].userName = nil;
+        [ShareValue shareInstance].userPass = nil;
     }
     
     [ShareAppDelegate showTabViewController];

@@ -14,4 +14,6 @@
 
 -(UIButton *)defaultRightButtonWithTitle:(NSString *)title;
 
+-(void)setLeftButtonTitle:(NSString *)title;
+
 @end

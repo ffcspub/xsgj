@@ -8,6 +8,7 @@
 
 #import "ShowTabViewController.h"
 #import "AppDelegate.h"
+#import "SIAlertView.h"
 
 @interface ShowTabViewController ()
 
@@ -36,9 +37,55 @@
         self.automaticallyAdjustsScrollViewInsets = YES;
     }
 #endif
+    UIButton *button = [self defaultBackButtonWithTitle:@"退出"];
+    [button addTarget:self action:@selector(exitAction) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
 	// Do any additional setup after loading the view.
 }
 
+-(UIButton *)defaultBackButtonWithTitle:(NSString *)title{
+    UIButton *button = [self defaultRightButtonWithTitle:title];
+    return button;
+}
+
+-(UIButton *)defaultRightButtonWithTitle:(NSString *)title{
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 70, 35)];
+    [btn setBackgroundImage:IMG_BTN_BLUE forState:UIControlStateNormal];
+    [btn setBackgroundImage:IMG_BTN_BLUE_S forState:UIControlStateHighlighted];
+    [btn setBackgroundImage:IMG_BTN_BLUE_D forState:UIControlStateDisabled];
+    btn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    [btn setTitle:title forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    return btn;
+}
+
+
+-(void)exitAction{
+    SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"提示"
+                                                    message:@"确定退出系统？"
+                                          cancelButtonTitle:@"取消"
+                                              cancelHandler:^(SIAlertView *alertView) {}
+                                     destructiveButtonTitle:@"确定"
+                                         destructiveHandler:^(SIAlertView *alertView) {
+                                             [self exitApplication];
+                                         }];
+    [alert show];
+}
+
+// 退出程序
+- (void)exitApplication
+{
+    UIWindow *window =  [UIApplication sharedApplication].delegate.window;
+    [UIView animateWithDuration:0.5f animations:^
+     {
+         window.alpha = 0;
+         window.frame = CGRectMake(CGRectGetWidth(window.frame)/2,CGRectGetHeight(window.frame)/2,1, 1);
+     }
+                     completion:^(BOOL finished)
+     {
+         exit(0);
+     }];
+}
 
 - (void)didReceiveMemoryWarning
 {
