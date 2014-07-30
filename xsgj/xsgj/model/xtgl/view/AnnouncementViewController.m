@@ -146,12 +146,12 @@ typedef  enum : NSUInteger {
     [_btn_endtime setBackgroundImage:[[UIImage imageNamed:@"日期选择控件背板"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateNormal];
     [_btn_endtime setBackgroundImage:[[UIImage imageNamed:@"日期选择控件背板_s"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateHighlighted];
     
-    NSDate *date = [NSDate date];
-    NSDateFormatter *formatter = [NSDateFormatter new];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
+//    NSDate *date = [NSDate date];
+//    NSDateFormatter *formatter = [NSDateFormatter new];
+//    [formatter setDateFormat:@"yyyy-MM-dd"];
     
     UILabel *lb_starttime = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
-    lb_starttime.text = [formatter stringFromDate:date];
+//    lb_starttime.text = [formatter stringFromDate:date];
     lb_starttime.font = [UIFont systemFontOfSize:15];
     lb_starttime.textColor = HEX_RGB(0x000000);
     lb_starttime.backgroundColor = [UIColor clearColor];
@@ -163,7 +163,7 @@ typedef  enum : NSUInteger {
     [_btn_starttime addSubview:iv_startcalendar];
     
     UILabel *lb_endtime = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
-    lb_endtime.text = [formatter stringFromDate:date];
+//    lb_endtime.text = [formatter stringFromDate:date];
     lb_endtime.font = [UIFont systemFontOfSize:15];
     lb_endtime.textColor = HEX_RGB(0x000000);
     lb_endtime.backgroundColor = [UIColor clearColor];
@@ -179,14 +179,18 @@ typedef  enum : NSUInteger {
     
     UILabel *lb_type = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
     lb_type.text = @"公告类型";
-    lb_type.font = [UIFont boldSystemFontOfSize:18];
+    lb_type.font = [UIFont boldSystemFontOfSize:17];
     lb_type.textColor = HEX_RGB(0x939fa7);
     lb_type.backgroundColor = [UIColor clearColor];
     [_btn_announceType addSubview:lb_type];
     
+    UILabel *lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = CGRectMake(78, 14, 10, 20);
+    [_btn_announceType addSubview:lblStart];
+    
     UILabel *lb_content = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
     lb_content.text = @"请选择";
-    lb_content.font = [UIFont boldSystemFontOfSize:18];
+    lb_content.font = [UIFont boldSystemFontOfSize:17];
     lb_content.textColor = HEX_RGB(0x000000);
     lb_content.backgroundColor = [UIColor clearColor];
     lb_content.tag = 701;
@@ -197,6 +201,8 @@ typedef  enum : NSUInteger {
     [_btn_announceType addSubview:iv_dropbox];
     
     self.view.backgroundColor = HEX_RGB(0xefeff4);
+    
+    [self queryNoticeRequest];
 }
 
 #pragma mark - navBarButton
@@ -216,6 +222,7 @@ typedef  enum : NSUInteger {
     [rightButton addTarget:self action:@selector(queryAction:) forControlEvents:UIControlEventTouchUpInside];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    
 }
 
 #pragma mark - private
@@ -250,7 +257,11 @@ typedef  enum : NSUInteger {
     UILabel *lb_endtime = (UILabel *)[_btn_endtime viewWithTag:302];
     request.BEGIN_TIME = lb_starttime.text;
     request.END_TIME = lb_endtime.text;
-    request.TYPE_ID = _selectType.TYPE_ID;
+    
+    if (_selectType) {
+        request.TYPE_ID = _selectType.TYPE_ID;
+    }
+    
     request.LOOK_FLAG = @"0";
     
     [XTGLAPI queryNoticeByRequest:request success:^(QueryNoticeHttpResponse *response) {

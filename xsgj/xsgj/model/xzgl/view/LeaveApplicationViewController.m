@@ -15,7 +15,8 @@
 #import "LeaveTypeBean.h"
 #import "MBProgressHUD+Add.h"
 
-@interface LeaveApplicationViewController (){
+@interface LeaveApplicationViewController ()<UITextFieldDelegate, UITextViewDelegate>
+{
     NSMutableArray *_typeList;
     LeaveTypeBean *_selectType;
 }
@@ -66,10 +67,16 @@
     lb_title.backgroundColor = [UIColor clearColor];
     [btn_title addSubview:lb_title];
     
+    UILabel *lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = CGRectMake(78, 14, 10, 20);
+    [btn_title addSubview:lblStart];
+    
     UITextField *tf_title = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
     tf_title.font = [UIFont boldSystemFontOfSize:17];
+    tf_title.maxLength = 15;
     tf_title.textColor = HEX_RGB(0x000000);
     tf_title.tag = 401;
+    tf_title.delegate = self;
     [btn_title addSubview:tf_title];
     
 //    UILabel *lb_content = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
@@ -94,6 +101,10 @@
     lb_type.textColor = HEX_RGB(0x939fa7);
     lb_type.backgroundColor = [UIColor clearColor];
     [btn_leaveType addSubview:lb_type];
+    
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = CGRectMake(78, 14, 10, 20);
+    [btn_leaveType addSubview:lblStart];
     
     UILabel *lb_typeValue = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
     lb_typeValue.text = @"请选择";
@@ -127,6 +138,10 @@
     lb_begintime.backgroundColor = [UIColor clearColor];
     [btn_beginTime addSubview:lb_begintime];
     
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = CGRectMake(78, 14, 10, 20);
+    [btn_beginTime addSubview:lblStart];
+    
     UILabel *lb_begintimeValue = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
     lb_begintimeValue.text = [formatter stringFromDate:date];
     lb_begintimeValue.font = [UIFont boldSystemFontOfSize:17];
@@ -155,6 +170,10 @@
     lb_endtime.backgroundColor = [UIColor clearColor];
     [btn_endTime addSubview:lb_endtime];
     
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = CGRectMake(78, 14, 10, 20);
+    [btn_endTime addSubview:lblStart];
+    
     UILabel *lb_endtimeValue = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
     lb_endtimeValue.text = [formatter stringFromDate:date];
     lb_endtimeValue.font = [UIFont boldSystemFontOfSize:17];
@@ -182,10 +201,15 @@
     lb_day.backgroundColor = [UIColor clearColor];
     [btn_leaveday addSubview:lb_day];
     
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = CGRectMake(78, 14, 10, 20);
+    [btn_leaveday addSubview:lblStart];
+    
     UITextField *tf_day = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
     tf_day.font = [UIFont boldSystemFontOfSize:17];
     tf_day.textColor = HEX_RGB(0x000000);
     tf_day.keyboardType = UIKeyboardTypeNumberPad;
+    tf_day.delegate = self;
     tf_day.tag = 405;
     [btn_leaveday addSubview:tf_day];
     
@@ -206,6 +230,10 @@
     lb_description.backgroundColor = [UIColor clearColor];
     [self.scrollView addSubview:lb_description];
     
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = CGRectMake(120, CGRectGetMaxY(btn_leaveday.frame) + 30, 10, 20);
+    [self.scrollView addSubview:lblStart];
+    
     UIImageView *iv_edge = [[UIImageView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(lb_description.frame) + 5, 300, 150)];
     [iv_edge setImage:[[UIImage imageNamed:@"bgNo1"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 20, 20, 20)]];
     [self.scrollView addSubview:iv_edge];
@@ -215,6 +243,7 @@
     [self.scrollView addSubview:iv_input];
     
     UITextView *tv_input = [[UITextView alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(lb_description.frame) + 22, 270, 115)];
+    tv_input.delegate = self;
     tv_input.tag = 406;
     [self.scrollView addSubview:tv_input];
     
@@ -232,6 +261,132 @@
     [self.scrollView addSubview:lb_Approval];
     
     [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width, CGRectGetMaxY(lb_Approval.frame) + 10)];
+}
+
+#pragma mark - UITextField Delegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    UITextField *tf_title = (UITextField *)[_scrollView viewWithTag:401];
+    UITextField *tf_day = (UITextField *)[_scrollView viewWithTag:405];
+    
+    if (textField == tf_title)
+    {
+        if (range.location >= 15)
+        {
+            return NO;
+        }
+    }
+    // 出差天数限制
+    else if (textField == tf_day) {
+        
+        // 判断是否存在点
+        BOOL isHaveDian = YES;
+        if ([textField.text rangeOfString:@"."].location==NSNotFound) {
+            isHaveDian=NO;
+        }
+        
+        // 小数点控制
+        if ([string length] > 0)
+        {
+            unichar single=[string characterAtIndex:0];//当前输入的字符
+            if ((single >='0' && single<='9') || single=='.')//数据格式正确
+            {
+                //首字母不能为小数点,当前如果第一个为0，之后只允许输入点
+                if([textField.text length]==0){
+                    if(single == '.'){
+                        [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                        return NO;
+                        
+                    }
+                } else if ([textField.text isEqualToString:@"0"]) {
+                    if (single != '.') {
+                        [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                        return NO;
+                    }
+                }
+                if (single=='.')
+                {
+                    if(!isHaveDian)//text中还没有小数点
+                    {
+                        isHaveDian=YES;
+                        return YES;
+                    }
+                    else
+                    {
+                        [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                        return NO;
+                    }
+                }
+                else
+                {
+                    // 长度过滤
+                    if (isHaveDian) {
+                        if (range.location >= 5) {
+                            return NO;
+                        }
+                    } else {
+                        if (range.location >= 3) {
+                            return NO;
+                        }
+                    }
+                    
+                    if (isHaveDian)//存在小数点
+                    {
+                        //判断小数点的位数
+                        NSRange ran=[textField.text rangeOfString:@"."];
+                        int tt=range.location-ran.location;
+                        if (tt <= 1){
+                            return YES;
+                        }else{
+                            return NO;
+                        }
+                    }
+                    else
+                    {
+                        return YES;
+                    }
+                }
+            }
+            //输入的数据格式不正确
+            else
+            {
+                [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                return NO;
+            }
+        }
+        else
+        {
+            return YES;
+        }
+    }
+    
+    return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    UITextView *tv_input = (UITextView *)[_scrollView viewWithTag:406];
+    
+    if (textView == tv_input) {
+        NSString *new = [textView.text stringByReplacingCharactersInRange:range withString:text];
+        NSInteger res = 200 - [new length];
+        if(res >= 0)
+        {
+            return YES;
+        }
+        else
+        {
+            NSRange rg = {0,[text length]+res};
+            if (rg.length>0) {
+                NSString *s = [text substringWithRange:rg];
+                [textView setText:[textView.text stringByReplacingCharactersInRange:range withString:s]];
+            }
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 #pragma mark - navBarButton

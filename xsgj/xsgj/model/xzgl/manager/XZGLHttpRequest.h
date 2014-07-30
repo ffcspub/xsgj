@@ -94,8 +94,8 @@
 @property(nonatomic,strong) NSString *	USER_NAME	;//	用户名
 @property(nonatomic,strong) NSString *	MOBILENO	;//	手机号码
 @property(nonatomic,strong) NSString *	APPROVE_STATE	;//	审批状态
-@property(nonatomic,strong) NSString *	BEGIN_TIME	;//	申请时间（开始时间）
-@property(nonatomic,strong) NSString *	END_TIME	;//	申请时间（结束时间）
+@property(nonatomic,strong) NSString *	BEGINTIME	;//	申请时间（开始时间）
+@property(nonatomic,strong) NSString *	ENDTIME	;//	申请时间（结束时间）
 @property(nonatomic,assign) int         PAGE	;//	第N页
 @property(nonatomic,assign) int         ROWS	;//	加载行数
 @property(nonatomic,strong) NSString *	LEADER	;//	直属领导ID

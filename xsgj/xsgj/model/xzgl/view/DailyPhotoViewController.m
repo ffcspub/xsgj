@@ -100,6 +100,10 @@
     [_iv_inputbg setImage:[[UIImage imageNamed:@"normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 100, 20, 30)]];
     _lb_description.textColor = HEX_RGB(0x939fa7);
     
+    UILabel *lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = CGRectMake(88, 34, 10, 20);
+    [self.view addSubview:lblStart];
+    
     [_iv_photobg setImage:[[UIImage imageNamed:@"Photo外框"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 20, 20, 20)]];
     [_iv_photo setImage:[UIImage imageNamed:@"defaultPhoto"]];
     [_iv_photobgdown setImage:[UIImage imageNamed:@"Photo外框Part2"]];

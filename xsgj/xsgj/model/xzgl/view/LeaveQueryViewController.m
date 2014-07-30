@@ -182,12 +182,12 @@ static int const pageSize = 10;
     [_btn_endtime setBackgroundImage:[[UIImage imageNamed:@"日期选择控件背板"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateNormal];
     [_btn_endtime setBackgroundImage:[[UIImage imageNamed:@"日期选择控件背板_s"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateHighlighted];
     
-    NSDate *date = [NSDate date];
-    NSDateFormatter *formatter = [NSDateFormatter new];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
+//    NSDate *date = [NSDate date];
+//    NSDateFormatter *formatter = [NSDateFormatter new];
+//    [formatter setDateFormat:@"yyyy-MM-dd"];
     
     UILabel *lb_starttime = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
-    lb_starttime.text = [formatter stringFromDate:date];
+//    lb_starttime.text = [formatter stringFromDate:date];
     lb_starttime.font = [UIFont systemFontOfSize:15];
     lb_starttime.textColor = HEX_RGB(0x000000);
     lb_starttime.backgroundColor = [UIColor clearColor];
@@ -199,7 +199,7 @@ static int const pageSize = 10;
     [_btn_starttime addSubview:iv_startcalendar];
     
     UILabel *lb_endtime = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
-    lb_endtime.text = [formatter stringFromDate:date];
+//    lb_endtime.text = [formatter stringFromDate:date];
     lb_endtime.font = [UIFont systemFontOfSize:15];
     lb_endtime.textColor = HEX_RGB(0x000000);
     lb_endtime.backgroundColor = [UIColor clearColor];
@@ -224,8 +224,8 @@ static int const pageSize = 10;
     QueryLeaveHttpRequest *request = [[QueryLeaveHttpRequest alloc] init];
     UILabel *lb_starttime = (UILabel *)[_btn_starttime viewWithTag:401];
     UILabel *lb_endtime = (UILabel *)[_btn_endtime viewWithTag:402];
-    request.BEGIN_TIME = lb_starttime.text;
-    request.END_TIME = lb_endtime.text;
+    request.BEGINTIME = lb_starttime.text;
+    request.ENDTIME = lb_endtime.text;
     request.PAGE = page;
     request.ROWS = pageSize;
     request.QUERY_USERID = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.USER_ID];
@@ -293,7 +293,7 @@ static int const pageSize = 10;
 - (IBAction)selectBeginTimeAction:(id)sender
 {
     UIDatePicker *picker = [[UIDatePicker alloc]init];
-    picker.datePickerMode = UIDatePickerModeDateAndTime;
+    picker.datePickerMode = UIDatePickerModeDate;
     picker.tag = 101;
     [picker showTitle:@"请选择" inView:self.view];
 }
@@ -301,7 +301,7 @@ static int const pageSize = 10;
 - (IBAction)selectEndTimeAction:(id)sender
 {
     UIDatePicker *picker = [[UIDatePicker alloc]init];
-    picker.datePickerMode = UIDatePickerModeDateAndTime;
+    picker.datePickerMode = UIDatePickerModeDate;
     picker.tag = 102;
     [picker showTitle:@"请选择" inView:self.view];
 }

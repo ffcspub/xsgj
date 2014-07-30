@@ -66,6 +66,10 @@
     lb_oldpwd.backgroundColor = [UIColor clearColor];
     [self.view addSubview:lb_oldpwd];
     
+    UILabel *lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = CGRectMake(88, CGRectGetMaxY(lb_account.frame) + 24, 10, 20);
+    [self.view addSubview:lblStart];
+    
     UITextField *tf_oldpwd = [[UITextField alloc] initWithFrame:CGRectMake(110, CGRectGetMaxY(lb_account.frame) + 10, 180, 40)];
     [tf_oldpwd setBorderStyle:UITextBorderStyleNone];
     tf_oldpwd.secureTextEntry = YES;
@@ -84,6 +88,10 @@
     lb_newpwd.backgroundColor = [UIColor clearColor];
     [self.view addSubview:lb_newpwd];
     
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = CGRectMake(88, CGRectGetMaxY(iv_oldpwd.frame) + 29, 10, 20);
+    [self.view addSubview:lblStart];
+    
     UITextField *tf_newpwd = [[UITextField alloc] initWithFrame:CGRectMake(110, CGRectGetMaxY(iv_oldpwd.frame) + 15, 180, 40)];
     [tf_newpwd setBorderStyle:UITextBorderStyleNone];
     tf_newpwd.secureTextEntry = YES;
@@ -101,6 +109,10 @@
     lb_confirmpwd.textColor = HEX_RGB(0x939fa7);
     lb_confirmpwd.backgroundColor = [UIColor clearColor];
     [self.view addSubview:lb_confirmpwd];
+    
+    lblStart = [ShareValue getStarMarkPrompt];
+    lblStart.frame = CGRectMake(88, CGRectGetMaxY(iv_newpwd.frame) + 29, 10, 20);
+    [self.view addSubview:lblStart];
     
     UITextField *tf_confirmpwd = [[UITextField alloc] initWithFrame:CGRectMake(110, CGRectGetMaxY(iv_newpwd.frame) + 15, 180, 40)];
     [tf_confirmpwd setBorderStyle:UITextBorderStyleNone];

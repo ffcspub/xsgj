@@ -143,7 +143,7 @@
     [XZGLAPI signupByRequest:request success:^(SignUpHttpReponse *response) {
         
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
         
         [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
     } fail:^(BOOL notReachable, NSString *desciption) {
