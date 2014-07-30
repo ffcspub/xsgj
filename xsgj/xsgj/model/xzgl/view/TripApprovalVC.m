@@ -86,7 +86,7 @@ static int const pageSize = 10;
     request.PAGE = self.currentPage;
     request.ROWS = pageSize;
     request.APPROVE_STATE = @"";
-    request.LEADER_ID = [NSString stringWithFormat:@"%d", [ShareValue shareInstance].userInfo.LEADER_ID];
+    request.LEADER_ID = @([ShareValue shareInstance].userInfo.LEADER_ID);
     
     MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [XZGLAPI queryTripByRequest:request success:^(QueryTripHttpResponse *response) {
