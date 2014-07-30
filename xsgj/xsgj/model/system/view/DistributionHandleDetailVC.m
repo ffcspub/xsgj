@@ -142,7 +142,8 @@
     [formatter setDateFormat:@"yyMMddHHmmss"];
     NSString *fileName = [NSString stringWithFormat:@"IMG_%@",[formatter stringFromDate:now]];
     
-    if (self.currentState == DistributionHandleStateResult) {
+    // 当存在图片上传
+    if (self.currentState == DistributionHandleStateResult && _imageData) {
         
         [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
             
@@ -214,7 +215,7 @@
             errorMessage = @"请删除收费信息";
         } else if ([self.tvRemark.text length] == 0) {
             errorMessage = @"请填写备注信息";
-        } else if (!_imageData) {
+        } else if ([self.lblResult.text isEqualToString:@"配送完成"] && !_imageData) {
             errorMessage = @"请先拍照";
         }
     }

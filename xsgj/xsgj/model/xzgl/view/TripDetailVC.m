@@ -367,6 +367,29 @@
     }
 }
 
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if (textView == self.tvApprovalDesc) {
+        NSString *new = [textView.text stringByReplacingCharactersInRange:range withString:text];
+        NSInteger res = 200 - [new length];
+        if(res >= 0)
+        {
+            return YES;
+        }
+        else
+        {
+            NSRange rg = {0,[text length]+res};
+            if (rg.length>0) {
+                NSString *s = [text substringWithRange:rg];
+                [textView setText:[textView.text stringByReplacingCharactersInRange:range withString:s]];
+            }
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 #pragma mark - 事件
 
 - (void)keyBoardWillShow
