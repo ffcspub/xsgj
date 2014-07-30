@@ -8,6 +8,7 @@
 
 #import "BNCustomerType.h"
 #import <LKDBHelper.h>
+#import "OAChineseToPinyin.h"
 
 @implementation BNCustomerType
 
@@ -45,6 +46,14 @@
     [array addObject:self];
     [self getParentByArray:array];
     return array;
+}
+
+-(void)setTYPE_NAME:(NSString *)TYPE_NAME{
+    _TYPE_NAME = TYPE_NAME;
+    if (TYPE_NAME) {
+        self.TYPE_NAME_PINYIN = [OAChineseToPinyin pinyinFromChiniseString:TYPE_NAME];
+        self.TYPE_NAME_HEAD   = [self.TYPE_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
+    }
 }
 
 

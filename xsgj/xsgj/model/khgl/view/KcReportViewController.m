@@ -108,7 +108,7 @@
 - (void)loadTypeData
 {
     _aryProductTypeData = [BNProductType searchWithWhere:nil orderBy:@"ORDER_NO" offset:0 count:1000];
-    _aryProductData = [BNProduct searchWithWhere:nil orderBy:nil offset:0 count:1000];
+    _aryProductData = [BNProduct searchWithWhere:nil orderBy:@"PROD_NAME_PINYIN" offset:0 count:1000];
     _aryProTypeTreeData = [self makeProTypeTreeData];
 }
 
@@ -403,7 +403,7 @@
     [_aryProDataTemp removeAllObjects];
     for(NSNumber *typeNumber in _aryTraversalRet)
     {
-        NSArray *aryProduct = [BNProduct searchWithWhere:[NSString stringWithFormat:@"CLASS_ID=%D",typeNumber.intValue] orderBy:nil offset:0 count:1000];
+        NSArray *aryProduct = [BNProduct searchWithWhere:[NSString stringWithFormat:@"CLASS_ID=%D",typeNumber.intValue] orderBy:@"PROD_NAME_PINYIN" offset:0 count:1000];
         for(BNProduct *product in aryProduct)
         {
             [_aryProDataTemp addObject:product];

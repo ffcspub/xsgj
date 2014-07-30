@@ -71,4 +71,10 @@
 /** 用户数据权限 */
 @property (nonatomic,strong)      NSString* USER_AUTH;
 
+//用户名拼音
+@property (nonatomic,strong)      NSString* CUST_NAME_PINYIN;
+//用户名拼音首字母
+@property (nonatomic,strong)      NSString* CUST_NAME_HEAD;
+
+
 @end

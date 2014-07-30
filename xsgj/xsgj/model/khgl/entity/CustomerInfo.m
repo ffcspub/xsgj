@@ -24,7 +24,7 @@
             name = @"待审核";
             break;
         case 1:
-            name = @"已通过";
+            name = @"通过";
             break;
         case 2:
             name = @"已驳回";

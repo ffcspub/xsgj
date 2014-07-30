@@ -22,4 +22,9 @@
 
 @property (nonatomic,strong) 	NSString *SPEC;//全名
 
+//拼音
+@property (nonatomic,strong)      NSString* PROD_NAME_PINYIN;
+//拼音首字母
+@property (nonatomic,strong)      NSString* PROD_NAME_HEAD;
+
 @end

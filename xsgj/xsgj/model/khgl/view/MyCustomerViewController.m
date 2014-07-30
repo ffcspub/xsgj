@@ -143,7 +143,7 @@
 
 - (void)loadCustomerData
 {
-    _aryCusTypeData = [BNCustomerType searchWithWhere:nil orderBy:@"ORDER_NO" offset:0 count:1000];
+    _aryCusTypeData = [BNCustomerType searchWithWhere:nil orderBy:@"TYPE_NAME_PINYIN" offset:0 count:1000];
     if(_aryCusTypeData.count > 0)
     {
         _aryCusTypeTreeData = [self makeCusTypeTreeData];

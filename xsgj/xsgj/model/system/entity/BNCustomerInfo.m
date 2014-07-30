@@ -9,6 +9,7 @@
 #import "BNCustomerInfo.h"
 #import "BNCustomerType.h"
 #import <LKDBHelper.h>
+#import "OAChineseToPinyin.h"
 
 @implementation BNCustomerInfo
 
@@ -28,6 +29,15 @@
         }
     }
     return nil;
+}
+
+-(void)setCUST_NAME:(NSString *)CUST_NAME{
+    _CUST_NAME = CUST_NAME;
+    if (CUST_NAME) {
+        self.CUST_NAME_PINYIN = [OAChineseToPinyin pinyinFromChiniseString:CUST_NAME];
+        self.CUST_NAME_PINYIN   = [self.CUST_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
+    }
+    
 }
 
 @end

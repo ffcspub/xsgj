@@ -18,6 +18,11 @@
 // 类型名
 @property (nonatomic,strong)      NSString* TYPE_NAME;
 
+//类型名拼音
+@property (nonatomic,strong)      NSString* TYPE_NAME_PINYIN;
+//类型名拼音首字母
+@property (nonatomic,strong)      NSString* TYPE_NAME_HEAD;
+
 
 +(NSString *)getOwnerAndChildTypeIds:(int)typeid;
 
