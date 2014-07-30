@@ -73,12 +73,9 @@
     [self showRightBarButtonItemWithTitle:@"进入" target:self action:@selector(handleNavBarRight)];
     [_svContain setContentSize:CGSizeMake(_svContain.frame.size.width, _btnCusInfo.frame.origin.y + _btnCusInfo.frame.size.height + 10)];
     
-    UIImage *image = [UIImage imageNamed:@"CommonBtn_nor"];
-    image = [image stretchableImageWithLeftCapWidth:10 topCapHeight:5];
-    UIImage *imageH = [UIImage imageNamed:@"CommonBtn_press"];
-    imageH = [imageH stretchableImageWithLeftCapWidth:10 topCapHeight:5];
-    [_btnCusInfo setBackgroundImage:image forState:UIControlStateNormal];
-    [_btnCusInfo setBackgroundImage:imageH forState:UIControlStateHighlighted];
+    [_btnCusInfo setBackgroundImage:IMG_BTN_BLUE forState:UIControlStateNormal];
+    [_btnCusInfo setBackgroundImage:IMG_BTN_BLUE_S forState:UIControlStateHighlighted];
+    [_btnCusInfo setBackgroundImage:IMG_BTN_BLUE_D forState:UIControlStateDisabled];
 }
 
 #pragma mark - functions
@@ -224,6 +221,7 @@
         bEnter = YES;
     }
     self.navigationItem.rightBarButtonItem.enabled = bEnter;
+    _btnCusInfo.enabled = bEnter;
 }
 
 - (void)loadCustomerData
@@ -260,14 +258,18 @@
     _lbContacts.text = customerInfo.LINKMAN;
     _lbMobile.text = customerInfo.TEL;
     _lbAddress.text = customerInfo.ADDRESS;
-    NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D and VISIT_TYPE=0",customerInfo.CUST_ID] orderBy:nil offset:0 count:100];
-    if(aryRecord.count > 0)
+    
+    if(customerInfo.CUST_NAME.length > 0 && customerInfo.TYPE_NAME > 0)
     {
-        self.visitRecordSelect = [aryRecord objectAtIndex:0];
-    }
-    if(self.visitRecordSelect)
-    {
-        _lbLastVisit.text = self.visitRecordSelect.BEGIN_TIME;
+        NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D and VISIT_TYPE=0",customerInfo.CUST_ID] orderBy:nil offset:0 count:100];
+        if(aryRecord.count > 0)
+        {
+            self.visitRecordSelect = [aryRecord lastObject];
+        }
+        if(self.visitRecordSelect)
+        {
+            _lbLastVisit.text = self.visitRecordSelect.END_TIME;
+        }
     }
 }
 

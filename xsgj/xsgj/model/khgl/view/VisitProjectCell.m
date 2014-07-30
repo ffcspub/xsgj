@@ -52,6 +52,15 @@
         }
     }
     
+    if([strState isEqualToString:@"未拜访"])
+    {
+        self.lbStatus.textColor = [UIColor colorWithRed:146/255.0 green:221/255.0 blue:253/255.0 alpha:1];
+    }
+    else
+    {
+        self.lbStatus.textColor = [UIColor lightGrayColor];
+    }
+    
     self.lbStatus.text = strState;
 }
 

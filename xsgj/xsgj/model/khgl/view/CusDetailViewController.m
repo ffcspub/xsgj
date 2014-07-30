@@ -38,7 +38,7 @@
 {
     self.title = @"客户详情";
     [self showRightBarButtonItemWithTitle:@"进入" target:self action:@selector(handleNavBarRight)];
-    [self.svContain setContentSize:CGSizeMake(320, self.ivPhoto.frame.origin.y + self.ivPhoto.frame.size.height + 15)];
+    [self.svContain setContentSize:CGSizeMake(320, self.ivPhoto.frame.origin.y + self.ivPhoto.frame.size.height + 70)];
     
     self.lbName.text = self.customerInfo.CUST_NAME;
     self.lbType.text = self.customerInfo.TYPE_NAME;
@@ -73,11 +73,27 @@
 
 - (void)handleNavBarRight
 {
-    if(![_strDateSelect isEqualToString:[[NSDate date]stringWithFormat:@"yyyy-MM-dd"]])
+    NSDate *date = [NSDate dateFromString:_strDateSelect withFormat:@"yyyy-MM-dd"];
+    NSString *strNow = [[NSDate date] stringWithFormat:@"yyyy-MM-dd"];
+    NSDate *now = [NSDate dateFromString:strNow withFormat:@"yyyy-MM-dd"];
+    
+    NSTimeInterval timeInterval = [date timeIntervalSinceDate:now];
+    if(timeInterval > 0)
     {
-        [MBProgressHUD showError:@"只能拜访当天的客户" toView:self.view];
+        [MBProgressHUD showError:@"未到计划日期，无法拜访" toView:self.view];
         return;
     }
+    else if (timeInterval < 0)
+    {
+        [MBProgressHUD showError:@"已过计划日期，无法拜访" toView:self.view];
+        return;
+    }
+    
+//    if(![_strDateSelect isEqualToString:[[NSDate date]stringWithFormat:@"yyyy-MM-dd"]])
+//    {
+//        [MBProgressHUD showError:@"只能拜访当天的客户" toView:self.view];
+//        return;
+//    }
     
     if(_customerInfo.LAT.intValue == 0 ||
        _customerInfo.LNG.intValue == 0 ||

@@ -35,6 +35,8 @@
 
 #define IMG_BTN_BLUE_S [[UIImage imageNamed:@"CommonBtn_press"]resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]
 
+#define IMG_BTN_BLUE_D [[UIImage imageNamed:@"CommonBtn_disable"]resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]
+
 #define IMG_BTN_ORGLE [[UIImage imageNamed:@"bg_BtnLogin_nor"]resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]
 
 #define IMG_BTN_ORGLE_S [[UIImage imageNamed:@"bg_BtnLogin_press"]resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]

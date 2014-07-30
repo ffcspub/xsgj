@@ -76,6 +76,27 @@
         {
             return NO;
         }
+        
+        if(textField.text.length < 9 || [string isEqualToString:@""])
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    
+    if(textField == self.tfReson)
+    {
+        if(textField.text.length < 25 || [string isEqualToString:@""])
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
     }
     
     return YES;

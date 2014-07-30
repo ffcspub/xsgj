@@ -410,4 +410,21 @@
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(textField == self.tf_Mark)
+    {
+        if(textField.text.length < 30 || [string isEqualToString:@""])
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 @end
