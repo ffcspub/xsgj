@@ -104,6 +104,15 @@
         {
             return NO;
         }
+        
+        if(textField.text.length < 9 || [string isEqualToString:@""])
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
     }
     
     return YES;

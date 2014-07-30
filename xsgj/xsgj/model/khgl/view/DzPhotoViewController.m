@@ -456,4 +456,21 @@
     
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(textField == self.tfMark)
+    {
+        if(textField.text.length < 50 || [string isEqualToString:@""])
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 @end

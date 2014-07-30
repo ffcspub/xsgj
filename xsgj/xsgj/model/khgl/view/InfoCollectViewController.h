@@ -14,7 +14,7 @@
 
 #define NOTIFICATION_INFOVIEW_CLOSE  @"NOTIFICATION_INFOVIEW_CLOSE"
 
-@interface InfoCollectViewController : HideTabViewController
+@interface InfoCollectViewController : HideTabViewController<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *viewContain;
 @property (weak, nonatomic) IBOutlet UILabel *lb_currentLocation;

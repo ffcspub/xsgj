@@ -100,6 +100,8 @@
 -(UIButton *)defaultRightButtonWithTitle:(NSString *)title{
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 70, 35)];
     [btn setBackgroundImage:IMG_BTN_BLUE forState:UIControlStateNormal];
+    [btn setBackgroundImage:IMG_BTN_BLUE_S forState:UIControlStateHighlighted];
+    [btn setBackgroundImage:IMG_BTN_BLUE_D forState:UIControlStateDisabled];
     btn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     [btn setTitle:title forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

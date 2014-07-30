@@ -24,7 +24,7 @@
 
 #define NOTIFICATION_COMMITDATA_FIN @"NOTIFICATION_COMMITDATA_FIN"
 
-@interface DzPhotoViewController : HideTabViewController<IBActionSheetDelegate,UIImagePickerControllerDelegate,UIGestureRecognizerDelegate>
+@interface DzPhotoViewController : HideTabViewController<IBActionSheetDelegate,UIImagePickerControllerDelegate,UIGestureRecognizerDelegate,UITextFieldDelegate>
 {
     IBActionSheet *_actionSheet;
     IBActionSheet *_delActionSheet;

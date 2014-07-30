@@ -14,6 +14,7 @@
                 <outlet property="lbName" destination="i3b-83-oFq" id="Elp-Gf-GmT"/>
                 <outlet property="lbType" destination="GdZ-oo-URt" id="6Ec-UJ-FgC"/>
                 <outlet property="lbVisitTime" destination="ntr-dR-N3m" id="R44-PJ-5Zk"/>
+                <outlet property="svContain" destination="6b8-zg-vvX" id="aq3-Su-hLx"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,7 +25,7 @@
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="6b8-zg-vvX">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="9Zi-Dm-LTO">
                             <rect key="frame" x="10" y="15" width="300" height="50"/>
@@ -186,9 +187,9 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
-                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="defaultPhoto.png" id="U7b-GM-8VI">
+                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="defaultPhoto.png" id="U7b-GM-8VI">
                             <rect key="frame" x="7" y="320" width="306" height="229"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                     </subviews>
                 </scrollView>
