@@ -10,7 +10,6 @@
                 <outlet property="btn_auto" destination="dtN-EW-Alv" id="hHs-nN-mzz"/>
                 <outlet property="btn_login" destination="s9u-cN-OEI" id="sJF-iP-xCM"/>
                 <outlet property="btn_rember" destination="JU9-um-pVU" id="UPZ-xP-68h"/>
-                <outlet property="lb_tel" destination="Imw-kW-hvI" id="zWn-W1-0sM"/>
                 <outlet property="tf_companycode" destination="53z-6X-7jN" id="FeD-O7-6ER"/>
                 <outlet property="tf_pwd" destination="vaU-kd-wLi" id="b88-ZX-WaA"/>
                 <outlet property="tf_username" destination="2sb-Ra-VAa" id="bws-Gd-8Lv"/>
@@ -109,13 +108,6 @@
                         <action selector="loginAction:" destination="-1" eventType="touchUpInside" id="fLQ-QP-9tm"/>
                     </connections>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Imw-kW-hvI" customClass="TTTAttributedLabel">
-                    <rect key="frame" x="0.0" y="491" width="320" height="34"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <view contentMode="scaleToFill" id="IB3-zc-lSd" userLabel="View_tool">
                     <rect key="frame" x="0.0" y="525" width="320" height="43"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -157,6 +149,25 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="客服电话：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kk3-MA-8Tt">
+                    <rect key="frame" x="51" y="496" width="80" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Thq-wr-WFf">
+                    <rect key="frame" x="129" y="492" width="122" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title="0591-83518200">
+                        <color key="titleColor" red="0.10072373750362473" green="0.68553090188213317" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="teleAction:" destination="-1" eventType="touchUpInside" id="O1x-JV-4mx"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.93725496530532837" green="0.93725496530532837" blue="0.95686280727386475" alpha="1" colorSpace="deviceRGB"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
