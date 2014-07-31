@@ -69,21 +69,46 @@
     [_aryVisitRecord removeAllObjects];
     
     NSArray *aryPlans = [BNVisitPlan searchWithWhere:[NSString stringWithFormat:@"WEEKDAY=%D",date] orderBy:@"ORDER_NO" offset:0 count:100];
-
-    NSMutableArray *aryCusInfo = [[NSMutableArray alloc] init];
-    for(BNVisitPlan *visitPlan in aryPlans)
-    {
-        NSArray *cusinfo =[BNCustomerInfo searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D",visitPlan.CUST_ID] orderBy:@"ORDER_NO" offset:0 count:100];
-        [aryCusInfo addObject:cusinfo];
-    }
+    NSArray *cusinfo =[BNCustomerInfo searchWithWhere:nil orderBy:@"CUST_NAME_PINYIN" offset:0 count:1000];
     
-    for(NSArray *cusinfo in aryCusInfo)
+    for(int i=0; i<cusinfo.count; i++)
     {
-        for(BNCustomerInfo *customerInfo in cusinfo)
+        BNCustomerInfo *customerInfo = [cusinfo objectAtIndex:i];
+        for(BNVisitPlan *visitPlan in aryPlans)
         {
-            [_aryVisitData addObject:customerInfo];
+            if(customerInfo.CUST_ID == visitPlan.CUST_ID)
+            {
+                [_aryVisitData addObject:customerInfo];
+                break;
+            }
         }
     }
+    
+//    for(BNVisitPlan *visitPlan in aryPlans)
+//    {
+//        for(BNCustomerInfo *customerInfo in cusinfo)
+//        {
+//            if(customerInfo.CUST_ID == visitPlan.CUST_ID)
+//            {
+//                [_aryVisitData addObject:customerInfo];
+//            }
+//        }
+//    }
+    
+//    NSMutableArray *aryCusInfo = [[NSMutableArray alloc] init];
+//    for(BNVisitPlan *visitPlan in aryPlans)
+//    {
+//        NSArray *cusinfo =[BNCustomerInfo searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D",visitPlan.CUST_ID] orderBy:@"ORDER_NO" offset:0 count:100];
+//        [aryCusInfo addObject:cusinfo];
+//    }
+//    
+//    for(NSArray *cusinfo in aryCusInfo)
+//    {
+//        for(BNCustomerInfo *customerInfo in cusinfo)
+//        {
+//            [_aryVisitData addObject:customerInfo];
+//        }
+//    }
     
     for(int i=0; i<_aryVisitData.count; i++)
     {

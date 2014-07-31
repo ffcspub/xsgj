@@ -21,6 +21,7 @@
 @property(nonatomic,strong) NSString   *REMARK;//备注
 @property(nonatomic,strong) NSString   *PHOTO;//照片uuid
 @property(nonatomic,assign) int    CUST_ID;//客户id
+@property(nonatomic,strong) NSString *POSITION;//地址
 
 @end
 

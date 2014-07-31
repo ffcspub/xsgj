@@ -153,13 +153,14 @@
     request.CUST_ID     = _customerInfo.CUST_ID;
     request.LAT = [ShareValue shareInstance].currentLocation.latitude*1000000;
     request.LNG = [ShareValue shareInstance].currentLocation.longitude*1000000;
+    request.POSITION = [ShareValue shareInstance].address;
     request.REMARK = _tf_Mark.text;
     request.PHOTO = _photoId;
     if (_isManualLocation) {
         request.LNG = manualCoordinate.longitude*1000000;
         request.LAT = manualCoordinate.latitude*1000000;
+        request.POSITION = _lb_manualAdjust.text;
     }
-    
     [KHGLAPI tempVisitByRequest:request success:^(TempVisitHttpResponse *response) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showSuccess:@"提交成功" toView:self.view];
