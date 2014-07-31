@@ -35,7 +35,7 @@
     _CUST_NAME = CUST_NAME;
     if (CUST_NAME) {
         self.CUST_NAME_PINYIN = [OAChineseToPinyin pinyinFromChiniseString:CUST_NAME];
-        self.CUST_NAME_PINYIN   = [self.CUST_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
+        self.CUST_NAME_HEAD   = [self.CUST_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
     }
     
 }
