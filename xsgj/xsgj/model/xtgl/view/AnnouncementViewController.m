@@ -369,7 +369,7 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
     NoticeInfoBean *info = [_announces objectAtIndex:indexPath.row];
     
     cell.name = info.TOPIC;
-    cell.time = info.BEGIN_TIME;
+    cell.time = [info.BEGIN_TIME substringToIndex:10];
     
     if (indexPath.row == 0) {
         cell.style = TOP;

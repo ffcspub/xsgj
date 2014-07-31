@@ -632,7 +632,7 @@
         [_customerTypeArray addObject:allType];
     }
     
-    NSArray *result  = [BNCustomerType searchWithWhere:[NSString stringWithFormat:@"TYPE_PID=%d",TYPE_PID] orderBy:@"ORDER_NO" offset:0 count:100];
+    NSArray *result  = [BNCustomerType searchWithWhere:[NSString stringWithFormat:@"TYPE_PID=%d",TYPE_PID] orderBy:@"TYPE_NAME_PINYIN" offset:0 count:100];
     [_customerTypeArray addObjectsFromArray:result];
     [_tv_customerType reloadData];
 }

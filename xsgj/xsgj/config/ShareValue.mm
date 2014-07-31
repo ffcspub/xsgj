@@ -113,7 +113,12 @@ static UIImage *_imageTablePart3;
 }
 
 -(void)setCorpCode:(NSString *)corpCode{
-    [[NSUserDefaults standardUserDefaults]setObject:corpCode forKey:SET_COREPCODE];
+    if (!corpCode) {
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:SET_COREPCODE];
+    }else{
+        [[NSUserDefaults standardUserDefaults]setObject:corpCode forKey:SET_COREPCODE];
+    }
+    [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
 -(NSString *)corpCode{
@@ -121,7 +126,12 @@ static UIImage *_imageTablePart3;
 }
 
 -(void)setUserName:(NSString *)userName{
-    [[NSUserDefaults standardUserDefaults]setObject:userName forKey:SET_USERNAME];
+    if (!userName) {
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:SET_USERNAME];
+    }else{
+        [[NSUserDefaults standardUserDefaults]setObject:userName forKey:SET_USERNAME];
+    }
+    [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
 -(NSString *)userName{
@@ -129,7 +139,12 @@ static UIImage *_imageTablePart3;
 }
 
 -(void)setUserPass:(NSString *)userPass{
-    [[NSUserDefaults standardUserDefaults]setObject:userPass forKey:SET_USERPASS];
+    if (!userPass) {
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:SET_USERPASS];
+    }else{
+        [[NSUserDefaults standardUserDefaults]setObject:userPass forKey:SET_USERPASS];
+    }
+    [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
 -(NSString *)userPass{

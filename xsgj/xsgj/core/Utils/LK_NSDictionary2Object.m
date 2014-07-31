@@ -348,28 +348,30 @@
                         else if ( type[0] == _C_DBL)
                         {
                             double tvalue = [(NSObject *)value asDouble];
-                            NSString *topchar = [[key substringToIndex:1]uppercaseString];
-                            NSString *selectorString = [NSString stringWithFormat:@"set%@:",[key stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:topchar]];
-                            SEL selector = NSSelectorFromString(selectorString);
-                            objc_msgSend(object, selector,tvalue);
+                            NSNumber *number = [NSNumber numberWithDouble:tvalue];
+                            [object setValue:number forKey:key];
                             flag = YES;
                         }
                         else if ( type[0] == _C_FLT)
                         {
-                            double tvalue = [(NSObject *)value asFloat];
-                            NSString *topchar = [[key substringToIndex:1]uppercaseString];
-                            NSString *selectorString = [NSString stringWithFormat:@"set%@:",[key stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:topchar]];
-                            SEL selector = NSSelectorFromString(selectorString);
-                            objc_msgSend(object, selector,tvalue);
+                            float tvalue = [(NSObject *)value asFloat];
+                            NSNumber *number = [NSNumber numberWithFloat:tvalue];
+                            [object setValue:number forKey:key];
+//                            NSString *topchar = [[key substringToIndex:1]uppercaseString];
+//                            NSString *selectorString = [NSString stringWithFormat:@"set%@:",[key stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:topchar]];
+//                            SEL selector = NSSelectorFromString(selectorString);
+//                            [object setValue:[NSValue value:tvalue withObjCType:_C_FLT] forKey:<#(NSString *)#>]
+//                            objc_msgSend(object, selector,tvalue);
                             flag = YES;
                         }
                         else if ( type[0] == _C_LNG_LNG)
                         {
                             double tvalue = [(NSObject *)value asFloat];
-                            NSString *topchar = [[key substringToIndex:1]uppercaseString];
-                            NSString *selectorString = [NSString stringWithFormat:@"set%@:",[key stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:topchar]];
-                            SEL selector = NSSelectorFromString(selectorString);
-                            objc_msgSend(object, selector,tvalue);
+                            [object setValue:[NSValue value:&tvalue withObjCType:@encode(int)] forKey:key];
+//                            NSString *topchar = [[key substringToIndex:1]uppercaseString];
+//                            NSString *selectorString = [NSString stringWithFormat:@"set%@:",[key stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:topchar]];
+//                            SEL selector = NSSelectorFromString(selectorString);
+//                            objc_msgSend(object, selector,tvalue);
                             flag = YES;
                         }
                         continue;
@@ -455,17 +457,33 @@
         }else{
             if ( type[0] == _C_INT || type[0] == _C_UINT || type[0] == _C_BOOL || type[0] == _C_SHT || type[0] == _C_BFLD)
             {
-                NSNumber *number = (NSNumber *)value;
+                NSNumber *number = nil;
+                if ([value isKindOfClass:[NSString class]]) {
+                    int intvalue = [(NSString *)value integerValue];
+                    value = [NSNumber numberWithInt:intvalue];
+                }
+                number = (NSNumber *)value;
                 [dict setObject:number forKey:propertyName];
             }
             else if ( type[0] == _C_ULNG || type[0] == _C_LNG || type[0] == _C_ULNG || type[0] == _C_LNG_LNG || type[0] == _C_ULNG_LNG || type[0] == _C_FLT)
             {
-                NSNumber *number = (NSNumber *)value;
+                NSNumber *number = nil;
+                if ([value isKindOfClass:[NSString class]]) {
+                    long long intvalue = [(NSString *)value longLongValue];
+                    value = [NSNumber numberWithLongLong:intvalue];
+                }
+                number = (NSNumber *)value;
                 [dict setObject:number forKey:propertyName];
             }
             else if ( type[0] == _C_DBL || type[0] == _C_BFLD )
             {
-                NSNumber *number = (NSNumber *)value;
+                NSNumber *number = nil;
+                if ([value isKindOfClass:[NSString class]]) {
+                    float intvalue = [(NSString *)value floatValue];
+                    value = [NSNumber numberWithFloat:intvalue];
+                }
+                number = (NSNumber *)value;
+
                 [dict setObject:number forKey:propertyName];
             }
         }

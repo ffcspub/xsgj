@@ -108,6 +108,30 @@
                 return NO;
             }
         }
+        
+        if(textField == _tfSubNum || textField == _tfZpNum)
+        {
+            if(textField.text.length < 9 || [string isEqualToString:@""])
+            {
+                return YES;
+            }
+            else
+            {
+                return NO;
+            }
+        }
+    }
+    
+    if(textField == _tfZpName || textField == _tfZpUnit)
+    {
+        if(textField.text.length < 15 || [string isEqualToString:@""])
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
     }
     
     
@@ -127,6 +151,15 @@
                 break;
             }
             flag++;
+        }
+        
+        if(textField.text.length < 12 || [string isEqualToString:@""])
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
         }
     }
 

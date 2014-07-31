@@ -150,13 +150,14 @@
     request.USER_AUTH   = [ShareValue shareInstance].userInfo.USER_AUTH;
     request.USER_ID     = [ShareValue shareInstance].userInfo.USER_ID;
     //
-    request.LAT = [ShareValue shareInstance].currentLocation.latitude;
-    request.LNG = [ShareValue shareInstance].currentLocation.longitude;
+    request.CUST_ID     = _customerInfo.CUST_ID;
+    request.LAT = [ShareValue shareInstance].currentLocation.latitude*1000000;
+    request.LNG = [ShareValue shareInstance].currentLocation.longitude*1000000;
     request.REMARK = _tf_Mark.text;
     request.PHOTO = _photoId;
     if (_isManualLocation) {
-        request.LNG = manualCoordinate.longitude;
-        request.LAT = manualCoordinate.latitude;
+        request.LNG = manualCoordinate.longitude*1000000;
+        request.LAT = manualCoordinate.latitude*1000000;
     }
     
     [KHGLAPI tempVisitByRequest:request success:^(TempVisitHttpResponse *response) {
@@ -408,6 +409,23 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(textField == self.tf_Mark)
+    {
+        if(textField.text.length < 30 || [string isEqualToString:@""])
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 @end

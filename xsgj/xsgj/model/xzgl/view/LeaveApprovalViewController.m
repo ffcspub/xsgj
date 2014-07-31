@@ -169,6 +169,7 @@ static int const pageSize = 10;
     [super viewWillAppear:animated];
     
     page = 0;
+    self.tableView.showsInfiniteScrolling = YES;
     [self loadLeaves];
 }
 

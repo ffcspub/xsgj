@@ -228,6 +228,7 @@
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfStarting = [ShareValue getDefaultTextField];
     tfStarting.frame = rectContent;
+    tfStarting.delegate = self;
     [self.svTripApply addSubview:tfStarting];
     self.tfStarting = tfStarting;
     
@@ -249,10 +250,11 @@
     [self.svTripApply addSubview:lblStart];
     
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
-    UITextField *tflblDestination = [ShareValue getDefaultTextField];
-    tflblDestination.frame = rectContent;
-    [self.svTripApply addSubview:tflblDestination];
-    self.tfDestination = tflblDestination;
+    UITextField *tfDestination = [ShareValue getDefaultTextField];
+    tfDestination.frame = rectContent;
+    tfDestination.delegate = self;
+    [self.svTripApply addSubview:tfDestination];
+    self.tfDestination = tfDestination;
     
     // 详情描述
     rectTitle = CGRectOffset(rectTitle, 0.f, rowHeight);
@@ -315,7 +317,7 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (textField == self.tfTheme)
+    if (textField == self.tfTheme || textField == self.tfStarting || textField == self.tfDestination)
     {
         if (range.location >= 15)
         {
@@ -462,7 +464,7 @@
     request.TRIP_TO      = self.tfDestination.text;
     request.REMARK       = self.tvDescription.text;
     request.APPLY_TIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
-    request.APPROVE_USER = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.USER_ID];
+    request.APPROVE_USER = [ShareValue shareInstance].userInfo.USER_ID;
 
     [MBProgressHUD showMessag:@"正在提交···" toView:ShareAppDelegate.window];
     [XZGLAPI applyTripByRequest:request success:^(ApplyTripHttpResponse *response) {

@@ -45,7 +45,7 @@
 
 @interface QueryLeaveDetailHttpResponse : LK_HttpBaseResponse
 
-@property(nonatomic,strong) NSArray *leaveInfoBean;
+@property(nonatomic,strong) NSArray *LEAVEINFOBEAN;
 
 @end
 

@@ -274,7 +274,7 @@ typedef  enum : NSUInteger {
         if (indexPath.section == 1) {
             cell.content = _leaveInfo.REMARK;
         } else if (indexPath.section == 2) {
-            cell.content = _leaveInfo.APPROVE_REAMRK;
+            cell.content = _leaveInfo.APPROVE_REMARK;
         }
         return cell;
     }

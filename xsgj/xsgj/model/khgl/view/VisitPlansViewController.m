@@ -174,7 +174,7 @@
     if (_sheet) {
         [_sheet dismissAnimated:NO];
     }
-   _sheet =  [[IBActionSheet alloc]initWithTitle:@"操作" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"添加" otherButtonTitles:@"删除",nil];
+   _sheet =  [[IBActionSheet alloc]initWithTitle:@"操作" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"新增" otherButtonTitles:@"删除",nil];
     _sheet.shouldCancelOnTouch = YES;
     [_sheet showInView:self.view];
 }

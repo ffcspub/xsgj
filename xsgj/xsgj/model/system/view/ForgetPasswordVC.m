@@ -77,12 +77,22 @@
     MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在提交···" toView:self.view];
     [hud showAnimated:YES whileExecutingBlock:^{
         [XTGLAPI forgetPwdByRequest:request success:^(ForgetPwdHttpResponse *response) {
-            
+            if ([self.tfCorpCode.text isEqual:[ShareValue shareInstance].corpCode] && [self.tfUserName.text isEqual:[ShareValue shareInstance].userName]) {
+                [ShareValue shareInstance].userPass = nil;
+            }
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
             
-            // 成功后退回登陆界面
-            [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
+            SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"提示"
+                                                            message:@"密码重置成功,密码为123456"
+                                                  cancelButtonTitle:@"取消"
+                                                      cancelHandler:^(SIAlertView *alertView) {}
+                                             destructiveButtonTitle:@"确定" destructiveHandler:^(SIAlertView *alertView) {
+                                                 // 成功后退回登陆界面
+                                                 [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
+                                             }];
+            alert.transitionStyle = SIAlertViewTransitionStyleBounce;
+            [alert show];
             
         } fail:^(BOOL notReachable, NSString *desciption) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
