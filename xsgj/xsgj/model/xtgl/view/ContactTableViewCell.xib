@@ -44,6 +44,7 @@
             <connections>
                 <outlet property="btnDail" destination="YOy-ov-l6f" id="kcJ-FD-7Vt"/>
                 <outlet property="btnMsg" destination="HY0-Id-VqV" id="khK-E7-R1n"/>
+                <outlet property="imageIcon" destination="W37-2E-zsr" id="EIU-Ye-m66"/>
                 <outlet property="labName" destination="1AR-Nt-Gqk" id="vRN-cq-jHD"/>
             </connections>
         </tableViewCell>

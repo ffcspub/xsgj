@@ -19,6 +19,7 @@
 #import "NSObject+LKDBHelper.h"
 #import "TreeViewCell.h"
 #import "SelectTreeViewController.h"
+#import "UIImageView+WebCache.h"
 
 @interface CorpAddressBookViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 {
@@ -227,6 +228,12 @@
     cell.btnDail.tag = indexPath.section*10000 +indexPath.row;
     [cell.btnMsg  addTarget:self action:@selector(clkMsg:) forControlEvents:UIControlEventTouchUpInside];
     [cell.btnDail addTarget:self action:@selector(clkDail:) forControlEvents:UIControlEventTouchUpInside];
+    if([bean.PHOTO length] > 1)
+    {
+        NSString *strUrl = [ShareValue getFileUrlByFileId:bean.PHOTO];
+        [cell.imageIcon sd_setImageWithURL:[NSURL URLWithString:strUrl] placeholderImage:[UIImage imageNamed:@"defaultPhoto"]];
+    }
+    
     return cell;
 
 }
