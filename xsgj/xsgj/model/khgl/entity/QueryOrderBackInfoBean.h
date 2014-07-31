@@ -14,5 +14,6 @@
 @property(nonatomic,strong) NSString *CUST_NAME;//客户名称
 @property(nonatomic,strong) NSString *COMMITTIME;//退单时间
 @property(nonatomic,strong) NSString *PROD_NAME;//产品名称
+@property(nonatomic,strong) NSString *REALNAME;//产品名称
 
 @end

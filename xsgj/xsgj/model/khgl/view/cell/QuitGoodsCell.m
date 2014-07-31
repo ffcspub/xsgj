@@ -61,8 +61,8 @@
 {
     // TODO: 设置数据
     QueryOrderBackInfoBean *bean = (QueryOrderBackInfoBean *)data;
-    self.lblTitle.text = bean.PROD_NAME;
-    self.lblCustomerName.text = bean.CUST_NAME;
+    self.lblTitle.text = bean.CUST_NAME;
+    self.lblCustomerName.text = bean.REALNAME;
     self.lblDetail.text = bean.COMMITTIME;
 }
 
