@@ -42,7 +42,7 @@
 #define URL_ANNOUNCEMENT @"notice/noticeQuery.shtml" // 企业公告
 #define URL_ANNOUNCEMENT_TYPE @"notice/noticeTypes.shtml" // 公告类型
 #define URL_ANNOUNCEMENT_DETAIL @"notice/noticeDetail.shtml"// 公告详情
-#define URL_CONTACT_DEPT @"userdept/myDeptInfo.shtml"
+#define URL_CONTACT_DEPT @"userdept/getAllDeptInfo.shtml"
 #define URL_ADDRESS_BOOK @"user/queryContacts.shtml"
 // zcq
 #define URL_ApplyLeave @"leave/applyLeave.shtml"// 请假申请
