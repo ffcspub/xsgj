@@ -224,14 +224,14 @@
     
     //请假详细描述
     UILabel *lb_description = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(btn_leaveday.frame) + 18, 180, 35)];
-    lb_description.text = @"请假详细描述";
+    lb_description.text = @"详情描述";
     lb_description.font = [UIFont boldSystemFontOfSize:17];
     lb_description.textColor = HEX_RGB(0x939fa7);
     lb_description.backgroundColor = [UIColor clearColor];
     [self.scrollView addSubview:lb_description];
     
     lblStart = [ShareValue getStarMarkPrompt];
-    lblStart.frame = CGRectMake(120, CGRectGetMaxY(btn_leaveday.frame) + 30, 10, 20);
+    lblStart.frame = CGRectMake(100, CGRectGetMaxY(btn_leaveday.frame) + 30, 10, 20);
     [self.scrollView addSubview:lblStart];
     
     UIImageView *iv_edge = [[UIImageView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(lb_description.frame) + 5, 300, 150)];
@@ -247,14 +247,14 @@
     tv_input.tag = 406;
     [self.scrollView addSubview:tv_input];
     
-    NSMutableAttributedString *hintString1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"直接审批人：%@",[ShareValue shareInstance].userInfo.LEADER_NAME]];
-    [hintString1 addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[HEX_RGB(0x939fa7) CGColor] range:NSMakeRange(0,6)];
-    [hintString1 addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor blackColor] CGColor] range:NSMakeRange(6,hintString1.length - 6)];
-    [hintString1 addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont boldSystemFontOfSize:16] range:NSMakeRange(0,6)];
-    [hintString1 addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont boldSystemFontOfSize:22] range:NSMakeRange(6,hintString1.length - 6)];
-    TTTAttributedLabel *lb_Approval = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(iv_edge.frame) + 10, 280, 35)];
-    lb_Approval.textColor = HEX_RGB(0x939fa7);
-    lb_Approval.text = hintString1;
+    NSMutableAttributedString *hintString1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"直接审批人为：%@",[ShareValue shareInstance].userInfo.LEADER_NAME]];
+    [hintString1 addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[HEX_RGB(0x939fa7) CGColor] range:NSMakeRange(0,7)];
+    [hintString1 addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor blackColor] CGColor] range:NSMakeRange(7,hintString1.length - 7)];
+    [hintString1 addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont boldSystemFontOfSize:16] range:NSMakeRange(0,7)];
+    [hintString1 addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont boldSystemFontOfSize:22] range:NSMakeRange(7,hintString1.length - 7)];
+    UILabel *lb_Approval = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(iv_edge.frame) + 10, 280, 35)];
+    lb_Approval.textColor = HEX_RGB(0x000000);
+    lb_Approval.text = [NSString stringWithFormat:@"直接审批人为：%@",[ShareValue shareInstance].userInfo.LEADER_NAME];
     lb_Approval.font = [UIFont boldSystemFontOfSize:18];
     lb_Approval.textAlignment = NSTextAlignmentRight;
     lb_Approval.backgroundColor = [UIColor clearColor];

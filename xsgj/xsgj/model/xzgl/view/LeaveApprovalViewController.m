@@ -18,6 +18,7 @@ typedef  enum : NSUInteger {
     TOP = 0,
     MID = 1,
     BOT = 2,
+    SINGLE
 } LeaveApprovalCellStyle;
 
 @interface LeaveApprovalCell : UITableViewCell{
@@ -86,8 +87,26 @@ typedef  enum : NSUInteger {
         }
             break;
         case BOT:{
-            _backView.image = [ShareValue tablePart3];
-            _backSelectedView.image = [ShareValue tablePart3S];
+//            _backView.image = [ShareValue tablePart3];
+//            _backSelectedView.image = [ShareValue tablePart3S];
+            
+            UIImage *image = [UIImage imageNamed:@"table_part3"];
+            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+            _backView.image = image;
+            
+            UIImage *imageSelect = [UIImage imageNamed:@"table_part3_s"];
+            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+            _backSelectedView.image = imageSelect;
+        }
+            break;
+        case SINGLE:{
+            UIImage *image = [UIImage imageNamed:@"table_main_n"];
+            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+            _backView.image = image;
+            
+            UIImage *imageSelect = [UIImage imageNamed:@"table_main_s"];
+            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+            _backSelectedView.image = imageSelect;
         }
             break;
         default:
@@ -233,12 +252,16 @@ static int const pageSize = 10;
     cell.time = info.APPLY_TIME;
     cell.state = info.APPROVE_STATE;
     
-    if (indexPath.row == 0) {
-        cell.style = TOP;
-    } else if (indexPath.row == ([_leaves count] - 1)) {
-        cell.style = BOT;
+    if ([_leaves count] == 1) {
+        cell.style = SINGLE;
     } else {
-        cell.style = MID;
+        if (indexPath.row == 0) {
+            cell.style = TOP;
+        } else if (indexPath.row == ([_leaves count] - 1)) {
+            cell.style = BOT;
+        } else {
+            cell.style = MID;
+        }
     }
     
     return cell;

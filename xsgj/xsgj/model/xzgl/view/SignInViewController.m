@@ -94,7 +94,7 @@
     [rightButton setFrame:CGRectMake(0, 2.f, 70.f, 33.f)];
     [rightButton setBackgroundColor:[UIColor clearColor]];
     
-    [rightButton setTitle:@"提交" forState:UIControlStateNormal];
+    [rightButton setTitle:@"确定" forState:UIControlStateNormal];
     
     [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateNormal];
     [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_press"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateHighlighted];
