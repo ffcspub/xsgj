@@ -159,6 +159,15 @@ static UIImage *_imageTablePart3;
     return [[NSUserDefaults standardUserDefaults]objectForKey:SET_USERID];
 }
 
+-(NSNumber *)lastUpdateTime{
+    return [[NSUserDefaults standardUserDefaults]valueForKey:[NSString stringWithFormat:@"LASTUPDATE_%D",[ShareValue shareInstance].userInfo.USER_ID]];;
+}
+
+-(void)setLastUpdateTime:(NSNumber *)lastUpdateTime{
+    [[NSUserDefaults standardUserDefaults]setObject:lastUpdateTime forKey:[NSString stringWithFormat:@"LASTUPDATE_%D",[ShareValue shareInstance].userInfo.USER_ID]];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
 -(BNUserInfo *)userInfo{
     if (_userInfo) {
         return _userInfo;

@@ -81,6 +81,8 @@
 @property(nonatomic,assign) CLLocationCoordinate2D currentLocation;//当前经纬度
 @property(nonatomic,strong) NSString *address;//当前地址
 
+@property(nonatomic,assign) NSNumber *lastUpdateTime;//最后更新时间
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // eg: 左侧为文本 右侧为文本输入框或者仅用户显示的文本
 // ___________________________________________________________

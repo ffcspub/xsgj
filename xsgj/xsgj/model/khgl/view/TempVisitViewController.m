@@ -13,6 +13,7 @@
 #import <NSDate+Helper.h>
 #import <UIAlertView+Blocks.h>
 #import "SIAlertView.h"
+#import "SystemAPI.h"
 
 @interface TempVisitViewController ()
 {
@@ -46,7 +47,25 @@
     // Do any additional setup after loading the view from its nib.
     
     [self initView];
-    [self loadCustomerData];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"正在检查数据更新...";
+    [SystemAPI getServerUpdatetimeSuccess:^(unsigned  long long lastupdatetime) {
+        if (lastupdatetime > [ShareValue shareInstance].lastUpdateTime.unsignedLongLongValue) {
+            [SystemAPI updateConfigSuccess:^{
+                [hud hide:YES];
+                 [self loadCustomerData];
+            } fail:^(BOOL notReachable, NSString *desciption) {
+                [hud hide:YES];
+                 [self loadCustomerData];
+            }];
+        }else{
+            [self loadCustomerData];
+        }
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        [hud hide:YES];
+         [self loadCustomerData];
+    }];
+   
 }
 
 -(void)viewWillAppear:(BOOL)animated{

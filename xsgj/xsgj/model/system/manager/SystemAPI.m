@@ -46,7 +46,7 @@
     BNUserInfo *userInfo = [[BNUserInfo alloc]init];
     [[ShareValue shareInstance].userInfo easyDeepCopy:userInfo];
     request.USER_INFO_BEAN = userInfo;
-    NSNumber *lastupdatetime = [[NSUserDefaults standardUserDefaults]valueForKey:[NSString stringWithFormat:@"LASTUPDATE_%D",[ShareValue shareInstance].userInfo.USER_ID]];
+    NSNumber *lastupdatetime = [ShareValue shareInstance].lastUpdateTime;
     if (!lastupdatetime) {
         lastupdatetime = @0;
     }
@@ -59,7 +59,7 @@
                 [alert show];
             }
             [tResponse saveCacheDB];
-            [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithUnsignedLongLong:[ShareValue shareInstance].userInfo.LAST_UPDATE_TIME] forKey:[NSString stringWithFormat:@"LASTUPDATE_%D",[ShareValue shareInstance].userInfo.USER_ID]];
+            [ShareValue shareInstance].lastUpdateTime = [NSNumber numberWithUnsignedLongLong:[ShareValue shareInstance].userInfo.LAST_UPDATE_TIME];
             Success();
         }else{
             fail(NO,response.MESSAGE.MESSAGECONTENT);
@@ -67,6 +67,18 @@
     } fail:^(BOOL NotReachable, NSString *descript) {
         fail(NotReachable,descript);
     } class:[UpdateConfigHttpResponse class]];
+}
+
+//获取服务器更新时间
++(void)getServerUpdatetimeSuccess:(void(^)(unsigned  long long lastupdatetime))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    GetServerUpdateTimeHttpRequest *request = [[GetServerUpdateTimeHttpRequest alloc]init];
+    [LK_APIUtil postHttpRequest:request apiPath:URL_getServerUpdateTime Success:^(LK_HttpBaseResponse *response) {
+        GetServerUpdateTimeHttpResponse *tResponse = (GetServerUpdateTimeHttpResponse *)response;
+        success(tResponse.LAST_UPDATE_TIME);
+    } fail:^(BOOL NotReachable, NSString *descript) {
+        fail(NotReachable,descript);
+    } class:[GetServerUpdateTimeHttpResponse class]];
+    
 }
 
 //定时定位上报

@@ -305,6 +305,11 @@
 
 @end
 
+@implementation GetServerUpdateTimeHttpResponse
+
+
+@end
+
 @implementation LocateCommitHttpResponse
 
 @end

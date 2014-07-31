@@ -7,6 +7,7 @@
 //
 
 #import "VisitProjectViewController.h"
+#import "SystemAPI.h"
 
 @interface VisitProjectViewController ()
 {
@@ -14,6 +15,7 @@
     NSMutableArray *_aryVisitData;
     NSMutableArray *_aryVisitRecord;
     BNVistRecord *_visitRecord;
+    int pageCount;
 }
 
 @end
@@ -36,13 +38,39 @@
     
     _aryVisitRecord = [[NSMutableArray alloc] init];
     _aryVisitData = [[NSMutableArray alloc] init];
+    
     [self loadDateInfo];
     [self initView];
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"正在检查数据更新...";
+    [SystemAPI getServerUpdatetimeSuccess:^(unsigned  long long lastupdatetime) {
+        if (lastupdatetime > [ShareValue shareInstance].lastUpdateTime.unsignedLongLongValue) {
+            [SystemAPI updateConfigSuccess:^{
+                [hud hide:YES];
+                [self loadVisitDataWithDate:[[NSDate date] getWeekDay]];
+            } fail:^(BOOL notReachable, NSString *desciption) {
+                [hud hide:YES];
+                [self loadVisitDataWithDate:[[NSDate date] getWeekDay]];
+            }];
+        }else{
+            [self loadVisitDataWithDate:[[NSDate date] getWeekDay]];
+        }
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        [hud hide:YES];
+        [self loadVisitDataWithDate:[[NSDate date] getWeekDay]];
+    }];
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self loadVisitDataWithDate:[[NSDate date] getWeekDay]];
+    [super viewWillAppear:animated];
+    if (pageCount > 0) {
+        [self loadVisitDataWithDate:[[NSDate date] getWeekDay]];
+    }
+    pageCount ++;
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -116,7 +144,7 @@
         NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D and VISIT_DATE like '%@%@'",customerInfo.CUST_ID,[[NSDate date] stringWithFormat:@"yyyy-MM-dd"],@"%"] orderBy:nil offset:0 count:100];
         [_aryVisitRecord addObject:aryRecord];
     }
-    
+    [_tvContain reloadData];
 }
 
 - (void)loadDateInfo

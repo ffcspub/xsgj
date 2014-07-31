@@ -65,6 +65,12 @@
 
 @end
 
+@interface GetServerUpdateTimeHttpResponse : LK_HttpBaseResponse
+
+@property(nonatomic,assign) long LAST_UPDATE_TIME;
+
+@end
+
 @interface LocateCommitHttpResponse : LK_HttpBaseResponse
 
 @end
