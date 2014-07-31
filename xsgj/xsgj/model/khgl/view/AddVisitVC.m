@@ -21,7 +21,7 @@
 #import "SelectTreeViewController.h"
 #import "BNCustomerType.h"
 
-@interface AddVisitVC () <MapAddressVCDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate>
+@interface AddVisitVC () <MapAddressVCDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UITextFieldDelegate>
 {
     BOOL _isLocationSuccess;
     BOOL _isManualLocation;
@@ -40,7 +40,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnPhoto;
 
 @property (weak, nonatomic) IBOutlet UILabel *lblAutoLocation;
-@property (weak, nonatomic) IBOutlet UILabel *lblManualLocation;
 @property (weak, nonatomic) IBOutlet UIButton *btnRefresh;
 @property (weak, nonatomic) IBOutlet UIButton *btnMap;
 
@@ -48,8 +47,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *tfName;
 @property (weak, nonatomic) IBOutlet UITextField *tfLinkMan;
 @property (weak, nonatomic) IBOutlet UITextField *tfPhone;
-@property (weak, nonatomic) IBOutlet UITextView *tvAddr;
-@property (weak, nonatomic) IBOutlet UITextView *tfRemark;
+@property (weak, nonatomic) IBOutlet UITextField *tfAddr;
+@property (weak, nonatomic) IBOutlet UITextField *tfRemark;
 @property (weak, nonatomic) IBOutlet UIImageView *ivPhoto;
 
 @end
@@ -82,7 +81,7 @@
     // 外边框
     self.vContaintLocation.layer.borderColor = HEX_RGB(0xd3d3d3).CGColor;
     self.vContaintLocation.layer.borderWidth = 1.0;
-    self.svRoot.contentSize = CGSizeMake(CGRectGetWidth(self.view.bounds), 800.f);
+    self.svRoot.contentSize = CGSizeMake(CGRectGetWidth(self.view.bounds), 630.f);
     
     // 拍照按钮
     [self.btnPhoto setImage:[UIImage imageNamed:@"btnPhoto_nor"] forState:UIControlStateNormal];
@@ -146,49 +145,20 @@
         {
             return NO;
         }
-    }
-    
-    return YES;
-    
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    if (textView == self.tvAddr) {
-        NSString *new = [textView.text stringByReplacingCharactersInRange:range withString:text];
-        NSInteger res = 25 - [new length];
-        if(res >= 0)
+    } else if (textField == self.tfAddr) {
+        if (range.location >= 25)
         {
-            return YES;
-        }
-        else
-        {
-            NSRange rg = {0,[text length]+res};
-            if (rg.length>0) {
-                NSString *s = [text substringWithRange:rg];
-                [textView setText:[textView.text stringByReplacingCharactersInRange:range withString:s]];
-            }
             return NO;
         }
-    } else if (textView == self.tfRemark) {
-        NSString *new = [textView.text stringByReplacingCharactersInRange:range withString:text];
-        NSInteger res = 20 - [new length];
-        if(res >= 0)
+    } else if (textField == self.tfRemark) {
+        if (range.location >= 20)
         {
-            return YES;
-        }
-        else
-        {
-            NSRange rg = {0,[text length]+res};
-            if (rg.length>0) {
-                NSString *s = [text substringWithRange:rg];
-                [textView setText:[textView.text stringByReplacingCharactersInRange:range withString:s]];
-            }
             return NO;
         }
     }
     
     return YES;
+    
 }
 
 #pragma mark - 事件
@@ -196,7 +166,7 @@
 - (BOOL)isValidData
 {
     NSString *errorMessage = nil;
-    if (!_isLocationSuccess) {
+    if (!_isLocationSuccess && !_isManualLocation) {
         errorMessage = @"未定位成功，请重新获取当前位置";
     } else if ([self.lblType.text isEqualToString:@"请选择类型"]) {
         errorMessage = @"请选择类型";
@@ -204,7 +174,7 @@
         errorMessage = @"请输入客户名称";
     } else if ([self.tfLinkMan.text length] == 0) {
         errorMessage = @"请输入联系人";
-    } else if ([self.tvAddr.text length] == 0) {
+    } else if ([self.tfAddr.text length] == 0) {
         errorMessage = @"请输入联系地址";
     } else if (!_imageData){
         errorMessage = @"请先拍照";
@@ -287,15 +257,22 @@
     request.CUST_NAME = self.tfName.text;
     request.LINKMAN = self.tfLinkMan.text;
     request.TEL = self.tfPhone.text;
-    request.ADDRESS = self.tvAddr.text;
+    request.ADDRESS = self.tfAddr.text;
     request.REMARK = self.tfRemark.text;
     request.PHOTO = _photoId;
     request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
 
-    request.LNG = @([ShareValue shareInstance].currentLocation.longitude);
-    request.LAT = @([ShareValue shareInstance].currentLocation.latitude);
+    // 定位信息上传，手动优先于自动定位
+    if (_isLocationSuccess) {
+        request.LNG = @([ShareValue shareInstance].currentLocation.longitude);
+        request.LAT = @([ShareValue shareInstance].currentLocation.latitude);
+    }
+    if (_isManualLocation) {
+        request.LNG = [NSNumber numberWithFloat:manualCoordinate.longitude];
+        request.LAT = [NSNumber numberWithFloat:manualCoordinate.latitude];
+    }
     request.POSITION = self.lblAutoLocation.text;
-    
+
     [KHGLAPI addCustomerCommitByRequest:request success:^(AddCustomerCommitHttpResponse *response) {
         
         [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -467,7 +444,7 @@
 {
     NSLog(@"解析的地址为:%@", address);
     if ([address length] > 0) {
-        self.lblManualLocation.text = address;
+        self.lblAutoLocation.text = address;
         manualCoordinate = coordinate;
         _isManualLocation = YES;
     }
