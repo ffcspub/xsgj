@@ -64,8 +64,8 @@
     // TODO: 设置数据
     SaleTaskInfoBean *bean = (SaleTaskInfoBean *)data;
     self.lblTime.text = bean.SALE_MONTH;
-    self.lblTargetMoney.text = [NSString stringWithFormat:@"%.2f", bean.SALE_TARGET];
-    self.lblCompleteMoney.text = [NSString stringWithFormat:@"%.2f", bean.SALE_FINISH];
+    self.lblTargetMoney.text = bean.SALE_TARGET;
+    self.lblCompleteMoney.text = bean.SALE_FINISH;
     self.lblPrecent.text = bean.SALE_PERCENT;
 }
 
