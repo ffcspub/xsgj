@@ -170,7 +170,7 @@
     for (NSString*s in mAzArray)
     {
         NSMutableString *sql = [NSMutableString stringWithFormat:@"USER_NAME_HEAD = '%@'",s];
-        if ([[_schBar text] length] <= 0 && sqlDeptIdAndSerach)
+        if ([[_schBar text] length] <= 0 && sqlDeptId)
         {
             [sql appendFormat:@" AND (%@)",sqlDeptId];
         }
@@ -179,10 +179,9 @@
             [sql appendFormat:@" AND (%@)",sqlDeptIdAndSerach];
         }
         NSMutableArray *list = [ContactBean searchWithWhere:sql orderBy:nil offset:0 count:1000];
-        NSLog(@"sql!!! = %@",sql);
         [mUIdataArray addObject:list];
     }
-    NSLog(@"%@",mUIdataArray);
+    NSLog(@"[mUIdataArray count] = %d",[mUIdataArray count]);
     // 刷新表格
     [_tabContact reloadData];
 }
@@ -259,34 +258,54 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSLog(@"numberOfSectionsInTableView = %d",[mAzArray count]);
     return [mAzArray count];
 }
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSLog(@"titleForHeaderInSection = %@",mAzArray[section]);
     return mAzArray[section];
 }
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    for (NSString *s in mAzArray)
-    {
-        NSLog(@"sectionIndexTitlesForTableView = %@ ",s);
-    }
     return mAzArray;
 }
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     NSString *text = [searchBar text];
-    NSMutableString *sql =  [NSMutableString stringWithFormat:@"(USER_NAME_PINYIN LIKE '%%%@%%' OR REALNAME LIKE '%%%@%%' OR MOBILENO LIKE '%%%@%%')",text,text,text];
-    if (sqlDeptId!= nil)
+    NSString *sql  = @"";
+    if ([text length] <= 0)
     {
-        [sql appendFormat:@" AND %@",sqlDeptId];
+        if (sqlDeptId!= nil)
+        {
+            sql = [NSString stringWithFormat:@"%@",sqlDeptId];
+            arraySourceContact = [ContactBean searchWithWhere:sql orderBy:nil offset:0 count:1000];
+            [self filltheTable:arraySourceContact];
+            return;
+        }
+        else
+        {
+            arraySourceContact = [ContactBean searchWithWhere:nil orderBy:nil offset:0 count:1000];
+            [self filltheTable:arraySourceContact];
+            return;
+        }
     }
-    sqlDeptIdAndSerach = sql;
-    arraySourceContact = [ContactBean searchWithWhere:sqlDeptIdAndSerach orderBy:nil offset:0 count:1000];
-    [self filltheTable:arraySourceContact];
+    else
+    {
+        if (sqlDeptId!= nil)
+        {
+            sql =  [NSMutableString stringWithFormat:@"(USER_NAME_PINYIN LIKE '%%%@%%' OR REALNAME LIKE '%%%@%%' OR MOBILENO LIKE '%%%@%%') AND %@",text,text,text,sqlDeptId];
+            sqlDeptIdAndSerach = sql;
+            arraySourceContact = [ContactBean searchWithWhere:sqlDeptIdAndSerach orderBy:nil offset:0 count:1000];
+            [self filltheTable:arraySourceContact];
+        }
+        else
+        {
+            sql =  [NSMutableString stringWithFormat:@"(USER_NAME_PINYIN LIKE '%%%@%%' OR REALNAME LIKE '%%%@%%' OR MOBILENO LIKE '%%%@%%')",text,text,text];
+            sqlDeptIdAndSerach = sql;
+            arraySourceContact = [ContactBean searchWithWhere:sqlDeptIdAndSerach orderBy:nil offset:0 count:1000];
+            [self filltheTable:arraySourceContact];
+        }
+    }
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar

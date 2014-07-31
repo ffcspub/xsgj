@@ -14,9 +14,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="110x110副本.png" id="W37-2E-zsr">
-                        <rect key="frame" x="11" y="0.0" width="43" height="43"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tableHeadPortrait.png" id="W37-2E-zsr">
+                        <rect key="frame" x="12" y="2" width="40" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HY0-Id-VqV">
                         <rect key="frame" x="190" y="3" width="43" height="43"/>
@@ -49,8 +49,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="110x110副本.png" width="73" height="73"/>
         <image name="tableCtrlBtnIcon_phone-nor.png" width="26" height="26"/>
         <image name="tableCtrlBtnIcon_sms-nor.png" width="26" height="26"/>
+        <image name="tableHeadPortrait.png" width="200" height="200"/>
     </resources>
 </document>
