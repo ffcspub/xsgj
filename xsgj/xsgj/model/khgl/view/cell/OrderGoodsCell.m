@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblTitle;
 @property (weak, nonatomic) IBOutlet UILabel *lblTime;
 @property (weak, nonatomic) IBOutlet UILabel *lblMoney;
+@property (weak, nonatomic) IBOutlet UILabel *lblName;
 
 - (void)_initialize;
 
@@ -28,7 +29,7 @@
 
 + (CGFloat)cellHeight
 {
-    return 56.f;
+    return 70.f;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -63,7 +64,12 @@
     OrderInfoBean *bean = (OrderInfoBean *)data;
     self.lblTitle.text = bean.CUST_NAME;
     self.lblTime.text = bean.COMMITTIME;
-    self.lblMoney.text = [NSString stringWithFormat:@"订货金额:%.2f", [bean.TOTAL_PRICE floatValue]];
+    self.lblName.text = bean.REALNAME;
+    
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSString *money = [formatter stringFromNumber:bean.TOTAL_PRICE];
+    self.lblMoney.text = [NSString stringWithFormat:@"订货金额: %@", money];
 }
 
 @end

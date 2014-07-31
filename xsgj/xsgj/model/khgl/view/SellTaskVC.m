@@ -135,10 +135,10 @@ static int const pageSize = 10;
 - (IBAction)tripQueryAction:(id)sender
 {
     // 验证时间
-    NSDate *beginTime = [NSDate dateFromString:self.lblBeginTime.text withFormat:@"yyyy-MM-dd"];
-    NSDate *endTime = [NSDate dateFromString:self.lblEndTime.text withFormat:@"yyyy-MM-dd"];
+    NSDate *beginTime = [NSDate dateFromString:self.lblBeginTime.text withFormat:@"yyyy-MM"];
+    NSDate *endTime = [NSDate dateFromString:self.lblEndTime.text withFormat:@"yyyy-MM"];
     if ([beginTime compare:endTime] == NSOrderedDescending) {
-        [MBProgressHUD showError:@"起始时间大于结束时间!" toView:self.view];
+        [MBProgressHUD showError:@"起始日期必须小于结束日期!" toView:self.view];
         return;
     }
     
@@ -212,9 +212,9 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
     UIDatePicker *picker =  (UIDatePicker *)signal.sender;
     NSDate *date = picker.date;
     if (picker.tag == 1000) {
-        self.lblBeginTime.text = [date stringWithFormat:@"yyyy-MM-dd"];
+        self.lblBeginTime.text = [date stringWithFormat:@"yyyy-MM"];
     } else {
-        self.lblEndTime.text = [date stringWithFormat:@"yyyy-MM-dd"];
+        self.lblEndTime.text = [date stringWithFormat:@"yyyy-MM"];
     }
 }
 

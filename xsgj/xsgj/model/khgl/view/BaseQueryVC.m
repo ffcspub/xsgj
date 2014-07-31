@@ -11,7 +11,7 @@
 #import <NSDate+Helper.h>
 #import "MBProgressHUD+Add.h"
 
-@interface BaseQueryVC ()
+@interface BaseQueryVC () <UITextFieldDelegate>
 
 // 顶部时间
 @property (weak, nonatomic) IBOutlet UIButton *btnBeginTime;
@@ -148,6 +148,21 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
         [MBProgressHUD showError:@"起始时间应该小于结束时间!" toView:self.view];
         return;
     }
+}
+
+#pragma mark - UITextField Delegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.tfVisiterName)
+    {
+        if (range.location >= 20)
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 #pragma mark - UITableViewDataSource methods

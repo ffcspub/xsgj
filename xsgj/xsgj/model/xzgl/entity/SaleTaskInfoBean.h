@@ -15,8 +15,8 @@
 @property(nonatomic,strong) NSString *	MOBILENO	;//	手机号码
 @property(nonatomic,strong) NSString *	REALNAME	;//	姓名
 @property(nonatomic,strong) NSString *	SALE_MONTH	;//	所在月份
-@property(nonatomic,assign) double      SALE_TARGET	;//	销售目标
-@property(nonatomic,assign) double      SALE_FINISH	;//	销售完成统计
+@property(nonatomic,strong) NSString *  SALE_TARGET	;//	销售目标
+@property(nonatomic,strong) NSString *  SALE_FINISH	;//	销售完成统计
 @property(nonatomic,strong) NSString *	SALE_PERCENT	;//	销售完成百分比
 
 @end
