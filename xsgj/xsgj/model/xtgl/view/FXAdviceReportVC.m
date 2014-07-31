@@ -46,7 +46,19 @@
         [textView resignFirstResponder];
         return NO;
     }
-    return YES;
+    // 字数限制
+    NSString *textString = textView.text ;
+    NSUInteger length = [textString length];
+    BOOL bChange =YES;
+    if (length >= 200)
+    {
+        bChange = NO;
+    }
+    if (range.length == 1)
+    {
+        bChange = YES;
+    }
+    return bChange;
 }
 
 #pragma mark - navBarButton
@@ -71,7 +83,7 @@
 {
     if ([[self.txtAdvice text] length] <= 0)
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"意见建议上报入参有为空" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"意见反馈不能为空!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
         return;
     }
@@ -88,9 +100,11 @@
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
+        {
             sleep(1);
-            dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^
+            {
                 [self.navigationController popViewControllerAnimated:YES];
             });
         });
