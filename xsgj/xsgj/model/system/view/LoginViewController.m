@@ -269,5 +269,14 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (IBAction)teleAction:(id)sender {
+    if (!_webView) {
+        _webView =[[UIWebView alloc] init];
+        [self.view addSubview:_webView];
+    }
+    [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"tel:0591-83518200"]]];
+}
+
+
 
 @end
