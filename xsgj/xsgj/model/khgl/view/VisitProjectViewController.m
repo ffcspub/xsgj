@@ -40,6 +40,11 @@
     [self initView];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self loadVisitDataWithDate:[[NSDate date] getWeekDay]];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -54,8 +59,6 @@
     NSString *strCnDate = [_dicWeekInfo objectForKey:strCnWeek];
     self.lbWeekday.text = strCnWeek;
     self.lbDate.text = strCnDate;
-
-    [self loadVisitDataWithDate:[[NSDate date] getWeekDay]];
 }
 
 #pragma mark - Functions
@@ -85,7 +88,7 @@
     for(int i=0; i<_aryVisitData.count; i++)
     {
         BNCustomerInfo *customerInfo = [_aryVisitData objectAtIndex:i];
-        NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D",customerInfo.CUST_ID] orderBy:nil offset:0 count:100];
+        NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D and VISIT_DATE like '%@%@'",customerInfo.CUST_ID,[[NSDate date] stringWithFormat:@"yyyy-MM-dd"],@"%"] orderBy:nil offset:0 count:100];
         [_aryVisitRecord addObject:aryRecord];
     }
     
