@@ -36,6 +36,9 @@
     
     self.title = @"忘记密码";
     
+    self.tfUserName.text = self.currentCUserName;
+    self.tfCorpCode.text = self.currentCropCode;
+    
     UIButton *rightButton = [self defaultRightButtonWithTitle:@"提交"];
     [rightButton addTarget:self
                     action:@selector(forgetPasswordAction:)
@@ -88,6 +91,12 @@
                                                   cancelButtonTitle:@"取消"
                                                       cancelHandler:^(SIAlertView *alertView) {}
                                              destructiveButtonTitle:@"确定" destructiveHandler:^(SIAlertView *alertView) {
+                                                 
+                                                 // 修改成功
+                                                 if (self.resultHandler) {
+                                                     self.resultHandler(YES);
+                                                 }
+                                                 
                                                  // 成功后退回登陆界面
                                                  [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
                                              }];

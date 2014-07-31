@@ -145,7 +145,7 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
     NSDate *beginTime = [NSDate dateFromString:self.lblBeginTime.text withFormat:@"yyyy-MM-dd"];
     NSDate *endTime = [NSDate dateFromString:self.lblEndTime.text withFormat:@"yyyy-MM-dd"];
     if ([beginTime compare:endTime] == NSOrderedDescending) {
-        [MBProgressHUD showError:@"起始时间应该小于结束时间!" toView:self.view];
+        [MBProgressHUD showError:@"起始日期必须小于结束日期!" toView:self.view];
         return;
     }
 }

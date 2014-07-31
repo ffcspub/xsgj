@@ -141,7 +141,7 @@
             return NO;
         }
     } else if (textField == self.tfPhone) {
-        if (range.location >= 20)
+        if (![ShareValue legalTextFieldInputWithLegalString:NumberAndCharacters checkedString:string] || range.location >= 20)
         {
             return NO;
         }

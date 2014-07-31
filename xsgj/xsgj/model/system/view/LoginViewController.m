@@ -260,6 +260,13 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
 //忘记密码
 - (IBAction)forgetAction:(id)sender {
     ForgetPasswordVC *vc = [[ForgetPasswordVC alloc] initWithNibName:nil bundle:nil];
+    vc.currentCUserName = self.tf_username.text;
+    vc.currentCropCode = self.tf_companycode.text;
+    vc.resultHandler = ^(BOOL isSuccess){
+        if (isSuccess) {
+            _tf_pwd.text = @"";
+        }
+    };
     [self.navigationController pushViewController:vc animated:YES];
 }
 

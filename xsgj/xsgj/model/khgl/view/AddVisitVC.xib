@@ -228,9 +228,9 @@
                             <rect key="frame" x="110" y="230" width="190" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                            <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                             <connections>
-                                <outlet property="delegate" destination="-1" id="kau-l9-SsZ"/>
+                                <outlet property="delegate" destination="-1" id="o2u-oA-JtZ"/>
                             </connections>
                         </textField>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＊" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UCR-Mg-w2E">
@@ -272,7 +272,7 @@
                             <rect key="frame" x="110" y="278" width="190" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                            <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="zlQ-dt-1mp"/>
                             </connections>
@@ -281,7 +281,7 @@
                             <rect key="frame" x="110" y="327" width="190" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                            <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="OB7-lV-koz"/>
                             </connections>
