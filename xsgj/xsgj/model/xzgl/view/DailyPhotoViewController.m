@@ -162,6 +162,8 @@
         }
     }
     
+    _iv_photo.image = [UIImage imageNamed:@"defaultPhoto"];
+    _iv_photo.tag = 10;
     UIImageView *lastImageView = nil;
     for(int i=0; i<_aryImages.count; i++)
     {
@@ -171,6 +173,12 @@
         imageView.highlighted = YES;
         lastImageView = imageView;
     }
+    if(lastImageView)
+    {
+        _iv_photo.image = lastImageView.image;
+        _iv_photo.tag = lastImageView.tag;
+    }
+    
     
     float fOffset = lastImageView.frame.origin.x + 72 - _scrollView.frame.size.width;
     if(fOffset > 0)
@@ -330,6 +338,35 @@
     }
 }
 
+- (IBAction)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer
+{
+    if(recognizer.direction==UISwipeGestureRecognizerDirectionLeft) {
+        if(_iv_photo.tag >= 0 && _iv_photo.tag <4)
+        {
+            UIImageView * imageview = [self imageViewWithTag:_iv_photo.tag + 1];
+            if(imageview && imageview.highlighted)
+            {
+                _iv_photo.image = imageview.image;
+                _iv_photo.tag = imageview.tag;
+            }
+        }
+        
+    }
+    else if(recognizer.direction==UISwipeGestureRecognizerDirectionRight) {
+        
+        if(_iv_photo.tag > 0 && _iv_photo.tag <=4)
+        {
+            UIImageView * imageview = [self imageViewWithTag:_iv_photo.tag - 1];
+            if(imageview && imageview.highlighted)
+            {
+                _iv_photo.image = imageview.image;
+                _iv_photo.tag = imageview.tag;
+            }
+        }
+        
+    }
+}
+
 - (void)submitAction:(id)sender
 {
     if (![self isValidData]) {
@@ -436,7 +473,7 @@
     image = [self fixOrientation:image];
     image = [self scaleImage:image toScale:0.2f];
     
-    _iv_photo.image = image;
+//    _iv_photo.image = image;
     [_aryImages addObject:image];
     
     ImageInfo *imageInfo = [[ImageInfo alloc] initWithImage:image];
@@ -444,9 +481,7 @@
     
     [self reloadScrollView];
     
-    [picker dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    [picker dismissModalViewControllerAnimated:YES];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -476,6 +511,25 @@
         }
     }
     
+}
+
+#pragma mark - UITextField Delegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(textField == self.tf_description)
+    {
+        if(textField.text.length < 50 || [string isEqualToString:@""])
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 @end

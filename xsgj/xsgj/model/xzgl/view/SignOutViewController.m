@@ -338,12 +338,12 @@
     image = [self fixOrientation:image];
     image = [self scaleImage:image toScale:0.2f];
     
+    _iv_photo.image = image;
+    
     NSData *imageData = UIImageJPEGRepresentation(image, 0.5f);
     _imageData = imageData;
     
-    [picker dismissViewControllerAnimated:YES completion:^{
-        _iv_photo.image = image;
-    }];
+    [picker dismissModalViewControllerAnimated:YES];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

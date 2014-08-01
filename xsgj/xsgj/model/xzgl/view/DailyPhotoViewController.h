@@ -27,6 +27,7 @@
 - (IBAction)takePhotoAction:(id)sender;
 - (IBAction)handleTapImageView:(id)sender;
 - (IBAction)handleLongPressImageView:(id)sender;
+- (IBAction)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer;
 
 @end
 

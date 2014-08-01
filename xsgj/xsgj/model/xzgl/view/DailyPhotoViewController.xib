@@ -44,14 +44,21 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="Yup-qD-BBA"/>
+                    </connections>
                 </textField>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="7kM-cx-NqR">
                     <rect key="frame" x="10" y="75" width="300" height="270"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="9HG-xP-MwJ">
+                <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="9HG-xP-MwJ">
                     <rect key="frame" x="11" y="82" width="298" height="220"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="6B4-yG-61I" appends="YES" id="tG8-b8-NcH"/>
+                        <outletCollection property="gestureRecognizers" destination="XeO-yt-0TJ" appends="YES" id="PuN-bv-YZu"/>
+                    </connections>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="3ee-X4-vDE">
                     <rect key="frame" x="11" y="289" width="298" height="56"/>
@@ -137,6 +144,16 @@
                 <outlet property="delegate" destination="-1" id="c7I-VC-tXX"/>
             </connections>
         </tapGestureRecognizer>
+        <swipeGestureRecognizer direction="right" id="6B4-yG-61I">
+            <connections>
+                <action selector="handleSwipeFrom:" destination="-1" id="mlw-fZ-xLK"/>
+            </connections>
+        </swipeGestureRecognizer>
+        <swipeGestureRecognizer direction="left" id="XeO-yt-0TJ">
+            <connections>
+                <action selector="handleSwipeFrom:" destination="-1" id="Za9-qd-aUr"/>
+            </connections>
+        </swipeGestureRecognizer>
     </objects>
     <resources>
         <image name="Photo_addPhoto.png" width="72" height="50"/>
