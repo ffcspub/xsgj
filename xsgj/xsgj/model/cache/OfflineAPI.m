@@ -110,6 +110,7 @@ static BOOL _isSending;
             [client getPath:cache.requestJsonStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 if(responseObject){
                     [[LKDBHelper getUsingLKDBHelper]deleteToDB:cache];
+                    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS object:cache];
                 }else{
                     
                 }

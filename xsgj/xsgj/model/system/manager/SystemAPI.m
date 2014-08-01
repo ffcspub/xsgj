@@ -91,8 +91,10 @@
     [LK_APIUtil getHttpRequest:request apiPath:URL_locateCommit Success:^(LK_HttpBaseResponse *response) {
         success();
     } fail:^(BOOL NotReachable, NSString *descript) {
-        OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"实时定位上报"];
-        [cache saveToDB];
+        if (NotReachable) {
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"实时定位上报"];
+            [cache saveToDB];
+        }
         fail(NotReachable,descript);
     } class:[LocateCommitHttpResponse class]];
 
@@ -104,10 +106,13 @@
     [LK_APIUtil getHttpRequest:request apiPath:URL_insertMobileState Success:^(LK_HttpBaseResponse *response) {
         success();
     } fail:^(BOOL NotReachable, NSString *descript) {
-        //存储离线数据，等待下次上传
-        request.STATE = 0;
-        OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"手机状态上报"];
-        [cache saveToDB];
+        if (NotReachable) {
+            //存储离线数据，等待下次上传
+            request.STATE = 0;
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"手机状态上报"];
+            [cache saveToDB];
+
+        }
         fail(NotReachable,descript);
     } class:[InsertMobileStateHttpResponse class]];
 }
@@ -119,8 +124,10 @@
  *  @param success 成功block
  *  @param fail    失败返回结果
  */
-+(void)uploadPhotoByFileName:(NSString *)fileName data:(NSData *)data success:(void(^)(NSString *fileId))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
++(NSString *)uploadPhotoByFileName:(NSString *)fileName data:(NSData *)data success:(void(^)(NSString *fileId))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    NSString *fileId = nil;
     UploadPhotoHttpRequest *request = [[UploadPhotoHttpRequest alloc]init];
+    fileId = request.FILE_ID;
     request.FILE_NAME = fileName;
     request.DATA = [data base64EncodedString];
     [LK_APIUtil getHttpRequest:request basePath:UPLOAD_PIC_URL apiPath:URL_uploadPhoto Success:^(LK_HttpBaseResponse *response) {
@@ -130,8 +137,11 @@
         }
         success(tResponse.FILE_ID);
     } fail:^(BOOL NotReachable, NSString *desciption) {
+        OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"照片上传"];
+        [cache saveToDB];
         fail(NotReachable,desciption);
     } class:[UploadPhotoHttpResponse class]];
+    return fileId;
 }
 
 @end

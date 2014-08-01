@@ -46,7 +46,7 @@
  {"id":"30","name":"企业公告","icon":"icon_announcement","parentId":"2","childClass":"AnnouncementViewController","leftShow":"true", "rightShow":"true"},
  {"id":"24","name":"企业通讯录","icon":"icon_addressbook","parentId":"2","childClass":"CorpAddressBookViewController","leftShow":"true", "rightShow":"true"},
  {"id":"25","name":"修改密码","icon":"icon_changepwd","parentId":"2","childClass":"ChangePasswordViewController","leftShow":"true", "rightShow":"true"},
- {"id":"26","name":"离线消息","icon":"icon_offlineinfo","parentId":"2","childClass":"system.message.OfflineInfo","leftShow":"true", "rightShow":"false"},
+ {"id":"26","name":"离线消息","icon":"icon_offlineinfo","parentId":"2","childClass":"OfflineListViewController","leftShow":"true", "rightShow":"false"},
  {"id":"27","name":"系统更新","icon":"icon_updateversion","parentId":"2","childClass":"SystemUpdateViewController","leftShow":"true", "rightShow":"true"},
  {"id":"28","name":"流量统计","icon":"icon_flowcount","parentId":"2","childClass":"system.message.FlowCount","leftShow":"true", "rightShow":"true"},
  {"id":"29","name":"关于","icon":"icon_about","parentId":"2","childClass":"AboutViewController","leftShow":"true", "rightShow":"true"},

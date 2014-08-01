@@ -171,9 +171,9 @@
         BNMobileMenu *menu = [[BNMobileMenu alloc]init];
         menu.MENU_ID = [[dict objectForKey:@"id"] integerValue];
         menu.ICON = [dict objectForKey:@"icon"];
-        if([[dict objectForKey:@"leftShow"] isEqual:@"true"]){
-            menu.STATE = 1;
-        }
+//        if([[dict objectForKey:@"leftShow"] isEqual:@"true"]){
+//            menu.STATE = 1;
+//        }
         NSString *CONTROLLER_NAME = [dict objectForKey:@"childClass"];
         if (CONTROLLER_NAME ) {
             menu.CONTROLLER_NAME = CONTROLLER_NAME;

@@ -82,7 +82,8 @@
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        fail(client.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable,@"网络不给力");
+//        fail(client.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable,@"网络不给力");
+        fail(YES,@"网络不给力");
     }];
 }
 
@@ -116,7 +117,8 @@
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        fail(client.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable,@"网络不给力");
+//        fail(client.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable,@"网络不给力");
+         fail(YES,@"网络不给力");
     }];
 }
 

@@ -36,7 +36,9 @@
  *  @param request 请求参数
  *  @param success 成功block
  *  @param fail    失败返回结果
+ *
+ *  @return 返回照片的ID
  */
-+(void)uploadPhotoByFileName:(NSString *)fileName data:(NSData *)data success:(void(^)(NSString *fileId))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
++(NSString *)uploadPhotoByFileName:(NSString *)fileName data:(NSData *)data success:(void(^)(NSString *fileId))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 @end
