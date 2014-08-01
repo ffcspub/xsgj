@@ -179,14 +179,14 @@
 {
     if(textField == self.tfHdName)
     {
-        NSCharacterSet *cs;
-        cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789\n"] invertedSet];
-        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
-        BOOL bNumber = [string isEqualToString:filtered];
-        if(!bNumber)
-        {
-            return NO;
-        }
+//        NSCharacterSet *cs;
+//        cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789\n"] invertedSet];
+//        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+//        BOOL bNumber = [string isEqualToString:filtered];
+//        if(!bNumber)
+//        {
+//            return NO;
+//        }
         
         if(textField.text.length < 15 || [string isEqualToString:@""])
         {
