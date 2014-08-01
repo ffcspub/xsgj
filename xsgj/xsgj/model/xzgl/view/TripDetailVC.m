@@ -270,7 +270,7 @@
     [self.svRoot addSubview:lblDetailDescTitle];
     
     rect = CGRectOffset(rect, 0.f, 2*rowHeight);
-    rect.size.height = 3*rowHeight;
+    rect.size.height = 4*rowHeight;
     UIView *ivDescription = [ShareValue getDefaultShowBorder];
     ivDescription.frame = rect;
     [self.svRoot addSubview:ivDescription];
