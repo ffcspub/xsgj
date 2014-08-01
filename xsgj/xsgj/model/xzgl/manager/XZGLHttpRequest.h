@@ -198,8 +198,8 @@
 @property(nonatomic,strong) NSString *	APPROVE_USER	;//	审批人
 @property(nonatomic,strong) NSString *	APPROVE_STATE	;//	审批状态0:未审批 1:已通过 2:未通过
 @property(nonatomic,strong) NSString *	APPROVE_TIME	;//	审批时间
-@property(nonatomic,assign) int	QUERY_USERID	;// 此处传user_id
-@property(nonatomic,strong) NSNumber * LEADER_ID;// 直属领导ID
+@property(nonatomic,strong) NSNumber *	QUERY_USERID	;// 此处传user_id
+@property(nonatomic,strong) NSNumber *  LEADER_ID;// 直属领导ID
 
 @end
 

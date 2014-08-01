@@ -162,7 +162,7 @@ static int const pageSize = 10;
     if (![self.lblEndTime.text isEmptyOrWhitespace]) {
         request.END_DATE = self.lblEndTime.text;
     }
-    request.QUERY_USERID = [ShareValue shareInstance].userInfo.USER_ID;
+    request.QUERY_USERID = @([ShareValue shareInstance].userInfo.USER_ID);
     request.PAGE = self.currentPage;
     request.ROWS = pageSize;
     
