@@ -264,7 +264,7 @@
     [self.scrollView addSubview:lblDetailDescTitle];
     
     rect = CGRectOffset(rect, 0.f, 2*rowHeight);
-    rect.size.height = 3*rowHeight;
+    rect.size.height = 5*rowHeight;
     UIView *ivDescription = [ShareValue getDefaultShowBorder];
     ivDescription.frame = rect;
     [self.scrollView addSubview:ivDescription];
@@ -276,6 +276,7 @@
     tvDescriptionValue.font = [UIFont systemFontOfSize:FONT_SIZE_DETAIL_CONTENT];
     tvDescriptionValue.backgroundColor = [UIColor whiteColor];
     tvDescriptionValue.editable = NO;
+    tvDescriptionValue.scrollEnabled = YES;
     tvDescriptionValue.delegate = self;
     [ivDescription addSubview:tvDescriptionValue];
     self.tvApplyDesc = tvDescriptionValue;
