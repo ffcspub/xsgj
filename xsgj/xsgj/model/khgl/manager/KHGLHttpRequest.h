@@ -124,7 +124,7 @@
 @property(nonatomic,strong) NSString * 	END_TIME	;//	结束时间
 @property(nonatomic,strong) NSString * 	USER_AUTH	;//	用户数据权限
 @property(nonatomic,strong) NSNumber * 	QUERY_DEPTID	;//	要查询的部门id
-@property(nonatomic,strong) NSNumber * 	QUERY_USER_ID	;//	要查询的用户id
+@property(nonatomic,strong) NSNumber * 	QUERY_USERID	;//	要查询的用户id
 
 @end
 
