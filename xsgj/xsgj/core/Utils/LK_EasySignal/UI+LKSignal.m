@@ -344,7 +344,7 @@
 @implementation UITextFieldWrapper
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;{
-    if (range.location > textField.maxLength && ![string isEqual:@""] && ![string isEqual:@"\n"]) {
+    if (range.location >= textField.maxLength && ![string isEqual:@""] && ![string isEqual:@"\n"]) {
         return NO;
     }
     return YES;

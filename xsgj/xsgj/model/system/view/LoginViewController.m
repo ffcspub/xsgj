@@ -19,6 +19,7 @@
 #import "RegisterVC.h"
 #import "AsnyTaskManager.h"
 #import "OfflineAPI.h"
+#import <Reachability.h>
 
 @interface LoginViewController ()<TTTAttributedLabelDelegate>{
     UIWebView *_webView;
@@ -220,8 +221,11 @@
     [[OfflineAPI shareInstance]sendOfflineRequest];
     [[OfflineAPI shareInstance]startListener];
     
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"我们会在7点至20点采集您的定位信息，请在[设置]中打开定位服务，以确保定位准确性" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-    [alertView show];
+    if (![CLLocationManager locationServicesEnabled]) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"我们会在7点至20点采集您的定位信息，请在[设置]中打开定位服务，以确保定位准确性" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+    }
+
 }
 
 -(BOOL)isVailData{

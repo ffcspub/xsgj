@@ -219,11 +219,11 @@
         return NO;
     }
     
-    if(_tfType.text.length < 1)
-    {
-        [MBProgressHUD showError:@"请填写合作商类型" toView:self.view];
-        return NO;
-    }
+//    if(_tfType.text.length < 1)
+//    {
+//        [MBProgressHUD showError:@"请填写合作商类型" toView:self.view];
+//        return NO;
+//    }
     
     if(_tfName.text.length < 1)
     {
