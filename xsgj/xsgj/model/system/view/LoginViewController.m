@@ -91,9 +91,9 @@
     
     [self setLeftButtonTitle:@"退出"];
     
+    _tf_companycode.text = [ShareValue shareInstance].corpCode;
+    _tf_username.text = [ShareValue shareInstance].userName;
     if (![ShareValue shareInstance].noRemberFlag) {
-        _tf_companycode.text = [ShareValue shareInstance].corpCode;
-        _tf_username.text = [ShareValue shareInstance].userName;
         _tf_pwd.text = [ShareValue shareInstance].userPass;
     }
     
