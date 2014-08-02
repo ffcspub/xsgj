@@ -361,6 +361,7 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
     MyCusMapAddressVC *myCusMapAddressVC = [[MyCusMapAddressVC alloc] initWithNibName:@"MyCusMapAddressVC" bundle:nil];
     myCusMapAddressVC.title = @"考勤查询";
     CLLocationCoordinate2D coordinate;
+    NSString *position = info.POSITION;
     if (info.LAT > 100) {
         coordinate.latitude = info.LAT/1000000;
         coordinate.longitude = info.LNG/1000000;
@@ -376,9 +377,10 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
             coordinate.latitude = info.LAT2;
             coordinate.longitude = info.LNG2;
         }
+        position = info.POSITION2;
     }
     myCusMapAddressVC.cusCoordinate = coordinate;
-    myCusMapAddressVC.strAddress = info.POSITION;
+    myCusMapAddressVC.strAddress = position;
     [self.navigationController pushViewController:myCusMapAddressVC animated:YES];
 }
 
