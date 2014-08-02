@@ -205,13 +205,11 @@
 }
 
 -(void)showTabViewController{
+    [ShareValue shareInstance].corpCode = _tf_companycode.text;
+    [ShareValue shareInstance].userName = _tf_username.text;
     if (![ShareValue shareInstance].noRemberFlag) {
-        [ShareValue shareInstance].corpCode = _tf_companycode.text;
-        [ShareValue shareInstance].userName = _tf_username.text;
         [ShareValue shareInstance].userPass = _tf_pwd.text;
     }else{
-        [ShareValue shareInstance].corpCode = nil;
-        [ShareValue shareInstance].userName = nil;
         [ShareValue shareInstance].userPass = nil;
     }
     
