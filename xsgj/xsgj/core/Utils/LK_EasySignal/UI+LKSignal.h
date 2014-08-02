@@ -59,6 +59,8 @@
 
 @interface UITextField (LK_EasySignal)
 
+@property(nonatomic,strong) NSString *inputRegular;
+
 @property(nonatomic,assign) int maxLength;
 
 +(NSString *)BEGIN_EDITING;

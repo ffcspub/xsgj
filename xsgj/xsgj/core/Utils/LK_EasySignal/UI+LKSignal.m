@@ -347,6 +347,14 @@
     if (range.location >= textField.maxLength && ![string isEqual:@""] && ![string isEqual:@"\n"]) {
         return NO;
     }
+    if ([string isEqual:@""]) {
+        return YES;
+    }
+    if (textField.inputRegular) {
+        NSPredicate *passWordPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",textField.inputRegular];
+        BOOL flag = [passWordPredicate evaluateWithObject:[textField.text stringByAppendingString:string]];
+        return flag;
+    }
     return YES;
 }
 
@@ -416,6 +424,23 @@
 @implementation UITextField(LK_EasySignal)
 
 @dynamic maxLength;
+@dynamic inputRegular;
+
+-(void)setInputRegular:(NSString *)inputRegular{
+    NSObject * obj = objc_getAssociatedObject( self, "maxLength" );
+	if ( obj && [obj isKindOfClass:[NSNumber class]] )
+    {
+        obj = nil;
+    }
+    objc_setAssociatedObject( self, "inputRegular", inputRegular, OBJC_ASSOCIATION_RETAIN );
+}
+
+-(NSString *)inputRegular{
+    NSObject * obj = objc_getAssociatedObject( self, "inputRegular" );
+	if ( obj && [obj isKindOfClass:[NSString class]] )
+		return ((NSString *)obj);
+	return nil;
+}
 
 -(int)maxLength{
     NSObject * obj = objc_getAssociatedObject( self, "maxLength" );
@@ -463,6 +488,7 @@
     if (range.location > textView.maxLength && ![text isEqual:@"\n"] && ![text isEqual:@""]) {
         return NO;
     }
+    
     if ([text isEqual:@"\n"]) {
         LKSignal *signal = [[LKSignal alloc]initWithSender:textView firstRouter:textView object:nil signalName:UITextView.RETURN tag:textView.tag tagString:textView.tagString];
         [textView sendSignal:signal];
