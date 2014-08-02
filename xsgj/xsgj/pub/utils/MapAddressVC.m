@@ -15,6 +15,9 @@
     NSString *_address;
     BMKPointAnnotation *_annotation;
     BMKGeoCodeSearch *_search;
+    __weak IBOutlet UIView *iv_teach;
+    
+    __weak IBOutlet UITapGestureRecognizer *tapGestureRecognizer;
 }
 
 @end
@@ -30,9 +33,16 @@
     return self;
 }
 
+- (IBAction)teachTouch:(id)sender {
+    iv_teach.hidden = YES;
+    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"ISTEACHED"];
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [tapGestureRecognizer setNumberOfTouchesRequired:1];
     self.title = @"调整位置";
     [self showRightBarButtonItemWithTitle:@"确定" target:self action:@selector(sureAction)];
     
@@ -74,6 +84,13 @@
     _search = [[BMKGeoCodeSearch alloc]init];
     _search.delegate = self;
     // Do any additional setup after loading the view from its nib.
+    BOOL teached = [[NSUserDefaults standardUserDefaults]boolForKey:@"ISTEACHED"];
+    if (!teached) {
+        iv_teach.hidden = NO;
+    }else{
+        iv_teach.hidden = YES;
+    }
+    
 }
 
 -(void)viewDidUnload{

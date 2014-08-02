@@ -209,8 +209,9 @@
     tf_day.font = [UIFont boldSystemFontOfSize:17];
     tf_day.textColor = HEX_RGB(0x000000);
     tf_day.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-    tf_day.delegate = self;
+//    tf_day.delegate = self;
     tf_day.tag = 405;
+    tf_day.inputRegular = @"^(\\d+)(\\.\\d?)?$";
     [btn_leaveday addSubview:tf_day];
     
     UILabel *lb_dayString = [[UILabel alloc] initWithFrame:CGRectMake(270, 0, 26, 40)];

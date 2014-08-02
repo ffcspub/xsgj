@@ -406,6 +406,11 @@
     return self;
 }
 
+-(void)setFrame:(CGRect)frame{
+    [super setFrame:frame];
+    [self addNotification];
+}
+
 -(void)__addDelegate:(NSNotification *)notification{
     if (notification.object == self && !self.delegate) {
         self.delegate = self.wrapper;
@@ -550,6 +555,11 @@
     return self;
 }
 
+-(void)setFrame:(CGRect)frame{
+    [super setFrame:frame];
+    [self addPlaceHolderLable];
+    [self addNotification];
+}
 
 -(void)__addDelegate:(NSNotification *)notification{
     if (!self.delegate) {
