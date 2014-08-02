@@ -385,7 +385,7 @@
 #pragma mark - UITextViewDelegate
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    if (range.location > 200) {
+    if (range.location > 200  && ![text isEqual:@"\n"] && ![text isEqual:@""]) {
         return NO;
     }
     return YES;
