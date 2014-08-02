@@ -59,6 +59,7 @@
 
 @interface UITextField (LK_EasySignal)
 
+//正则验证如只允许输入精度为2位的小数或整数 @"^(-?\\d*)(\\.\\d?\\d?)?$"
 @property(nonatomic,strong) NSString *inputRegular;
 
 @property(nonatomic,assign) int maxLength;
