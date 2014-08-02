@@ -16,6 +16,8 @@
 #import <IQKeyboardManager.h>
 #import "SIAlertView.h"
 #import "NSString+URL.h"
+#import "OfflineRequestCache.h"
+#import <LKDBHelper.h>
 
 @interface ApprovalInfoViewController () <UITextViewDelegate>
 
@@ -263,14 +265,17 @@
     lblDetailDescTitle.text = @"详情描述";
     [self.scrollView addSubview:lblDetailDescTitle];
     
+    UITextView *tvDescriptionValue = [[UITextView alloc] initWithFrame:CGRectZero];
+    
     rect = CGRectOffset(rect, 0.f, 2*rowHeight);
-    rect.size.height = 5*rowHeight;
+    CGSize size = [self.leaveInfo.REMARK sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE_DETAIL_CONTENT] constrainedToSize:CGSizeMake(rect.size.width-20, 1000) lineBreakMode:NSLineBreakByCharWrapping];
+    rect.size.height = MAX(5*rowHeight,size.height) ;
     UIView *ivDescription = [ShareValue getDefaultShowBorder];
     ivDescription.frame = rect;
     [self.scrollView addSubview:ivDescription];
     
-    CGRect rectDescription = CGRectInset(ivDescription.bounds, 10.f, 10.f);
-    UITextView *tvDescriptionValue = [[UITextView alloc] initWithFrame:CGRectZero];
+    CGRect rectDescription = ivDescription.bounds;//CGRectInset(ivDescription.bounds, 10.f, 10.f);
+    
     tvDescriptionValue.frame = rectDescription;
     tvDescriptionValue.textColor = COLOR_DETAIL_CONTENT;
     tvDescriptionValue.font = [UIFont systemFontOfSize:FONT_SIZE_DETAIL_CONTENT];
@@ -326,17 +331,18 @@
         CGFloat btnWidth = (CGRectGetWidth(self.view.bounds) - 2*xOffset - midOffset) / 2;
         CGFloat btnHeight = 40.f;
         CGFloat yOffset = CGRectGetHeight(self.view.bounds) - 50;
-        if (DEVICE_IS_IPHONE5) {
-            yOffset += 88;
-        }
+//        if (DEVICE_IS_IPHONE5) {
+//            yOffset += 88;
+//        }
         
         CGRect  rect = CGRectMake(xOffset, yOffset, btnWidth, btnHeight);
-        UIButton *btnAgree = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIButton *btnAgree = [[UIButton alloc]init];
         [btnAgree setFrame:rect];
         [btnAgree configBlueStyle];
         [btnAgree setTitle:@"同意" forState:UIControlStateNormal];
         [btnAgree addTarget:self action:@selector(agreeAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:btnAgree];
+        [self.view bringSubviewToFront:btnAgree];
         
         rect = CGRectOffset(rect, midOffset + btnWidth, 0.f);
         UIButton *btnRefuse = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -345,7 +351,7 @@
         [btnRefuse setTitle:@"驳回" forState:UIControlStateNormal];
         [btnRefuse addTarget:self action:@selector(refuseAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:btnRefuse];
-        
+        [self.view bringSubviewToFront:btnRefuse];
         rect = self.scrollView.frame;
         rect.size.height -= 40.f;
         self.scrollView.frame = rect;
@@ -464,9 +470,21 @@
         });
         
     } fail:^(BOOL notReachable, NSString *desciption) {
+        if (notReachable) {
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"请假审批"];
+            [cache saveToDB];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showMessag:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            double delayInSeconds = 1.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+        }
         
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [MBProgressHUD showError:desciption toView:self.view];
     }];
 }
 

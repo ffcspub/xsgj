@@ -12,6 +12,7 @@ typedef  enum : NSUInteger {
     TOP = 0,
     MID = 1,
     BOT = 2,
+    SINGLE = 3
 } PlanInfoCellStyle;
 
 @interface PlanInfoCell : UITableViewCell{
@@ -56,6 +57,10 @@ typedef  enum : NSUInteger {
 -(void)setStyle:(PlanInfoCellStyle)style{
     _style = style;
     switch (style) {
+        case SINGLE:{
+            _backView.image = [ShareValue tablePart];
+        }
+            break;
         case TOP:{
             _backView.image = [ShareValue tablePart1];
         }

@@ -20,12 +20,25 @@
 
 
 static ShareValue *_shareValue;
+static UIImage *_imageTablePart;
 static UIImage *_imageTablePart1;
 static UIImage *_imageTablePart2;
 static UIImage *_imageTablePart3;
+static UIImage *_imageTablePartS;
+static UIImage *_imageTablePart1S;
+static UIImage *_imageTablePart2S;
+static UIImage *_imageTablePart3S;
 
 
 @implementation ShareValue
+
++(UIImage *)tablePart{
+    if (!_imageTablePart) {
+        _imageTablePart  = [UIImage imageNamed:@"table_main_n"];
+        _imageTablePart = [_imageTablePart resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
+    }
+    return _imageTablePart;
+}
 
 +(UIImage *)tablePart1{
     if (!_imageTablePart1) {
@@ -38,7 +51,7 @@ static UIImage *_imageTablePart3;
 +(UIImage *)tablePart2{
     if (!_imageTablePart2) {
         _imageTablePart2  = [UIImage imageNamed:@"table_part2"];
-        _imageTablePart2 = [_imageTablePart1 resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
+        _imageTablePart2 = [_imageTablePart2 resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
     }
     return _imageTablePart2;
 }
@@ -46,33 +59,42 @@ static UIImage *_imageTablePart3;
 +(UIImage *)tablePart3{
     if (!_imageTablePart3) {
         _imageTablePart3  = [UIImage imageNamed:@"table_part3"];
-        _imageTablePart3 = [_imageTablePart1 resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
+        _imageTablePart3 = [_imageTablePart3 resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
     }
     return _imageTablePart3;
 }
 
-+(UIImage *)tablePart1S{
-    if (!_imageTablePart1) {
-        _imageTablePart1  = [UIImage imageNamed:@"table_part1_S"];
-        _imageTablePart1 = [_imageTablePart1 resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
+
++(UIImage *)tablePartS{
+    if (!_imageTablePartS) {
+        _imageTablePartS  = [UIImage imageNamed:@"table_main_s"];
+        _imageTablePartS = [_imageTablePartS resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
     }
-    return _imageTablePart1;
+    return _imageTablePartS;
 }
 
-+(UIImage *)tablePart2S{
-    if (!_imageTablePart2) {
-        _imageTablePart2  = [UIImage imageNamed:@"table_part2_S"];
-        _imageTablePart2 = [_imageTablePart1 resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
++(UIImage *)tablePart1S{
+    if (!_imageTablePart1S) {
+        _imageTablePart1S  = [UIImage imageNamed:@"table_part1_S"];
+        _imageTablePart1S = [_imageTablePart1S resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
     }
     return _imageTablePart2;
 }
 
-+(UIImage *)tablePart3S{
-    if (!_imageTablePart3) {
-        _imageTablePart3  = [UIImage imageNamed:@"table_part3_S"];
-        _imageTablePart3 = [_imageTablePart1 resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
++(UIImage *)tablePart2S{
+    if (!_imageTablePart2S) {
+        _imageTablePart2S  = [UIImage imageNamed:@"table_part2_S"];
+        _imageTablePart2S = [_imageTablePart2S resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
     }
-    return _imageTablePart3;
+    return _imageTablePart2S;
+}
+
++(UIImage *)tablePart3S{
+    if (!_imageTablePart3S) {
+        _imageTablePart3S  = [UIImage imageNamed:@"table_part3_S"];
+        _imageTablePart3S = [_imageTablePart3S resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
+    }
+    return _imageTablePart3S;
 }
 
 //获取文件id对应的图片

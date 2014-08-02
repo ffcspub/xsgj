@@ -14,6 +14,7 @@ typedef  enum : NSUInteger {
     TOP = 0,
     MID = 1,
     BOT = 2,
+    SINGLE = 3
 } OfflineCellStyle;
 
 @interface OfflineCell : UITableViewCell{
@@ -38,6 +39,10 @@ typedef  enum : NSUInteger {
 -(void)setStyle:(OfflineCellStyle)style{
     _style = style;
     switch (style) {
+        case SINGLE:{
+            _backView.image = [ShareValue tablePart];
+        }
+            break;
         case TOP:{
             _backView.image = [ShareValue tablePart1];
         }
@@ -60,8 +65,8 @@ typedef  enum : NSUInteger {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _backView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, 300, [OfflineCell height])];
-        lb_name = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 280, 22)];
-        lb_time = [[UILabel alloc]initWithFrame:CGRectMake(10, 22, 280, 22)];
+        lb_name = [[UILabel alloc]initWithFrame:CGRectMake(15, 0, 280, 22)];
+        lb_time = [[UILabel alloc]initWithFrame:CGRectMake(15, 22, 280, 22)];
         lb_name.font = [UIFont systemFontOfSize:15];
         lb_time.font = [UIFont systemFontOfSize:12];
         lb_name.textColor = MCOLOR_BLUE;
@@ -102,7 +107,13 @@ typedef  enum : NSUInteger {
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateSuccess:) name:NOTIFICATION_OFFLINESENDSUCCESS object:nil];
+    [self loadDatas];
     // Do any additional setup after loading the view from its nib.
+}
+
+-(void)viewDidUnload{
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 -(void)updateSuccess:(NSNotification *)notification{
@@ -112,6 +123,7 @@ typedef  enum : NSUInteger {
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    
     // Dispose of any resources that can be recreated.
 }
 
@@ -123,22 +135,21 @@ typedef  enum : NSUInteger {
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    int count = [OfflineRequestCache rowCountWithWhere:nil];
-    return count;
+    return [_datas count];
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CELLIDENTIFIER = @"CELLIDENTIFIER";
-    OfflineCell *cell = [tableView dequeueReusableCellWithIdentifier:CELLIDENTIFIER];
+    static NSString *CELLIDENTIFIER = @"OfflineCell";
+    OfflineCell *cell = [tableView dequeueReusableCellWithIdentifier:CELLIDENTIFIER ];
     if (!cell) {
         cell = [[OfflineCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CELLIDENTIFIER];
     }
     cell.requestCache = [_datas objectAtIndex:indexPath.row];
-    if (_datas.count == 0) {
-        cell.style = MID;
+    if (_datas.count == 1) {
+        cell.style = SINGLE;
     }else{
         if(indexPath.row == 0){
             cell.style = TOP;

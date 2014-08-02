@@ -59,10 +59,12 @@
    
 }
 
++(UIImage *)tablePart;
 +(UIImage *)tablePart1;
 +(UIImage *)tablePart2;
 +(UIImage *)tablePart3;
 
++(UIImage *)tablePartS;
 +(UIImage *)tablePart1S;
 +(UIImage *)tablePart2S;
 +(UIImage *)tablePart3S;

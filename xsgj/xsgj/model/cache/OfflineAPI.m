@@ -15,6 +15,12 @@
 
 static BOOL _isSending;
 
+@interface OfflineAPI(){
+    Reachability *_reachability;
+}
+@end
+
+
 @implementation OfflineAPI
 
 +(OfflineAPI *)shareInstance{
@@ -29,9 +35,17 @@ static BOOL _isSending;
 -(id)init{
     self = [super init];
     if (self) {
+        //开启网络状况的监听
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
         
+        _reachability = [Reachability reachabilityWithHostname:@"www.baidu.com"];  // 测试服务器状态
+        [_reachability startNotifier];  //开始监听,会启动一个run loop
     }
     return self;
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 /***
@@ -41,9 +55,7 @@ static BOOL _isSending;
 - (BOOL)isExistenceNetwork
 {
     BOOL isExistenceNetwork;
-    Reachability *reachability = [Reachability reachabilityWithHostname:@"www.baidu.com"];  // 测试服务器状态
-    
-    switch([reachability currentReachabilityStatus]) {
+    switch([_reachability currentReachabilityStatus]) {
         case NotReachable:
             isExistenceNetwork = FALSE;
             break;
@@ -121,10 +133,6 @@ static BOOL _isSending;
     }
     _isSending = NO;
     
-}
-
--(void)dealloc{
-    [self startListener];
 }
 
 -(void)startListener{

@@ -20,6 +20,7 @@ typedef  enum : NSUInteger {
     TOP = 0,
     MID = 1,
     BOT = 2,
+    SINGLE = 3
 } AnnouncementCellStyle;
 
 @interface AnnouncementCell : UITableViewCell{
@@ -69,6 +70,11 @@ typedef  enum : NSUInteger {
 -(void)setStyle:(AnnouncementCellStyle)style{
     _style = style;
     switch (style) {
+        case SINGLE:{
+            _backView.image = [ShareValue tablePart];
+            _backSelectedView.image = [ShareValue tablePartS];
+        }
+            break;
         case TOP:{
             _backView.image = [ShareValue tablePart1];
             _backSelectedView.image = [ShareValue tablePart1S];
@@ -370,14 +376,18 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
     
     cell.name = info.TOPIC;
     cell.time = [info.BEGIN_TIME substringToIndex:10];
-    
-    if (indexPath.row == 0) {
-        cell.style = TOP;
-    } else if (indexPath.row == ([_announces count] - 1)) {
-        cell.style = BOT;
-    } else {
-        cell.style = MID;
+    if (_announces.count == 1) {
+        cell.style = SINGLE;
+    }else{
+        if (indexPath.row == 0) {
+            cell.style = TOP;
+        } else if (indexPath.row == ([_announces count] - 1)) {
+            cell.style = BOT;
+        } else {
+            cell.style = MID;
+        }
     }
+    
     
     return cell;
 }

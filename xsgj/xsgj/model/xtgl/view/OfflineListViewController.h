@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "HideTabViewController.h"
 
-@interface OfflineListViewController : UIViewController<UITableViewDataSource>
+@interface OfflineListViewController : HideTabViewController<UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
