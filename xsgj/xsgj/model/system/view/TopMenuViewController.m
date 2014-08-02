@@ -10,10 +10,13 @@
 #import <LKDBHelper.h>
 #import "MenuBtn.h"
 #import "NextMenuViewController.h"
+#import <Reachability.h>
 
 #define DEFINE_COLNUMER 3
 
 @interface TopMenuViewController (){
+    
+    __weak IBOutlet UIView *iv_netstate;
     
 }
 
@@ -33,8 +36,65 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [self reloadScrollView];
     // Do any additional setup after loading the view from its nib.
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+}
+
+-(void)showNetStateBar{
+    iv_netstate.hidden = NO;
+    iv_netstate.layer.opacity = 0.0;
+    CGRect rect = self.view.bounds;
+    rect.size.height -= iv_netstate.frame.size.height;
+    rect.origin.y += iv_netstate.frame.size.height;
+    [UIView animateWithDuration:0.5 animations:^{
+        iv_netstate.layer.opacity = 1.0;
+        _scrollView.frame = rect;
+    }];
+}
+
+-(void)hideNetStateBar{
+    CGRect rect = self.view.bounds;
+    [UIView animateWithDuration:0.5 animations:^{
+        iv_netstate.layer.opacity = 0.0;
+        _scrollView.frame = rect;
+    } completion:^(BOOL finished) {
+        iv_netstate.hidden = YES;
+    }];
+}
+
+-(void)reachabilityChanged: (NSNotification* )note {
+    Reachability* curReach = [note object];
+    NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
+    
+    NetworkStatus netStatus = [curReach currentReachabilityStatus];
+    
+    switch (netStatus)
+    {
+        case NotReachable:
+        {
+            [self showNetStateBar];
+            break;
+        }
+            
+        case ReachableViaWWAN:
+        {
+            [self hideNetStateBar];
+            break;
+        }
+        case ReachableViaWiFi:
+        {
+            [self hideNetStateBar];
+            break;
+        }
+    }
+}
+
+-(void)viewDidUnload{
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning

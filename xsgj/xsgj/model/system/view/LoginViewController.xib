@@ -158,7 +158,7 @@
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Thq-wr-WFf">
                     <rect key="frame" x="137" y="497" width="108" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title="0591-83518200">
                         <color key="titleColor" red="0.10072373750362473" green="0.68553090188213317" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -168,9 +168,9 @@
                         <action selector="teleAction:" destination="-1" eventType="touchUpInside" id="O1x-JV-4mx"/>
                     </connections>
                 </button>
-                <view alpha="0.94999999999999996" contentMode="scaleToFill" id="oxw-qK-s9T">
+                <view alpha="0.94999999999999996" contentMode="scaleToFill" id="oxw-qK-s9T" userLabel="line">
                     <rect key="frame" x="136" y="514" width="109" height="1"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="backgroundColor" red="0.10072373749999999" green="0.68553090189999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
             </subviews>

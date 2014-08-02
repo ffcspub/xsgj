@@ -9,11 +9,13 @@
 #import "BNMobileMenu.h"
 #import <LKDBHelper.h>
 #import "MenuBtn.h"
+#import <Reachability.h>
 
 #define DEFINE_COLNUMER 3
 
 @interface NextMenuViewController (){
     
+    __weak IBOutlet UIView *iv_netstate;
 }
 
 @end
@@ -33,7 +35,15 @@
 {
     [super viewDidLoad];
     [self reloadScrollView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+    
     // Do any additional setup after loading the view from its nib.
+}
+
+-(void)viewDidUnload{
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -135,5 +145,56 @@
     }
     
 }
+
+
+-(void)showNetStateBar{
+    iv_netstate.hidden = NO;
+    iv_netstate.layer.opacity = 0.0;
+    CGRect rect = self.view.bounds;
+    rect.size.height -= iv_netstate.frame.size.height;
+    rect.origin.y += iv_netstate.frame.size.height;
+    [UIView animateWithDuration:0.5 animations:^{
+        iv_netstate.layer.opacity = 1.0;
+        _scrollView.frame = rect;
+    }];
+}
+
+-(void)hideNetStateBar{
+    CGRect rect = self.view.bounds;
+    [UIView animateWithDuration:0.5 animations:^{
+        iv_netstate.layer.opacity = 0.0;
+        _scrollView.frame = rect;
+    } completion:^(BOOL finished) {
+        iv_netstate.hidden = YES;
+    }];
+}
+
+-(void)reachabilityChanged: (NSNotification* )note {
+    Reachability* curReach = [note object];
+    NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
+    
+    NetworkStatus netStatus = [curReach currentReachabilityStatus];
+    
+    switch (netStatus)
+    {
+        case NotReachable:
+        {
+            [self showNetStateBar];
+            break;
+        }
+            
+        case ReachableViaWWAN:
+        {
+            [self hideNetStateBar];
+            break;
+        }
+        case ReachableViaWiFi:
+        {
+            [self hideNetStateBar];
+            break;
+        }
+    }
+}
+
 
 @end
