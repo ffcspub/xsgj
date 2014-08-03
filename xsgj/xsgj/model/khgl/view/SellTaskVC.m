@@ -22,7 +22,7 @@ static NSString * const SellTaskQueryCellIdentifier = @"SellTaskQueryCellIdentif
 
 static int const pageSize = 10;
 
-@interface SellTaskVC () <UITableViewDelegate, UITableViewDataSource>
+@interface SellTaskVC () <UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource>
 
 // 顶部时间
 @property (weak, nonatomic) IBOutlet UILabel *lblBeginTime;
@@ -35,6 +35,10 @@ static int const pageSize = 10;
 
 @property (nonatomic, strong) NSMutableArray *arrData;
 @property (nonatomic, assign) NSUInteger currentPage; // 第一页开始,每页加载20，当加载返回的数量少于请求的页数认为没有数据了
+
+@property (nonatomic, strong) NSMutableArray *arrPicker;
+@property (nonatomic, strong) NSString *currentYear;
+@property (nonatomic, strong) NSString *currentMonth;
 
 @end
 
@@ -52,6 +56,19 @@ static int const pageSize = 10;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // 日期控制
+    int year = [[NSDate stringFromDate:[NSDate date] withFormat:@"yyyy"] intValue];
+    NSMutableArray *arrYear = [[NSMutableArray alloc] initWithCapacity:5];
+    for (int i = year - 4; i <= year; i++) {
+        [arrYear addObject:[NSString stringWithFormat:@"%d", i]];
+    }
+    [self.arrPicker addObject:arrYear];
+    NSMutableArray *arrMonth = [[NSMutableArray alloc] initWithCapacity:12];
+    for (int i = 1; i <= 12; i++) {
+        [arrMonth addObject:[NSString stringWithFormat:@"%d", i]];
+    }
+    [self.arrPicker addObject:arrMonth];
     
     [self UI_setup];
     
@@ -74,6 +91,15 @@ static int const pageSize = 10;
     }
     
     return _arrData;
+}
+
+- (NSMutableArray *)arrPicker
+{
+    if (!_arrPicker) {
+        _arrPicker = [[NSMutableArray alloc] init];
+    }
+    
+    return _arrPicker;
 }
 
 #pragma mark - UI
@@ -193,20 +219,43 @@ static int const pageSize = 10;
 
 - (IBAction)beginTimeAction:(id)sender
 {
+    /*
     UIDatePicker *picker = [[UIDatePicker alloc]init];
     picker.datePickerMode = UIDatePickerModeDate;
     picker.tag = 1000;
     [picker showTitle:@"请选择起始时间" inView:self.view];
+    */
+    UIPickerView *picker = [[UIPickerView alloc] init];
+    picker.delegate = self;
+    picker.dataSource = self;
+    picker.tag = 1000;
+    [picker selectRow:0 inComponent:0 animated:YES];
+    [picker selectRow:0 inComponent:1 animated:YES];
+    self.currentYear = self.arrPicker[0][0];
+    self.currentMonth = [NSString stringWithFormat:@"%02d" ,[self.arrPicker[1][0] intValue]];
+    [picker showTitle:@"请选择起始日期" inView:self.view];
 }
 
 - (IBAction)endTimeAction:(id)sender
 {
+    /*
     UIDatePicker *picker = [[UIDatePicker alloc]init];
     picker.datePickerMode = UIDatePickerModeDate;
     picker.tag = 1001;
     [picker showTitle:@"请选择结束时间" inView:self.view];
+    */
+    UIPickerView *picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0.f, 0.f, CGRectGetWidth(self.view.bounds), 100.f)];
+    picker.delegate = self;
+    picker.dataSource = self;
+    picker.tag = 1001;
+    [picker selectRow:4 inComponent:0 animated:YES];
+    [picker selectRow:0 inComponent:1 animated:YES];
+    self.currentYear = self.arrPicker[0][4];
+    self.currentMonth = [NSString stringWithFormat:@"%02d" ,[self.arrPicker[1][0] intValue]];
+    [picker showTitle:@"请选择结束日期" inView:self.view];
 }
 
+/*
 ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
 {
     UIDatePicker *picker =  (UIDatePicker *)signal.sender;
@@ -215,6 +264,17 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
         self.lblBeginTime.text = [date stringWithFormat:@"yyyy-MM"];
     } else {
         self.lblEndTime.text = [date stringWithFormat:@"yyyy-MM"];
+    }
+}
+*/
+
+ON_LKSIGNAL3(UIPickerView, COMFIRM, signal)
+{
+    UIPickerView *picker =  (UIPickerView *)signal.sender;
+    if (picker.tag == 1000) {
+        self.lblBeginTime.text = [NSString stringWithFormat:@"%@-%@", self.currentYear, self.currentMonth];
+    } else {
+        self.lblEndTime.text = [NSString stringWithFormat:@"%@-%@", self.currentYear, self.currentMonth];
     }
 }
 
@@ -255,6 +315,37 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return [SellTaskCell cellHeight];
+}
+
+#pragma mark - UIPickerView
+
+// returns the number of 'columns' to display.
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return [self.arrPicker count];
+}
+
+// returns the # of rows in each component..
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [self.arrPicker[component] count];
+}
+
+// these methods return either a plain NSString, a NSAttributedString, or a view (e.g UILabel) to display the row for the component.
+// for the view versions, we cache any hidden and thus unused views and pass them back for reuse.
+// If you return back a different object, the old one will be released. the view will be centered in the row rect
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return self.arrPicker[component][row];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if (component == 0) {
+        self.currentYear = self.arrPicker[component][row];
+    } else {
+        self.currentMonth = [NSString stringWithFormat:@"%02d" ,[self.arrPicker[component][row] intValue]];
+    }
 }
 
 
