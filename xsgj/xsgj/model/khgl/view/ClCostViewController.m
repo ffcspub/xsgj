@@ -47,6 +47,8 @@
     
     _tfTimeBegin.text = [[NSDate date] stringWithFormat:@"yyyy-MM-dd"];
     _tfTimeEnd.text = [[NSDate date] stringWithFormat:@"yyyy-MM-dd"];
+    _beginTime = [NSDate date];
+    _endTime = [NSDate date];
 }
 
 #pragma mark - functions
@@ -97,7 +99,6 @@
 ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
     UIDatePicker *picker =  (UIDatePicker *)signal.sender;
     NSDate *selectDate = picker.date;
-    NSLog(@"%@",[selectDate stringWithFormat:@"yyyy-MM-dd"] );
 
     NSString *strTime = [selectDate stringWithFormat:@"yyyy-MM-dd"];
     if(!_bSetEndTime)
@@ -202,7 +203,24 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
      }fail:^(BOOL notReachable, NSString *desciption){
          [step save];
          [MBProgressHUD hideHUDForView:self.view animated:YES];
-         [MBProgressHUD showError:desciption toView:self.view];
+         if(notReachable)
+         {
+             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
+             
+             [cache saveToDB];
+             [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                 sleep(1);
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
+                     [self.navigationController popViewControllerAnimated:YES];
+                 });
+             });
+         }
+         else
+         {
+             [MBProgressHUD showError:desciption toView:self.view];
+         }
          
      }];
 }
@@ -223,8 +241,34 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if(textField == self.tfClCost)
+
+    NSMutableString * futureString = [NSMutableString stringWithString:textField.text];
+    [futureString  insertString:string atIndex:range.location];
+    NSInteger flag=0;
+    if(textField == _tfClCost)
     {
+        NSString *strRule = @"0123456789.\n";
+        NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:strRule] invertedSet];
+        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+        BOOL bNumber = [string isEqualToString:filtered];
+        if(!bNumber)
+        {
+            return NO;
+        }
+        
+        const NSInteger limited = 2;
+        for (int i = futureString.length-1; i>=0; i--) {
+            if ([futureString characterAtIndex:i] == '.') {
+                
+                if (flag > limited) {
+                    return NO;
+                }
+                
+                break;
+            }
+            flag++;
+        }
+        
         if(textField.text.length < 12 || [string isEqualToString:@""])
         {
             return YES;

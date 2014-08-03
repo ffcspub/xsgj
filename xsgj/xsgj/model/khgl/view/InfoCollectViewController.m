@@ -60,6 +60,8 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(locationAddressUpdateErro) name:NOTIFICATION_ADDRESS_UPDATEERROR object:nil];
     
     [[MapUtils shareInstance] startLocationUpdate];
+    
+    [_svContain setContentSize:CGSizeMake(0, _lb_ps.frame.origin.y + _lb_ps.frame.size.height + 10)];
 }
 
 - (void)didReceiveMemoryWarning

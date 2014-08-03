@@ -93,11 +93,11 @@
         return;
     }
     
-    if(_tfMark.text.length < 1)
-    {
-        [MBProgressHUD showError:@"请填写备注" toView:self.view];
-        return;
-    }
+//    if(_tfMark.text.length < 1)
+//    {
+//        [MBProgressHUD showError:@"请填写备注" toView:self.view];
+//        return;
+//    }
     
     _iSendImgCount = 0;
     [_aryFileId removeAllObjects];
@@ -271,26 +271,57 @@
 
 - (void)commitData
 {
+//    if(_aryfileDatas.count > 0)
+//    {
+//        ImageFileInfo *fileInfo = [_aryfileDatas objectAtIndex:_iSendImgCount];
+//        [SystemAPI uploadPhotoByFileName:self.title data:fileInfo.fileData success:^(NSString *fileId) {
+//            [_aryFileId addObject:fileId];
+//            _iSendImgCount ++;
+//            if(_iSendImgCount < _aryfileDatas.count)
+//            {
+//                [self commitData];
+//            }
+//            else
+//            {
+//                [self sendStoreCameraRequest];
+//            }
+//                
+//        } fail:^(BOOL notReachable, NSString *desciption) {
+//            [MBProgressHUD hideHUDForView:self.view animated:YES];
+//            [MBProgressHUD showError:desciption toView:self.view];
+//            return;
+//        }];
+//    }
+//    else
+//    {
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        [MBProgressHUD showError:@"至少需要一张照片" toView:self.view];
+//        return;
+//    }
+    
     if(_aryfileDatas.count > 0)
     {
         ImageFileInfo *fileInfo = [_aryfileDatas objectAtIndex:_iSendImgCount];
-        [SystemAPI uploadPhotoByFileName:self.title data:fileInfo.fileData success:^(NSString *fileId) {
-            [_aryFileId addObject:fileId];
-            _iSendImgCount ++;
-            if(_iSendImgCount < _aryfileDatas.count)
-            {
-                [self commitData];
-            }
-            else
-            {
-                [self sendStoreCameraRequest];
-            }
-                
+        NSString *fileId = [SystemAPI uploadPhotoByFileName:self.title data:fileInfo.fileData success:^(NSString *fileId) {
         } fail:^(BOOL notReachable, NSString *desciption) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
-            return;
         }];
+        
+        [_aryFileId addObject:fileId];
+        _iSendImgCount ++;
+        if(_iSendImgCount < _aryfileDatas.count)
+        {
+            [self commitData];
+        }
+        else
+        {
+            [self sendStoreCameraRequest];
+        }
+    }
+    else
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:@"至少需要一张照片" toView:self.view];
+        return;
     }
 }
 
@@ -360,7 +391,24 @@
      }fail:^(BOOL notReachable, NSString *desciption){
          [step save];
          [MBProgressHUD hideHUDForView:self.view animated:YES];
-         [MBProgressHUD showError:desciption toView:self.view];
+         if(notReachable)
+         {
+             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
+             
+             [cache saveToDB];
+             [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                 sleep(1);
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
+                     [self.navigationController popViewControllerAnimated:YES];
+                 });
+             });
+         }
+         else
+         {
+             [MBProgressHUD showError:desciption toView:self.view];
+         }
      }];
 }
 

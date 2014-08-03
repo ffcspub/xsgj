@@ -16,6 +16,7 @@
 
 @interface InfoCollectViewController : HideTabViewController<UITextFieldDelegate>
 
+@property (weak, nonatomic) IBOutlet UIScrollView *svContain;
 @property (weak, nonatomic) IBOutlet UIView *viewContain;
 @property (weak, nonatomic) IBOutlet UILabel *lb_currentLocation;
 @property (weak, nonatomic) IBOutlet UILabel *lb_manualAdjust;
