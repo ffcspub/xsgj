@@ -773,14 +773,14 @@
     [_allCustomers removeAllObjects];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *sql = @"";
-    if (_selectedCustomerType) {
-        sql = [sql stringByAppendingFormat:@"TYPE_ID=%d",_selectedCustomerType.TYPE_ID];
+    if (_selectedCustomerType && _selectedCustomerType.TYPE_ID != -1) {
+        sql = [sql stringByAppendingFormat:@"TYPE_ID in (%@)",[BNCustomerType getOwnerAndChildTypeIds:_selectedCustomerType.TYPE_ID]];
     }
-    if (_selectedAreaInfo) {
+    if (_selectedAreaInfo && _selectedAreaInfo.AREA_ID != -1) {
         if (sql.length > 0) {
             sql = [sql stringByAppendingFormat:@" and "];
         }
-        sql = [sql stringByAppendingFormat:@"AREA_ID=%d",_selectedAreaInfo.AREA_ID];
+        sql = [sql stringByAppendingFormat:@"AREA_ID in (%@)",[BNAreaInfo getOwnerAndChildAreaIds:_selectedAreaInfo.AREA_ID]];
     }
     if (_deselectedCutomerIds.count>0) {
        NSString *ids =   [_deselectedCutomerIds componentsJoinedByString:@","];
