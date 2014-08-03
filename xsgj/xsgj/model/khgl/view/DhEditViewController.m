@@ -296,7 +296,24 @@
      }fail:^(BOOL notReachable, NSString *desciption){
          [step save];
          [MBProgressHUD hideHUDForView:self.view animated:YES];
-         [MBProgressHUD showError:desciption toView:self.view];
+         if(notReachable)
+         {
+             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
+             
+             [cache saveToDB];
+             [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                 sleep(1);
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
+                     [self.navigationController popToRootViewControllerAnimated:YES];
+                 });
+             });
+         }
+         else
+         {
+             [MBProgressHUD showError:desciption toView:self.view];
+         }
          
      }];
 }

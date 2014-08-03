@@ -21,6 +21,7 @@
 #import "LK_HttpRequest.h"
 #import <IQKeyboardManager.h>
 #import "BNVisitStepRecord.h"
+#import "OfflineRequestCache.h"
 
 #define NOTIFICATION_COMMITDATA_FIN @"NOTIFICATION_COMMITDATA_FIN"
 

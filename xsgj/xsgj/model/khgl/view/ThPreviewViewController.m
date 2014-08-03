@@ -77,26 +77,45 @@
 
 - (void)commitData
 {
+//    if(_arySourceData.count > 0)
+//    {
+//        ThCommitData *kcCommitBean = [_arySourceData objectAtIndex:_iSendImgCount];
+//        [SystemAPI uploadPhotoByFileName:self.title data:kcCommitBean.PhotoData success:^(NSString *fileId) {
+//            kcCommitBean.PHOTO1 = fileId;
+//            _iSendImgCount ++;
+//            if(_iSendImgCount < _arySourceData.count)
+//            {
+//                [self commitData];
+//            }
+//            else
+//            {
+//                [self sendReportRequest];
+//            }
+//            
+//        } fail:^(BOOL notReachable, NSString *desciption) {
+//            [MBProgressHUD hideHUDForView:self.view animated:YES];
+//            [MBProgressHUD showError:desciption toView:self.view];
+//            return;
+//        }];
+//    }
+    
     if(_arySourceData.count > 0)
     {
-        ThCommitData *kcCommitBean = [_arySourceData objectAtIndex:_iSendImgCount];
-        [SystemAPI uploadPhotoByFileName:self.title data:kcCommitBean.PhotoData success:^(NSString *fileId) {
-            kcCommitBean.PHOTO1 = fileId;
-            _iSendImgCount ++;
-            if(_iSendImgCount < _arySourceData.count)
-            {
-                [self commitData];
-            }
-            else
-            {
-                [self sendReportRequest];
-            }
-            
+        KcCommitData *kcCommitBean = [_arySourceData objectAtIndex:_iSendImgCount];
+        NSString *fileId = [SystemAPI uploadPhotoByFileName:self.title data:kcCommitBean.PhotoData success:^(NSString *fileId) {
         } fail:^(BOOL notReachable, NSString *desciption) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
-            return;
         }];
+        
+        kcCommitBean.PHOTO1 = fileId;
+        _iSendImgCount ++;
+        if(_iSendImgCount < _arySourceData.count)
+        {
+            [self commitData];
+        }
+        else
+        {
+            [self sendReportRequest];
+        }
     }
 }
 
@@ -157,7 +176,24 @@
     }fail:^(BOOL notReachable, NSString *desciption){
         [step save];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:desciption toView:self.view];
+        if(notReachable)
+        {
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
+            
+            [cache saveToDB];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                sleep(1);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                });
+            });
+        }
+        else
+        {
+            [MBProgressHUD showError:desciption toView:self.view];
+        }
         
     }];
 }
