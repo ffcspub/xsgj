@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
+        <deployment defaultVersion="1280" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KcReportViewController">
             <connections>
                 <outlet property="btnSeleltAll" destination="ioV-G1-RPX" id="RqP-vf-BFb"/>
+                <outlet property="svSelect" destination="PR5-b3-9GW" id="31d-HU-7bT"/>
                 <outlet property="tfSearch" destination="VH5-EZ-luU" id="Phq-Lu-TEl"/>
                 <outlet property="tfType" destination="9ds-v7-NLe" id="goK-Vw-2h9"/>
                 <outlet property="tvProduct" destination="rzM-Ar-kyQ" id="Bg5-lv-1cE"/>
@@ -100,7 +101,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="rzM-Ar-kyQ">
-                    <rect key="frame" x="10" y="140" width="300" height="428"/>
+                    <rect key="frame" x="10" y="140" width="300" height="385"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <view key="tableHeaderView" contentMode="scaleToFill" id="5fn-ci-mN4">
@@ -134,6 +135,11 @@
                         <outlet property="delegate" destination="-1" id="tOs-N7-GMG"/>
                     </connections>
                 </tableView>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="PR5-b3-9GW">
+                    <rect key="frame" x="0.0" y="530" width="320" height="38"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </scrollView>
             </subviews>
             <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

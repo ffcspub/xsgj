@@ -20,8 +20,8 @@
 @property(nonatomic,strong) NSString *	SPEC;//产品规格
 @property(nonatomic,strong) NSString *	PROD_NAME;
 @property(nonatomic,strong) NSString *	GIFT_UNIT_NAME;//赠品单位
-@property(nonatomic,assign) NSString * GIFT_TOTAL;//赠品总价
-@property(nonatomic,assign) NSString * GIFT_PRICE;//赠品金额
-@property(nonatomic,assign) NSString * GIFT_NUM;//赠品总价
+@property(nonatomic,strong) NSString * GIFT_TOTAL;//赠品总价
+@property(nonatomic,strong) NSString * GIFT_PRICE;//赠品金额
+@property(nonatomic,strong) NSString * GIFT_NUM;//赠品总价
 
 @end

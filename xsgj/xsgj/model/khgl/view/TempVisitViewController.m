@@ -290,6 +290,14 @@
         {
             _lbLastVisit.text = self.visitRecordSelect.END_TIME;
         }
+        else
+        {
+            _lbLastVisit.text = @"";
+        }
+    }
+    else
+    {
+        _lbLastVisit.text = @"";
     }
 }
 

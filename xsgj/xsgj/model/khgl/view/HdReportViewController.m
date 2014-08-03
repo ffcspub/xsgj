@@ -60,15 +60,15 @@
         return;
     }
     
-    if(_txHdDescription.text.length < 1)
-    {
-        [MBProgressHUD showError:@"请填写描述" toView:self.view];
-        return;
-    }
+//    if(_txHdDescription.text.length < 1)
+//    {
+//        [MBProgressHUD showError:@"请填写描述" toView:self.view];
+//        return;
+//    }
     
     if(_aryfileDatas.count < 1)
     {
-        [MBProgressHUD showError:@"请拍照片" toView:self.view];
+        [MBProgressHUD showError:@"至少需要一张照片" toView:self.view];
         return;
     }
     
@@ -100,6 +100,12 @@
             [MBProgressHUD showError:desciption toView:self.view];
             return;
         }];
+    }
+    else
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:@"至少需要一张照片" toView:self.view];
+        return;
     }
 }
 

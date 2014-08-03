@@ -103,6 +103,7 @@
     }
     
     [_tvProduct reloadData];
+    [self reloadSelectView];
 }
 
 - (void)loadTypeData
@@ -196,6 +197,45 @@
     {
         self.navigationItem.rightBarButtonItem.enabled = NO;
     }
+}
+
+- (void)reloadSelectView
+{
+    for(UIView *view in _svSelect.subviews)
+    {
+        [view removeFromSuperview];
+    }
+    
+    ProductDelView *lastView = nil;
+    for(BNProduct *tempPro in _aryProductSelect)
+    {
+        ProductDelView *view = [[[NSBundle mainBundle]loadNibNamed:@"ProductDelView" owner:nil options:nil]lastObject];
+        view.delegate = self;
+        view.productData = tempPro;
+        view.lbName.text = tempPro.PROD_NAME;
+        
+        if(lastView)
+        {
+            view.frame = CGRectMake(lastView.frame.origin.x + 85, 4, 80, 30);
+        }
+        else
+        {
+            view.frame = CGRectMake(5, 4, 80, 30);
+        }
+        
+        lastView = view;
+        [_svSelect addSubview:view];
+        [_svSelect setContentSize:CGSizeMake(lastView.frame.origin.x + 90, 0)];
+    }
+}
+
+#pragma mark - ProductDelViewDelegate
+
+- (void)onBtnDelClicked:(ProductDelView *)view
+{
+    [self handleSelectData:view.productData ISAdd:NO];
+    [self reloadSelectView];
+    [_tvProduct reloadData];
 }
 
 #pragma mark - UITableViewDataSource
@@ -334,6 +374,8 @@
     {
         [self handleSelectData:cell.productData ISAdd:NO];
     }
+    
+    [self reloadSelectView];
 }
 
 - (void)handleNotifySelectProductFin:(NSNotification *)note
@@ -344,75 +386,10 @@
     _proTypeShow = productType;
     _tfType.text = productType.CLASS_NAME;
     
-    [self proTypeFilter:productType];
-}
-
-- (TreeData *)foundRootTree:(TreeData *)treeData TargetType:(BNProductType *)targetType
-{
-    BNProductType *typeResource = (BNProductType *)treeData.dataInfo;
-    if(typeResource.CLASS_ID == targetType.CLASS_ID)
-    {
-        return treeData;
-    }
+    NSString *types = [BNProductType getOwnerAndChildTypeIds:productType.CLASS_ID];
+    _aryProductData = [BNProduct searchWithWhere:[NSString stringWithFormat:@"CLASS_ID in (%@)",types] orderBy:@"PROD_NAME_PINYIN" offset:0 count:100];
     
-    if(treeData.children.count > 0)
-    {
-        for(TreeData *childTreeData in treeData.children)
-        {
-            [self foundRootTree:childTreeData TargetType:targetType];
-        }
-    }
-    
-    return nil;
-}
-
-- (void)traversalTreeDataForTypes:(TreeData *)treeData
-{
-    BNProductType *proType = (BNProductType *)treeData.dataInfo;
-    [_aryTraversalRet addObject:[NSNumber numberWithInt:proType.CLASS_ID]];
-    
-    if(treeData.children.count > 0)
-    {
-        for(TreeData *childTreeData in treeData.children)
-        {
-            [self traversalTreeDataForTypes:childTreeData];
-        }
-    }
-    
-}
-
-- (void)proTypeFilter:(BNProductType *)targetType
-{
-    TreeData *resultData = nil;
-    // found root tree
-    for(TreeData *treeData in _aryProTypeTreeData)
-    {
-        resultData = [self foundRootTree:treeData TargetType:targetType];
-        if(resultData)
-            break;
-    }
-    
-    // traversal tree for get class_id
-    if(resultData)
-    {
-        [_aryTraversalRet removeAllObjects];
-        [self traversalTreeDataForTypes:resultData];
-    }
-    
-    // get product by class_id
-    [_aryProDataTemp removeAllObjects];
-    for(NSNumber *typeNumber in _aryTraversalRet)
-    {
-        NSArray *aryProduct = [BNProduct searchWithWhere:[NSString stringWithFormat:@"CLASS_ID=%D",typeNumber.intValue] orderBy:@"PROD_NAME_PINYIN" offset:0 count:1000];
-        for(BNProduct *product in aryProduct)
-        {
-            [_aryProDataTemp addObject:product];
-        }
-    }
-    
-    _aryProductData = [NSArray arrayWithArray:_aryProDataTemp];
     [_tvProduct reloadData];
-    
 }
 
 @end

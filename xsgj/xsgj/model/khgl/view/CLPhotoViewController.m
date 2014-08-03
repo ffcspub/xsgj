@@ -151,6 +151,12 @@
             return;
         }];
     }
+    else
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:@"至少需要一张照片" toView:self.view];
+        return;
+    }
 }
 
 - (void)sendStoreCameraRequest

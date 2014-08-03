@@ -197,7 +197,7 @@
     
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setPositiveFormat:@"###0.##"];
-    
+
     self.commitData.TOTAL_PRICE  = self.commitData.ITEM_PRICE * self.commitData.ITEM_NUM + self.commitData.GIFT_PRICE.doubleValue * self.commitData.GIFT_NUM.intValue;
     self.lbTotalPrice.text = [numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.commitData.TOTAL_PRICE]];
 }

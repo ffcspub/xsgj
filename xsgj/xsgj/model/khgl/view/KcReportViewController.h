@@ -16,8 +16,9 @@
 #import "KcProductCell.h"
 #import "BNCustomerInfo.h"
 #import "BNVistRecord.h"
+#import "ProductDelView.h"
 
-@interface KcReportViewController : HideTabViewController<UITextFieldDelegate,KcProductCellDelegate>
+@interface KcReportViewController : HideTabViewController<UITextFieldDelegate,KcProductCellDelegate,ProductDelViewDelegate>
 {
     BNProductType *_proTypeShow;
     NSArray *_aryProductData;
@@ -30,6 +31,7 @@
     BOOL _bSearch;
 }
 
+@property (weak, nonatomic) IBOutlet UIScrollView *svSelect;
 @property (weak, nonatomic) IBOutlet UITableView *tvProduct;
 @property (weak, nonatomic) IBOutlet UITextField *tfType;
 @property (weak, nonatomic) IBOutlet UITextField *tfSearch;

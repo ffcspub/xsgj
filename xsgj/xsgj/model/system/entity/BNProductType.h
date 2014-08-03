@@ -19,4 +19,6 @@
 // 类别排序
 @property (nonatomic,assign)    int ORDER_NO;
 
++(NSString *)getOwnerAndChildTypeIds:(int)typeid;
+
 @end

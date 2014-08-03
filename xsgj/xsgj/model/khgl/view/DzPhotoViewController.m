@@ -93,11 +93,11 @@
         return;
     }
     
-    if(_tfMark.text.length < 1)
-    {
-        [MBProgressHUD showError:@"请填写备注" toView:self.view];
-        return;
-    }
+//    if(_tfMark.text.length < 1)
+//    {
+//        [MBProgressHUD showError:@"请填写备注" toView:self.view];
+//        return;
+//    }
     
     _iSendImgCount = 0;
     [_aryFileId removeAllObjects];
@@ -291,6 +291,12 @@
             [MBProgressHUD showError:desciption toView:self.view];
             return;
         }];
+    }
+    else
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:@"至少需要一张照片" toView:self.view];
+        return;
     }
 }
 

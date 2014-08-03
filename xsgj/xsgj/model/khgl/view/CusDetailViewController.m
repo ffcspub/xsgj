@@ -38,7 +38,7 @@
 {
     self.title = @"客户详情";
     [self showRightBarButtonItemWithTitle:@"进入" target:self action:@selector(handleNavBarRight)];
-    [self.svContain setContentSize:CGSizeMake(320, self.ivPhoto.frame.origin.y + self.ivPhoto.frame.size.height + 70)];
+    [self.svContain setContentSize:CGSizeMake(320, self.ivPhoto.frame.origin.y + self.ivPhoto.frame.size.height + 15)];
     
     self.lbName.text = self.customerInfo.CUST_NAME;
     self.lbType.text = self.customerInfo.TYPE_NAME;
