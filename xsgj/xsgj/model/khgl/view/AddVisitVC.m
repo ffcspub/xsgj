@@ -20,6 +20,7 @@
 #import "SIAlertView.h"
 #import "SelectTreeViewController.h"
 #import "BNCustomerType.h"
+#import <LKDBHelper.h>
 
 @interface AddVisitVC () <MapAddressVCDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UITextFieldDelegate>
 {
@@ -97,7 +98,7 @@
     
     [[MapUtils shareInstance] startLocationUpdate];
     
-    // 加载客户类型数据
+    // 加载客户类型数据,现在默认同android一样，直接从本地数据库取数据，如果有必要保持同步，可以调用更新配置接口
     [self getCustomerType];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleNotifySelectFin:) name:NOTIFICATION_SELECT_FIN object:nil];
@@ -205,6 +206,7 @@
  */
 - (void)getCustomerType
 {
+    /*
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     AllTypeHttpRequest *request = [[AllTypeHttpRequest alloc] init];
@@ -224,6 +226,12 @@
         [MBProgressHUD showError:desciption toView:self.view];
         
     }];
+    */
+    
+    NSArray *arrTemp = [BNCustomerType searchWithWhere:nil orderBy:@" TYPE_NAME_PINYIN ASC " offset:0 count:1000];
+    _isTypeSuccess = YES;
+    [self.arrType removeAllObjects];
+    [self.arrType addObjectsFromArray:arrTemp];
 }
 
 - (void)uploadPhoto
