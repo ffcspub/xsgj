@@ -130,6 +130,7 @@ static int const pageSize = 10;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     OrderGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:OrderGoodsCellIdentifier];
+    [cell setSelected:NO];
     // 配置Cell
     [cell configureForData:self.arrData[indexPath.row]];
     
