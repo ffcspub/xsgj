@@ -34,7 +34,7 @@
         lb_success = [[UILabel alloc]initWithFrame:self.bounds];
         lb_success.font = [UIFont systemFontOfSize:13];
         lb_success.textColor = MCOLOR_GREEN;
-        lb_success.text = @"";
+        lb_success.text = @"未下载";
         lb_success.backgroundColor = [UIColor clearColor];
         [self addSubview:lb_success];
         _progressView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, CGRectGetHeight(self.frame))];
@@ -56,6 +56,7 @@
     }
     if (progress == 0) {
         self.layer.borderWidth = 0;
+        lb_success.text = @"未下载";
         lb_success.hidden = NO;
         [_progressView setHidden:YES];
     }else{
