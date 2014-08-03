@@ -97,6 +97,7 @@
     _mapView.delegate = nil;
     _search.delegate = nil;
     [_mapView removeFromSuperview];
+    _mapView = nil;
     _search = nil;
 }
 

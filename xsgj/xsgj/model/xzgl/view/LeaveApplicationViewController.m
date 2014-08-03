@@ -71,7 +71,7 @@
     lblStart.frame = CGRectMake(78, 14, 10, 20);
     [btn_title addSubview:lblStart];
     
-    UITextField *tf_title = [[UITextField alloc] initWithFrame:CGRectMake(100, 10, 180, 30)];
+    UITextField *tf_title = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
     tf_title.font = [UIFont boldSystemFontOfSize:17];
     tf_title.maxLength = 15;
     tf_title.textColor = HEX_RGB(0x000000);
@@ -205,7 +205,7 @@
     lblStart.frame = CGRectMake(78, 14, 10, 20);
     [btn_leaveday addSubview:lblStart];
     
-    UITextField *tf_day = [[UITextField alloc] initWithFrame:CGRectMake(100, 10, 180, 30)];
+    UITextField *tf_day = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
     tf_day.font = [UIFont boldSystemFontOfSize:17];
     tf_day.textColor = HEX_RGB(0x000000);
     tf_day.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
