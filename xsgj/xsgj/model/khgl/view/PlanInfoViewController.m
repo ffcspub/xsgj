@@ -202,7 +202,7 @@ typedef  enum : NSUInteger {
             case 2:{
                 if (_customerInfo.CHECK_STATE == 3) {
                     cell.name = @"操作类型";
-                    cell.value = [_customerInfo stateName];
+                    cell.value = [_customerInfo applyStateName];
                     cell.style = MID;
                 }else{
                     cell.name = @"审批状态";
@@ -213,7 +213,7 @@ typedef  enum : NSUInteger {
                 break;
             case 3:{
                     cell.name = @"审批状态";
-                    cell.value = @"通过";
+                    cell.value = [_customerInfo stateName];
                     cell.style = BOT;
             }
                 break;
