@@ -106,7 +106,6 @@
     
     UITextField *tfTheme = [ShareValue getDefaultTextField];
     tfTheme.frame = rectContent;
-    tfTheme.maxLength = 50;
     tfTheme.keyboardType = UIKeyboardTypeDefault;
     tfTheme.delegate = self;
     [self.svTripApply addSubview:tfTheme];
@@ -133,7 +132,6 @@
     UITextField *tfDays = [ShareValue getDefaultTextField];
     tfDays.frame = rectContent;
     tfDays.keyboardType = UIKeyboardTypeDecimalPad; // 0 ～ 9 .
-    tfDays.maxLength = 5.f;
     tfDays.delegate = self;
     [self.svTripApply addSubview:tfDays];
     self.tfDayNumber = tfDays;
