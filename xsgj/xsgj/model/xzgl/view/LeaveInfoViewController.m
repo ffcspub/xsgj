@@ -39,11 +39,11 @@ typedef  enum : NSUInteger {
         _backSelectedView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, [LeaveInfoCell height])];
         _lb_name = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 80, [LeaveInfoCell height])];
         _lb_name.backgroundColor = [UIColor clearColor];
-        _lb_name.font = [UIFont boldSystemFontOfSize:17];
+        _lb_name.font = [UIFont systemFontOfSize:17];
         _lb_name.textColor = HEX_RGB(0x939fa7);
         _lb_value = [[UILabel alloc]initWithFrame:CGRectMake(90, 0, 200,[LeaveInfoCell height])];
         _lb_value.textColor = HEX_RGB(0x000000);
-        _lb_value.font = [UIFont boldSystemFontOfSize:17];
+        _lb_value.font = [UIFont systemFontOfSize:17];
         self.backgroundView = _backView;
         self.selectedBackgroundView = _backSelectedView;
         [self.contentView addSubview:_lb_name];
@@ -133,7 +133,7 @@ typedef  enum : NSUInteger {
         backView.image = image;
         textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 0, 290, [LeaveCommentCell height])];
         textView.textColor = HEX_RGB(0x000000);
-        textView.font = [UIFont boldSystemFontOfSize:17];
+        textView.font = [UIFont systemFontOfSize:17];
         textView.backgroundColor = [UIColor clearColor];
         textView.editable = NO;
         textView.textColor = [UIColor darkTextColor];
@@ -304,7 +304,7 @@ typedef  enum : NSUInteger {
     } else {
         lable.text = @"审批意见";
     }
-    lable.font = [UIFont boldSystemFontOfSize:17];
+    lable.font = [UIFont systemFontOfSize:17];
     lable.backgroundColor = [UIColor clearColor];
     [view addSubview:lable];
     return view;

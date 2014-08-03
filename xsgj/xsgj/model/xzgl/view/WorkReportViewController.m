@@ -57,7 +57,7 @@
     
     UILabel *lb_type = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
     lb_type.text = @"汇报类型";
-    lb_type.font = [UIFont boldSystemFontOfSize:17];
+    lb_type.font = [UIFont systemFontOfSize:17];
     lb_type.textColor = HEX_RGB(0x939fa7);
     lb_type.backgroundColor = [UIColor clearColor];
     [_btn_inputType addSubview:lb_type];
@@ -68,7 +68,7 @@
     
     UILabel *lb_content = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
     lb_content.text = @"请选择";
-    lb_content.font = [UIFont boldSystemFontOfSize:17];
+    lb_content.font = [UIFont systemFontOfSize:17];
     lb_content.textColor = HEX_RGB(0x000000);
     lb_content.backgroundColor = [UIColor clearColor];
     lb_content.tag = 701;

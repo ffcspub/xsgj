@@ -61,7 +61,7 @@
     
     UILabel *lb_oldpwd = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(lb_account.frame) + 10, 80, 40)];
     lb_oldpwd.text = @"旧密码";
-    lb_oldpwd.font = [UIFont boldSystemFontOfSize:17];
+    lb_oldpwd.font = [UIFont systemFontOfSize:17];
     lb_oldpwd.textColor = HEX_RGB(0x939fa7);
     lb_oldpwd.backgroundColor = [UIColor clearColor];
     [self.view addSubview:lb_oldpwd];
@@ -73,7 +73,7 @@
     UITextField *tf_oldpwd = [[UITextField alloc] initWithFrame:CGRectMake(110, CGRectGetMaxY(lb_account.frame) + 10, 180, 40)];
     [tf_oldpwd setBorderStyle:UITextBorderStyleNone];
     tf_oldpwd.secureTextEntry = YES;
-    tf_oldpwd.font = [UIFont boldSystemFontOfSize:17];
+    tf_oldpwd.font = [UIFont systemFontOfSize:17];
     [self.view addSubview:tf_oldpwd];
     _tf_oldpwd = tf_oldpwd;
     
@@ -83,7 +83,7 @@
     
     UILabel *lb_newpwd = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(iv_oldpwd.frame) + 15, 80, 40)];
     lb_newpwd.text = @"新密码";
-    lb_newpwd.font = [UIFont boldSystemFontOfSize:17];
+    lb_newpwd.font = [UIFont systemFontOfSize:17];
     lb_newpwd.textColor = HEX_RGB(0x939fa7);
     lb_newpwd.backgroundColor = [UIColor clearColor];
     [self.view addSubview:lb_newpwd];
@@ -95,7 +95,7 @@
     UITextField *tf_newpwd = [[UITextField alloc] initWithFrame:CGRectMake(110, CGRectGetMaxY(iv_oldpwd.frame) + 15, 180, 40)];
     [tf_newpwd setBorderStyle:UITextBorderStyleNone];
     tf_newpwd.secureTextEntry = YES;
-    tf_newpwd.font = [UIFont boldSystemFontOfSize:17];
+    tf_newpwd.font = [UIFont systemFontOfSize:17];
     [self.view addSubview:tf_newpwd];
     _tf_newpwd = tf_newpwd;
     
@@ -105,7 +105,7 @@
     
     UILabel *lb_confirmpwd = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(iv_newpwd.frame) + 15, 80, 40)];
     lb_confirmpwd.text = @"确认密码";
-    lb_confirmpwd.font = [UIFont boldSystemFontOfSize:17];
+    lb_confirmpwd.font = [UIFont systemFontOfSize:17];
     lb_confirmpwd.textColor = HEX_RGB(0x939fa7);
     lb_confirmpwd.backgroundColor = [UIColor clearColor];
     [self.view addSubview:lb_confirmpwd];
@@ -117,7 +117,7 @@
     UITextField *tf_confirmpwd = [[UITextField alloc] initWithFrame:CGRectMake(110, CGRectGetMaxY(iv_newpwd.frame) + 15, 180, 40)];
     [tf_confirmpwd setBorderStyle:UITextBorderStyleNone];
     tf_confirmpwd.secureTextEntry = YES;
-    tf_confirmpwd.font = [UIFont boldSystemFontOfSize:17];
+    tf_confirmpwd.font = [UIFont systemFontOfSize:17];
     [self.view addSubview:tf_confirmpwd];
     _tf_confirmpwd = tf_confirmpwd;
     

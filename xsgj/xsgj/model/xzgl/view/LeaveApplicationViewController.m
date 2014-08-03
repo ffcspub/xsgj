@@ -62,7 +62,7 @@
     
     UILabel *lb_title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
     lb_title.text = @"主题";
-    lb_title.font = [UIFont boldSystemFontOfSize:17];
+    lb_title.font = [UIFont systemFontOfSize:17];
     lb_title.textColor = HEX_RGB(0x939fa7);
     lb_title.backgroundColor = [UIColor clearColor];
     [btn_title addSubview:lb_title];
@@ -72,7 +72,7 @@
     [btn_title addSubview:lblStart];
     
     UITextField *tf_title = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
-    tf_title.font = [UIFont boldSystemFontOfSize:17];
+    tf_title.font = [UIFont systemFontOfSize:17];
     tf_title.maxLength = 15;
     tf_title.textColor = HEX_RGB(0x000000);
     tf_title.tag = 401;
@@ -81,7 +81,7 @@
     
 //    UILabel *lb_content = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
 //    lb_content.text = @"请选择";
-//    lb_content.font = [UIFont boldSystemFontOfSize:18];
+//    lb_content.font = [UIFont systemFontOfSize:18];
 //    lb_content.textColor = HEX_RGB(0x000000);
 //    lb_content.backgroundColor = [UIColor clearColor];
 //    [btn_title addSubview:lb_content];
@@ -97,7 +97,7 @@
     
     UILabel *lb_type = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
     lb_type.text = @"请假类型";
-    lb_type.font = [UIFont boldSystemFontOfSize:17];
+    lb_type.font = [UIFont systemFontOfSize:17];
     lb_type.textColor = HEX_RGB(0x939fa7);
     lb_type.backgroundColor = [UIColor clearColor];
     [btn_leaveType addSubview:lb_type];
@@ -108,7 +108,7 @@
     
     UILabel *lb_typeValue = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
     lb_typeValue.text = @"请选择";
-    lb_typeValue.font = [UIFont boldSystemFontOfSize:17];
+    lb_typeValue.font = [UIFont systemFontOfSize:17];
     lb_typeValue.textColor = HEX_RGB(0x000000);
     lb_typeValue.backgroundColor = [UIColor clearColor];
     lb_typeValue.tag = 402;
@@ -133,7 +133,7 @@
     
     UILabel *lb_begintime = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
     lb_begintime.text = @"起始时间";
-    lb_begintime.font = [UIFont boldSystemFontOfSize:17];
+    lb_begintime.font = [UIFont systemFontOfSize:17];
     lb_begintime.textColor = HEX_RGB(0x939fa7);
     lb_begintime.backgroundColor = [UIColor clearColor];
     [btn_beginTime addSubview:lb_begintime];
@@ -144,7 +144,7 @@
     
     UILabel *lb_begintimeValue = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
     lb_begintimeValue.text = [formatter stringFromDate:date];
-    lb_begintimeValue.font = [UIFont boldSystemFontOfSize:17];
+    lb_begintimeValue.font = [UIFont systemFontOfSize:17];
     lb_begintimeValue.textColor = HEX_RGB(0x000000);
     lb_begintimeValue.backgroundColor = [UIColor clearColor];
     lb_begintimeValue.tag = 403;
@@ -165,7 +165,7 @@
     
     UILabel *lb_endtime = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
     lb_endtime.text = @"结束时间";
-    lb_endtime.font = [UIFont boldSystemFontOfSize:17];
+    lb_endtime.font = [UIFont systemFontOfSize:17];
     lb_endtime.textColor = HEX_RGB(0x939fa7);
     lb_endtime.backgroundColor = [UIColor clearColor];
     [btn_endTime addSubview:lb_endtime];
@@ -176,7 +176,7 @@
     
     UILabel *lb_endtimeValue = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
     lb_endtimeValue.text = [formatter stringFromDate:date];
-    lb_endtimeValue.font = [UIFont boldSystemFontOfSize:17];
+    lb_endtimeValue.font = [UIFont systemFontOfSize:17];
     lb_endtimeValue.textColor = HEX_RGB(0x000000);
     lb_endtimeValue.backgroundColor = [UIColor clearColor];
     lb_endtimeValue.tag = 404;
@@ -196,7 +196,7 @@
     
     UILabel *lb_day = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
     lb_day.text = @"请假天数";
-    lb_day.font = [UIFont boldSystemFontOfSize:17];
+    lb_day.font = [UIFont systemFontOfSize:17];
     lb_day.textColor = HEX_RGB(0x939fa7);
     lb_day.backgroundColor = [UIColor clearColor];
     [btn_leaveday addSubview:lb_day];
@@ -206,7 +206,7 @@
     [btn_leaveday addSubview:lblStart];
     
     UITextField *tf_day = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
-    tf_day.font = [UIFont boldSystemFontOfSize:17];
+    tf_day.font = [UIFont systemFontOfSize:17];
     tf_day.textColor = HEX_RGB(0x000000);
     tf_day.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
 //    tf_day.delegate = self;
@@ -216,7 +216,7 @@
     
     UILabel *lb_dayString = [[UILabel alloc] initWithFrame:CGRectMake(270, 0, 26, 40)];
     lb_dayString.text = @"天";
-    lb_dayString.font = [UIFont boldSystemFontOfSize:17];
+    lb_dayString.font = [UIFont systemFontOfSize:17];
     lb_dayString.textColor = HEX_RGB(0x939fa7);
     lb_dayString.backgroundColor = [UIColor clearColor];
     [btn_leaveday addSubview:lb_dayString];
@@ -226,7 +226,7 @@
     //请假详细描述
     UILabel *lb_description = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(btn_leaveday.frame) + 18, 180, 35)];
     lb_description.text = @"详情描述";
-    lb_description.font = [UIFont boldSystemFontOfSize:17];
+    lb_description.font = [UIFont systemFontOfSize:17];
     lb_description.textColor = HEX_RGB(0x939fa7);
     lb_description.backgroundColor = [UIColor clearColor];
     [self.scrollView addSubview:lb_description];
@@ -251,12 +251,12 @@
     NSMutableAttributedString *hintString1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"直接审批人为：%@",[ShareValue shareInstance].userInfo.LEADER_NAME]];
     [hintString1 addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[HEX_RGB(0x939fa7) CGColor] range:NSMakeRange(0,7)];
     [hintString1 addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor blackColor] CGColor] range:NSMakeRange(7,hintString1.length - 7)];
-    [hintString1 addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont boldSystemFontOfSize:16] range:NSMakeRange(0,7)];
-    [hintString1 addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont boldSystemFontOfSize:22] range:NSMakeRange(7,hintString1.length - 7)];
+    [hintString1 addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont systemFontOfSize:16] range:NSMakeRange(0,7)];
+    [hintString1 addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont systemFontOfSize:22] range:NSMakeRange(7,hintString1.length - 7)];
     UILabel *lb_Approval = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(iv_edge.frame) + 10, 280, 35)];
     lb_Approval.textColor = HEX_RGB(0x000000);
     lb_Approval.text = [NSString stringWithFormat:@"直接审批人为：%@",[ShareValue shareInstance].userInfo.LEADER_NAME];
-    lb_Approval.font = [UIFont boldSystemFontOfSize:18];
+    lb_Approval.font = [UIFont systemFontOfSize:18];
     lb_Approval.textAlignment = NSTextAlignmentRight;
     lb_Approval.backgroundColor = [UIColor clearColor];
     [self.scrollView addSubview:lb_Approval];

@@ -116,7 +116,7 @@
 {
     UILabel *lb_topic = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, 300, 30)];
     lb_topic.text = _noticeDetail.TOPIC;
-    lb_topic.font = [UIFont boldSystemFontOfSize:19];
+    lb_topic.font = [UIFont systemFontOfSize:19];
     lb_topic.backgroundColor = [UIColor clearColor];
     [self.scrollView addSubview:lb_topic];
     
