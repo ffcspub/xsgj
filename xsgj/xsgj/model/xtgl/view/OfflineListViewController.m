@@ -71,9 +71,11 @@ typedef  enum : NSUInteger {
         lb_time.font = [UIFont systemFontOfSize:12];
         lb_name.textColor = MCOLOR_BLUE;
         lb_time.textColor = MCOLOR_BLACK;
-        [self addSubview:_backView];
-        [self addSubview:lb_name];
-        [self addSubview:lb_time];
+        [self.contentView addSubview:_backView];
+        [self.contentView addSubview:lb_name];
+        [self.contentView addSubview:lb_time];
+        self.backgroundView = _backView;
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }

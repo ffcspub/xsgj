@@ -20,6 +20,7 @@
 #import "BNCustomerInfo.h"
 #import "NSObject+EasyCopy.h"
 #import "PlanInfoViewController.h"
+#import "OfflineRequestCache.h"
 
 @interface PlanCell : UITableViewCell{
     UILabel *lb_customeName;
@@ -530,8 +531,20 @@
         _index = [self nextPage];
         [self loadPlanVisits];
     } fail:^(BOOL notReachable, NSString *desciption) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [MBProgressHUD showError:@"网络不给力" toView:self.view];
+        if (notReachable) {
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"拜访规划"];
+            [cache saveToDB];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            double delayInSeconds = 1.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else{
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+        }
     }];
     
 }

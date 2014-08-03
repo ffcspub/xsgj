@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "LK_HttpRequest.h"
+#import <LKDBHelper.h>
 
 @interface OfflineRequestCache : NSObject
 
