@@ -123,23 +123,24 @@
         if(aryUnitBean.count > 0)
         {
             unitBean = [aryUnitBean objectAtIndex:0];
-            OrderItemBean *bean = [[OrderItemBean alloc]init];
-            bean.GIFT_NAME = @"";
-            bean.UNIT_NAME = unitBean.UNITNAME;
-            bean.SPEC = product.SPEC;
-            bean.PROD_NAME = product.PROD_NAME;
-            bean.GIFT_UNIT_NAME = @"";
-            bean.TOTAL_PRICE = 0;
-            bean.ITEM_PRICE = unitBean.PROD_PRICE;
-            bean.PRODUCT_UNIT_ID = unitBean.PRODUCT_UNIT_ID;
-            bean.PROD_ID = unitBean.PROD_ID;
-            bean.GIFT_TOTAL = @"";
-            bean.GIFT_PRICE =@"";
-            bean.ITEM_NUM = -1;
-            bean.GIFT_NUM = @"";
-            
-            [_aryDhData addObject:bean];
         }
+        
+        OrderItemBean *bean = [[OrderItemBean alloc]init];
+        bean.GIFT_NAME = @"";
+        bean.UNIT_NAME = unitBean.UNITNAME;
+        bean.SPEC = product.SPEC;
+        bean.PROD_NAME = product.PROD_NAME;
+        bean.GIFT_UNIT_NAME = @"";
+        bean.TOTAL_PRICE = 0;
+        bean.ITEM_PRICE = product.PRICE.doubleValue;
+        bean.PRODUCT_UNIT_ID = unitBean.PRODUCT_UNIT_ID;
+        bean.PROD_ID = unitBean.PROD_ID;
+        bean.GIFT_TOTAL = @"";
+        bean.GIFT_PRICE =@"";
+        bean.ITEM_NUM = -1;
+        bean.GIFT_NUM = @"";
+        
+        [_aryDhData addObject:bean];
     }
 }
 
@@ -225,11 +226,11 @@
 //        return NO;
 //    }
     
-    if(_tfName.text.length < 1)
-    {
-        [MBProgressHUD showError:@"请填写合作商名称" toView:self.view];
-        return NO;
-    }
+//    if(_tfName.text.length < 1)
+//    {
+//        [MBProgressHUD showError:@"请填写合作商名称" toView:self.view];
+//        return NO;
+//    }
     
     for(OrderItemBean * bean in _aryDhData)
     {
