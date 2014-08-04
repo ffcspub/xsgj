@@ -302,20 +302,40 @@
     if(_aryfileDatas.count > 0)
     {
         ImageFileInfo *fileInfo = [_aryfileDatas objectAtIndex:_iSendImgCount];
-        NSString *fileId = [SystemAPI uploadPhotoByFileName:self.title data:fileInfo.fileData success:^(NSString *fileId) {
+        NSString *fileId =nil;
+        fileId = [SystemAPI uploadPhotoByFileName:self.title data:fileInfo.fileData success:^(NSString *fileId) {
+            [_aryFileId addObject:fileId];
+            _iSendImgCount ++;
+            if(_iSendImgCount < _aryfileDatas.count)
+            {
+                [self commitData];
+            }
+            else
+            {
+                [self sendStoreCameraRequest];
+            }
+            
         } fail:^(BOOL notReachable, NSString *desciption) {
+            if(notReachable)
+            {
+                [_aryFileId addObject:fileId];
+                _iSendImgCount ++;
+                if(_iSendImgCount < _aryfileDatas.count)
+                {
+                    [self commitData];
+                }
+                else
+                {
+                    [self sendStoreCameraRequest];
+                }
+            }
+            else
+            {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [MBProgressHUD showError:desciption toView:self.view];
+                return;
+            }
         }];
-        
-        [_aryFileId addObject:fileId];
-        _iSendImgCount ++;
-        if(_iSendImgCount < _aryfileDatas.count)
-        {
-            [self commitData];
-        }
-        else
-        {
-            [self sendStoreCameraRequest];
-        }
     }
     else
     {

@@ -101,21 +101,41 @@
     
     if(_arySourceData.count > 0)
     {
-        KcCommitData *kcCommitBean = [_arySourceData objectAtIndex:_iSendImgCount];
-        NSString *fileId = [SystemAPI uploadPhotoByFileName:self.title data:kcCommitBean.PhotoData success:^(NSString *fileId) {
+        ThCommitData *kcCommitBean = [_arySourceData objectAtIndex:_iSendImgCount];
+        NSString *fileId = nil;
+        fileId = [SystemAPI uploadPhotoByFileName:self.title data:kcCommitBean.PhotoData success:^(NSString *fileId) {
+            kcCommitBean.PHOTO1 = fileId;
+            _iSendImgCount ++;
+            if(_iSendImgCount < _arySourceData.count)
+            {
+                [self commitData];
+            }
+            else
+            {
+                [self sendReportRequest];
+            }
+            
         } fail:^(BOOL notReachable, NSString *desciption) {
+            if(notReachable)
+            {
+                kcCommitBean.PHOTO1 = fileId;
+                _iSendImgCount ++;
+                if(_iSendImgCount < _arySourceData.count)
+                {
+                    [self commitData];
+                }
+                else
+                {
+                    [self sendReportRequest];
+                }
+            }
+            else
+            {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [MBProgressHUD showError:desciption toView:self.view];
+                return;
+            }
         }];
-        
-        kcCommitBean.PHOTO1 = fileId;
-        _iSendImgCount ++;
-        if(_iSendImgCount < _arySourceData.count)
-        {
-            [self commitData];
-        }
-        else
-        {
-            [self sendReportRequest];
-        }
     }
 }
 
