@@ -12,6 +12,7 @@
 #import "XZGLAPI.h"
 #import "IBActionSheet.h"
 #import "NSDate+Helper.h"
+#import "OfflineRequestCache.h"
 
 #define MAXPHOTONUMBER   5
 
@@ -271,14 +272,29 @@
     [XZGLAPI insertUserCameraByRequest:request success:^(InsertUserCameraHttpResponse *response) {
         
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:@"提交成功" toView:self.view];
+        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
         
         [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
         
     } fail:^(BOOL notReachable, NSString *desciption) {
         
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:desciption toView:self.view];
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        [MBProgressHUD showError:desciption toView:self.view];
+        
+        if (notReachable) {
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"日常拍照"];
+            [cache saveToDB];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            double delayInSeconds = 1.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else{
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+        }
     }];
 }
 
@@ -288,24 +304,39 @@
     
     ImageInfo *imageInfo = [_aryfileDatas objectAtIndex:_iSendImgCount];
     
-    [SystemAPI uploadPhotoByFileName:imageInfo.fileName data:imageInfo.fileData success:^(NSString *fileId) {
-        
-        [_aryFileId addObject:fileId];
-        _iSendImgCount ++;
-        if(_iSendImgCount < _aryfileDatas.count)
-        {
-            [self uploadPhoto];
-        }
-        else
-        {
-            [self insertUserCameraRequest];
-        }
-        
+//    [SystemAPI uploadPhotoByFileName:imageInfo.fileName data:imageInfo.fileData success:^(NSString *fileId) {
+//        
+//        [_aryFileId addObject:fileId];
+//        _iSendImgCount ++;
+//        if(_iSendImgCount < _aryfileDatas.count)
+//        {
+//            [self uploadPhoto];
+//        }
+//        else
+//        {
+//            [self insertUserCameraRequest];
+//        }
+//        
+//    } fail:^(BOOL notReachable, NSString *desciption) {
+//        
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        [MBProgressHUD showError:desciption toView:self.view];
+//    }];
+    
+    NSString *fileId = [SystemAPI uploadPhotoByFileName:imageInfo.fileName data:imageInfo.fileData success:^(NSString *fileId) {
     } fail:^(BOOL notReachable, NSString *desciption) {
-        
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:desciption toView:self.view];
     }];
+    
+    [_aryFileId addObject:fileId];
+    _iSendImgCount ++;
+    if(_iSendImgCount < _aryfileDatas.count)
+    {
+        [self uploadPhoto];
+    }
+    else
+    {
+        [self insertUserCameraRequest];
+    }
 }
 
 #pragma mark - Action

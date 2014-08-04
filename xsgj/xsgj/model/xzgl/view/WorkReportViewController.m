@@ -11,6 +11,7 @@
 #import "XZGLAPI.h"
 #import "WorkReportTypeBean.h"
 #import "MBProgressHUD+Add.h"
+#import "OfflineRequestCache.h"
 
 @interface WorkReportViewController (){
     NSMutableArray *_types;
@@ -133,11 +134,26 @@
     
     [XZGLAPI workReportByRequest:request success:^(WorkReportHttpResponse *response) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:@"提交成功！" toView:self.view];
+        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
         [self.navigationController popViewControllerAnimated:YES];
     } fail:^(BOOL notReachable, NSString *desciption) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:@"网络不给力" toView:self.view];
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        [MBProgressHUD showError:@"网络不给力" toView:self.view];
+        
+        if (notReachable) {
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"工作汇报"];
+            [cache saveToDB];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            double delayInSeconds = 1.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else{
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+        }
     }];
 }
 

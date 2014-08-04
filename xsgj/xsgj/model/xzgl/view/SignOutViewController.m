@@ -13,6 +13,7 @@
 #import "XZGLAPI.h"
 #import "MBProgressHUD+Add.h"
 #import "SystemAPI.h"
+#import "OfflineRequestCache.h"
 
 @interface SignOutViewController ()<MapAddressVCDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>{
     BOOL _isLocationSuccess;
@@ -147,8 +148,23 @@
         [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
     } fail:^(BOOL notReachable, NSString *desciption) {
         
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:desciption toView:self.view];
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        [MBProgressHUD showError:desciption toView:self.view];
+        
+        if (notReachable) {
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"签退"];
+            [cache saveToDB];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            double delayInSeconds = 1.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else{
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+        }
     }];
 }
 
@@ -161,16 +177,22 @@
     [formatter setDateFormat:@"yyMMddHHmmss"];
     NSString *fileName = [NSString stringWithFormat:@"IMG_%@",[formatter stringFromDate:now]];
     
-    [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
-        
-        _photoId = fileId;
-        [self signUpRequest];
-        
+//    [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
+//        
+//        _photoId = fileId;
+//        [self signUpRequest];
+//        
+//    } fail:^(BOOL notReachable, NSString *desciption) {
+//        
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        [MBProgressHUD showError:desciption toView:self.view];
+//    }];
+    
+    _photoId = [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
     } fail:^(BOOL notReachable, NSString *desciption) {
-        
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:desciption toView:self.view];
     }];
+    
+    [self signUpRequest];
 }
 
 #pragma mark - Action
