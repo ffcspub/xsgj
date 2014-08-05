@@ -96,6 +96,7 @@
         return;
     }
 
+    _btnCommit.enabled = NO;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self sendReportRequest];
 }
@@ -289,12 +290,14 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
+                _btnCommit.enabled = YES;
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
                 [self.navigationController popToRootViewControllerAnimated:YES];
             });
         });
         
      }fail:^(BOOL notReachable, NSString *desciption){
+         _btnCommit.enabled = YES;
          [step save];
          [MBProgressHUD hideHUDForView:self.view animated:YES];
          if(notReachable)

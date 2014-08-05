@@ -52,6 +52,7 @@
 
 - (void)handleNavBarRight
 {
+    self.navigationItem.rightBarButtonItem.enabled = YES;
     _iSendImgCount = 0;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self commitData];
@@ -133,6 +134,7 @@
             {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [MBProgressHUD showError:desciption toView:self.view];
+                self.navigationItem.rightBarButtonItem.enabled = YES;
                 return;
             }
         }];
@@ -188,12 +190,14 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
+                self.navigationItem.rightBarButtonItem.enabled = YES;
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
                 [self.navigationController popToRootViewControllerAnimated:YES];
             });
         });
         
     }fail:^(BOOL notReachable, NSString *desciption){
+        self.navigationItem.rightBarButtonItem.enabled = YES;
         [step save];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         if(notReachable)

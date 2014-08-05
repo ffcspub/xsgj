@@ -66,6 +66,8 @@
     {
         return;
     }
+    
+    _btnCommit.enabled = NO;
     _iSendImgCount = 0;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self commitData];
@@ -201,6 +203,7 @@
             {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [MBProgressHUD showError:desciption toView:self.view];
+                _btnCommit.enabled = YES;
                 return;
             }
         }];
@@ -249,6 +252,7 @@
     request.DATA = aryCommit ;
     
     [KHGLAPI commitStockByRequest:request success:^(StockCommitHttpResponse *response){
+        
         step.SYNC_STATE = 2;
         [step save];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -256,12 +260,14 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
+                _btnCommit.enabled = YES;
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
                 [self.navigationController popToRootViewControllerAnimated:YES];
             });
         });
         
      }fail:^(BOOL notReachable, NSString *desciption){
+         _btnCommit.enabled = YES;
          [step save];
          [MBProgressHUD hideHUDForView:self.view animated:YES];
          if(notReachable)
