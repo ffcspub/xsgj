@@ -8,6 +8,7 @@
 
 #import "DistributionCell.h"
 #import "MobileInfoDisBean.h"
+#import "UIImage+External.h"
 
 @interface DistributionCell ()
 
@@ -16,6 +17,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblTel;
 @property (weak, nonatomic) IBOutlet UILabel *lblTime;
 @property (weak, nonatomic) IBOutlet UILabel *lblState;
+@property (weak, nonatomic) IBOutlet UIImageView *ivBg;
+
+@property (weak, nonatomic) IBOutlet UILabel *vSP1;
+@property (weak, nonatomic) IBOutlet UILabel *vSP2;
+@property (weak, nonatomic) IBOutlet UILabel *vSP3;
+@property (weak, nonatomic) IBOutlet UILabel *vSP4;
+
 
 - (void)_initialize;
 
@@ -52,7 +60,32 @@
 - (void)_initialize
 {
     //TODO: 设置所有控件默认风格
+    [self.ivBg setImage:[[UIImage imageNamed:@"bgNo2"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 20, 20, 20)]];
+    [self.ivBg setHighlightedImage:[UIImage imageWithColor:HEX_RGB(0xebf6ff) size:self.ivBg.bounds.size]];
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
     
+    if (selected) {
+        [self.vSP1 setHighlighted:NO];
+        [self.vSP2 setHighlighted:NO];
+        [self.vSP3 setHighlighted:NO];
+        [self.vSP4 setHighlighted:NO];
+    }
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+    [super setHighlighted:highlighted animated:animated];
+    
+    if (highlighted) {
+        [self.vSP1 setHighlighted:NO];
+        [self.vSP2 setHighlighted:NO];
+        [self.vSP3 setHighlighted:NO];
+        [self.vSP4 setHighlighted:NO];
+    }
 }
 
 @end

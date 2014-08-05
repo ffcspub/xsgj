@@ -61,6 +61,7 @@ static int const pageSize = 10;
     self.tbvQuery.delegate = self;
     self.tbvQuery.dataSource = self;
     self.tbvQuery.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tbvQuery.separatorColor = [UIColor clearColor];
     self.tbvQuery.showsVerticalScrollIndicator = NO;
     [self.tbvQuery registerNib:[DistributionCell nib] forCellReuseIdentifier:DistributionQueryCellIdentifier];
     
@@ -218,7 +219,7 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
     // 配置Cell
     [cell configureForData:self.arrData[indexPath.row]];
     
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    //cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
     return cell;
 }
@@ -227,7 +228,7 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
 }
 

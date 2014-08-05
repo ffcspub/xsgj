@@ -18,4 +18,6 @@
 
 - (UIImage *)fixOrientation;
 
++ (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size;
+
 @end
