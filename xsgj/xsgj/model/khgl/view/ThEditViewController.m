@@ -122,7 +122,7 @@
         
         if(bean.REMARK.length < 1)
         {
-            [MBProgressHUD showError:@"请填写退货" toView:self.view];
+            [MBProgressHUD showError:@"请输入退货原因" toView:self.view];
             return NO;
         }
     }
