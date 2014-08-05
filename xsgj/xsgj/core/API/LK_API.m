@@ -26,6 +26,7 @@
     static AFHTTPClient *_client;
     dispatch_once(&onceToken, ^{
         _client = [[AFHTTPClient alloc]initWithBaseURL:[NSURL URLWithString:BASE_SERVERLURL]];
+        [AFHTTPRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
     });
     return _client;
 }
@@ -93,10 +94,10 @@
     }
     NSDictionary *tdict = request.lkDictionary;
     NSString *paramString = [LK_APIUtil stringCreateJsonWithObject:tdict ];
-    NSLog(@"请求参数:%@", paramString);
     
-    path = [NSString stringWithFormat:@"%@?data=%@",path,[paramString URLEncodedString]];
-    request.requestPath = path;
+    path = [NSString stringWithFormat:@"%@?data=%@",path, [paramString URLEncodedString]];
+    NSLog(@"http请求:%@", path);
+    
     AFHTTPClient *client = LK_APIUtil.client;
     [client getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if(responseObject){
@@ -116,22 +117,24 @@
                 fail(NO,@"网络不给力");
             }
         } else {
-            fail(NO,@"服务器返回数据为空!");
+            fail(NO,@"服务器返回数据为空");
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", [error description]);
 //        fail(client.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable,@"网络不给力");
          fail(YES,@"网络不给力");
     }];
 }
 
-+(AFHTTPClient *)getHttpRequest:(LK_HttpBaseRequest *)request basePath:(NSString *)basePath apiPath:(NSString *)path Success:(void (^)(LK_HttpBaseResponse *))sucess fail:(void (^)(BOOL NotReachable,NSString *descript))fail class:(Class)responseClass{
++(void)getHttpRequest:(LK_HttpBaseRequest *)request basePath:(NSString *)basePath apiPath:(NSString *)path Success:(void (^)(LK_HttpBaseResponse *))sucess fail:(void (^)(BOOL NotReachable,NSString *descript))fail class:(Class)responseClass
+{
     if (!responseClass) {
         responseClass = [LK_HttpBaseResponse class];
     }
     NSDictionary *tdict = request.lkDictionary;
     NSString *paramString = [LK_APIUtil stringCreateJsonWithObject:tdict ];
-    
     path = [NSString stringWithFormat:@"%@?data=%@",path,[paramString URLEncodedString]];
+    
     AFHTTPClient *client =  [[AFHTTPClient alloc]initWithBaseURL:[NSURL URLWithString:basePath]];
     [client getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if(responseObject){
@@ -150,11 +153,12 @@
             }else{
                 fail(NO,@"网络不给力");
             }
+        } else {
+            fail(NO,@"服务器返回数据为空");
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         fail(client.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable,@"网络不给力");
     }];
-    return client;
 }
 
 +(void)cancelAllHttpRequestByApiPath:(NSString *)path;{

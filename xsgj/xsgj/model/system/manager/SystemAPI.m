@@ -41,10 +41,27 @@
     } class:[UserLoginHttpResponse class]];
 }
 
+
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_EQUAL_TO(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+
 +(void)updateConfigSuccess:(void(^)())Success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
     UpdateConfigHttpRequest *request = [[UpdateConfigHttpRequest alloc]init];
     BNUserInfo *userInfo = [[BNUserInfo alloc]init];
     [[ShareValue shareInstance].userInfo easyDeepCopy:userInfo];
+    
+    
+    //!!!: 临时用最2B的方法解决iOS6.1.2的问题，主要问题就是因为编码格式；好像只有在6.1.2才有问题
+    if (SYSTEM_VERSION_EQUAL_TO(@"6.1.2")) {
+        
+        userInfo.REALNAME                    = [[ShareValue shareInstance].userInfo.REALNAME stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        userInfo.LEADER_NAME                 = [[ShareValue shareInstance].userInfo.LEADER_NAME stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        userInfo.CORP_NAME                   = [[ShareValue shareInstance].userInfo.CORP_NAME stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        userInfo.DEPT_NAME                   = [[ShareValue shareInstance].userInfo.DEPT_NAME stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        userInfo.ROLE_NAME                   = [[ShareValue shareInstance].userInfo.ROLE_NAME stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    }
+
     request.USER_INFO_BEAN = userInfo;
     NSNumber *lastupdatetime = [ShareValue shareInstance].lastUpdateTime;
     if (!lastupdatetime) {

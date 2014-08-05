@@ -165,19 +165,13 @@
     [SystemAPI loginByCorpcode:_tf_companycode.text username:_tf_username.text password:_tf_pwd.text success:^(BNUserInfo *userinfo) {
         dispatch_async(dispatch_get_main_queue() , ^{
             hud.labelText = @"正在更新配置...";
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                [SystemAPI updateConfigSuccess:^{
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self showTabViewController];
-                        [hud removeFromSuperview];
-                    });
-                } fail:^(BOOL notReachable, NSString *desciption) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [hud removeFromSuperview];
-                        [MBProgressHUD showError:desciption toView:self.view];
-                    });
-                }];
-            });
+            [SystemAPI updateConfigSuccess:^{
+                [self showTabViewController];
+                [hud removeFromSuperview];
+            } fail:^(BOOL notReachable, NSString *desciption) {
+                [hud removeFromSuperview];
+                [MBProgressHUD showError:desciption toView:self.view];
+            }];
         });
     } fail:^(BOOL notReachable, NSString *desciption) {
         [hud removeFromSuperview];
