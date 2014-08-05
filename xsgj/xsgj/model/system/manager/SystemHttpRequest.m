@@ -97,9 +97,7 @@
         _DEPT_ID = [ShareValue shareInstance].userInfo.DEPT_ID;
         _USER_AUTH = [ShareValue shareInstance].userInfo.USER_AUTH;
         _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
-        NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
-        long long int date = (long long int)time;
-        _FILE_ID = [NSString stringWithFormat:@"%@%qu",[OpenUDID value],date];
+        _FILE_ID = [NSString stringWithFormat:@"%@%@",[OpenUDID value],[[NSDate date] stringWithFormat:@"yyyyMMddhhmmssSSS"]];
     }
     return self;
 }
