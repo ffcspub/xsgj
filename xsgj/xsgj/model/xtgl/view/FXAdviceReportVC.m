@@ -11,6 +11,7 @@
 #import "ShareValue.h"
 #import "NSDate+Helper.h"
 #import "MBProgressHUD+Add.h"
+#import "OfflineRequestCache.h"
 
 @interface FXAdviceReportVC ()<UITextViewDelegate>
 {
@@ -100,20 +101,32 @@
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
-        {
-            sleep(1);
-            dispatch_async(dispatch_get_main_queue(), ^
-            {
-                [self.navigationController popViewControllerAnimated:YES];
-            });
+        double delayInSeconds = 1.5;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self.navigationController popViewControllerAnimated:YES];
         });
         
     }
     fail:^(BOOL notReachable, NSString *desciption)
     {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:@"网络不给力" toView:self.view];
+        if (notReachable)
+        {
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
+            [cache saveToDB];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            double delayInSeconds = 1.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }
+        else
+        {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+        }
     }];
 }
 - (void)didReceiveMemoryWarning
