@@ -20,6 +20,7 @@
 #import "TreeViewCell.h"
 #import "SelectTreeViewController.h"
 #import "UIImageView+WebCache.h"
+#import <Reachability.h>
 
 @interface CorpAddressBookViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 {
@@ -50,8 +51,6 @@
         arraySourceDept      = [NSArray array];
         mAzArray             = [NSMutableArray array];
         mUIdataArray         = [NSMutableArray array];
-        [DeptInfoBean deleteWithWhere:nil];
-        [ContactBean deleteWithWhere:nil];
     }
     return self;
 }
@@ -74,63 +73,88 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleNotifySelectFin:) name:NOTIFICATION_SELECT_FIN object:nil];
     // 标题按钮
     [self setTitleButtonStyle];
-    // 部门信息获取
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    GetUserAllDeptHttpRequest *deptRequest = [[GetUserAllDeptHttpRequest alloc]init];
-    deptRequest.SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
-    deptRequest.CORP_ID    = [ShareValue shareInstance].userInfo.CORP_ID;
-    deptRequest.DEPT_ID    = [ShareValue shareInstance].userInfo.DEPT_ID;
-    deptRequest.USER_AUTH  = [ShareValue shareInstance].userInfo.USER_AUTH;
-    deptRequest.USER_ID    = [ShareValue shareInstance].userInfo.USER_ID;
-    [XTGLAPI getUserALlDeptByRequest:deptRequest success:^(GetUserAllDeptHttpResponse *response)
+    // 网路状态好则重新获取信息列表,状态查则从本地数据库读取
+    if ([self isEnableNetwork])
     {
-        if ([response.MESSAGE.MESSAGECODE isEqual:DEFINE_SUCCESSCODE])
+        [DeptInfoBean deleteWithWhere:nil];
+        [ContactBean deleteWithWhere:nil];
+        // 部门信息获取
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        GetUserAllDeptHttpRequest *deptRequest = [[GetUserAllDeptHttpRequest alloc]init];
+        deptRequest.SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
+        deptRequest.CORP_ID    = [ShareValue shareInstance].userInfo.CORP_ID;
+        deptRequest.DEPT_ID    = [ShareValue shareInstance].userInfo.DEPT_ID;
+        deptRequest.USER_AUTH  = [ShareValue shareInstance].userInfo.USER_AUTH;
+        deptRequest.USER_ID    = [ShareValue shareInstance].userInfo.USER_ID;
+        [XTGLAPI getUserALlDeptByRequest:deptRequest success:^(GetUserAllDeptHttpResponse *response)
         {
-            NSArray *aryTemp = response.DATA;
-            for (DeptInfoBean *bean in aryTemp)
+            if ([response.MESSAGE.MESSAGECODE isEqual:DEFINE_SUCCESSCODE])
             {
-                [bean saveToDB];
+                NSArray *aryTemp = response.DATA;
+                for (DeptInfoBean *bean in aryTemp)
+                {
+                    [bean saveToDB];
+                }
             }
-        }
-        // 保存部门原始数据
+            // 保存部门原始数据
+            arraySourceDept = [DeptInfoBean searchWithWhere:nil orderBy:nil offset:0 count:1000];
+        }fail:^(BOOL notReachable, NSString *desciption)
+        {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD showError:@"网络不给力" toView:self.view];
+        }];
+        // 联系人信息
+        QueryContactsHttpRequest *contactRequest = [[QueryContactsHttpRequest alloc]init];
+        // 基本信息
+        contactRequest.SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
+        contactRequest.CORP_ID    = [ShareValue shareInstance].userInfo.CORP_ID;
+        contactRequest.DEPT_ID    = [ShareValue shareInstance].userInfo.DEPT_ID;
+        contactRequest.USER_AUTH  = [ShareValue shareInstance].userInfo.USER_AUTH;
+        contactRequest.USER_ID    = [ShareValue shareInstance].userInfo.USER_ID;
+        // 请求
+        [XTGLAPI queryContactsByRequest:contactRequest success:^(QueryContactsHttpResponse *response)
+         {
+             [MBProgressHUD hideHUDForView:self.view animated:YES];
+             if ([response.MESSAGE.MESSAGECODE isEqual:DEFINE_SUCCESSCODE])
+             {
+                 NSArray *aryTemp = response.DATA;
+                 for (ContactBean *bean in aryTemp)
+                 {
+                     bean.USER_NAME_PINYIN = [OAChineseToPinyin pinyinFromChiniseString:bean.REALNAME];
+                     bean.USER_NAME_HEAD   = [bean.USER_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
+                     [bean saveToDB];
+                 }
+                 // 获取原始联系人数据
+                 arraySourceContact = [ContactBean searchWithWhere:nil orderBy:nil offset:0 count:1000];
+                 // 分段处理
+                 [self filltheTable:arraySourceContact];
+             }
+         }fail:^(BOOL notReachable, NSString *desciption)
+         {
+             [MBProgressHUD hideHUDForView:self.view animated:YES];
+             [MBProgressHUD showError:@"网络不给力" toView:self.view];
+         }];
+
+    }
+    // 无网络情况
+    else
+    {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         arraySourceDept = [DeptInfoBean searchWithWhere:nil orderBy:nil offset:0 count:1000];
-    }
-    fail:^(BOOL notReachable, NSString *desciption)
-    {
-        
-    }];
-    // 联系人信息
-    QueryContactsHttpRequest *contactRequest = [[QueryContactsHttpRequest alloc]init];
-    // 基本信息
-    contactRequest.SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
-    contactRequest.CORP_ID    = [ShareValue shareInstance].userInfo.CORP_ID;
-    contactRequest.DEPT_ID    = [ShareValue shareInstance].userInfo.DEPT_ID;
-    contactRequest.USER_AUTH  = [ShareValue shareInstance].userInfo.USER_AUTH;
-    contactRequest.USER_ID    = [ShareValue shareInstance].userInfo.USER_ID;
-    // 请求
-    [XTGLAPI queryContactsByRequest:contactRequest success:^(QueryContactsHttpResponse *response)
-    {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        if ([response.MESSAGE.MESSAGECODE isEqual:DEFINE_SUCCESSCODE])
+        if (!arraySourceDept)
         {
-            NSArray *aryTemp = response.DATA;
-            for (ContactBean *bean in aryTemp)
-            {
-                bean.USER_NAME_PINYIN = [OAChineseToPinyin pinyinFromChiniseString:bean.REALNAME];
-                bean.USER_NAME_HEAD   = [bean.USER_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
-                [bean saveToDB];
-            }
-            // 获取原始联系人数据
-            arraySourceContact = [ContactBean searchWithWhere:nil orderBy:nil offset:0 count:1000];
-            // 分段处理
-            [self filltheTable:arraySourceContact];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD showError:@"部门信息为空" toView:self.view];
         }
-    }
-    fail:^(BOOL notReachable, NSString *desciption)
-    {
+        arraySourceContact = [ContactBean searchWithWhere:nil orderBy:nil offset:0 count:1000];
+        if (!arraySourceContact)
+        {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD showError:@"联系人信息为空" toView:self.view];
+        }
+        [self filltheTable:arraySourceContact];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:@"网络不给力" toView:self.view];
-    }];
+    }
 }
 
 -(void)handleNotifySelectFin:(NSNotification*)note
@@ -182,7 +206,7 @@
         NSMutableArray *list = [ContactBean searchWithWhere:sql orderBy:nil offset:0 count:1000];
         [mUIdataArray addObject:list];
     }
-    NSLog(@"[mUIdataArray count] = %d",[mUIdataArray count]);
+    //NSLog(@"[mUIdataArray count] = %d",[mUIdataArray count]);
     // 刷新表格
     [_tabContact reloadData];
 }
@@ -209,7 +233,7 @@
     }
     else
     {
-        NSLog(@"numberOfRowsInSection = %d",[mUIdataArray[section] count]);
+        //NSLog(@"numberOfRowsInSection = %d",[mUIdataArray[section] count]);
         return [mUIdataArray[section] count];
     }
 }
@@ -375,5 +399,14 @@
     {
         [self makeSubCusTypeTreeData:arySourceData ParentTreeData:aryChildTree];
     }
+}
+
+-(BOOL)isEnableNetwork
+{
+    if ([[Reachability reachabilityForLocalWiFi] currentReachabilityStatus] == NotReachable)
+    {
+        return NO;
+    }
+    return YES;
 }
 @end
