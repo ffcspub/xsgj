@@ -476,8 +476,23 @@
             UIImageView * imageview = [self imageViewWithTag:_ivShowBig.tag + 1];
             if(imageview && imageview.highlighted)
             {
-                _ivShowBig.image = imageview.image;
                 _ivShowBig.tag = imageview.tag;
+                _ivShowBig.alpha = 1.0;
+                [UIView animateWithDuration:0.3 animations:^{
+                    _ivShowBig.alpha = 0.1;
+                    
+                } completion:^(BOOL finished) {
+                    _ivShowBig.image = imageview.image;
+                    [UIView animateWithDuration:0.5 animations:^{
+                        _ivShowBig.alpha = 1.0;
+                        
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+                }];
+            
+//                _ivShowBig.image = imageview.image;
+//                _ivShowBig.tag = imageview.tag;
             }
         }
 
@@ -489,8 +504,24 @@
             UIImageView * imageview = [self imageViewWithTag:_ivShowBig.tag - 1];
             if(imageview && imageview.highlighted)
             {
-                _ivShowBig.image = imageview.image;
                 _ivShowBig.tag = imageview.tag;
+                _ivShowBig.alpha = 1.0;
+                [UIView animateWithDuration:0.3 animations:^{
+                    _ivShowBig.alpha = 0.1;
+                    
+                } completion:^(BOOL finished) {
+                    _ivShowBig.image = imageview.image;
+                    [UIView animateWithDuration:0.5 animations:^{
+                        _ivShowBig.alpha = 1.0;
+                        
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+                }];
+                
+                
+//                _ivShowBig.image = imageview.image;
+//                _ivShowBig.tag = imageview.tag;
             }
         }
 

@@ -29,6 +29,7 @@
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleNotifySelectProductFin:) name:NOTIFICATION_SELECTPRODUCT_FIN object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleNotifyTextChanged:) name:UITextFieldTextDidChangeNotification object:nil];
     // Do any additional setup after loading the view from its nib.
     
     _aryProDataTemp = [[NSMutableArray alloc] init];
@@ -314,13 +315,17 @@
 //- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 //{
 //    
-//    if(_tfSearch.text.length > 0)
+//    NSMutableString * futureString = [NSMutableString stringWithString:textField.text];
+//    [futureString  insertString:string atIndex:range.location];
+//    
+//    
+//    if(futureString.length > 0)
 //    {
 //        _bSearch = YES;
 //        [_aryFilter removeAllObjects];
 //        for(BNProduct *product in _aryProductData)
 //        {
-//            NSRange range = [product.PROD_NAME rangeOfString:string];
+//            NSRange range = [product.PROD_NAME rangeOfString:futureString];
 //            if(range.length > 0)
 //            {
 //                [_aryFilter addObject:product];
@@ -340,25 +345,25 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [_tfSearch resignFirstResponder];
-    if(_tfSearch.text.length > 0)
-    {
-        _bSearch = YES;
-        [_aryFilter removeAllObjects];
-        for(BNProduct *product in _aryProductData)
-        {
-            NSRange range = [product.PROD_NAME rangeOfString:textField.text];
-            if(range.length > 0)
-            {
-                [_aryFilter addObject:product];
-            }
-        }
-    }
-    else
-    {
-        _bSearch = NO;
-    }
-    
-    [_tvProduct reloadData];
+//    if(_tfSearch.text.length > 0)
+//    {
+//        _bSearch = YES;
+//        [_aryFilter removeAllObjects];
+//        for(BNProduct *product in _aryProductData)
+//        {
+//            NSRange range = [product.PROD_NAME rangeOfString:textField.text];
+//            if(range.length > 0)
+//            {
+//                [_aryFilter addObject:product];
+//            }
+//        }
+//    }
+//    else
+//    {
+//        _bSearch = NO;
+//    }
+//    
+//    [_tvProduct reloadData];
     return NO;
 }
 
@@ -388,6 +393,29 @@
     
     NSString *types = [BNProductType getOwnerAndChildTypeIds:productType.CLASS_ID];
     _aryProductData = [BNProduct searchWithWhere:[NSString stringWithFormat:@"CLASS_ID in (%@)",types] orderBy:@"PROD_NAME_PINYIN" offset:0 count:100];
+    
+    [_tvProduct reloadData];
+}
+
+- (void)handleNotifyTextChanged:(NSNotification *)note
+{
+    if(_tfSearch.text.length > 0)
+    {
+        _bSearch = YES;
+        [_aryFilter removeAllObjects];
+        for(BNProduct *product in _aryProductData)
+        {
+            NSRange range = [product.PROD_NAME rangeOfString:_tfSearch.text];
+            if(range.length > 0)
+            {
+                [_aryFilter addObject:product];
+            }
+        }
+    }
+    else
+    {
+        _bSearch = NO;
+    }
     
     [_tvProduct reloadData];
 }
