@@ -46,6 +46,8 @@
     {
         return;
     }
+    
+    self.btnCommit.enabled = NO;
     _iSendImgCount = 0;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self commitData];
@@ -189,6 +191,7 @@
             {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [MBProgressHUD showError:desciption toView:self.view];
+                self.btnCommit.enabled = YES;
                 return;
             }
         }];
@@ -245,12 +248,14 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
+                self.btnCommit.enabled = YES;
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
                 [self.navigationController popToRootViewControllerAnimated:YES];
             });
         });
         
      }fail:^(BOOL notReachable, NSString *desciption){
+         self.btnCommit.enabled = YES;
          [step save];
          [MBProgressHUD hideHUDForView:self.view animated:YES];
          if(notReachable)

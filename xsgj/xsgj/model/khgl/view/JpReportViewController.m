@@ -92,6 +92,7 @@
         return;
     }
     
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     _iSendImgCount = 0;
     [_aryFileId removeAllObjects];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -162,6 +163,7 @@
             {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [MBProgressHUD showError:desciption toView:self.view];
+                self.navigationItem.rightBarButtonItem.enabled = YES;
                 return;
             }
         }];
@@ -170,6 +172,7 @@
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showError:@"至少需要一张照片" toView:self.view];
+        self.navigationItem.rightBarButtonItem.enabled = YES;
         return;
     }
 }
@@ -238,12 +241,14 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
+                self.navigationItem.rightBarButtonItem.enabled = YES;
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
                 [self.navigationController popViewControllerAnimated:YES];
             });
         });
         
      }fail:^(BOOL notReachable, NSString *desciption){
+         self.navigationItem.rightBarButtonItem.enabled = YES;
          [step save];
          [MBProgressHUD hideHUDForView:self.view animated:YES];
          if(notReachable)
