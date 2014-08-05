@@ -115,6 +115,8 @@
             }else{
                 fail(NO,@"网络不给力");
             }
+        } else {
+            fail(NO,@"服务器返回数据为空!");
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 //        fail(client.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable,@"网络不给力");
