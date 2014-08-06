@@ -11,11 +11,17 @@
 
 @interface WorkReportViewController : HideTabViewController<LeveyPopListViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *btn_inputType;
 @property (weak, nonatomic) IBOutlet UIImageView *iv_contentbg;
 @property (weak, nonatomic) IBOutlet UIImageView *iv_inputbg;
 @property (weak, nonatomic) IBOutlet UITextView *tv_content;
+@property (weak, nonatomic) IBOutlet UIImageView *iv_photobg;
+@property (weak, nonatomic) IBOutlet UIImageView *iv_photo;
+@property (weak, nonatomic) IBOutlet UIImageView *iv_photobgdown;
+@property (weak, nonatomic) IBOutlet UILabel *lb_photo;
 
 - (IBAction)selectReportTypeAction:(id)sender;
+- (IBAction)takePhotoAction:(id)sender;
 
 @end
