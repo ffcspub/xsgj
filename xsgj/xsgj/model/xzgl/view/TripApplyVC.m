@@ -18,6 +18,7 @@
 #import <NSDate+Helper.h>
 #import "NSString+URL.h"
 #import "ShareValue.h"
+#import "OfflineRequestCache.h"
 
 @interface TripApplyVC () <UITextFieldDelegate, UITextViewDelegate>
 {
@@ -466,12 +467,26 @@
 
     [MBProgressHUD showMessag:@"正在提交···" toView:ShareAppDelegate.window];
     [XZGLAPI applyTripByRequest:request success:^(ApplyTripHttpResponse *response) {
+        
         [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
         [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
-        [self performSelector:@selector(backToFront) withObject:nil afterDelay:.5f];
+        
+        [self performSelector:@selector(backToFront) withObject:nil afterDelay:1.5f];
     } fail:^(BOOL notReachable, NSString *desciption) {
-        [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
-        [MBProgressHUD showError:desciption toView:self.view];
+        
+        if (notReachable) {
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"出差申请"];
+            [cache saveToDB];
+            
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            
+            [self performSelector:@selector(backToFront) withObject:nil afterDelay:1.5f];
+        } else {
+            
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+        }
     }];
 }
 
