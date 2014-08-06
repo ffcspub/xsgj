@@ -83,6 +83,7 @@
 @property(nonatomic,weak) NSString *userName;//用户名
 @property(nonatomic,weak) NSString *userPass;//登录类型
 @property(nonatomic,weak) NSNumber *userId;//用户编号
+@property(nonatomic,weak) NSString *userPwd;//用户密码
 
 @property(nonatomic,assign) CLLocationCoordinate2D currentLocation;//当前经纬度
 @property(nonatomic,strong) NSString *address;//当前地址
