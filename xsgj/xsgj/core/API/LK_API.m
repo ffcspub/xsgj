@@ -134,7 +134,7 @@
     NSDictionary *tdict = request.lkDictionary;
     NSString *paramString = [LK_APIUtil stringCreateJsonWithObject:tdict ];
     path = [NSString stringWithFormat:@"%@?data=%@",path,[paramString URLEncodedString]];
-    
+    request.requestPath = path;
     AFHTTPClient *client =  [[AFHTTPClient alloc]initWithBaseURL:[NSURL URLWithString:basePath]];
     [client getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if(responseObject){
