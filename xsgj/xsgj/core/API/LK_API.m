@@ -94,9 +94,9 @@
     }
     NSDictionary *tdict = request.lkDictionary;
     NSString *paramString = [LK_APIUtil stringCreateJsonWithObject:tdict ];
+    NSLog(@"参数:%@", paramString);
     
     path = [NSString stringWithFormat:@"%@?data=%@",path, [paramString URLEncodedString]];
-    NSLog(@"http请求:%@", path);
     
     AFHTTPClient *client = LK_APIUtil.client;
     [client getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {

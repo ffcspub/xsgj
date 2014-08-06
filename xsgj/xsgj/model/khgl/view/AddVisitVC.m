@@ -21,6 +21,7 @@
 #import "SelectTreeViewController.h"
 #import "BNCustomerType.h"
 #import <LKDBHelper.h>
+#import "OfflineRequestCache.h"
 
 @interface AddVisitVC () <MapAddressVCDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UITextFieldDelegate>
 {
@@ -242,17 +243,11 @@
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"yyMMddHHmmss"];
     NSString *fileName = [NSString stringWithFormat:@"IMG_%@",[formatter stringFromDate:now]];
-    
-    [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
-        
-        _photoId = fileId;
-        [self addVisiterAction];
-        
-    } fail:^(BOOL notReachable, NSString *desciption) {
-        
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:desciption toView:self.view];
-    }];
+    _photoId = [SystemAPI uploadPhotoByFileName:fileName
+                                           data:_imageData
+                                        success:^(NSString *fileId) {}
+                                           fail:^(BOOL notReachable, NSString *desciption) {}];
+    [self addVisiterAction];
 }
 
 /**
@@ -290,9 +285,21 @@
         
     } fail:^(BOOL notReachable, NSString *desciption) {
         
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:desciption toView:self.view];
-        
+        if (notReachable)
+        {
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"新增客户"];
+            [cache saveToDB];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            double delayInSeconds = 1.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        } else {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+        }
     }];
 }
 

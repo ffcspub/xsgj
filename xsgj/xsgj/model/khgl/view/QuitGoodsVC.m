@@ -18,6 +18,9 @@ static NSString * const QuitGoodsCellIdentifier = @"QuitGoodsCellIdentifier";
 static int const pageSize = 10;
 
 @interface QuitGoodsVC ()
+{
+    BOOL _isloading; // 加载的标识
+}
 
 @property (nonatomic, assign) NSUInteger currentPage; // 第1页开始,每页加载10
 
@@ -72,6 +75,7 @@ static int const pageSize = 10;
     request.PAGE = self.currentPage;
     request.ROWS = pageSize;
     
+    _isloading = YES;
     MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [KHGLAPI queryOrderBackByRequest:request success:^(QueryOrderBackHttpResponse *response) {
         
@@ -80,12 +84,11 @@ static int const pageSize = 10;
         
         if (resultCount < pageSize) {
             self.tbvQuery.showsInfiniteScrolling = NO;
-        } else {
-            self.tbvQuery.showsInfiniteScrolling = YES;
         }
-        
+
         if (self.currentPage == 1) {
             [self.arrData removeAllObjects];
+            [self.tbvQuery scrollRectToVisible:CGRectMake(0, 0, 320, 1) animated:NO];
         }
         
         [self.tbvQuery.infiniteScrollingView stopAnimating];
@@ -94,15 +97,17 @@ static int const pageSize = 10;
         [self.tbvQuery reloadData];
         
         [hub removeFromSuperview];
-        
+        _isloading = NO;
     } fail:^(BOOL notReachable, NSString *desciption) {
         
         [self.tbvQuery.infiniteScrollingView stopAnimating];
-        
+        self.tbvQuery.showsInfiniteScrolling = NO;
+        self.tbvQuery.showsInfiniteScrolling = YES;
         [self.tbvQuery reloadData];
         
         [hub removeFromSuperview];
         [MBProgressHUD showError:desciption toView:self.view];
+        _isloading = NO;
     }];
 }
 
@@ -111,6 +116,10 @@ static int const pageSize = 10;
 // 查询按钮事件
 - (void)queryAction:(UIButton *)sender
 {
+    if (_isloading) {
+        return;
+    }
+    
     // 验证时间
     [super queryAction:sender];
     
@@ -130,7 +139,7 @@ static int const pageSize = 10;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     QuitGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:QuitGoodsCellIdentifier];
-    [cell setSelected:NO];
+    [cell setHighlighted:NO animated:NO];
     
     // 配置Cell
     [cell configureForData:self.arrData[indexPath.row]];
@@ -155,7 +164,7 @@ static int const pageSize = 10;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     QuitGoodsDetailVC *vc = [[QuitGoodsDetailVC alloc] init];
     vc.quitBean = self.arrData[indexPath.row];

@@ -175,6 +175,7 @@ static int const pageSize = 10;
         }
         if (self.currentPage == 1) {
             [self.arrTrips removeAllObjects];
+            [self.tbvQuery scrollRectToVisible:CGRectMake(0, 0, 320, 1) animated:NO];
         }
         
         [self.tbvQuery.infiniteScrollingView stopAnimating];
