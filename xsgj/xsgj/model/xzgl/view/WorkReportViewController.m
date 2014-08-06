@@ -12,10 +12,13 @@
 #import "WorkReportTypeBean.h"
 #import "MBProgressHUD+Add.h"
 #import "OfflineRequestCache.h"
+#import "SystemAPI.h"
 
-@interface WorkReportViewController (){
+@interface WorkReportViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>{
     NSMutableArray *_types;
     WorkReportTypeBean *_selectType;
+    NSData *_imageData;
+    NSString *_photoId;
 }
 
 @end
@@ -82,6 +85,13 @@
     [_iv_contentbg setImage:[[UIImage imageNamed:@"bgNo1"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 20, 20, 20)]];
     
     [_iv_inputbg setImage:[[UIImage imageNamed:@"TextBox_selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(8, 8, 8, 8)]];
+    
+    [_iv_photobg setImage:[[UIImage imageNamed:@"Photo外框"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 20, 20, 20)]];
+    [_iv_photo setImage:[UIImage imageNamed:@"defaultPhoto"]];
+    [_iv_photobgdown setImage:[UIImage imageNamed:@"Photo外框Part2"]];
+    _lb_photo.textColor = HEX_RGB(0xb1b9bf);
+    
+    [_scrollView setContentSize:CGSizeMake(CGRectGetWidth(_scrollView.frame), CGRectGetMaxY(_iv_photobg.frame) + 10)];
 }
 
 #pragma mark - navBarButton
@@ -111,6 +121,8 @@
         errorMessage = @"请选择汇报类型";
     }else if (_tv_content.text.length == 0){
         errorMessage = @"请输入汇报内容";
+    }else if(!_imageData){
+        errorMessage = @"请先拍照";
     }
     if (errorMessage.length > 0) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:errorMessage delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -122,8 +134,6 @@
 
 - (void)workReportRequest
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
     WorkReportHttpRequest *request = [[WorkReportHttpRequest alloc] init];
     request.TYPE_ID = [NSString stringWithFormat:@"%d",_selectType.TYPE_ID];
     request.CONTENT = _tv_content.text;
@@ -131,14 +141,15 @@
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     request.COMMITTIME = [formatter stringFromDate:now];
+    request.PHOTO1 = _photoId;
     
     [XZGLAPI workReportByRequest:request success:^(WorkReportHttpResponse *response) {
+        
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
-        [self.navigationController popViewControllerAnimated:YES];
+        [self performSelector:@selector(backToFront) withObject:nil afterDelay:.5f];
+        
     } fail:^(BOOL notReachable, NSString *desciption) {
-//        [MBProgressHUD hideHUDForView:self.view animated:YES];
-//        [MBProgressHUD showError:@"网络不给力" toView:self.view];
         
         if (notReachable) {
             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"工作汇报"];
@@ -157,6 +168,26 @@
     }];
 }
 
+- (void)backToFront
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)uploadPhoto
+{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    NSDate *now = [NSDate new];
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    [formatter setDateFormat:@"yyMMddHHmmss"];
+    NSString *fileName = [NSString stringWithFormat:@"IMG_%@",[formatter stringFromDate:now]];
+    
+    _photoId = [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
+    } fail:^(BOOL notReachable, NSString *desciption) {
+    }];
+    
+    [self workReportRequest];
+}
 
 #pragma mark - LeveyPopListViewDelegate
 
@@ -176,7 +207,7 @@
     if (![self isVailData]) {
         return;
     }
-    [self workReportRequest];
+    [self uploadPhoto];
 }
 
 - (IBAction)selectReportTypeAction:(id)sender
@@ -196,6 +227,126 @@
     } fail:^(BOOL notReachable, NSString *desciption) {
         
     }];
+}
+
+- (void)showCamera
+{
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    [self presentViewController:imagePickerController animated:YES completion:NULL];
+}
+
+- (IBAction)takePhotoAction:(id)sender
+{
+    [self performSelector:@selector(showCamera) withObject:nil afterDelay:0.3];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (UIImage *)fixOrientation:(UIImage *)aImage {
+    
+    // No-op if the orientation is already correct
+    if (aImage.imageOrientation == UIImageOrientationUp)
+        return aImage;
+    
+    // We need to calculate the proper transformation to make the image upright.
+    // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationDown:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+            
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+            
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+        default:
+            break;
+    }
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationUpMirrored:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+            
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.height, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+        default:
+            break;
+    }
+    
+    // Now we draw the underlying CGImage into a new context, applying the transform
+    // calculated above.
+    CGContextRef ctx = CGBitmapContextCreate(NULL, aImage.size.width, aImage.size.height,
+                                             CGImageGetBitsPerComponent(aImage.CGImage), 0,
+                                             CGImageGetColorSpace(aImage.CGImage),
+                                             CGImageGetBitmapInfo(aImage.CGImage));
+    CGContextConcatCTM(ctx, transform);
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            // Grr...
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.height,aImage.size.width), aImage.CGImage);
+            break;
+            
+        default:
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.width,aImage.size.height), aImage.CGImage);
+            break;
+    }
+    
+    // And now we just create a new UIImage from the drawing context
+    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
+    UIImage *img = [UIImage imageWithCGImage:cgimg];
+    CGContextRelease(ctx);
+    CGImageRelease(cgimg);
+    return img;
+}
+
+- (UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
+{
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
+    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    image = [self fixOrientation:image];
+    image = [self scaleImage:image toScale:0.2f];
+    
+    _iv_photo.image = image;
+    
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.5f);
+    _imageData = imageData;
+    
+    [picker dismissModalViewControllerAnimated:YES];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end
