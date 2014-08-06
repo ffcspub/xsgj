@@ -156,6 +156,8 @@
         errorMessage = @"请输入确认密码";
     }else if (![_tf_newpwd.text isEqualToString:_tf_confirmpwd.text]){
         errorMessage = @"密码不一致，请重新输入";
+    }else if (![_tf_oldpwd.text isEqualToString:[ShareValue shareInstance].userPwd]){
+        errorMessage = @"旧密码输入错误，请重新输入";
     }
     if (errorMessage.length > 0) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:errorMessage delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -188,6 +190,7 @@
         
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showError:desciption toView:self.view];
+        
     }];
 }
 
