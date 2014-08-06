@@ -74,6 +74,7 @@
     [tf_oldpwd setBorderStyle:UITextBorderStyleNone];
     tf_oldpwd.secureTextEntry = YES;
     tf_oldpwd.font = [UIFont systemFontOfSize:17];
+    tf_oldpwd.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     [self.view addSubview:tf_oldpwd];
     _tf_oldpwd = tf_oldpwd;
     
@@ -96,6 +97,7 @@
     [tf_newpwd setBorderStyle:UITextBorderStyleNone];
     tf_newpwd.secureTextEntry = YES;
     tf_newpwd.font = [UIFont systemFontOfSize:17];
+    tf_newpwd.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     [self.view addSubview:tf_newpwd];
     _tf_newpwd = tf_newpwd;
     
@@ -118,6 +120,7 @@
     [tf_confirmpwd setBorderStyle:UITextBorderStyleNone];
     tf_confirmpwd.secureTextEntry = YES;
     tf_confirmpwd.font = [UIFont systemFontOfSize:17];
+    tf_confirmpwd.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     [self.view addSubview:tf_confirmpwd];
     _tf_confirmpwd = tf_confirmpwd;
     

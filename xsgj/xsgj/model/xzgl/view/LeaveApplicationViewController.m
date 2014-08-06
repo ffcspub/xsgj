@@ -76,6 +76,7 @@
     tf_title.font = [UIFont systemFontOfSize:17];
     tf_title.maxLength = 15;
     tf_title.textColor = HEX_RGB(0x000000);
+    tf_title.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     tf_title.tag = 401;
     tf_title.delegate = self;
     [btn_title addSubview:tf_title];
@@ -210,6 +211,7 @@
     tf_day.font = [UIFont systemFontOfSize:17];
     tf_day.textColor = HEX_RGB(0x000000);
     tf_day.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    tf_day.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 //    tf_day.delegate = self;
     tf_day.tag = 405;
     tf_day.inputRegular = @"^(\\d+)(\\.\\d?)?$";
