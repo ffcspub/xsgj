@@ -113,12 +113,26 @@ static BOOL _isSending;
     return _client;
 }
 
++(AFHTTPClient *)uploadClient{
+    static dispatch_once_t onceToken;
+    static AFHTTPClient *_client;
+    dispatch_once(&onceToken, ^{
+        _client = [[AFHTTPClient alloc]initWithBaseURL:[NSURL URLWithString:UPLOAD_PIC_URL]];
+        LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
+        [helper createTableWithModelClass:[OfflineRequestCache class]];
+    });
+    return _client;
+}
+
 -(void)sendOfflineRequest{
     _isSending = YES;
     AFHTTPClient *client = OfflineAPI.client;
     NSArray *array = [OfflineRequestCache searchWithWhere:nil orderBy:nil offset:0 count:100];
     for (OfflineRequestCache *cache in array) {
         if (_isSending) {
+            if (cache.isUpload) {
+                client = OfflineAPI.uploadClient;
+            }
             [client getPath:cache.requestJsonStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 if(responseObject){
                     [[LKDBHelper getUsingLKDBHelper]deleteToDB:cache];

@@ -16,6 +16,7 @@
 @property(nonatomic,strong) NSString *time;
 @property(nonatomic,strong) NSString *name;
 @property(nonatomic,strong) NSString *requestJsonStr;
+@property(nonatomic,assign) int isUpload;
 
 -(id)initWith:(LK_HttpBaseRequest *)request name:(NSString *)name;
 

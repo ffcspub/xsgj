@@ -9,6 +9,7 @@
 #import "OfflineRequestCache.h"
 #import <NSDate+Helper.h>
 #import "LK_NSDictionary2Object.h"
+#import "SystemHttpRequest.h"
 
 @implementation OfflineRequestCache
 
@@ -32,6 +33,9 @@
          self.time = [[NSDate date]stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
         self.requestJsonStr = request.requestPath;
         self.name = name;
+        if ([request isKindOfClass:[UploadPhotoHttpRequest class]]) {
+            self.isUpload = 1;
+        }
     }
     return self;
 }
