@@ -30,6 +30,7 @@
         if ([DEFINE_SUCCESSCODE isEqual:response.MESSAGE.MESSAGECODE]) {
             UserLoginHttpResponse *tResponse = (UserLoginHttpResponse *)response;
             [ShareValue shareInstance].userId = [NSNumber numberWithInt:tResponse.USERINFO.USER_ID];
+            [ShareValue shareInstance].userPwd = password;
             [ShareValue shareInstance].userInfo = tResponse.USERINFO;
             [tResponse saveCacheDB];
             success(tResponse.USERINFO);

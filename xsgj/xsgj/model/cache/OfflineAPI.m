@@ -113,6 +113,17 @@
     return _client;
 }
 
++(AFHTTPClient *)uploadClient{
+    static dispatch_once_t onceToken;
+    static AFHTTPClient *_client;
+    dispatch_once(&onceToken, ^{
+        _client = [[AFHTTPClient alloc]initWithBaseURL:[NSURL URLWithString:UPLOAD_PIC_URL]];
+        LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
+        [helper createTableWithModelClass:[OfflineRequestCache class]];
+    });
+    return _client;
+}
+
 /**
  *  启动离线上报
  */
@@ -123,6 +134,9 @@
         AFHTTPClient *client = OfflineAPI.client;
         NSArray *array = [OfflineRequestCache searchWithWhere:nil orderBy:nil offset:0 count:100];
         for (OfflineRequestCache *cache in array) {
+            if (cache.isUpload) {
+                client = OfflineAPI.uploadClient;
+            }
             if ([self httpClient:client sendHTTPRequest:cache]) {
                 NSLog(@"离线上报---->[%@] 成功!", cache.name);
             } else {
@@ -147,7 +161,7 @@
     
     NSURLResponse *response = nil;
     NSError *error = nil;
-    
+
     NSMutableURLRequest *urlRequest = [client requestWithMethod:@"GET"
                                                            path:request.requestJsonStr
                                                      parameters:nil];
@@ -169,7 +183,7 @@
     return result;
 }
 
--(void)startListener
+- (void)startListener
 {
     if (!_reachability) {
         _reachability = [Reachability reachabilityWithHostname:@"www.baidu.com"];  // 测试服务器状态

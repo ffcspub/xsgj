@@ -16,7 +16,7 @@
 #define SET_USERPASS @"SET_USERPASS"
 #define SET_NOSHOWPASS @"SET_NOSHOWPASS"
 #define SET_USERID @"SET_USERID"
-
+#define SET_PWD @"SET_PWD"
 
 
 static ShareValue *_shareValue;
@@ -145,6 +145,19 @@ static UIImage *_imageTablePart3S;
 
 -(NSString *)corpCode{
     return [[NSUserDefaults standardUserDefaults]stringForKey:SET_COREPCODE];
+}
+
+-(void)setUserPwd:(NSString *)userPwd{
+    if (!userPwd) {
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:SET_PWD];
+    }else{
+        [[NSUserDefaults standardUserDefaults]setObject:userPwd forKey:SET_PWD];
+    }
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+-(NSString *)userPwd{
+    return [[NSUserDefaults standardUserDefaults]stringForKey:SET_PWD];
 }
 
 -(void)setUserName:(NSString *)userName{
