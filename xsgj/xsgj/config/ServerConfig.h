@@ -56,6 +56,7 @@
 #define URL_detailTrip @"trip/detailTrip.shtml" // 出差详情
 #define URL_approveCount @"leave/queryApproveCount.shtml" //审批数量
 #define URL_insertWorkInfo @"workReport/insertWorkInfo.shtml" // 工作上报
+#define URL_workReport @"workReport/workReport.shtml"//工作汇报
 #define URL_work_type @"workReport/work_type.shtml"// 工作上报类型
 #define URL_addAdvice @"advice/addAdvice.shtml"// 意见上报
 #define URL_queryAdvice @"advice/queryAdvice.shtml"// 查询意见上报

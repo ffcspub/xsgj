@@ -226,7 +226,7 @@
  *  @param fail    失败返回结果
  */
 +(void)workReportByRequest:(WorkReportHttpRequest *)request success:(void(^)(WorkReportHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
-    [LK_APIUtil getHttpRequest:request apiPath:URL_insertWorkInfo Success:^(LK_HttpBaseResponse *response) {
+    [LK_APIUtil getHttpRequest:request apiPath:URL_workReport Success:^(LK_HttpBaseResponse *response) {
         success((WorkReportHttpResponse *)response);
     } fail:^(BOOL NotReachable, NSString *desciption) {
         fail(NotReachable,desciption);
