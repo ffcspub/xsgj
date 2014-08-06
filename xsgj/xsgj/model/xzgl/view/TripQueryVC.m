@@ -187,8 +187,6 @@ static int const pageSize = 10;
     } fail:^(BOOL notReachable, NSString *desciption) {
         
         [self.tbvQuery.infiniteScrollingView stopAnimating];
-        self.tbvQuery.showsInfiniteScrolling = NO;
-        self.tbvQuery.showsInfiniteScrolling = YES;
         
         [hub removeFromSuperview];
         [MBProgressHUD showError:desciption toView:self.view];

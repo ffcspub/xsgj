@@ -55,7 +55,7 @@ static int const pageSize = 10;
     
     // 默认加载第一页
     self.currentPage = 1;
-    self.tbvQuery.showsInfiniteScrolling = NO;
+    self.tbvQuery.showsInfiniteScrolling = YES;
     [self loadOrderGoods];
 }
 
@@ -101,8 +101,6 @@ static int const pageSize = 10;
     } fail:^(BOOL notReachable, NSString *desciption) {
         
         [self.tbvQuery.infiniteScrollingView stopAnimating];
-        self.tbvQuery.showsInfiniteScrolling = NO;
-        self.tbvQuery.showsInfiniteScrolling = YES;
         [self.tbvQuery reloadData];
         
         [hub removeFromSuperview];
