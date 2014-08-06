@@ -12,14 +12,15 @@
 #import "OfflineRequestCache.h"
 #import "ServerConfig.h"
 #import <Reachability.h>
-
-static BOOL _isSending;
+#import <JSONKit.h>
 
 @interface OfflineAPI(){
     Reachability *_reachability;
 }
-@end
 
+@property (nonatomic, assign) BOOL isObserve; // 是否监听网络变化
+
+@end
 
 @implementation OfflineAPI
 
@@ -35,17 +36,14 @@ static BOOL _isSending;
 -(id)init{
     self = [super init];
     if (self) {
-        //开启网络状况的监听
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
         
-        _reachability = [Reachability reachabilityWithHostname:@"www.baidu.com"];  // 测试服务器状态
-        [_reachability startNotifier];  //开始监听,会启动一个run loop
     }
     return self;
 }
 
--(void)dealloc{
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
+-(void)dealloc
+{
+    [self stopListener];
 }
 
 /***
@@ -69,34 +67,36 @@ static BOOL _isSending;
     return  isExistenceNetwork;
 }
 
--(void)reachabilityChanged: (NSNotification* )note {
+-(void)reachabilityChanged: (NSNotification* )note
+{
     Reachability* curReach = [note object];
     NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
-    
     NetworkStatus netStatus = [curReach currentReachabilityStatus];
     
     switch (netStatus)
     {
         case NotReachable:
         {
-            NSLog(@"Access Not Available");
+            NSLog(@"当前网络->不可用!");
             break;
         }
             
         case ReachableViaWWAN:
         {
             if ([self isExistenceNetwork]) {
-                [self sendOfflineRequest];
+                [self performSelectorInBackground:@selector(sendOfflineRequest) withObject:nil];
+                //[self sendOfflineRequest];
             }
-            NSLog(@"Reachable WWAN");
+            NSLog(@"当前网络->3G");
             break;
         }
         case ReachableViaWiFi:
         {
             if ([self isExistenceNetwork]) {
-                [self sendOfflineRequest];
+                [self performSelectorInBackground:@selector(sendOfflineRequest) withObject:nil];
+                //[self sendOfflineRequest];
             }
-            NSLog(@"Reachable WiFi");
+            NSLog(@"当前网络->WIFI");
             break;
         }
     }
@@ -113,36 +113,82 @@ static BOOL _isSending;
     return _client;
 }
 
--(void)sendOfflineRequest{
-    _isSending = YES;
-    AFHTTPClient *client = OfflineAPI.client;
-    NSArray *array = [OfflineRequestCache searchWithWhere:nil orderBy:nil offset:0 count:100];
-    for (OfflineRequestCache *cache in array) {
-        if (_isSending) {
-            [client getPath:cache.requestJsonStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                if(responseObject){
-                    [[LKDBHelper getUsingLKDBHelper]deleteToDB:cache];
-                    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS object:cache];
-                }else{
-                    
-                }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                
-            }];
+/**
+ *  启动离线上报
+ */
+-(void)sendOfflineRequest
+{
+    // 保证只有一个线程在发送请求
+    @synchronized(self) {
+        AFHTTPClient *client = OfflineAPI.client;
+        NSArray *array = [OfflineRequestCache searchWithWhere:nil orderBy:nil offset:0 count:100];
+        for (OfflineRequestCache *cache in array) {
+            if ([self httpClient:client sendHTTPRequest:cache]) {
+                NSLog(@"离线上报---->[%@] 成功!", cache.name);
+            } else {
+                NSLog(@"离线上报---->[%@] 成功!", cache.name);
+            }
         }
     }
-    _isSending = NO;
-    
 }
 
--(void)startListener{
-    if (!_isSending) {
-        [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+/**
+ *  同步请求
+ *
+ *  @param client
+ *  @param request 请求信息
+ *
+ *  @return 是否请求成功
+ */
+- (BOOL)httpClient:(AFHTTPClient *)client sendHTTPRequest:(OfflineRequestCache*)request
+{
+    NSLog(@"离线上报---->[%@] 正在请求···", request.name);
+    BOOL result = NO;
+    
+    NSURLResponse *response = nil;
+    NSError *error = nil;
+    
+    NSMutableURLRequest *urlRequest = [client requestWithMethod:@"GET"
+                                                           path:request.requestJsonStr
+                                                     parameters:nil];
+    NSData *data = [NSURLConnection sendSynchronousRequest:urlRequest
+                                         returningResponse:&response
+                                                     error:&error];
+    if( error ) {
+        result = NO;
+    } else {
+        id JSON = [data objectFromJSONData];
+        if(JSON){
+            [[LKDBHelper getUsingLKDBHelper] deleteToDB:request];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
+                                                                object:request];
+            result = YES;
+        }
+    }
+    
+    return result;
+}
+
+-(void)startListener
+{
+    if (!_reachability) {
+        _reachability = [Reachability reachabilityWithHostname:@"www.baidu.com"];  // 测试服务器状态
+    }
+    [_reachability startNotifier]; //开始监听,会启动一个run loop
+    
+    if (!self.isObserve) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(reachabilityChanged:)
+                                                     name:kReachabilityChangedNotification
+                                                   object:nil];
     }
 }
 
--(void)stopListener{
+-(void)stopListener
+{
+    [_reachability stopNotifier];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+    self.isObserve = NO;
 }
 
 @end
