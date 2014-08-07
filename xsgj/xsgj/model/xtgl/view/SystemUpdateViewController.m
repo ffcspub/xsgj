@@ -9,9 +9,7 @@
 #import "SystemUpdateViewController.h"
 
 // FXTX
-//static const NSString *appleID = @"906620927";
-// CPVS
-static const NSString *appleID = @"835387569";
+static const NSString *appleID = @"906620927";
 
 @interface SystemUpdateViewController ()<UIAlertViewDelegate>
 {
