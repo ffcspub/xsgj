@@ -28,7 +28,7 @@
     self.lbType.text = customerInfo.TYPE_NAME;
     if(customerInfo.LASTEST_VISIT.length > 10)
     {
-        self.lbVisitTime.text = customerInfo.LASTEST_VISIT;
+        self.lbVisitTime.text = [NSString stringWithFormat:@"最近拜访时间:%@",customerInfo.LASTEST_VISIT];
     }
     else
     {

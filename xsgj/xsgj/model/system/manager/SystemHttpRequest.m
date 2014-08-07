@@ -97,7 +97,7 @@
         _DEPT_ID = [ShareValue shareInstance].userInfo.DEPT_ID;
         _USER_AUTH = [ShareValue shareInstance].userInfo.USER_AUTH;
         _USER_ID = [ShareValue shareInstance].userInfo.USER_ID;
-        _FILE_ID = [NSString stringWithFormat:@"%@%@",[OpenUDID value],[[NSDate date] stringWithFormat:@"yyyyMMddhhmmssSSS"]];
+        _FILE_ID = [NSString stringWithFormat:@"%@%@",[[OpenUDID value]substringFromIndex:7],[[NSDate date] stringWithFormat:@"yyyyMMddhhmmssSSS"]];
     }
     return self;
 }
