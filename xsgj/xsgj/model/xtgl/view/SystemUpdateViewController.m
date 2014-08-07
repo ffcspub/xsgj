@@ -1,6 +1,6 @@
 //
 //  SystemUpdateViewController.m
-//  xsgj
+//  系统更新
 //
 //  Created by linw on 14-7-24.
 //  Copyright (c) 2014年 ilikeido. All rights reserved.
@@ -8,13 +8,16 @@
 
 #import "SystemUpdateViewController.h"
 
-static const NSString *appleID = @"521989084";
+// FXTX
+//static const NSString *appleID = @"906620927";
+// CPVS
+static const NSString *appleID = @"835387569";
 
 @interface SystemUpdateViewController ()<UIAlertViewDelegate>
 {
-    double localVersion;
-    double remoteVersion;
-    NSString *trackViewUrl;
+    NSString* strLocalVer;
+    NSString* strRemoteVer;
+    NSString* trackViewUrl;
 }
 @end
 
@@ -25,7 +28,7 @@ static const NSString *appleID = @"521989084";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        // Custom initialization
+        
     }
     return self;
 }
@@ -34,51 +37,66 @@ static const NSString *appleID = @"521989084";
 {
     [super viewDidLoad];
     [self setRightBarButtonItem];
-    _labLocalVer.text  = [NSString stringWithFormat:@"%f",[self getLocalVersion]];
-    _labRemoteVer.text = [NSString stringWithFormat:@"%f",[self getRemoteVersion]];
+    // 获取本地版本
+    _labLocalVer.text  = [self getStrLocalVer];
+    // 获取远程版本
+    _labRemoteVer.text = [self getStrRemoteVer];
+    // 版本判断
+    if ([strLocalVer isEqualToString:strRemoteVer])
+    {
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+        _labVerDescription.text = @"已经是最新版本";
+    }
+    else
+    {
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        _labVerDescription.text  = @"当前版本不是最新版本,请及时更新";
+    }
 }
 
--(double)getLocalVersion
+-(NSString*)getStrLocalVer
 {
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
-    localVersion = [currentVersion doubleValue];
-    return  localVersion;
+    strLocalVer = [infoDict objectForKey:@"CFBundleShortVersionString"];
+    return  strLocalVer;
 }
 
--(double)getRemoteVersion
+-(NSString*)getStrRemoteVer
 {
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",appleID]]];
     [request setHTTPMethod:@"GET"];
     NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:nil];
-    remoteVersion = [jsonData[@"results"][0][@"version"] floatValue];
+    if ([jsonData[@"resultCount"] intValue] == 0)
+    {
+        // 远程版本预置缺省值
+        strRemoteVer       = [self getStrLocalVer];
+        return strRemoteVer;
+    }
+    strRemoteVer = jsonData[@"results"][0][@"version"];
     trackViewUrl  = jsonData[@"results"][0][@"trackViewUrl"];
-    return remoteVersion;
+    return strRemoteVer;
 }
 
 #pragma mark - navBarButton
 
-- (void)setRightBarButtonItem{
-    
+- (void)setRightBarButtonItem
+{
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
     [rightButton setFrame:CGRectMake(0, 2.f, 70.f, 33.f)];
     [rightButton setBackgroundColor:[UIColor clearColor]];
-    
     [rightButton setTitle:@"更新" forState:UIControlStateNormal];
-    
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateNormal];
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_press"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateHighlighted];
-    
+    [rightButton setBackgroundImage:IMG_BTN_BLUE forState:UIControlStateNormal];
+    [rightButton setBackgroundImage:IMG_BTN_BLUE_S forState:UIControlStateHighlighted];
+    [rightButton setBackgroundImage:IMG_BTN_BLUE_D forState:UIControlStateDisabled];
     [rightButton addTarget:self action:@selector(updateAction:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
 }
 
 -(void)updateAction:(id)sender
 {
-    if (localVersion < remoteVersion)
+    if (![strLocalVer isEqualToString:strRemoteVer])
     {
         UIAlertView *alert;
         alert = [[UIAlertView alloc] initWithTitle:@"销售管家"
@@ -86,7 +104,6 @@ static const NSString *appleID = @"521989084";
                                           delegate: self
                                  cancelButtonTitle:@"取消"
                                  otherButtonTitles: @"升级", nil];
-        alert.tag = 1001;
         [alert show];
     }
     else
@@ -108,7 +125,6 @@ static const NSString *appleID = @"521989084";
     // Dispose of any resources that can be recreated.
 }
 
-//根据被点击按钮的索引处理点击事件
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex ==1)

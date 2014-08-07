@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="labLocalVer" destination="4b2-85-kCT" id="eyE-BO-p6Q"/>
                 <outlet property="labRemoteVer" destination="35G-Wh-1tj" id="Ha5-IH-Ww3"/>
+                <outlet property="labVerDescription" destination="Cai-gK-3GY" id="mQ6-Ws-XY4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
