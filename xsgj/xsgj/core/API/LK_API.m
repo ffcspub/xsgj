@@ -26,7 +26,7 @@
     static AFHTTPClient *_client;
     dispatch_once(&onceToken, ^{
         _client = [[AFHTTPClient alloc]initWithBaseURL:[NSURL URLWithString:BASE_SERVERLURL]];
-        [AFHTTPRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
+//        [AFHTTPRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
     });
     return _client;
 }

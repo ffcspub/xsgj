@@ -233,7 +233,12 @@
 
 - (void)LoadFunctionItems
 {
-    _aryFuncItems = [BNMobileMenu searchWithWhere:[NSString stringWithFormat:@"PARENT_ID=%D and STATE=1",17] orderBy:@"ORDER_NO" offset:0 count:100];
+    if ([_strVisitType isEqual:@"1"]) {
+        _aryFuncItems = [BNMobileMenu searchWithWhere:[NSString stringWithFormat:@"PARENT_ID=%D and STATE=1",16] orderBy:@"ORDER_NO" offset:0 count:100];
+    }else{
+        _aryFuncItems = [BNMobileMenu searchWithWhere:[NSString stringWithFormat:@"PARENT_ID=%D and STATE=1",17] orderBy:@"ORDER_NO" offset:0 count:100];
+
+    }
     
     CGRect frame = _tvFuncBg.frame;
     frame.size.height = _aryFuncItems.count * 44;

@@ -210,7 +210,7 @@
     UITextField *tf_day = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 40)];
     tf_day.font = [UIFont systemFontOfSize:17];
     tf_day.textColor = HEX_RGB(0x000000);
-    tf_day.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    tf_day.keyboardType = UIKeyboardTypeDecimalPad;
     tf_day.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 //    tf_day.delegate = self;
     tf_day.tag = 405;
@@ -459,7 +459,11 @@
     [XZGLAPI applyLeaveByRequest:request success:^(ApplyLeaveHttpResponse *response) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
-        [self.navigationController popViewControllerAnimated:YES];
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self.navigationController popViewControllerAnimated:YES];
+        });
     } fail:^(BOOL notReachable, NSString *desciption) {
 //        [MBProgressHUD hideHUDForView:self.view animated:YES];
 //        [MBProgressHUD showError:@"网络不给力" toView:self.view];

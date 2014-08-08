@@ -57,43 +57,23 @@
     _cellStyle = cellStyle;
     switch (cellStyle) {
         case TOP:{
-            UIImage *image = [UIImage imageNamed:@"table_part1"];
-            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-            self.ivBackground.image = image;
-            
-            UIImage *imageSelect = [UIImage imageNamed:@"table_part1_s"];
-            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-            self.ivBackgroundSelect.image = imageSelect;
+            self.ivBackground.image = [ShareValue tablePart1];
+            self.ivBackgroundSelect.image = [ShareValue tablePart1S];
         }
         break;
         case MID:{
-            UIImage *image = [UIImage imageNamed:@"table_part2"];
-            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-            self.ivBackground.image = image;
-            
-            UIImage *imageSelect = [UIImage imageNamed:@"table_part2_s"];
-            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-            self.ivBackgroundSelect.image = imageSelect;
+            self.ivBackground.image = [ShareValue tablePart2];
+            self.ivBackgroundSelect.image = [ShareValue tablePart2S];
         }
         break;
         case BOT:{
-            UIImage *image = [UIImage imageNamed:@"table_part3"];
-            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-            self.ivBackground.image = image;
-            
-            UIImage *imageSelect = [UIImage imageNamed:@"table_part3_s"];
-            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-            self.ivBackgroundSelect.image = imageSelect;
+            self.ivBackground.image = [ShareValue tablePart3];
+            self.ivBackgroundSelect.image = [ShareValue tablePart3S];
         }
         break;
         case SINGLE:{
-            UIImage *image = [UIImage imageNamed:@"table_main_n"];
-            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-            self.ivBackground.image = image;
-            
-            UIImage *imageSelect = [UIImage imageNamed:@"table_main_s"];
-            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-            self.ivBackgroundSelect.image = imageSelect;
+            self.ivBackground.image = [ShareValue tablePart];
+            self.ivBackgroundSelect.image = [ShareValue tablePartS];;
         }
         break;
         default:

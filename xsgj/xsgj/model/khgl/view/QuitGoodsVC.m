@@ -137,7 +137,8 @@ static int const pageSize = 10;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     QuitGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:QuitGoodsCellIdentifier];
-    [cell setHighlighted:NO animated:NO];
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    [cell setHighlighted:NO animated:NO];
     
     // 配置Cell
     [cell configureForData:self.arrData[indexPath.row]];
