@@ -15,6 +15,8 @@
 #import "SVPullToRefresh.h"
 #import "SignDetailBean.h"
 #import "MyCusMapAddressVC.h"
+#import <LKDBHelper.h>
+#import "BNSignConfigBean.h"
 
 typedef  enum : NSUInteger {
     TOP = 0,
@@ -120,11 +122,13 @@ typedef  enum : NSUInteger {
 
 @end
 
-static int const pageSize = 10;
+static int const pageSize = 30;
 
 @interface AttendanceQueryViewController (){
     NSMutableArray *_attendances;
     int page;
+    NSDate *_beginDate;
+    NSDate *_endDate;
 }
 
 @end
@@ -155,6 +159,16 @@ static int const pageSize = 10;
     [self queryAttendance];
     
     self.view.backgroundColor = HEX_RGB(0xefeff4);
+    
+    [[LKDBHelper getUsingLKDBHelper]createTableWithModelClass:[SignDetailBean class ]];
+    
+    NSDate *date = [NSDate date];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:date];
+    [components setMonth:components.month -1];
+    NSDate *beginDate = [cal dateFromComponents:components];
+    _beginDate = beginDate;
+    _endDate = [NSDate date];
 }
 
 - (void)didReceiveMemoryWarning
@@ -171,12 +185,9 @@ static int const pageSize = 10;
     [_btn_endtime setBackgroundImage:[[UIImage imageNamed:@"日期选择控件背板"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateNormal];
     [_btn_endtime setBackgroundImage:[[UIImage imageNamed:@"日期选择控件背板_s"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateHighlighted];
     
-    NSDate *date = [NSDate date];
-    NSDateFormatter *formatter = [NSDateFormatter new];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
     
     UILabel *lb_starttime = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
-    lb_starttime.text = [formatter stringFromDate:date];
+    lb_starttime.text = [_beginDate stringWithFormat:@"yyyy-MM-dd"];
     lb_starttime.font = [UIFont systemFontOfSize:15];
     lb_starttime.textColor = HEX_RGB(0x000000);
     lb_starttime.backgroundColor = [UIColor clearColor];
@@ -188,7 +199,7 @@ static int const pageSize = 10;
     [_btn_starttime addSubview:iv_startcalendar];
     
     UILabel *lb_endtime = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
-    lb_endtime.text = [formatter stringFromDate:date];
+    lb_endtime.text = [_endDate stringWithFormat:@"yyyy-MM-dd"];
     lb_endtime.font = [UIFont systemFontOfSize:15];
     lb_endtime.textColor = HEX_RGB(0x000000);
     lb_endtime.backgroundColor = [UIColor clearColor];
@@ -218,12 +229,14 @@ static int const pageSize = 10;
     request.QUERY_USERID = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.USER_ID];
     request.PAGE = page;
     request.ROWS = pageSize;
-    
     [XZGLAPI detailAttendanceByRequest:request success:^(DetailAttendanceHttpResponse *response) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
         int resultCount = [response.DATA count];
         if (resultCount < pageSize) {
+            for (SignDetailBean *bean in response.DATA) {
+                [bean save];
+            }
             self.tableView.showsInfiniteScrolling = NO;
         }
         if (page == 1) {
@@ -237,8 +250,18 @@ static int const pageSize = 10;
         [self.tableView.infiniteScrollingView stopAnimating];
         self.tableView.showsInfiniteScrolling = NO;
         
+        NSString *sql = [NSString stringWithFormat:@"SIGNTIME>%f and SIGNTIME<%f",[NSDate dateFromString:[_beginDate stringWithFormat:@"yyyy-MM-dd 00:00:00"] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970,[NSDate dateFromString:[_endDate stringWithFormat:@"yyyy-MM-dd 23:59:59"] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970];
+        
+        NSArray *attendances = [SignDetailBean searchWithWhere:sql orderBy:@"SIGNTIME" offset:0 count:60];
+        if (page == 1) {
+            [_attendances removeAllObjects];
+        }
+        [self.tableView.infiniteScrollingView stopAnimating];
+        [_attendances addObjectsFromArray:attendances];
+        [self.tableView reloadData];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:@"网络不给力" toView:self.view];
+        [MBProgressHUD showError:DEFAULT_OFFLINEMESSAGE toView:self.view];
+        
     }];
 }
 
@@ -283,6 +306,13 @@ static int const pageSize = 10;
 {
     UIDatePicker *picker = [[UIDatePicker alloc]init];
     picker.datePickerMode = UIDatePickerModeDate;
+     NSDate *date = [NSDate date];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:date];
+    [components setMonth:components.month -1];
+    NSDate *beginDate = [cal dateFromComponents:components];
+    picker.maximumDate = [NSDate date];
+    picker.minimumDate = beginDate;
     picker.tag = 101;
     [picker showTitle:@"请选择" inView:self.view];
 }
@@ -292,6 +322,7 @@ static int const pageSize = 10;
     UIDatePicker *picker = [[UIDatePicker alloc]init];
     picker.datePickerMode = UIDatePickerModeDate;
     picker.tag = 102;
+    picker.maximumDate = [NSDate date];
     [picker showTitle:@"请选择" inView:self.view];
 }
 
@@ -300,9 +331,11 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
     NSDate *date = picker.date;
     NSLog(@"%@",[date stringWithFormat:@"yyyy-MM-dd"] );
     if (picker.tag == 101) {
+        _beginDate = date;
         UILabel *lb_starttime = (UILabel *)[_btn_starttime viewWithTag:301];
         lb_starttime.text = [date stringWithFormat:@"yyyy-MM-dd"];
     } else {
+        _endDate = date;
         UILabel *lb_endtime = (UILabel *)[_btn_endtime viewWithTag:302];
         lb_endtime.text = [date stringWithFormat:@"yyyy-MM-dd"];
     }
