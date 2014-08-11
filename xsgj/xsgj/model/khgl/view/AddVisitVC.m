@@ -243,10 +243,14 @@
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"yyMMddHHmmss"];
     NSString *fileName = [NSString stringWithFormat:@"IMG_%@",[formatter stringFromDate:now]];
-    _photoId = [SystemAPI uploadPhotoByFileName:fileName
+    [SystemAPI uploadPhotoByFileName:fileName
                                            data:_imageData
-                                        success:^(NSString *fileId) {}
-                                           fail:^(BOOL notReachable, NSString *desciption) {}];
+                                        success:^(NSString *fileId) {
+                                            _photoId = fileId;
+                                        }
+                                           fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {
+                                            _photoId = fileId;
+                                           }];
     [self addVisiterAction];
 }
 

@@ -182,11 +182,15 @@
     [formatter setDateFormat:@"yyMMddHHmmss"];
     NSString *fileName = [NSString stringWithFormat:@"IMG_%@",[formatter stringFromDate:now]];
     
-    _photoId = [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
-    } fail:^(BOOL notReachable, NSString *desciption) {
+    [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
+        _photoId = fileId;
+        [self workReportRequest];
+    } fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {
+        _photoId = fileId;
+        [self workReportRequest];
     }];
     
-    [self workReportRequest];
+    
 }
 
 #pragma mark - LeveyPopListViewDelegate
