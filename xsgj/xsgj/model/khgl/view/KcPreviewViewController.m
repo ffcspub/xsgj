@@ -141,8 +141,7 @@
     if(_arySourceData.count > 0)
     {
         KcCommitData *kcCommitBean = [_arySourceData objectAtIndex:_iSendImgCount];
-        NSString *fileId = nil;
-        fileId = [SystemAPI uploadPhotoByFileName:self.title data:kcCommitBean.PhotoData success:^(NSString *fileId) {
+        [SystemAPI uploadPhotoByFileName:self.title data:kcCommitBean.PhotoData success:^(NSString *fileId) {
             kcCommitBean.PHOTO1 = fileId;
             _iSendImgCount ++;
             if(_iSendImgCount < _arySourceData.count)
@@ -154,7 +153,7 @@
                 [self sendReportRequest];
             }
             
-        } fail:^(BOOL notReachable, NSString *desciption) {
+        } fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {
             if(notReachable)
             {
                 kcCommitBean.PHOTO1 = fileId;

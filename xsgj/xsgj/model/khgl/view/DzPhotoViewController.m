@@ -304,8 +304,7 @@
     if(_aryfileDatas.count > 0)
     {
         ImageFileInfo *fileInfo = [_aryfileDatas objectAtIndex:_iSendImgCount];
-        NSString *fileId =nil;
-        fileId = [SystemAPI uploadPhotoByFileName:self.title data:fileInfo.fileData success:^(NSString *fileId) {
+        [SystemAPI uploadPhotoByFileName:self.title data:fileInfo.fileData success:^(NSString *fileId) {
             [_aryFileId addObject:fileId];
             _iSendImgCount ++;
             if(_iSendImgCount < _aryfileDatas.count)
@@ -317,7 +316,7 @@
                 [self sendStoreCameraRequest];
             }
             
-        } fail:^(BOOL notReachable, NSString *desciption) {
+        } fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {
             if(notReachable)
             {
                 [_aryFileId addObject:fileId];

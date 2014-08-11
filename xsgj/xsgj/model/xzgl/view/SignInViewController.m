@@ -189,11 +189,15 @@
 //        [MBProgressHUD showError:desciption toView:self.view];
 //    }];
     
-    _photoId = [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
-    } fail:^(BOOL notReachable, NSString *desciption) {
+    [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
+        _photoId = fileId;
+        [self signUpRequest];
+    } fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {
+        _photoId = fileId;
+        [self signUpRequest];
     }];
     
-    [self signUpRequest];
+    
 }
 
 #pragma mark - Action

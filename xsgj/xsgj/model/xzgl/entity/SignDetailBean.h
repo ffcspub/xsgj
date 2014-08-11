@@ -27,4 +27,8 @@
 @property(nonatomic,assign) float       LAT2;//	纠偏纬度
 @property(nonatomic,strong) NSString *	POSITION2;//	纠偏地理位置
 
+@property(nonatomic,assign) NSInteger   SIGNTIME;//签到时间
+
+-(void)save;
+
 @end

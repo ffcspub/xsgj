@@ -150,7 +150,7 @@
             _photoId = fileId;
             [self submitDisHandleResult];
             
-        } fail:^(BOOL notReachable, NSString *desciption) {
+        } fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {
             
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [MBProgressHUD showError:desciption toView:self.view];

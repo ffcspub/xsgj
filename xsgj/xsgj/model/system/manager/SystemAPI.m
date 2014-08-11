@@ -142,7 +142,7 @@
  *  @param success 成功block
  *  @param fail    失败返回结果
  */
-+(NSString *)uploadPhotoByFileName:(NSString *)fileName data:(NSData *)data success:(void(^)(NSString *fileId))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
++(void)uploadPhotoByFileName:(NSString *)fileName data:(NSData *)data success:(void(^)(NSString *fileId))success fail:(void(^)(BOOL notReachable,NSString *desciption,NSString *fileId))fail{
     NSString *fileId = nil;
     UploadPhotoHttpRequest *request = [[UploadPhotoHttpRequest alloc]init];
     fileId = request.FILE_ID;
@@ -157,9 +157,8 @@
     } fail:^(BOOL NotReachable, NSString *desciption) {
         OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"照片上传"];
         [cache saveToDB];
-        fail(NotReachable,desciption);
+        fail(NotReachable,desciption,request.FILE_ID);
     } class:[UploadPhotoHttpResponse class]];
-    return fileId;
 }
 
 @end

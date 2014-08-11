@@ -323,20 +323,31 @@
 //        [MBProgressHUD showError:desciption toView:self.view];
 //    }];
     
-    NSString *fileId = [SystemAPI uploadPhotoByFileName:imageInfo.fileName data:imageInfo.fileData success:^(NSString *fileId) {
-    } fail:^(BOOL notReachable, NSString *desciption) {
+    [SystemAPI uploadPhotoByFileName:imageInfo.fileName data:imageInfo.fileData success:^(NSString *fileId) {
+        [_aryFileId addObject:fileId];
+        _iSendImgCount ++;
+        if(_iSendImgCount < _aryfileDatas.count)
+        {
+            [self uploadPhoto];
+        }
+        else
+        {
+            [self insertUserCameraRequest];
+        }
+    } fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {
+        [_aryFileId addObject:fileId];
+        _iSendImgCount ++;
+        if(_iSendImgCount < _aryfileDatas.count)
+        {
+            [self uploadPhoto];
+        }
+        else
+        {
+            [self insertUserCameraRequest];
+        }
     }];
     
-    [_aryFileId addObject:fileId];
-    _iSendImgCount ++;
-    if(_iSendImgCount < _aryfileDatas.count)
-    {
-        [self uploadPhoto];
-    }
-    else
-    {
-        [self insertUserCameraRequest];
-    }
+    
 }
 
 #pragma mark - Action
