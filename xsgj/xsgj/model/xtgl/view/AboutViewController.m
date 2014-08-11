@@ -44,7 +44,9 @@
     
     _viewImage.backgroundColor = HEX_RGB(0xf9f9f9);
     
-    _lb_version.text = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+//    _lb_version.text = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    _lb_version.text  = [infoDict objectForKey:@"CFBundleShortVersionString"];
     
     self.view.backgroundColor = HEX_RGB(0xefeff4);
 }

@@ -369,6 +369,8 @@
     return YES;
 }
 
+
+
 @end
 
 @interface UITextField(LK_EasySignal_Private)
@@ -379,6 +381,17 @@
 
 @implementation UITextField(LK_EasySignal_Private)
 
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+    if (!self.allowCopy) {
+        UIMenuController *menuController = [UIMenuController sharedMenuController];
+        if (menuController) {
+            [UIMenuController sharedMenuController].menuVisible = NO;
+        }
+        return NO;
+    }
+    return YES;
+}
 
 -(UITextFieldWrapper *) wrapper;{
     UITextFieldWrapper *wrapper = objc_getAssociatedObject(self, @"wrapper");
@@ -430,6 +443,7 @@
 
 @dynamic maxLength;
 @dynamic inputRegular;
+@dynamic allowCopy;
 
 -(void)setInputRegular:(NSString *)inputRegular{
     NSObject * obj = objc_getAssociatedObject( self, "maxLength" );
@@ -445,6 +459,22 @@
 	if ( obj && [obj isKindOfClass:[NSString class]] )
 		return ((NSString *)obj);
 	return nil;
+}
+
+-(BOOL)allowCopy{
+    NSObject * obj = objc_getAssociatedObject( self, "allowCopy" );
+	if ( obj && [obj isKindOfClass:[NSNumber class]] )
+		return ((NSNumber *)obj).boolValue;
+	return NO;
+}
+
+-(void)setAllowCopy:(BOOL)allowCopy{
+    NSObject * obj = objc_getAssociatedObject( self, "allowCopy" );
+	if ( obj && [obj isKindOfClass:[NSNumber class]] )
+    {
+        obj = nil;
+    }
+    objc_setAssociatedObject( self, "allowCopy", [NSNumber numberWithBool:allowCopy], OBJC_ASSOCIATION_RETAIN );
 }
 
 -(int)maxLength{
@@ -475,9 +505,6 @@
 +(NSString *)BEGIN_EDITING;{
     return @"BEGIN_EDITING";
 }
-
-
-
 
 @end
 

@@ -72,6 +72,7 @@ static int const pageSize = 10;
     request.CUST_NAME = self.tfVisiterName.text;
     request.PAGE = self.currentPage;
     request.ROWS = pageSize;
+    request.QUERY_USERID = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.USER_ID];
     
     _isloading = YES;
     MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

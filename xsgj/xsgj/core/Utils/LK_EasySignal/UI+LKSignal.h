@@ -64,6 +64,8 @@
 
 @property(nonatomic,assign) int maxLength;
 
+@property(nonatomic,assign) BOOL allowCopy;
+
 +(NSString *)BEGIN_EDITING;
 
 +(NSString *)RETURN;

@@ -231,6 +231,7 @@
 @property(nonatomic,strong) NSString *	BEGIN_DATE	;//	上报开始时间
 @property(nonatomic,strong) NSString *	END_DATE	;//	上报结束时间
 @property(nonatomic,strong) NSString *	CUST_NAME	;//	客户名称
+@property(nonatomic,strong) NSString *  QUERY_USERID;// 用户查询ID
 
 @end
 
@@ -273,6 +274,7 @@
 @property(nonatomic,strong) NSString *	CUST_NAME	;//	客户名称
 @property(nonatomic,strong) NSString *	BEGINTIME	;//	上报开始时间
 @property(nonatomic,strong) NSString *	ENDTIME	;//	上报结束时间
+@property(nonatomic,strong) NSString *	QUERY_USERID	;//	查询个人标识
 
 @end
 

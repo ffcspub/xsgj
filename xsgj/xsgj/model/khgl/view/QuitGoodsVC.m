@@ -74,6 +74,7 @@ static int const pageSize = 10;
     request.CUST_NAME = self.tfVisiterName.text;
     request.PAGE = self.currentPage;
     request.ROWS = pageSize;
+    request.QUERY_USERID = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.USER_ID];
     
     _isloading = YES;
     MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -137,7 +138,8 @@ static int const pageSize = 10;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     QuitGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:QuitGoodsCellIdentifier];
-    [cell setHighlighted:NO animated:NO];
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    [cell setHighlighted:NO animated:NO];
     
     // 配置Cell
     [cell configureForData:self.arrData[indexPath.row]];
