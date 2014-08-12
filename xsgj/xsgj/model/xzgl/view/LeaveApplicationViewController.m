@@ -214,7 +214,7 @@
     tf_day.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 //    tf_day.delegate = self;
     tf_day.tag = 405;
-    tf_day.inputRegular = @"^(\\d\\d)(\\.\\d?)?$";
+    tf_day.inputRegular = @"^(\\d?\\d?\\d?)(\\.\\d?)?$";
     [btn_leaveday addSubview:tf_day];
     
     UILabel *lb_dayString = [[UILabel alloc] initWithFrame:CGRectMake(270, 0, 26, 40)];

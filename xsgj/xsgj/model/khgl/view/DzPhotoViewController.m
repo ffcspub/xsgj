@@ -414,12 +414,15 @@
         });
      }fail:^(BOOL notReachable, NSString *desciption){
          self.navigationItem.rightBarButtonItem.enabled = YES;
-         [step save];
+         
          [MBProgressHUD hideHUDForView:self.view animated:YES];
          if(notReachable)
          {
-             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
+             step.SYNC_STATE = 1;
+             [step save];
              
+             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
+             cache.VISIT_NO = self.vistRecord.VISIT_NO;
              [cache saveToDB];
              [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{

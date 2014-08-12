@@ -172,21 +172,9 @@
     if(_aryKcData.count > 0)
     {
         KcCommitData *kcCommitBean = [_aryKcData objectAtIndex:_iSendImgCount];
-        [SystemAPI uploadPhotoByFileName:self.title data:kcCommitBean.PhotoData success:^(NSString *fileId) {
-            kcCommitBean.PHOTO1 = fileId;
-            _iSendImgCount ++;
-            if(_iSendImgCount < _aryKcData.count)
-            {
-                [self commitData];
-            }
-            else
-            {
-                [self sendReportRequest];
-            }
-            
-        } fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {
-            if(notReachable)
-            {
+        if(kcCommitBean.PhotoData.length > 0)
+        {
+            [SystemAPI uploadPhotoByFileName:self.title data:kcCommitBean.PhotoData success:^(NSString *fileId) {
                 kcCommitBean.PHOTO1 = fileId;
                 _iSendImgCount ++;
                 if(_iSendImgCount < _aryKcData.count)
@@ -197,15 +185,42 @@
                 {
                     [self sendReportRequest];
                 }
+                
+            } fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {
+                if(notReachable)
+                {
+                    kcCommitBean.PHOTO1 = fileId;
+                    _iSendImgCount ++;
+                    if(_iSendImgCount < _aryKcData.count)
+                    {
+                        [self commitData];
+                    }
+                    else
+                    {
+                        [self sendReportRequest];
+                    }
+                }
+                else
+                {
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    [MBProgressHUD showError:desciption toView:self.view];
+                    _btnCommit.enabled = YES;
+                    return;
+                }
+            }];
+        }
+        else
+        {
+            _iSendImgCount ++;
+            if(_iSendImgCount < _aryKcData.count)
+            {
+                [self commitData];
             }
             else
             {
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-                [MBProgressHUD showError:desciption toView:self.view];
-                _btnCommit.enabled = YES;
-                return;
+                [self sendReportRequest];
             }
-        }];
+        }
     }
     
 }
@@ -267,12 +282,15 @@
         
      }fail:^(BOOL notReachable, NSString *desciption){
          _btnCommit.enabled = YES;
-         [step save];
+
          [MBProgressHUD hideHUDForView:self.view animated:YES];
          if(notReachable)
          {
-             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
+             step.SYNC_STATE = 1;
+             [step save];
              
+             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
+             cache.VISIT_NO = self.vistRecord.VISIT_NO;
              [cache saveToDB];
              [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
