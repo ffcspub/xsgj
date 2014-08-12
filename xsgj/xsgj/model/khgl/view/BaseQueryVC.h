@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "HideTabViewController.h"
 #import "LK_HttpResponse.h"
+#import <IQKeyboardManager.h>
 
 @interface BaseQueryVC : HideTabViewController <UITableViewDataSource, UITableViewDelegate>
 
@@ -20,6 +21,9 @@
 // 表格
 @property (weak, nonatomic) IBOutlet UITableView *tbvQuery;
 @property (nonatomic, strong) NSMutableArray *arrData; // 数据
+
+@property (nonatomic, strong) NSDate *beginDate;
+@property (nonatomic, strong) NSDate *endDate;
 
 // 查询按钮事件
 - (void)queryAction:(UIButton *)sender;

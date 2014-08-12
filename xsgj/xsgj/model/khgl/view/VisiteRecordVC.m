@@ -12,9 +12,12 @@
 #import "SVPullToRefresh.h"
 #import "VisitRecordCell.h"
 #import "NSString+URL.h"
+#import "VisistRecordVO.h"
+#import <NSDate+Helper.h>
+#import <LKDBHelper.h>
 
 static NSString * const VisiteRecordCellIdentifier = @"VisiteRecordCellIdentifier";
-static int const pageSize = 10;
+static int const pageSize = 10000;
 
 @interface VisiteRecordVC ()
 
@@ -61,42 +64,96 @@ static int const pageSize = 10;
 {
     QueryVistitRecordHttpRequest *request = [[QueryVistitRecordHttpRequest alloc] init];
     // 如果是空串就不上传
+    /*
     if (![self.lblBeginTime.text isEmptyOrWhitespace]) {
         request.BEGIN_TIME = self.lblBeginTime.text;
     }
     if (![self.lblEndTime.text isEmptyOrWhitespace]) {
         request.END_TIME = self.lblEndTime.text;
     }
-    request.CUST_NAME = self.tfVisiterName.text;
+    */
+    
+    request.BEGIN_TIME = [self.beginDate stringWithFormat:@"yyyy-MM-dd"];
+    request.END_TIME = [self.endDate stringWithFormat:@"yyyy-MM-dd"];
+    request.CUST_NAME = @"";
     request.PAGE = self.currentPage;
     request.ROWS = pageSize;
     
-    MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     [KHGLAPI queryVisitRecordByRequest:request success:^(QueryVistitRecordHttpResponse *response) {
         
+        // 分页
+        [self.tbvQuery.infiniteScrollingView stopAnimating];
         int resultCount = [response.rows count];
         if (resultCount < pageSize) {
             self.tbvQuery.showsInfiniteScrolling = NO;
-        } else {
-            self.tbvQuery.showsInfiniteScrolling = YES;
-        }
-        if (self.currentPage == 1) {
-            [self.arrData removeAllObjects];
         }
         
-        [self.tbvQuery.infiniteScrollingView stopAnimating];
-        [self.arrData addObjectsFromArray:response.rows];
-        [self.tbvQuery reloadData];
+        // 保存离线数据
+        [[LKDBHelper getUsingLKDBHelper] executeDB:^(FMDatabase *db) {
+            @try {
+                [db beginTransaction];
+                for (VisistRecordVO *bean in response.rows) {
+                    [bean save];
+                }
+                [db commit];
+            }
+            @catch (NSException *exception) {
+                [db rollback];
+            }
+            @finally {
+                
+            }
+        }];
         
-        [hub removeFromSuperview];
+        [self loadCacheData];
+        
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
 
     } fail:^(BOOL notReachable, NSString *desciption) {
         
         [self.tbvQuery.infiniteScrollingView stopAnimating];
+        self.tbvQuery.showsInfiniteScrolling = NO;
         
-        [hub removeFromSuperview];
-        [MBProgressHUD showError:desciption toView:self.view];
+        if (notReachable) {
+            [self loadCacheData];
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            if(self.arrData.count == 0){
+                [MBProgressHUD showError:desciption toView:nil];
+            }
+        } else {
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:nil];
+        }
     }];
+}
+
+- (void)loadCacheData
+{
+    NSString *SQL = @"";
+    if ([self.lblBeginTime.text length] > 0) {
+        SQL = [NSString stringWithFormat:@" TIME >= %f ", [NSDate dateFromString:[NSString stringWithFormat:@"%@ 00:00:00", self.lblBeginTime.text] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970];
+    } else {
+        SQL = [NSString stringWithFormat:@" 1 = 1 "];
+    }
+    if ([self.lblEndTime.text length] > 0) {
+        SQL = [NSString stringWithFormat:@" %@ AND TIME <= %f ", SQL, [NSDate dateFromString:[NSString stringWithFormat:@"%@ 23:59:59", self.lblEndTime.text] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970];
+    } else {
+        SQL = [NSString stringWithFormat:@" %@ AND 1 = 1 ", SQL];
+    }
+    if ([self.tfVisiterName.text length] > 0) {
+        SQL = [NSString stringWithFormat:@" %@ AND CUST_NAME LIKE '%%%@%%'", SQL, self.tfVisiterName.text];
+    }
+    
+    NSLog(@"查询过滤 : %@", SQL);
+    
+    NSArray *arrTemp = [VisistRecordVO searchWithWhere:SQL orderBy:@"START_DATE DESC" offset:0 count:10000];
+    if (self.currentPage == 1) {
+        [self.arrData removeAllObjects];
+        [self.tbvQuery scrollRectToVisible:CGRectMake(0, 0, 320, 1) animated:NO];
+    }
+    [self.arrData addObjectsFromArray:arrTemp];
+    [self.tbvQuery reloadData];
 }
 
 #pragma mark - 事件
@@ -104,6 +161,8 @@ static int const pageSize = 10;
 // 查询按钮事件
 - (void)queryAction:(UIButton *)sender
 {
+    [[IQKeyboardManager sharedManager] resignFirstResponder];
+    
     // 验证时间
     [super queryAction:sender];
     

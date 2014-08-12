@@ -29,4 +29,8 @@
 @property(nonatomic,strong) NSString *  	CUST_NAME	;//	客户姓名
 @property(nonatomic,strong) NSString *  	REALNAME	;//	真实姓名
 
+@property(nonatomic,assign) NSInteger   TIME;
+
+-(void)save;
+
 @end

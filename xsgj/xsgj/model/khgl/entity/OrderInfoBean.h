@@ -20,4 +20,8 @@
 @property(nonatomic,strong) NSString *	CREATETIME	;//	创建时间
 @property(nonatomic,strong) NSString *	CUST_NAME	;//	订货客户
 
+@property(nonatomic,assign) NSInteger   TIME;
+
+-(void)save;
+
 @end

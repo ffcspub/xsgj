@@ -38,6 +38,14 @@
 {
     [super viewDidLoad];
     
+    NSDate *date = [NSDate date];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:date];
+    [components setMonth:components.month -1];
+    NSDate *beginDate = [cal dateFromComponents:components];
+    self.beginDate = beginDate;
+    self.endDate = [NSDate date];
+    
     [self UI_setup];
 }
 
@@ -111,6 +119,8 @@
 {
     UIDatePicker *picker = [[UIDatePicker alloc]init];
     picker.datePickerMode = UIDatePickerModeDate;
+    [picker setMinimumDate:self.beginDate];
+    [picker setMaximumDate:self.endDate];
     picker.tag = 1000;
     [picker showTitle:@"请选择起始时间" inView:self.view];
 }
@@ -119,6 +129,8 @@
 {
     UIDatePicker *picker = [[UIDatePicker alloc]init];
     picker.datePickerMode = UIDatePickerModeDate;
+    [picker setMinimumDate:_beginDate];
+    [picker setMaximumDate:_endDate];
     picker.tag = 1001;
     [picker showTitle:@"请选择结束时间" inView:self.view];
 }

@@ -16,4 +16,8 @@
 @property(nonatomic,strong) NSString *PROD_NAME;//产品名称
 @property(nonatomic,strong) NSString *REALNAME;//产品名称
 
+@property(nonatomic,assign) NSInteger   TIME;
+
+-(void)save;
+
 @end

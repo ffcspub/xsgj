@@ -13,14 +13,13 @@
 #import "OrderGoodsCell.h"
 #import "NSString+URL.h"
 #import "OrderGoodsDetailVC.h"
+#import <NSDate+Helper.h>
+#import <LKDBHelper.h>
 
 static NSString * const OrderGoodsCellIdentifier = @"OrderGoodsCellIdentifier";
-static int const pageSize = 10;
+static int const pageSize = 10000;
 
 @interface OrderGoodsVC ()
-{
-    BOOL _isloading; // 加载的标识
-}
 
 @property (nonatomic, assign) NSUInteger currentPage; // 第1页开始,每页加载10
 
@@ -63,51 +62,96 @@ static int const pageSize = 10;
 {
     OrderQueryHttpRequest *request = [[OrderQueryHttpRequest alloc] init];
     // 如果是空串就不上传
+    /*
     if (![self.lblBeginTime.text isEmptyOrWhitespace]) {
         request.BEGIN_DATE = self.lblBeginTime.text;
     }
     if (![self.lblEndTime.text isEmptyOrWhitespace]) {
         request.END_DATE = self.lblEndTime.text;
     }
-    request.CUST_NAME = self.tfVisiterName.text;
+    */
+    request.BEGIN_DATE = [self.beginDate stringWithFormat:@"yyyy-MM-dd"];
+    request.END_DATE = [self.endDate stringWithFormat:@"yyyy-MM-dd"];
+    request.CUST_NAME = @"";
     request.PAGE = self.currentPage;
     request.ROWS = pageSize;
     request.QUERY_USERID = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.USER_ID];
     
-    _isloading = YES;
-    MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     [KHGLAPI queryOrderByRequest:request success:^(OrderQueryHttpResponse *response) {
         
+        // 分页
+        [self.tbvQuery.infiniteScrollingView stopAnimating];
         int resultCount = [response.DATA count];
-        
-        NSLog(@"订货查询返回的总数:%d", resultCount);
-        
         if (resultCount < pageSize) {
             self.tbvQuery.showsInfiniteScrolling = NO;
         }
         
-        if (self.currentPage == 1) {
-            [self.arrData removeAllObjects];
-            [self.tbvQuery scrollRectToVisible:CGRectMake(0, 0, 320, 1) animated:NO];
-        }
+        // 保存离线数据
+        [[LKDBHelper getUsingLKDBHelper] executeDB:^(FMDatabase *db) {
+            @try {
+                [db beginTransaction];
+                for (OrderInfoBean *bean in response.DATA) {
+                    [bean save];
+                }
+                [db commit];
+            }
+            @catch (NSException *exception) {
+                [db rollback];
+            }
+            @finally {
+                
+            }
+        }];
         
-        [self.tbvQuery.infiniteScrollingView stopAnimating];
-        [self.arrData addObjectsFromArray:response.DATA];
+        [self loadCacheData];
         
-        [self.tbvQuery reloadData];
-        
-        [hub removeFromSuperview];
-        _isloading = NO;
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
         
     } fail:^(BOOL notReachable, NSString *desciption) {
         
         [self.tbvQuery.infiniteScrollingView stopAnimating];
-        [self.tbvQuery reloadData];
+        self.tbvQuery.showsInfiniteScrolling = NO;
         
-        [hub removeFromSuperview];
-        [MBProgressHUD showError:desciption toView:self.view];
-        _isloading = NO;
+        if (notReachable) {
+            [self loadCacheData];
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            if(self.arrData.count == 0){
+                [MBProgressHUD showError:desciption toView:nil];
+            }
+        } else {
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:nil];
+        }
     }];
+}
+
+- (void)loadCacheData
+{
+    NSString *SQL = @"";
+    if ([self.lblBeginTime.text length] > 0) {
+        SQL = [NSString stringWithFormat:@" TIME >= %f ", [NSDate dateFromString:[NSString stringWithFormat:@"%@ 00:00:00", self.lblBeginTime.text] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970];
+    } else {
+        SQL = [NSString stringWithFormat:@" 1 = 1 "];
+    }
+    if ([self.lblEndTime.text length] > 0) {
+        SQL = [NSString stringWithFormat:@" %@ AND TIME <= %f ", SQL, [NSDate dateFromString:[NSString stringWithFormat:@"%@ 23:59:59", self.lblEndTime.text] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970];
+    } else {
+        SQL = [NSString stringWithFormat:@" %@ AND 1 = 1 ", SQL];
+    }
+    if ([self.tfVisiterName.text length] > 0) {
+        SQL = [NSString stringWithFormat:@" %@ AND CUST_NAME LIKE '%%%@%%'", SQL, self.tfVisiterName.text];
+    }
+    
+    NSLog(@"查询过滤 : %@", SQL);
+    
+    NSArray *arrTemp = [OrderInfoBean searchWithWhere:SQL orderBy:@"COMMITTIME DESC" offset:0 count:10000];
+    if (self.currentPage == 1) {
+        [self.arrData removeAllObjects];
+        [self.tbvQuery scrollRectToVisible:CGRectMake(0, 0, 320, 1) animated:NO];
+    }
+    [self.arrData addObjectsFromArray:arrTemp];
+    [self.tbvQuery reloadData];
 }
 
 #pragma mark - 事件
@@ -115,9 +159,7 @@ static int const pageSize = 10;
 // 查询按钮事件
 - (void)queryAction:(UIButton *)sender
 {
-    if (_isloading) {
-        return;
-    }
+    [[IQKeyboardManager sharedManager] resignFirstResponder];
     
     // 验证时间
     [super queryAction:sender];
