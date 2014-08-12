@@ -54,6 +54,7 @@
 @property (weak, nonatomic) BNCustomerInfo *customerInfo;
 @property (weak, nonatomic) BNVistRecord *vistRecord;
 @property (weak, nonatomic) BNCameraType *cameratypeSelect;
+@property (strong, nonatomic) NSString *strMenuId;
 
 -(void)takePhoto;
 -(void)delPhoto;

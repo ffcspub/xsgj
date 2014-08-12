@@ -64,7 +64,7 @@
     
     // Do any additional setup after loading the view from its nib.
     if (!_vistRecord) {
-        BNVistRecord *record = [BNVistRecord searchSingleWithWhere:[NSString stringWithFormat:@"CUST_ID=%d and VISIT_TYPE=0",_customerInfo.CUST_ID] orderBy:@"BEGIN_TIME desc"];
+        BNVistRecord *record = [BNVistRecord searchSingleWithWhere:[NSString stringWithFormat:@"CUST_ID=%d and VISIT_TYPE=%@",_customerInfo.CUST_ID,_strVisitType] orderBy:@"BEGIN_TIME desc"];
         if (record) {
             NSString *visitDate = record.BEGIN_TIME;
             if (visitDate.length > 10) {
@@ -78,7 +78,7 @@
         }else{
             _vistRecord = [[BNVistRecord alloc]init];
         }
-        
+        _vistRecord.VISIT_TYPE = _strVisitType.intValue;
     }
 
     
@@ -308,7 +308,25 @@
         
      }fail:^(BOOL notReachable, NSString *desciption){
          [MBProgressHUD hideHUDForView:self.view animated:YES];
-         [MBProgressHUD showError:desciption toView:self.view];
+         if(notReachable)
+         {
+             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
+             cache.VISIT_NO = _vistRecord.VISIT_NO;
+             [cache saveToDB];
+             [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+             
+             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                 sleep(1);
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
+                     [self dismissModalViewControllerAnimated:YES];
+                 });
+             });
+         }
+         else
+         {
+             [MBProgressHUD showError:desciption toView:self.view];
+         }
          
      }];
 }
@@ -415,6 +433,7 @@
         case 31:
         {
             DzPhotoViewController *viewController = [[DzPhotoViewController alloc] initWithNibName:@"DzPhotoViewController" bundle:nil];
+            viewController.strMenuId = [NSString stringWithFormat:@"%d",cell.mobileMenu.MENU_ID];
             viewController.customerInfo = self.customerInfo;
             viewController.vistRecord = self.vistRecord;
             controller = viewController;
@@ -425,6 +444,7 @@
         case 32:
         {
             CLPhotoViewController *viewController = [[CLPhotoViewController alloc] initWithNibName:@"CLPhotoViewController" bundle:nil];
+            viewController.strMenuId = [NSString stringWithFormat:@"%d",cell.mobileMenu.MENU_ID];
             viewController.customerInfo = self.customerInfo;
             viewController.vistRecord = self.vistRecord;
             controller = viewController;
@@ -434,6 +454,7 @@
         case 33:
         {
             ClLivelyViewController *viewController = [[ClLivelyViewController alloc] initWithNibName:@"ClLivelyViewController" bundle:nil];
+            viewController.strMenuId = [NSString stringWithFormat:@"%d",cell.mobileMenu.MENU_ID];
             viewController.customerInfo = self.customerInfo;
             viewController.vistRecord = self.vistRecord;
             controller = viewController;
@@ -443,6 +464,7 @@
         case 34:
         {
             ClCostViewController *viewController = [[ClCostViewController alloc] initWithNibName:@"ClCostViewController" bundle:nil];
+            viewController.strMenuId = [NSString stringWithFormat:@"%d",cell.mobileMenu.MENU_ID];
             viewController.customerInfo = self.customerInfo;
             viewController.vistRecord = self.vistRecord;
             controller = viewController;
@@ -452,6 +474,7 @@
         case 35:
         {
             KcReportViewController *viewController = [[KcReportViewController alloc] initWithNibName:@"KcReportViewController" bundle:nil];
+            viewController.strMenuId = [NSString stringWithFormat:@"%d",cell.mobileMenu.MENU_ID];
             viewController.customerInfo = self.customerInfo;
             viewController.vistRecord = self.vistRecord;
             controller = viewController;
@@ -461,6 +484,7 @@
         case 36:
         {
             DhReportViewController *viewController = [[DhReportViewController alloc] initWithNibName:@"KcReportViewController" bundle:nil];
+            viewController.strMenuId = [NSString stringWithFormat:@"%d",cell.mobileMenu.MENU_ID];
             viewController.customerInfo = self.customerInfo;
             viewController.vistRecord = self.vistRecord;
             controller = viewController;
@@ -470,6 +494,7 @@
         case 37:
         {
             ThReportViewController *viewController = [[ThReportViewController alloc] initWithNibName:@"KcReportViewController" bundle:nil];
+            viewController.strMenuId = [NSString stringWithFormat:@"%d",cell.mobileMenu.MENU_ID];
             viewController.customerInfo = self.customerInfo;
             viewController.vistRecord = self.vistRecord;
             controller = viewController;
@@ -480,6 +505,7 @@
         case 38:
         {
             HdReportViewController *viewController = [[HdReportViewController alloc] initWithNibName:@"HdReportViewController" bundle:nil];
+            viewController.strMenuId = [NSString stringWithFormat:@"%d",cell.mobileMenu.MENU_ID];
             viewController.customerInfo = self.customerInfo;
             viewController.vistRecord = self.vistRecord;
             controller = viewController;
@@ -490,6 +516,7 @@
         case 39:
         {
             JpReportViewController *viewController = [[JpReportViewController alloc] initWithNibName:@"JpReportViewController" bundle:nil];
+            viewController.strMenuId = [NSString stringWithFormat:@"%d",cell.mobileMenu.MENU_ID];
             viewController.customerInfo = self.customerInfo;
             viewController.vistRecord = self.vistRecord;
             controller = viewController;

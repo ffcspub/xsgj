@@ -38,7 +38,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnSeleltAll;
 @property (weak, nonatomic) BNCustomerInfo *customerInfo;
 @property (weak, nonatomic) BNVistRecord *vistRecord;
-
+@property (strong, nonatomic) NSString *strMenuId;
 
 - (IBAction)handleBtnTypeClicked:(id)sender;
 - (IBAction)handleBtnSelectAll:(id)sender;

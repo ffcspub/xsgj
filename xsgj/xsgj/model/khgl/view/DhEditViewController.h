@@ -38,7 +38,7 @@
 @property (weak, nonatomic) NSArray *aryData;
 @property (weak, nonatomic) BNCustomerInfo *customerInfo;
 @property (weak, nonatomic) BNVistRecord *vistRecord;
-
+@property (strong, nonatomic) NSString *strMenuId;
 
 - (IBAction)handleBtnTypeClicked:(id)sender;
 - (IBAction)handleBtnNameClicked:(id)sender;

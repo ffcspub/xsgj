@@ -350,13 +350,13 @@
 
 - (void)sendStoreCameraRequest
 {
-    BNVisitStepRecord *step = [BNVisitStepRecord searchSingleWithWhere:[NSString stringWithFormat:@"VISIT_NO='%@' and OPER_MENU='31'",self.vistRecord.VISIT_NO] orderBy:nil];
+    BNVisitStepRecord *step = [BNVisitStepRecord searchSingleWithWhere:[NSString stringWithFormat:@"VISIT_NO='%@' and OPER_MENU='%@'",self.vistRecord.VISIT_NO,_strMenuId] orderBy:nil];
     step.SYNC_STATE = 1;
     if (!step) {
         step = [[BNVisitStepRecord alloc]init];
         step.VISIT_NO = _vistRecord.VISIT_NO;
         step.OPER_NUM =  step.OPER_NUM + 1;
-        step.OPER_MENU = 31;
+        step.OPER_MENU = _strMenuId.intValue;
     }
     
     StoreCameraCommitHttpRequest *request = [[StoreCameraCommitHttpRequest alloc]init];
