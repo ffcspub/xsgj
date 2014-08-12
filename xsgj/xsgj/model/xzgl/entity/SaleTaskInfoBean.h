@@ -19,4 +19,8 @@
 @property(nonatomic,strong) NSString *  SALE_FINISH	;//	销售完成统计
 @property(nonatomic,strong) NSString *	SALE_PERCENT	;//	销售完成百分比
 
+@property(nonatomic,assign) NSInteger   TIME;
+
+-(void)save;
+
 @end

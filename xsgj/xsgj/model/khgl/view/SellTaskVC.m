@@ -17,12 +17,18 @@
 #import "ShareValue.h"
 #import "SVPullToRefresh.h"
 #import "SellTaskCell.h"
+#import "SaleTaskInfoBean.h"
+#import <LKDBHelper.h>
 
 static NSString * const SellTaskQueryCellIdentifier = @"SellTaskQueryCellIdentifier";
 
-static int const pageSize = 10;
+static int const pageSize = 10000;
 
 @interface SellTaskVC () <UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource>
+{
+    NSDate *_beginDate;
+    NSDate *_endDate;
+}
 
 // 顶部时间
 @property (weak, nonatomic) IBOutlet UILabel *lblBeginTime;
@@ -56,6 +62,14 @@ static int const pageSize = 10;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // 日期处理
+    NSDate *date = [NSDate date];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit) fromDate:date];
+    _endDate = [cal dateFromComponents:components];   // 当前月
+    [components setYear:components.year - 1];
+    _beginDate = [cal dateFromComponents:components]; // 当前月
     
     // 日期控制
     int year = [[NSDate stringFromDate:[NSDate date] withFormat:@"yyyy"] intValue];
@@ -178,43 +192,78 @@ static int const pageSize = 10;
 {
     QuerySaleTaskHttpRequest *request = [[QuerySaleTaskHttpRequest alloc] init];
     // 如果是空串就不上传
+    /*
     if (![self.lblBeginTime.text isEmptyOrWhitespace]) {
         request.BEGIN_MONTH = self.lblBeginTime.text;
     }
     if (![self.lblEndTime.text isEmptyOrWhitespace]) {
         request.END_MONTH = self.lblEndTime.text;
     }
+    */
+    request.BEGIN_MONTH = [_beginDate stringWithFormat:@"yyyy-MM"];
+    request.END_MONTH = [_endDate stringWithFormat:@"yyyy-MM"];
+    request.QUERY_USERID = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.USER_ID];
+    request.ROWS = pageSize;
     
-    MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     [XZGLAPI QuerySaleTaskByRequest:request success:^(QuerySaleTaskHttpResponse *response) {
 
+        // 分页
+        [self.tbvQuery.infiniteScrollingView stopAnimating];
         int resultCount = [response.DATA count];
-        NSLog(@"销售任务查询总数:%d", resultCount);
-        
         if (resultCount < pageSize) {
             self.tbvQuery.showsInfiniteScrolling = NO;
-        } else {
-            self.tbvQuery.showsInfiniteScrolling = YES;
-        }
-
-        if (self.currentPage == 1) {
-            [self.arrData removeAllObjects];
         }
         
-        [self.tbvQuery.infiniteScrollingView stopAnimating];
-        [self.arrData addObjectsFromArray:response.DATA];
-        [self.tbvQuery reloadData];
+        // 保存离线数据
+        for (SaleTaskInfoBean *bean in response.DATA) {
+            [bean save];
+        }
         
-        [hub removeFromSuperview];
-
+        [self loadCacheData];
+        
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
     } fail:^(BOOL notReachable, NSString *desciption) {
+        
         [self.tbvQuery.infiniteScrollingView stopAnimating];
+        self.tbvQuery.showsInfiniteScrolling = NO;
         
-        [self.tbvQuery reloadData];
-        
-        [hub removeFromSuperview];
-        [MBProgressHUD showError:desciption toView:self.view];
+        if (notReachable) {
+            [self loadCacheData];
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            if(self.arrData.count == 0){
+                [MBProgressHUD showError:desciption toView:nil];
+            }
+        } else {
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:nil];
+        }
     }];
+}
+
+- (void)loadCacheData
+{
+    NSString *SQL = @"";
+    if ([self.lblBeginTime.text length] > 0) {
+        SQL = [NSString stringWithFormat:@" TIME >= %f ", [NSDate dateFromString:[NSString stringWithFormat:@"%@", self.lblBeginTime.text] withFormat:@"yyyy-MM"].timeIntervalSince1970];
+    } else {
+        SQL = [NSString stringWithFormat:@" 1 = 1 "];
+    }
+    if ([self.lblEndTime.text length] > 0) {
+        SQL = [NSString stringWithFormat:@" %@ AND TIME <= %f ", SQL, [NSDate dateFromString:[NSString stringWithFormat:@"%@", self.lblEndTime.text] withFormat:@"yyyy-MM"].timeIntervalSince1970];
+    } else {
+        SQL = [NSString stringWithFormat:@" %@ AND 1 = 1 ", SQL];
+    }
+    
+    NSLog(@"查询过滤 : %@", SQL);
+    
+    NSArray *arrTemp = [SaleTaskInfoBean searchWithWhere:SQL orderBy:@"SALE_MONTH ASC" offset:0 count:10000];
+    if (self.currentPage == 1) {
+        [self.arrData removeAllObjects];
+        [self.tbvQuery scrollRectToVisible:CGRectMake(0, 0, 320, 1) animated:NO];
+    }
+    [self.arrData addObjectsFromArray:arrTemp];
+    [self.tbvQuery reloadData];
 }
 
 - (IBAction)beginTimeAction:(id)sender

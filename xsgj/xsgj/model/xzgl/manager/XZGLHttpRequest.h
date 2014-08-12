@@ -286,12 +286,14 @@
 @property(nonatomic,assign) int         DEPT_ID	;//	部门ID
 @property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
 @property(nonatomic,assign) int         USER_ID	;//	用户ID
-@property(nonatomic,assign) int         QUERY_DEPTID	;//	查询部门标识
+@property(nonatomic,strong) NSNumber *  QUERY_DEPTID	;//	查询部门标识
 @property(nonatomic,strong) NSString *	USER_NAME	;//	登录名
 @property(nonatomic,strong) NSString *	REALNAME	;//	姓名
 @property(nonatomic,strong) NSString *	MOBILENO	;//	手机号码
 @property(nonatomic,strong) NSString *	BEGIN_MONTH	;//	查询起始月份
 @property(nonatomic,strong) NSString *	END_MONTH	;//	查询终止月份
+@property(nonatomic,strong) NSString *	QUERY_USERID;
+@property(nonatomic,assign) int ROWS;
 
 @end
 

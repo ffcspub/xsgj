@@ -31,8 +31,11 @@
 #import "LK_NSDictionary2Object.h"
 #import "OfflineRequestCache.h"
 #import "TripInfoBean.h"
-
 #import <LKDBHelper.h>
+#import "SaleTaskInfoBean.h"
+#import "VisistRecordVO.h"
+#import "OrderInfoBean.h"
+#import "QueryOrderBackInfoBean.h"
 
 @implementation UserLoginHttpResponse
 
@@ -62,8 +65,13 @@
     [helper createTableWithModelClass:[BNPartnerInfoBean class]];
     [helper createTableWithModelClass:[BNPartnerType class]];
     [helper createTableWithModelClass:[OfflineRequestCache class]];
+    
     [helper createTableWithModelClass:[TripInfoBean class ]]; // 出差查询表
-    [helper createTableWithModelClass:[TripInfoBean2 class ]];// 出差审批表
+    [helper createTableWithModelClass:[TripInfoBean2 class ]]; // 出差审批表
+    [helper createTableWithModelClass:[SaleTaskInfoBean class ]]; // 销售任务
+    [helper createTableWithModelClass:[OrderInfoBean class ]]; // 订货查询
+    [helper createTableWithModelClass:[QueryOrderBackInfoBean class ]]; // 退货查询
+    [helper createTableWithModelClass:[VisistRecordVO class ]]; // 拜访记录
 }
 
 -(void)saveCacheDB{
