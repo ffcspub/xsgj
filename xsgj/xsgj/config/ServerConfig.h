@@ -11,18 +11,21 @@
 #ifndef fxtx_FXRequestUrl_h
 #define fxtx_FXRequestUrl_h
 
+// **************生产************
+//// 根路径
+//#define BASE_SERVERLURL @"http://117.27.151.203:9099/xsgj_ws/"
+//// 图片上传路径
+//#define UPLOAD_PIC_URL @"http://117.27.151.204:9099/xsgj_up/"
+//// 图片根路径
+// #define IMAGE_PREFIX_URL @"http://117.27.151.204:9099/xsgj_up/photo.shtml?corpId=%d&fileId=%@"
 
-
-
+// **************测试************
 // 根路径
 #define BASE_SERVERLURL @"http://202.101.116.77:8082/xsgj_ws/"
-
 // 图片上传路径
 #define UPLOAD_PIC_URL @"http://202.101.116.77:8082/xsgj_up/"
-
 // 图片根路径
 #define IMAGE_PREFIX_URL @"http://202.101.116.77:8082/xsgj_up/photo.shtml?corpId=%d&fileId=%@"
-
 
 // gmm
 #define URL_LOGIN @"loginCheck.shtml" // 登录

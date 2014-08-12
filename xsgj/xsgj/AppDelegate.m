@@ -52,6 +52,8 @@
     _mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
     BOOL ret = [_mapManager start:@"LoKhl36KEikegL3WHiHFkpc8"  generalDelegate:nil];
+    // 上线版本改成 @"wo0D6wriYPg2x3WOeC721hRU",对应app id为 com.doone.fxtx
+    // BOOL ret = [_mapManager start:@"wo0D6wriYPg2x3WOeC721hRU"  generalDelegate:nil];
     if (!ret) {
         NSLog(@"manager start failed!");
     }
