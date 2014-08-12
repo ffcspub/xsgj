@@ -29,4 +29,8 @@
 @property(nonatomic,strong) NSString *	APPROVE_TIME	;//	审批时间
 @property(nonatomic,assign) int         TRIP_ID;//编号
 
+@property(nonatomic,assign) NSInteger   APPLYTIME; // 申请时间
+
+-(void)save;
+
 @end

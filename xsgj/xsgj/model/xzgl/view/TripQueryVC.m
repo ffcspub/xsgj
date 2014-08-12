@@ -21,12 +21,18 @@
 #import "TripQueryCell.h"
 #import "TripDetailVC.h"
 #import "SVPullToRefresh.h"
+#import <LKDBHelper.h>
+#import "TripInfoBean.h"
 
 static NSString * const TripQueryCellIdentifier = @"TripQueryCellIdentifier";
 
-static int const pageSize = 10;
+static int const pageSize = 10000;
 
 @interface TripQueryVC ()
+{
+    NSDate *_beginDate;
+    NSDate *_endDate;
+}
 
 @property (nonatomic, strong) NSMutableArray *arrTrips;
 @property (nonatomic, assign) NSUInteger currentPage; // 第一页开始,每页加载20，当加载返回的数量少于请求的页数认为没有数据了
@@ -47,6 +53,18 @@ static int const pageSize = 10;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // 离线处理
+    [[LKDBHelper getUsingLKDBHelper] createTableWithModelClass:[TripInfoBean class ]];
+    
+    // 日期处理
+    NSDate *date = [NSDate date];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:date];
+    [components setDay:1];
+    NSDate *beginDate = [cal dateFromComponents:components];
+    _beginDate = beginDate;
+    _endDate = [NSDate date];
 
     [self UI_setup];
 }
@@ -155,6 +173,8 @@ static int const pageSize = 10;
 - (void)loadTripList
 {
     QueryTripHttpRequest *request = [[QueryTripHttpRequest alloc] init];
+    
+    /*
     // 如果是空串就不上传
     if (![self.lblBeginTime.text isEmptyOrWhitespace]) {
         request.BEGIN_DATE = self.lblBeginTime.text;
@@ -162,41 +182,77 @@ static int const pageSize = 10;
     if (![self.lblEndTime.text isEmptyOrWhitespace]) {
         request.END_DATE = self.lblEndTime.text;
     }
+    */
+    // 离线逻辑修改，每次进入查询直接加载到今日为止的一个月的数据，然后将数据保存到数据库
+    request.BEGIN_DATE = [_beginDate stringWithFormat:@"yyyy-MM-dd"];
+    request.END_DATE = [_endDate stringWithFormat:@"yyyy-MM-dd"];
     request.QUERY_USERID = @([ShareValue shareInstance].userInfo.USER_ID);
     request.PAGE = self.currentPage;
     request.ROWS = pageSize;
     
-    MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     [XZGLAPI queryTripByRequest:request success:^(QueryTripHttpResponse *response) {
         
+        // 分页
+        [self.tbvQuery.infiniteScrollingView stopAnimating];
         int resultCount = [response.queryTripList count];
         if (resultCount < pageSize) {
             self.tbvQuery.showsInfiniteScrolling = NO;
         }
-        if (self.currentPage == 1) {
-            [self.arrTrips removeAllObjects];
-            [self.tbvQuery scrollRectToVisible:CGRectMake(0, 0, 320, 1) animated:NO];
+        
+        // 保存离线数据
+        for (TripInfoBean *bean in response.queryTripList) {
+            [bean save];
         }
         
-        [self.tbvQuery.infiniteScrollingView stopAnimating];
-        [self.arrTrips addObjectsFromArray:response.queryTripList];
-        [self.tbvQuery reloadData];
+        [self loadCacheData];
         
-        [hub removeFromSuperview];
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
         //[MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        
     } fail:^(BOOL notReachable, NSString *desciption) {
         
         [self.tbvQuery.infiniteScrollingView stopAnimating];
+        self.tbvQuery.showsInfiniteScrolling = NO;
         
-        [hub removeFromSuperview];
-        [MBProgressHUD showError:desciption toView:self.view];
+        [self loadCacheData];
+        
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showError:DEFAULT_OFFLINEMESSAGE toView:nil];
     }];
+}
+
+- (void)loadCacheData
+{
+    NSString *SQL = @"";
+    if ([self.lblBeginTime.text length] > 0) {
+        SQL = [NSString stringWithFormat:@" APPLYTIME > %f ", [NSDate dateFromString:[NSString stringWithFormat:@"%@ 00:00:00", self.lblBeginTime.text] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970];
+    } else {
+        SQL = [NSString stringWithFormat:@" 1 = 1 "];
+    }
+    if ([self.lblEndTime.text length] > 0) {
+        SQL = [NSString stringWithFormat:@" %@ AND APPLYTIME < %f ", SQL, [NSDate dateFromString:[NSString stringWithFormat:@"%@ 23:59:59", self.lblEndTime.text] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970];
+    } else {
+        SQL = [NSString stringWithFormat:@" %@ AND 1 = 1 ", SQL];
+    }
+    
+    NSLog(@"查询过滤 : %@", SQL);
+    
+    NSArray *arrTemp = [TripInfoBean searchWithWhere:SQL orderBy:@"APPROVE_STATE ASC, APPLYTIME DESC" offset:0 count:10000];
+    if (self.currentPage == 1) {
+        [self.arrTrips removeAllObjects];
+        [self.tbvQuery scrollRectToVisible:CGRectMake(0, 0, 320, 1) animated:NO];
+    }
+    [self.arrTrips addObjectsFromArray:arrTemp];
+    [self.tbvQuery reloadData];
 }
 
 - (IBAction)beginTimeAction:(id)sender
 {
     UIDatePicker *picker = [[UIDatePicker alloc]init];
     picker.datePickerMode = UIDatePickerModeDate;
+    [picker setMinimumDate:_beginDate];
+    [picker setMaximumDate:_endDate];
     picker.tag = 1000;
     [picker showTitle:@"请选择起始时间" inView:self.view];
 }
@@ -205,6 +261,8 @@ static int const pageSize = 10;
 {
     UIDatePicker *picker = [[UIDatePicker alloc]init];
     picker.datePickerMode = UIDatePickerModeDate;
+    [picker setMinimumDate:_beginDate];
+    [picker setMaximumDate:_endDate];
     picker.tag = 1001;
     [picker showTitle:@"请选择结束时间" inView:self.view];
 }
