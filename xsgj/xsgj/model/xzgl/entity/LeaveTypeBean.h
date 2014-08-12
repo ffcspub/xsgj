@@ -13,5 +13,6 @@
 @property(nonatomic,strong) NSString *TYPE_NAME ;//调休类型名称
 @property(nonatomic,assign) int TYPE_ID;//调休类型id
 
+-(void)save;
 
 @end

@@ -15,6 +15,7 @@
 #import "LeaveTypeBean.h"
 #import "MBProgressHUD+Add.h"
 #import "OfflineRequestCache.h"
+#import <LKDBHelper.h>
 
 @interface LeaveApplicationViewController ()<UITextFieldDelegate, UITextViewDelegate>
 {
@@ -45,6 +46,8 @@
     [self setup];
     
     self.scrollView.backgroundColor = HEX_RGB(0xefeff4);
+    
+    [[LKDBHelper getUsingLKDBHelper]createTableWithModelClass:[LeaveTypeBean class ]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -503,12 +506,27 @@
         [_typeList addObjectsFromArray:response.LEAVEINFOBEAN];
         NSMutableArray *options = [[NSMutableArray alloc]init];
         for (LeaveTypeBean *type in _typeList) {
+            [type save];
             [options addObject:[NSDictionary dictionaryWithObjectsAndKeys:type.TYPE_NAME,@"text", nil]];
         }
         LeveyPopListView *listView = [[LeveyPopListView alloc] initWithTitle:@"选择类型" options:options];
         listView.delegate = self;
         [listView showInView:self.navigationController.view animated:YES];
     } fail:^(BOOL notReachable, NSString *desciption) {
+        
+        if (notReachable) {
+            NSArray *types = [LeaveTypeBean searchWithWhere:nil orderBy:nil offset:0 count:90];
+            _typeList = [[NSMutableArray alloc] init];
+            [_typeList addObjectsFromArray:types];
+            NSMutableArray *options = [[NSMutableArray alloc]init];
+            for (LeaveTypeBean *type in _typeList) {
+                [type save];
+                [options addObject:[NSDictionary dictionaryWithObjectsAndKeys:type.TYPE_NAME, @"text",nil]];
+            }
+            LeveyPopListView *listView = [[LeveyPopListView alloc] initWithTitle:@"选择类型" options:options];
+            listView.delegate = self;
+            [listView showInView:self.navigationController.view animated:YES];
+        }
         
     }];
 }

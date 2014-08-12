@@ -7,7 +7,21 @@
 //
 
 #import "WorkReportTypeBean.h"
+#import <LKDBHelper.h>
 
 @implementation WorkReportTypeBean
+
+//表名
++(NSString *)getTableName
+{
+    return [NSString stringWithFormat:@"t_%d_WorkReportTypeBean",[ShareValue shareInstance].userInfo.USER_ID];
+}
+
+
+
+-(void)save{
+    [WorkReportTypeBean deleteWithWhere:[NSString stringWithFormat:@"TYPE_ID=%d",_TYPE_ID]];
+    [self saveToDB];
+}
 
 @end
