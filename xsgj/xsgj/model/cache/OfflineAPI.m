@@ -129,21 +129,24 @@
  */
 -(void)sendOfflineRequest
 {
-    // 保证只有一个线程在发送请求
-    @synchronized(self) {
+    NSArray *array = [OfflineRequestCache searchWithWhere:nil orderBy:nil offset:0 count:100];
+    if (array.count > 0) {
+        OfflineRequestCache *cache = array.firstObject;
         AFHTTPClient *client = OfflineAPI.client;
-        NSArray *array = [OfflineRequestCache searchWithWhere:nil orderBy:nil offset:0 count:100];
-        for (OfflineRequestCache *cache in array) {
-            if (cache.isUpload) {
-                client = OfflineAPI.uploadClient;
-            }
+        if (cache.isUpload) {
+            client = OfflineAPI.uploadClient;
+        }
+        // 保证只有一个线程在发送请求
+        @synchronized(self) {
             if ([self httpClient:client sendHTTPRequest:cache]) {
                 NSLog(@"离线上报---->[%@] 成功!", cache.name);
             } else {
                 NSLog(@"离线上报---->[%@] 成功!", cache.name);
             }
         }
+        [self sendOfflineRequest];
     }
+   
 }
 
 /**

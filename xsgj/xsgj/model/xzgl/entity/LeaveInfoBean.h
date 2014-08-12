@@ -28,4 +28,8 @@
 @property(nonatomic,strong) NSString *	APPROVE_TIME 	;//	审批时间
 @property(nonatomic,strong) NSString *	LEAVE_DAYS;//请假天数
 
+@property(nonatomic,assign) NSInteger   APPLYTIME;
+
+-(void)save;
+
 @end
