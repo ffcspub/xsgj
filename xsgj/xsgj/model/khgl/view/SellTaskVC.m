@@ -216,9 +216,21 @@ static int const pageSize = 10000;
         }
         
         // 保存离线数据
-        for (SaleTaskInfoBean *bean in response.DATA) {
-            [bean save];
-        }
+        [[LKDBHelper getUsingLKDBHelper] executeDB:^(FMDatabase *db) {
+            @try {
+                [db beginTransaction];
+                for (SaleTaskInfoBean *bean in response.DATA) {
+                    [bean save];
+                }
+                [db commit];
+            }
+            @catch (NSException *exception) {
+                [db rollback];
+            }
+            @finally {
+                
+            }
+        }];
         
         [self loadCacheData];
         

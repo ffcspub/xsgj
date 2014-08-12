@@ -100,9 +100,21 @@ static int const pageSize = 10000;
         }
         
         // 保存离线数据
-        for (TripInfoBean2 *bean in response.queryTripList) {
-            [bean save];
-        }
+        [[LKDBHelper getUsingLKDBHelper] executeDB:^(FMDatabase *db) {
+            @try {
+                [db beginTransaction];
+                for (TripInfoBean2 *bean in response.queryTripList) {
+                    [bean save];
+                }
+                [db commit];
+            }
+            @catch (NSException *exception) {
+                [db rollback];
+            }
+            @finally {
+                
+            }
+        }];
         
         [self loadCacheData];
         
