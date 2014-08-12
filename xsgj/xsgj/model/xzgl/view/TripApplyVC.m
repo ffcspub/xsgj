@@ -469,9 +469,10 @@
     [XZGLAPI applyTripByRequest:request success:^(ApplyTripHttpResponse *response) {
         
         [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
-        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:nil];
         
-        [self performSelector:@selector(backToFront) withObject:nil afterDelay:1.5f];
+        [self performSelector:@selector(backToFront) withObject:nil afterDelay:0.f];
+        
     } fail:^(BOOL notReachable, NSString *desciption) {
         
         if (notReachable) {
@@ -479,13 +480,13 @@
             [cache saveToDB];
             
             [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
             
-            [self performSelector:@selector(backToFront) withObject:nil afterDelay:1.5f];
+            [self performSelector:@selector(backToFront) withObject:nil afterDelay:0.f];
         } else {
             
             [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
+            [MBProgressHUD showError:desciption toView:nil];
         }
     }];
 }

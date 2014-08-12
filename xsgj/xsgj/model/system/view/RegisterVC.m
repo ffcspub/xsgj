@@ -15,6 +15,7 @@
 #import <IQKeyboardManager.h>
 #import "SIAlertView.h"
 #import <NSDate+Helper.h>
+#import "OfflineRequestCache.h"
 
 @interface RegisterVC () <UITextFieldDelegate>
 
@@ -356,10 +357,28 @@
         alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
         [alertView show];
     } fail:^(BOOL notReachable, NSString *desciption) {
-        [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
-        [MBProgressHUD showError:desciption toView:self.view];
+        
+        if (notReachable) {
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"申请试用"];
+            [cache saveToDB];
+            
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
+            
+            [self performSelector:@selector(backToFront) withObject:nil afterDelay:0.f];
+        } else {
+            
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:nil];
+        }
     }];
 }
+
+- (void)backToFront
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (BOOL)verifyInput
 {

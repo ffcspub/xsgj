@@ -88,7 +88,7 @@ static int const pageSize = 10;
     request.APPROVE_STATE = @"";
     request.LEADER_ID = @([ShareValue shareInstance].userInfo.LEADER_ID);
     
-    MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     [XZGLAPI queryTripByRequest:request success:^(QueryTripHttpResponse *response) {
         
         int resultCount = [response.queryTripList count];
@@ -104,14 +104,14 @@ static int const pageSize = 10;
         [self.arrTrips addObjectsFromArray:response.queryTripList];
         [self.tbvApproval reloadData];
         
-        [hub removeFromSuperview];
-        //[MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
     } fail:^(BOOL notReachable, NSString *desciption) {
         
         [self.tbvApproval.infiniteScrollingView stopAnimating];
         
-        [hub removeFromSuperview];
-        [MBProgressHUD showError:desciption toView:self.view];
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showError:desciption toView:nil];
     }];
 
 }

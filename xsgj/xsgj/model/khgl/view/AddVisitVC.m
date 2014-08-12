@@ -271,12 +271,12 @@
 
     // 定位信息上传，手动优先于自动定位
     if (_isLocationSuccess) {
-        request.LNG = @([ShareValue shareInstance].currentLocation.longitude);
-        request.LAT = @([ShareValue shareInstance].currentLocation.latitude);
+        request.LNG = @([ShareValue shareInstance].currentLocation.longitude*1000000);
+        request.LAT = @([ShareValue shareInstance].currentLocation.latitude*1000000);
     }
     if (_isManualLocation) {
-        request.LNG = [NSNumber numberWithFloat:manualCoordinate.longitude];
-        request.LAT = [NSNumber numberWithFloat:manualCoordinate.latitude];
+        request.LNG = [NSNumber numberWithFloat:manualCoordinate.longitude*1000000];
+        request.LAT = [NSNumber numberWithFloat:manualCoordinate.latitude*1000000];
     }
     request.POSITION = self.lblAutoLocation.text;
 
