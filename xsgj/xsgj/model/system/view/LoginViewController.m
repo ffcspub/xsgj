@@ -210,7 +210,9 @@
     [ShareAppDelegate showTabViewController];
     [[AsnyTaskManager shareInstance]loadConfig];
     [[AsnyTaskManager shareInstance]startTask];//开始定时传送
-    [[OfflineAPI shareInstance]sendOfflineRequest];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [[OfflineAPI shareInstance] sendOfflineRequest];
+    });
     [[OfflineAPI shareInstance]startListener];
 }
 

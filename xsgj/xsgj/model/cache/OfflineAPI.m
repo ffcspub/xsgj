@@ -129,7 +129,7 @@
  */
 -(void)sendOfflineRequest
 {
-    NSArray *array = [OfflineRequestCache searchWithWhere:nil orderBy:nil offset:0 count:100];
+    NSArray *array = [OfflineRequestCache searchWithWhere:nil orderBy:nil offset:0 count:1];
     if (array.count > 0) {
         OfflineRequestCache *cache = array.firstObject;
         AFHTTPClient *client = OfflineAPI.client;
@@ -140,11 +140,12 @@
         @synchronized(self) {
             if ([self httpClient:client sendHTTPRequest:cache]) {
                 NSLog(@"离线上报---->[%@] 成功!", cache.name);
+                [self sendOfflineRequest];
             } else {
                 NSLog(@"离线上报---->[%@] 成功!", cache.name);
             }
         }
-        [self sendOfflineRequest];
+        
     }
    
 }
