@@ -29,6 +29,7 @@
 #import "BNPartnerInfoBean.h"
 #import "BNPartnerType.h"
 #import "LK_NSDictionary2Object.h"
+#import "OfflineRequestCache.h"
 
 #import <LKDBHelper.h>
 
@@ -59,6 +60,7 @@
     [helper createTableWithModelClass:[ContactBean class]];
     [helper createTableWithModelClass:[BNPartnerInfoBean class]];
     [helper createTableWithModelClass:[BNPartnerType class]];
+    [helper createTableWithModelClass:[OfflineRequestCache class]];
 }
 
 -(void)saveCacheDB{

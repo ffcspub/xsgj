@@ -107,8 +107,7 @@
     static AFHTTPClient *_client;
     dispatch_once(&onceToken, ^{
         _client = [[AFHTTPClient alloc]initWithBaseURL:[NSURL URLWithString:BASE_SERVERLURL]];
-        LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
-        [helper createTableWithModelClass:[OfflineRequestCache class]];
+        
     });
     return _client;
 }
