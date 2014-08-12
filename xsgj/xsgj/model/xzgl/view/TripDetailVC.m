@@ -18,6 +18,7 @@
 #import "NSString+URL.h"
 #import "ShareValue.h"
 #import "TripDetailBean.h"
+#import "OfflineRequestCache.h"
 
 @interface TripDetailVC () <UITextViewDelegate>
 
@@ -526,18 +527,29 @@
     [XZGLAPI approvalTripByRequest:request success:^(ApproveTripHttpResponse *response) {
         
         [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
-        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:nil];
         
-        [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
+        [self performSelector:@selector(backToFront) withObject:nil afterDelay:0.f];
         
     } fail:^(BOOL notReachable, NSString *desciption) {
         
-        [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
-        [MBProgressHUD showError:desciption toView:self.view];
+        if (notReachable) {
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"出差审批"];
+            [cache saveToDB];
+            
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
+            
+            [self performSelector:@selector(backToFront) withObject:nil afterDelay:0.f];
+        } else {
+            
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:nil];
+        }
     }];
 }
 
-- (void)back
+- (void)backToFront
 {
     [self.navigationController popViewControllerAnimated:YES];
 }

@@ -170,6 +170,15 @@
     } class:[QueryTripHttpResponse class]];
 }
 
++(void)queryTrip2ByRequest:(QueryTripHttpRequest *)request success:(void(^)(QueryTrip2HttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail
+{
+    [LK_APIUtil getHttpRequest:request apiPath:URL_queryTrip Success:^(LK_HttpBaseResponse *response) {
+        success((QueryTrip2HttpResponse *)response);
+    } fail:^(BOOL NotReachable, NSString *desciption) {
+        fail(NotReachable,desciption);
+    } class:[QueryTrip2HttpResponse class]];
+}
+
 /**
  *  出差详细查询接口
  *

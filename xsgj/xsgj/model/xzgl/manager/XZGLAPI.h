@@ -102,6 +102,7 @@
  *  @param fail    失败返回结果
  */
 +(void)queryTripByRequest:(QueryTripHttpRequest *)request success:(void(^)(QueryTripHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
++(void)queryTrip2ByRequest:(QueryTripHttpRequest *)request success:(void(^)(QueryTrip2HttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
 /**
  *  出差详细查询接口

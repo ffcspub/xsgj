@@ -62,7 +62,8 @@
     [helper createTableWithModelClass:[BNPartnerInfoBean class]];
     [helper createTableWithModelClass:[BNPartnerType class]];
     [helper createTableWithModelClass:[OfflineRequestCache class]];
-    [helper createTableWithModelClass:[TripInfoBean class ]];
+    [helper createTableWithModelClass:[TripInfoBean class ]]; // 出差查询表
+    [helper createTableWithModelClass:[TripInfoBean2 class ]];// 出差审批表
 }
 
 -(void)saveCacheDB{

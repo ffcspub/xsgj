@@ -20,10 +20,11 @@
 #import "TripQueryCell.h"
 #import "TripDetailVC.h"
 #import "SVPullToRefresh.h"
+#import <LKDBHelper.h>
 
 static NSString * const TripApprovalCellIdentifier = @"TripApprovalCellIdentifier";
 
-static int const pageSize = 10;
+static int const pageSize = 10000;
 
 @interface TripApprovalVC ()
 
@@ -89,31 +90,52 @@ static int const pageSize = 10;
     request.LEADER_ID = @([ShareValue shareInstance].userInfo.LEADER_ID);
     
     [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
-    [XZGLAPI queryTripByRequest:request success:^(QueryTripHttpResponse *response) {
+    [XZGLAPI queryTrip2ByRequest:request success:^(QueryTrip2HttpResponse *response) {
         
+        // 分页
+        [self.tbvApproval.infiniteScrollingView stopAnimating];
         int resultCount = [response.queryTripList count];
         if (resultCount < pageSize) {
             self.tbvApproval.showsInfiniteScrolling = NO;
         }
-        if (self.currentPage == 1) {
-            [self.arrTrips removeAllObjects];
-            [self.tbvApproval scrollRectToVisible:CGRectMake(0, 0, 320, 1) animated:NO];
+        
+        // 保存离线数据
+        for (TripInfoBean2 *bean in response.queryTripList) {
+            [bean save];
         }
         
-        [self.tbvApproval.infiniteScrollingView stopAnimating];
-        [self.arrTrips addObjectsFromArray:response.queryTripList];
-        [self.tbvApproval reloadData];
-        
+        [self loadCacheData];
         
         [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+        //[MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        
     } fail:^(BOOL notReachable, NSString *desciption) {
         
         [self.tbvApproval.infiniteScrollingView stopAnimating];
+        self.tbvApproval.showsInfiniteScrolling = NO;
         
-        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
-        [MBProgressHUD showError:desciption toView:nil];
+        if (notReachable) {
+            [self loadCacheData];
+            
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:DEFAULT_OFFLINEMESSAGE toView:nil];
+        } else {
+            
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:nil];
+        }
     }];
+}
 
+- (void)loadCacheData
+{
+    NSArray *arrTemp = [TripInfoBean2 searchWithWhere:nil orderBy:@"APPROVE_STATE ASC, APPLYTIME DESC" offset:0 count:10000];
+    if (self.currentPage == 1) {
+        [self.arrTrips removeAllObjects];
+        [self.tbvApproval scrollRectToVisible:CGRectMake(0, 0, 320, 1) animated:NO];
+    }
+    [self.arrTrips addObjectsFromArray:arrTemp];
+    [self.tbvApproval reloadData];
 }
 
 #pragma mark - UI

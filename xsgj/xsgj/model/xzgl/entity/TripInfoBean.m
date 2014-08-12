@@ -33,3 +33,27 @@
 }
 
 @end
+
+@implementation TripInfoBean2
+
+//表名
++ (NSString *)getTableName
+{
+    return [NSString stringWithFormat:@"t_%d_TripInfoBean2",[ShareValue shareInstance].userInfo.USER_ID];
+}
+
+- (void)setAPPLY_TIME:(NSString *)APPLY_TIME
+{
+    _APPLY_TIME = APPLY_TIME;
+    if (_APPLY_TIME) {
+        self.APPLYTIME = [[NSDate dateFromString:_APPLY_TIME withFormat:@"yyyy-MM-dd HH:mm:ss"] timeIntervalSince1970];
+    }
+}
+
+- (void)save
+{
+    [TripInfoBean2 deleteWithWhere:[NSString stringWithFormat:@"TRIP_ID=%d", self.TRIP_ID]];
+    [self saveToDB];
+}
+
+@end

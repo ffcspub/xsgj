@@ -64,6 +64,9 @@ static int const pageSize = 10000;
     _endDate = [NSDate date];
 
     [self UI_setup];
+    
+    self.currentPage = 1;
+    [self loadTripList];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -71,8 +74,10 @@ static int const pageSize = 10000;
     [super viewDidAppear:animated];
     
     // 每次进入页面重新加载
+    /*
     self.currentPage = 1;
     [self loadTripList];
+    */
 }
 
 - (void)didReceiveMemoryWarning
@@ -211,11 +216,17 @@ static int const pageSize = 10000;
         
         [self.tbvQuery.infiniteScrollingView stopAnimating];
         self.tbvQuery.showsInfiniteScrolling = NO;
-        
-        [self loadCacheData];
-        
-        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
-        [MBProgressHUD showError:DEFAULT_OFFLINEMESSAGE toView:nil];
+
+        if (notReachable) {
+            [self loadCacheData];
+            
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:DEFAULT_OFFLINEMESSAGE toView:nil];
+        } else {
+            
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:nil];
+        }
     }];
 }
 
@@ -330,11 +341,14 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
     vc.tripInfo = bean;
 
     // 待审批
+    /*
     if ([bean.APPROVE_STATE intValue] == 0) {
         vc.showStyle = TripDetailShowStyleApproval;
     } else {
         vc.showStyle = TripDetailShowStyleQuery;
     }
+    */
+    vc.showStyle = TripDetailShowStyleQuery;
     
     [self.navigationController pushViewController:vc animated:YES];
 }

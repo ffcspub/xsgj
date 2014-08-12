@@ -84,6 +84,14 @@
 
 @end
 
+@implementation QueryTrip2HttpResponse
+
++(Class)__queryTripListClass{
+    return [TripInfoBean2 class];
+}
+
+@end
+
 @implementation QueryTripDetailHttpResponse
 
 +(Class)__detailTripListClass{
