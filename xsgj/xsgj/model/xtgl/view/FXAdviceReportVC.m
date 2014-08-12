@@ -88,7 +88,7 @@
         [alert show];
         return;
     }
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     AddAdviceHttpRequest *request = [[AddAdviceHttpRequest alloc]init];
     request.SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
     request.CORP_ID    = [ShareValue shareInstance].userInfo.CORP_ID;
@@ -99,8 +99,8 @@
     request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd"];
     [XZGLAPI addAdviceByRequest:request success:^(AddAdviceHttpResponse *response)
     {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:ShareAppDelegate.window];
         double delayInSeconds = 1.5;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -114,8 +114,8 @@
         {
             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
             [cache saveToDB];
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:ShareAppDelegate.window];
             double delayInSeconds = 1.5;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -124,8 +124,8 @@
         }
         else
         {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
         }
     }];
 }

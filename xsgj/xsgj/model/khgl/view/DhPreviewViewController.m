@@ -64,7 +64,7 @@
 - (void)handleNavBarRight
 {
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     [self sendReportRequest];
     
 }
@@ -124,8 +124,8 @@
     [KHGLAPI commitOrderByRequest:request success:^(OrderCommitHttpResponse *response){
         step.SYNC_STATE = 2;
         [step save];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:@"提交成功" toView:self.view];
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showSuccess:@"提交成功" toView:ShareAppDelegate.window];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -138,7 +138,7 @@
     }fail:^(BOOL notReachable, NSString *desciption){
         self.navigationItem.rightBarButtonItem.enabled = YES;
 
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
         if(notReachable)
         {
             step.SYNC_STATE = 1;
@@ -147,7 +147,7 @@
             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
             cache.VISIT_NO = self.vistRecord.VISIT_NO;
             [cache saveToDB];
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:ShareAppDelegate.window];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 sleep(1);
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -158,7 +158,7 @@
         }
         else
         {
-            [MBProgressHUD showError:desciption toView:self.view];
+            [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
         }
         
     }];

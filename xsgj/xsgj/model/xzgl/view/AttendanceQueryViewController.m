@@ -252,7 +252,7 @@ static int const pageSize = 30;
         
         NSString *sql = [NSString stringWithFormat:@"SIGNTIME>%f and SIGNTIME<%f",[NSDate dateFromString:[_beginDate stringWithFormat:@"yyyy-MM-dd 00:00:00"] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970,[NSDate dateFromString:[_endDate stringWithFormat:@"yyyy-MM-dd 23:59:59"] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970];
         
-        NSArray *attendances = [SignDetailBean searchWithWhere:sql orderBy:@"SIGNTIME" offset:0 count:60];
+        NSArray *attendances = [SignDetailBean searchWithWhere:sql orderBy:@"SIGNTIME DESC" offset:0 count:60];
         if (page == 1) {
             [_attendances removeAllObjects];
         }
@@ -260,8 +260,12 @@ static int const pageSize = 30;
         [_attendances addObjectsFromArray:attendances];
         [self.tableView reloadData];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:DEFAULT_OFFLINEMESSAGE toView:self.view];
-        
+        if (attendances.count == 0) {
+             [MBProgressHUD showError:desciption toView:self.view];
+        }else{
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+        }
+       
     }];
 }
 

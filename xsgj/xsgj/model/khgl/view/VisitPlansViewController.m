@@ -198,11 +198,11 @@
 #pragma mark -initView
 
 -(void)loadPlanVisits{
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     QueryPlanVisitConfigsHttpRequest *request = [[QueryPlanVisitConfigsHttpRequest alloc]init];
     request.PLAN_DATE = [[NSDate getNextDate:1] stringWithFormat:@"yyyy-MM-dd"];
     [KHGLAPI queryPlanVisiConfigsByRequest:request success:^(QueryPlanVisitConfigsHttpResponse *response) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
         _btn_submit.hidden = NO;
         NSArray *array =  response.PLAN_VISIT_CONFIGS;
         _dateArray = [[NSMutableArray alloc]init];
@@ -227,8 +227,8 @@
 //        [self loadPlayVisitRecords];
     } fail:^(BOOL notReachable, NSString *desciption) {
         self.navigationItem.rightBarButtonItem.enabled = NO;
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:@"网络不给力" toView:self.view];
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showError:@"网络不给力" toView:ShareAppDelegate.window];
     }];
 }
 
@@ -499,7 +499,7 @@
 
 #pragma mark - Action
 - (IBAction)submitAction:(id)sender {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     UpdateVisitPlansHttpRequest *request = [[UpdateVisitPlansHttpRequest alloc]init];
     NSMutableArray *array = [NSMutableArray array];
     NSMutableArray *datas = [_dataArray objectAtIndex:_index];
@@ -526,24 +526,24 @@
         [datas removeAllObjects];
         NSDate *date = [_dateArray objectAtIndex:_index];
         NSString *message = [NSString stringWithFormat:@"%@拜访规划提交成功",[date stringWithFormat:@"yyyy-MM-dd"]];
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:message toView:self.view];
+        [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showSuccess:message toView:ShareAppDelegate.window];
         _index = [self nextPage];
         [self loadPlanVisits];
     } fail:^(BOOL notReachable, NSString *desciption) {
         if (notReachable) {
             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"拜访规划"];
             [cache saveToDB];
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:ShareAppDelegate.window];
             double delayInSeconds = 1.5;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }else{
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
         }
     }];
     

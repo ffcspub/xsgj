@@ -213,7 +213,7 @@
 }
 
 - (IBAction)handleBtnVisitEndClicked:(id)sender {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     [self sendVisitEndRequest];
 }
 
@@ -296,8 +296,8 @@
     [KHGLAPI recordVisitByRequest:request success:^(RecordVisitHttpResponse *response){
         _btnVisitEnd.enabled = NO;
         _lbEndVisitTime.text = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:@"提交成功" toView:self.view];
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showSuccess:@"提交成功" toView:ShareAppDelegate.window];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -307,13 +307,13 @@
         });
         
      }fail:^(BOOL notReachable, NSString *desciption){
-         [MBProgressHUD hideHUDForView:self.view animated:YES];
+         [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
          if(notReachable)
          {
              OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
              cache.VISIT_NO = _vistRecord.VISIT_NO;
              [cache saveToDB];
-             [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+             [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:ShareAppDelegate.window];
              
              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                  sleep(1);
@@ -325,7 +325,7 @@
          }
          else
          {
-             [MBProgressHUD showError:desciption toView:self.view];
+             [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
          }
          
      }];

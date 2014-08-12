@@ -118,9 +118,12 @@ static int const pageSize = 10000;
             [self loadCacheData];
             
             [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
-            [MBProgressHUD showError:DEFAULT_OFFLINEMESSAGE toView:nil];
+            if(self.arrTrips.count == 0){
+                [MBProgressHUD showError:desciption toView:nil];
+            }else{
+                [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
+            }
         } else {
-            
             [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
             [MBProgressHUD showError:desciption toView:nil];
         }

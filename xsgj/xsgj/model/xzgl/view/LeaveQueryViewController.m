@@ -252,6 +252,7 @@ static int const pageSize = 30;
 
 - (void)queryLeave
 {
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     page++;
@@ -269,10 +270,10 @@ static int const pageSize = 30;
         
         int resultCount = [response.LEAVEINFOBEAN count];
         if (resultCount < pageSize) {
-            for (LeaveinfoBean *bean in response.LEAVEINFOBEAN) {
-                [bean save];
-            }
             self.tableView.showsInfiniteScrolling = NO;
+        }
+        for (LeaveinfoBean *bean in response.LEAVEINFOBEAN) {
+            [bean save];
         }
         if (page == 1) {
             [_leaves removeAllObjects];
@@ -287,7 +288,7 @@ static int const pageSize = 30;
         
         NSString *sql = [NSString stringWithFormat:@"APPLYTIME>%f and APPLYTIME<%f",[NSDate dateFromString:[_beginDate stringWithFormat:@"yyyy-MM-dd 00:00:00"] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970,[NSDate dateFromString:[_endDate stringWithFormat:@"yyyy-MM-dd 23:59:59"] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970];
         
-        NSArray *attendances = [LeaveinfoBean searchWithWhere:sql orderBy:@"APPLYTIME" offset:0 count:60];
+        NSArray *attendances = [LeaveinfoBean searchWithWhere:sql orderBy:@"APPLYTIME DESC" offset:0 count:60];
         if (page == 1) {
             [_leaves removeAllObjects];
         }
@@ -295,7 +296,12 @@ static int const pageSize = 30;
         [_leaves addObjectsFromArray:attendances];
         [self.tableView reloadData];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:DEFAULT_OFFLINEMESSAGE toView:self.view];
+        if (_leaves.count == 0) {
+          [MBProgressHUD showError:desciption toView:self.view];
+        }else{
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+        }
+        
     }];
 }
 

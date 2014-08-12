@@ -164,8 +164,8 @@
         request.POSITION = _lb_manualAdjust.text;
     }
     [KHGLAPI tempVisitByRequest:request success:^(TempVisitHttpResponse *response) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:@"提交成功" toView:self.view];
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showSuccess:@"提交成功" toView:ShareAppDelegate.window];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -175,8 +175,8 @@
         });
         
     } fail:^(BOOL notReachable, NSString *desciption) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:desciption toView:self.view];
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
         
     }];
 }
@@ -216,7 +216,7 @@
 
 - (void)uploadPhoto
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     
     NSDate *now = [NSDate new];
     NSDateFormatter *formatter = [NSDateFormatter new];
@@ -230,8 +230,8 @@
         
     } fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {
         
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:desciption toView:self.view];
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
     }];
 }
 

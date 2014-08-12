@@ -436,7 +436,7 @@
 
 - (void)applyLeaveRequest
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     
     ApplyLeaveHttpRequest *request = [[ApplyLeaveHttpRequest alloc] init];
     UITextField *tf_title = (UITextField *)[_scrollView viewWithTag:401];
@@ -457,30 +457,30 @@
     request.APPLY_TIME = [formatter stringFromDate:now];
     request.LEADER = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.LEADER_ID];
     [XZGLAPI applyLeaveByRequest:request success:^(ApplyLeaveHttpResponse *response) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:ShareAppDelegate.window];
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [self.navigationController popViewControllerAnimated:YES];
         });
     } fail:^(BOOL notReachable, NSString *desciption) {
-//        [MBProgressHUD hideHUDForView:self.view animated:YES];
-//        [MBProgressHUD showError:@"网络不给力" toView:self.view];
+//        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+//        [MBProgressHUD showError:@"网络不给力" toView:ShareAppDelegate.window];
         
         if (notReachable) {
             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"请假申请"];
             [cache saveToDB];
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:ShareAppDelegate.window];
             double delayInSeconds = 1.5;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }else{
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
         }
     }];
 }

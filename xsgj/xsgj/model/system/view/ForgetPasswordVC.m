@@ -77,14 +77,14 @@
     request.CORP_CODE = self.tfCorpCode.text;
     request.USER_NAME = self.tfUserName.text;
     
-    MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在提交···" toView:self.view];
+    MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在提交···" toView:ShareAppDelegate.window];
     [hud showAnimated:YES whileExecutingBlock:^{
         [XTGLAPI forgetPwdByRequest:request success:^(ForgetPwdHttpResponse *response) {
             if ([self.tfCorpCode.text isEqual:[ShareValue shareInstance].corpCode] && [self.tfUserName.text isEqual:[ShareValue shareInstance].userName]) {
                 [ShareValue shareInstance].userPass = nil;
             }
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:ShareAppDelegate.window];
             
             SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"提示"
                                                             message:@"密码重置成功,密码为123456"
@@ -104,8 +104,8 @@
             [alert show];
             
         } fail:^(BOOL notReachable, NSString *desciption) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
         }];
     }];
 }
