@@ -13,6 +13,7 @@
 #import "ServerConfig.h"
 #import <Reachability.h>
 #import <JSONKit.h>
+#import "BNVisitStepRecord.h"
 
 @interface OfflineAPI(){
     Reachability *_reachability;
@@ -107,8 +108,7 @@
     static AFHTTPClient *_client;
     dispatch_once(&onceToken, ^{
         _client = [[AFHTTPClient alloc]initWithBaseURL:[NSURL URLWithString:BASE_SERVERLURL]];
-        LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
-        [helper createTableWithModelClass:[OfflineRequestCache class]];
+        
     });
     return _client;
 }
@@ -129,7 +129,7 @@
  */
 -(void)sendOfflineRequest
 {
-    NSArray *array = [OfflineRequestCache searchWithWhere:nil orderBy:nil offset:0 count:100];
+    NSArray *array = [OfflineRequestCache searchWithWhere:nil orderBy:nil offset:0 count:1];
     if (array.count > 0) {
         OfflineRequestCache *cache = array.firstObject;
         AFHTTPClient *client = OfflineAPI.client;
@@ -140,11 +140,12 @@
         @synchronized(self) {
             if ([self httpClient:client sendHTTPRequest:cache]) {
                 NSLog(@"离线上报---->[%@] 成功!", cache.name);
+                [self sendOfflineRequest];
             } else {
                 NSLog(@"离线上报---->[%@] 成功!", cache.name);
             }
         }
-        [self sendOfflineRequest];
+        
     }
    
 }
@@ -174,8 +175,11 @@
     if( error ) {
         result = NO;
     } else {
-        id JSON = [data objectFromJSONData];
+        NSDictionary * JSON = [data objectFromJSONData];
         if(JSON){
+            if (request.VISIT_NO.length>0) {
+                [BNVisitStepRecord updateToDBWithSet:@"SYNC_STATE=2" where:[NSString stringWithFormat:@"VISIT_NO=%@",request.VISIT_NO]];
+            }
             [[LKDBHelper getUsingLKDBHelper] deleteToDB:request];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
                                                                 object:request];
