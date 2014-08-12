@@ -157,6 +157,7 @@
 {
     InfoCollectViewController *viewController = [[InfoCollectViewController alloc] initWithNibName:@"InfoCollectViewController" bundle:nil];
     viewController.bEnterNextview = bTag;
+    viewController.customerInfo = _customerInfo;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
     [self presentModalViewController:nav animated:YES];
 }

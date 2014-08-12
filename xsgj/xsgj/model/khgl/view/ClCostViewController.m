@@ -162,13 +162,22 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
 }
 - (void)sendRequest
 {
-    BNVisitStepRecord *step = [BNVisitStepRecord searchSingleWithWhere:[NSString stringWithFormat:@"VISIT_NO='%@' and OPER_MENU='34'",self.vistRecord.VISIT_NO] orderBy:nil];
+//    BNVisitStepRecord *step = [BNVisitStepRecord searchSingleWithWhere:[NSString stringWithFormat:@"VISIT_NO='%@' and OPER_MENU='34'",self.vistRecord.VISIT_NO] orderBy:nil];
+//    step.SYNC_STATE = 1;
+//    if (!step) {
+//        step = [[BNVisitStepRecord alloc]init];
+//        step.VISIT_NO = self.vistRecord.VISIT_NO;
+//        step.OPER_NUM =  step.OPER_NUM + 1;
+//        step.OPER_MENU = 34;
+//    }
+    
+    BNVisitStepRecord *step = [BNVisitStepRecord searchSingleWithWhere:[NSString stringWithFormat:@"VISIT_NO='%@' and OPER_MENU='%@'",self.vistRecord.VISIT_NO,self.strMenuId] orderBy:nil];
     step.SYNC_STATE = 1;
     if (!step) {
         step = [[BNVisitStepRecord alloc]init];
         step.VISIT_NO = self.vistRecord.VISIT_NO;
         step.OPER_NUM =  step.OPER_NUM + 1;
-        step.OPER_MENU = 34;
+        step.OPER_MENU = self.strMenuId.intValue;
     }
     
     InsertDisplayCostHttpRequest *request = [[InsertDisplayCostHttpRequest alloc]init];

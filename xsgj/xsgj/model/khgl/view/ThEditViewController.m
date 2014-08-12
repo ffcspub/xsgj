@@ -62,6 +62,7 @@
     }
     
     ThPreviewViewController *viewController = [[ThPreviewViewController alloc] initWithNibName:@"ThPreviewViewController" bundle:nil];
+    viewController.strMenuId = self.strMenuId;
     viewController.aryData = _aryKcData;
     viewController.customerInfo = self.customerInfo;
     viewController.vistRecord = self.vistRecord;
@@ -214,13 +215,22 @@
 
 - (void)sendReportRequest
 {
-    BNVisitStepRecord *step = [BNVisitStepRecord searchSingleWithWhere:[NSString stringWithFormat:@"VISIT_NO='%@' and OPER_MENU='37'",self.vistRecord.VISIT_NO] orderBy:nil];
+//    BNVisitStepRecord *step = [BNVisitStepRecord searchSingleWithWhere:[NSString stringWithFormat:@"VISIT_NO='%@' and OPER_MENU='37'",self.vistRecord.VISIT_NO] orderBy:nil];
+//    step.SYNC_STATE = 1;
+//    if (!step) {
+//        step = [[BNVisitStepRecord alloc]init];
+//        step.VISIT_NO = self.vistRecord.VISIT_NO;
+//        step.OPER_NUM =  step.OPER_NUM + 1;
+//        step.OPER_MENU = 37;
+//    }
+    
+    BNVisitStepRecord *step = [BNVisitStepRecord searchSingleWithWhere:[NSString stringWithFormat:@"VISIT_NO='%@' and OPER_MENU='%@'",self.vistRecord.VISIT_NO,self.strMenuId] orderBy:nil];
     step.SYNC_STATE = 1;
     if (!step) {
         step = [[BNVisitStepRecord alloc]init];
         step.VISIT_NO = self.vistRecord.VISIT_NO;
         step.OPER_NUM =  step.OPER_NUM + 1;
-        step.OPER_MENU = 37;
+        step.OPER_MENU = self.strMenuId.intValue;
     }
     
     InsertOrderBackHttpRequest *request = [[InsertOrderBackHttpRequest alloc]init];

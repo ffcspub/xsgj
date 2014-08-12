@@ -43,6 +43,7 @@
 - (void)handleNavBarRight
 {
     ThEditViewController *viewController = [[ThEditViewController alloc] initWithNibName:@"ThEditViewController" bundle:nil];
+    viewController.strMenuId = self.strMenuId;
     viewController.aryData = _aryProductSelect;
     viewController.customerInfo = self.customerInfo;
     viewController.vistRecord = self.vistRecord;

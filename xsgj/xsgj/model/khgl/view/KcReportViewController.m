@@ -72,6 +72,7 @@
 - (void)handleNavBarRight
 {
     KcEditViewController *viewController = [[KcEditViewController alloc] initWithNibName:@"KcEditViewController" bundle:nil];
+    viewController.strMenuId = _strMenuId;
     viewController.aryData = _aryProductSelect;
     viewController.customerInfo = self.customerInfo;
     viewController.vistRecord = self.vistRecord;

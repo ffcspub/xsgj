@@ -112,36 +112,11 @@
         }
     }
     
-//    for(BNVisitPlan *visitPlan in aryPlans)
-//    {
-//        for(BNCustomerInfo *customerInfo in cusinfo)
-//        {
-//            if(customerInfo.CUST_ID == visitPlan.CUST_ID)
-//            {
-//                [_aryVisitData addObject:customerInfo];
-//            }
-//        }
-//    }
-    
-//    NSMutableArray *aryCusInfo = [[NSMutableArray alloc] init];
-//    for(BNVisitPlan *visitPlan in aryPlans)
-//    {
-//        NSArray *cusinfo =[BNCustomerInfo searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D",visitPlan.CUST_ID] orderBy:@"ORDER_NO" offset:0 count:100];
-//        [aryCusInfo addObject:cusinfo];
-//    }
-//    
-//    for(NSArray *cusinfo in aryCusInfo)
-//    {
-//        for(BNCustomerInfo *customerInfo in cusinfo)
-//        {
-//            [_aryVisitData addObject:customerInfo];
-//        }
-//    }
-    
     for(int i=0; i<_aryVisitData.count; i++)
     {
         BNCustomerInfo *customerInfo = [_aryVisitData objectAtIndex:i];
         NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D and VISIT_DATE like '%@%@'",customerInfo.CUST_ID,[[NSDate date] stringWithFormat:@"yyyy-MM-dd"],@"%"] orderBy:nil offset:0 count:100];
+
         [_aryVisitRecord addObject:aryRecord];
     }
     [_tvContain reloadData];

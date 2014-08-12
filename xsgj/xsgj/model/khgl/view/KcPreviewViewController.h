@@ -25,6 +25,6 @@
 @property (weak, nonatomic) NSArray *aryData;
 @property (weak, nonatomic) BNCustomerInfo *customerInfo;
 @property (weak, nonatomic) BNVistRecord *vistRecord;
-
+@property (strong, nonatomic) NSString *strMenuId;
 
 @end

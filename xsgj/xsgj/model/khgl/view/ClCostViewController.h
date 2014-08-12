@@ -32,6 +32,7 @@
 @property (weak, nonatomic) BNCustomerInfo *customerInfo;
 @property (weak, nonatomic) BNVistRecord *vistRecord;
 @property (weak, nonatomic) BNDisplayShape *clShapeSelect;
+@property (strong, nonatomic) NSString *strMenuId;
 
 - (IBAction)handleBtnTimeBeginClicked:(id)sender;
 - (IBAction)handleBtnTimeEndClicked:(id)sender;
