@@ -66,10 +66,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (pageCount > 0) {
-        [self loadVisitDataWithDate:[[NSDate date] getWeekDay]];
-    }
-    pageCount ++;
+//    if (pageCount > 0) {
+//        [self loadVisitDataWithDate:[[NSDate date] getWeekDay]];
+//    }
+//    pageCount ++;
     
 }
 
