@@ -13,6 +13,7 @@
 #import "MBProgressHUD+Add.h"
 #import "OfflineRequestCache.h"
 #import "SystemAPI.h"
+#import <LKDBHelper.h>
 
 @interface WorkReportViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>{
     NSMutableArray *_types;
@@ -44,6 +45,8 @@
     [self setRightBarButtonItem];
     
     self.view.backgroundColor = HEX_RGB(0xefeff4);
+    
+    [[LKDBHelper getUsingLKDBHelper]createTableWithModelClass:[WorkReportTypeBean class ]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -223,12 +226,27 @@
         [_types addObjectsFromArray:response.WORKREPORTINFOBEAN];
         NSMutableArray *options = [[NSMutableArray alloc]init];
         for (WorkReportTypeBean *type in _types) {
+            [type save];
             [options addObject:[NSDictionary dictionaryWithObjectsAndKeys:type.TYPE_NAME, @"text",nil]];
         }
         LeveyPopListView *listView = [[LeveyPopListView alloc] initWithTitle:@"选择类型" options:options];
         listView.delegate = self;
         [listView showInView:self.navigationController.view animated:YES];
     } fail:^(BOOL notReachable, NSString *desciption) {
+        
+        if (notReachable) {
+            NSArray *types = [WorkReportTypeBean searchWithWhere:nil orderBy:nil offset:0 count:90];
+            _types = [[NSMutableArray alloc] init];
+            [_types addObjectsFromArray:types];
+            NSMutableArray *options = [[NSMutableArray alloc]init];
+            for (WorkReportTypeBean *type in _types) {
+                [type save];
+                [options addObject:[NSDictionary dictionaryWithObjectsAndKeys:type.TYPE_NAME, @"text",nil]];
+            }
+            LeveyPopListView *listView = [[LeveyPopListView alloc] initWithTitle:@"选择类型" options:options];
+            listView.delegate = self;
+            [listView showInView:self.navigationController.view animated:YES];
+        }
         
     }];
 }
