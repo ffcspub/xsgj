@@ -178,7 +178,7 @@
         NSDictionary * JSON = [data objectFromJSONData];
         if(JSON){
             if (request.VISIT_NO.length>0) {
-                [BNVisitStepRecord updateToDBWithSet:@"SYNC_STATE=2" where:[NSString stringWithFormat:@"VISIT_NO=%@",request.VISIT_NO]];
+                [BNVisitStepRecord updateToDBWithSet:@"SYNC_STATE=2" where:[NSString stringWithFormat:@"VISIT_NO='%@'",request.VISIT_NO]];
             }
             [[LKDBHelper getUsingLKDBHelper] deleteToDB:request];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
