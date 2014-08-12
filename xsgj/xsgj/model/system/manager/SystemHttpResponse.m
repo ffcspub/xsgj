@@ -30,6 +30,7 @@
 #import "BNPartnerType.h"
 #import "LK_NSDictionary2Object.h"
 #import "OfflineRequestCache.h"
+#import "TripInfoBean.h"
 
 #import <LKDBHelper.h>
 
@@ -61,6 +62,7 @@
     [helper createTableWithModelClass:[BNPartnerInfoBean class]];
     [helper createTableWithModelClass:[BNPartnerType class]];
     [helper createTableWithModelClass:[OfflineRequestCache class]];
+    [helper createTableWithModelClass:[TripInfoBean class ]];
 }
 
 -(void)saveCacheDB{

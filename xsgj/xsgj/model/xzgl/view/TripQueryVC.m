@@ -54,9 +54,6 @@ static int const pageSize = 10000;
 {
     [super viewDidLoad];
     
-    // 离线处理
-    [[LKDBHelper getUsingLKDBHelper] createTableWithModelClass:[TripInfoBean class ]];
-    
     // 日期处理
     NSDate *date = [NSDate date];
     NSCalendar *cal = [NSCalendar currentCalendar];
