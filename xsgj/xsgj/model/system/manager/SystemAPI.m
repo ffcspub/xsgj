@@ -76,7 +76,22 @@
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"企业公告有新的信息" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alert show];
             }
-            [tResponse saveCacheDB];
+            
+            // 更新配置添加事务
+            [[LKDBHelper getUsingLKDBHelper] executeDB:^(FMDatabase *db) {
+                @try {
+                    [db beginTransaction];
+                    [tResponse saveCacheDB];
+                    [db commit];
+                }
+                @catch (NSException *exception) {
+                    [db rollback];
+                }
+                @finally {
+                    
+                }
+            }];
+            
             [ShareValue shareInstance].lastUpdateTime = [NSNumber numberWithUnsignedLongLong:[ShareValue shareInstance].userInfo.LAST_UPDATE_TIME];
             Success();
         }else{
