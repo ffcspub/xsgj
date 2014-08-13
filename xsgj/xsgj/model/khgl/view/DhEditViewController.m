@@ -289,7 +289,7 @@
     request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     request.VISIT_NO   = self.vistRecord.VISIT_NO;
     request.CUST_ID    = self.customerInfo.CUST_ID;
-    request.OPER_MENU  = @"36";
+    request.OPER_MENU  = self.strMenuId;
     request.DATA = _aryDhData;
     
     [KHGLAPI commitOrderByRequest:request success:^(OrderCommitHttpResponse *response){

@@ -61,8 +61,22 @@
 
 #pragma mark - functions
 
+-(void)backAction{
+    NSDictionary *dicInfo = [NSDictionary dictionaryWithObjectsAndKeys:_arySourceData,@"data",[NSNumber numberWithInt:0],@"prodid", nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_MODIFY_DATA object:dicInfo];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)handleNavBarRight
 {
+    if(_arySourceData.count < 1)
+    {
+        [MBProgressHUD showError:@"订货不能为空" toView:ShareAppDelegate.window];
+        return;
+    }
+    
     self.navigationItem.rightBarButtonItem.enabled = NO;
     [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     [self sendReportRequest];
@@ -118,7 +132,7 @@
     request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     request.VISIT_NO   = self.vistRecord.VISIT_NO;
     request.CUST_ID    = self.customerInfo.CUST_ID;
-    request.OPER_MENU  = @"36";
+    request.OPER_MENU  = self.strMenuId;
     request.DATA = _arySourceData;
     
     [KHGLAPI commitOrderByRequest:request success:^(OrderCommitHttpResponse *response){
@@ -243,6 +257,16 @@
     [self.tvDetail reloadData];
     
     [self adjustTableViewHeight];
+    
+    double total = 0;
+    for(OrderItemBean *commitBean  in _arySourceData)
+    {
+        total = total + commitBean.TOTAL_PRICE;
+    }
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setPositiveFormat:@"###0.##"];
+    self.lbTotal.text = [numberFormatter stringFromNumber:[NSNumber numberWithDouble:total]];
 }
 
 

@@ -238,7 +238,7 @@
     request.VISIT_NO   = self.vistRecord.VISIT_NO;
     request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     request.CUST_ID    = self.customerInfo.CUST_ID;
-    request.OPER_MENU  = @"32";
+    request.OPER_MENU  = self.strMenuId;
     request.TYPE_ID    = self.clTypeSelect.TYPE_ID;
     request.REMARK = self.tfMark.text;
     

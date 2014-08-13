@@ -189,7 +189,7 @@
     request.REMARK     = _txHdDescription.text;
     request.TOPIC      = _tfHdName.text;
     request.CUST_ID    = self.customerInfo.CUST_ID;
-    request.OPER_MENU  = @"38";
+    request.OPER_MENU  = self.strMenuId;
     
     if(_aryFileId.count >= 1)
     {

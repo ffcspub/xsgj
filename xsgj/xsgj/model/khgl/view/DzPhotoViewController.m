@@ -369,7 +369,7 @@
     // 附加信息
     request.CUST_ID = self.customerInfo.CUST_ID;
     request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
-    request.OPER_MENU = @"31";
+    request.OPER_MENU = self.strMenuId;
     request.TYPE_ID = self.cameratypeSelect.TYPE_ID;
     request.VISIT_NO = self.vistRecord.VISIT_NO;
     request.REMARK = self.tfMark.text;
