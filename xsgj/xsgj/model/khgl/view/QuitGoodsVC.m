@@ -15,6 +15,7 @@
 #import "QuitGoodsDetailVC.h"
 #import <NSDate+Helper.h>
 #import <LKDBHelper.h>
+#import "QueryOrderBackDetailInfoBean.h"
 
 static NSString * const QuitGoodsCellIdentifier = @"QuitGoodsCellIdentifier";
 static int const pageSize = 10000;
@@ -107,7 +108,37 @@ static int const pageSize = 10000;
         
         [self loadCacheData];
         
-        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+        // 加载退货详情列表
+        QueryOrderBackDetailHttpRequest *requestDetail = [[QueryOrderBackDetailHttpRequest alloc] init];
+        requestDetail.BEGINTIME = [self.beginDate stringWithFormat:@"yyyy-MM-dd"];
+        requestDetail.ENDTIME = [self.endDate stringWithFormat:@"yyyy-MM-dd"];
+        
+        [KHGLAPI queryOrderBackDetailByRequest:requestDetail success:^(QueryOrderBackDetailHttpResponse *response) {
+            
+            // 保存退货查询明细离线数据
+            [[LKDBHelper getUsingLKDBHelper] executeDB:^(FMDatabase *db) {
+                @try {
+                    [db beginTransaction];
+                    for (QueryOrderBackDetailInfoBean *bean in response.QUERYORDERBACKINFOBEAN) {
+                        [bean save];
+                    }
+                    [db commit];
+                }
+                @catch (NSException *exception) {
+                    [db rollback];
+                }
+                @finally {
+                    
+                }
+            }];
+            
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+
+        } fail:^(BOOL notReachable, NSString *desciption) {
+            
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+        }];
         
     } fail:^(BOOL notReachable, NSString *desciption) {
         

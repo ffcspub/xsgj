@@ -280,15 +280,16 @@
 
 @end
 
-@interface QueryOrderBackDetailHttpRequest : LK_HttpBasePageRequest
+@interface QueryOrderBackDetailHttpRequest : LK_HttpBaseRequest
 
 @property(nonatomic,strong) NSString *	SESSION_ID	;//	会话ID
 @property(nonatomic,assign) int 	CORP_ID	;//	企业ID
 @property(nonatomic,assign) int 	DEPT_ID	;//	部门ID
 @property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
 @property(nonatomic,assign) int 	USER_ID	;//	用户ID
-@property(nonatomic,strong) NSNumber *	QUERY_DEPTID	;//	查询部门标识
-@property(nonatomic,strong) NSNumber *  ORDER_ID;//退货ID
+
+@property(nonatomic,strong) NSString *	BEGINTIME; // 起始日期 (可选)
+@property(nonatomic,strong) NSString *	ENDTIME;   // 结束日期 (可选)
 
 @end
 

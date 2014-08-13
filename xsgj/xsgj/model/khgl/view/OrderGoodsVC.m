@@ -107,6 +107,7 @@ static int const pageSize = 10000;
         
         [self loadCacheData];
         
+        // 加载订货详情列表
         OrderDetailHttpRequest *requestDetail = [[OrderDetailHttpRequest alloc] init];
         requestDetail.BEGIN_DATE = [self.beginDate stringWithFormat:@"yyyy-MM-dd"];
         requestDetail.END_DATE = [self.endDate stringWithFormat:@"yyyy-MM-dd"];

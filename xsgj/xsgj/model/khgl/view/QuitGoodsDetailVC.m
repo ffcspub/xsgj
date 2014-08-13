@@ -11,6 +11,7 @@
 #import "KHGLAPI.h"
 #import "MBProgressHUD+Add.h"
 #import "XCMultiSortTableView.h"
+#import <LKDBHelper.h>
 
 @interface QuitGoodsDetailVC () <XCMultiTableViewDataSource>
 {
@@ -67,21 +68,11 @@
 
 - (void)loadQuitGoodsDetail
 {
-    QueryOrderBackDetailHttpRequest *request = [[QueryOrderBackDetailHttpRequest alloc] init];
-    request.ORDER_ID = [NSNumber numberWithInt:self.quitBean.ORDER_ID];
-    
-    MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [KHGLAPI queryOrderBackDetailByRequest:request success:^(QueryOrderBackDetailHttpResponse *response) {
-        
-        [self.arrQuitGoods removeAllObjects];
-        [self.arrQuitGoods addObjectsFromArray:response.QUERYORDERBACKINFOBEAN];
-        [self refreshUI];
-        
-        [hub removeFromSuperview];
-    } fail:^(BOOL notReachable, NSString *desciption) {
-        [hub removeFromSuperview];
-        [MBProgressHUD showError:desciption toView:self.view];
-    }];
+    NSString *condition = [NSString stringWithFormat:@"ORDER_ID=%d", self.quitBean.ORDER_ID];
+    NSMutableArray *arrTemp = [QueryOrderBackDetailInfoBean searchWithWhere:condition orderBy:nil offset:0 count:1000];
+    [self.arrQuitGoods removeAllObjects];
+    [self.arrQuitGoods addObjectsFromArray:arrTemp];
+    [self refreshUI];
 }
 
 - (void)refreshUI
@@ -185,6 +176,8 @@
 {
     if (column == 0) {
         return 100.0f;
+    } else if (column == 4) {
+        return 200;
     }
     return 100.f;
 }

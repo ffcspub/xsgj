@@ -7,7 +7,21 @@
 //
 
 #import "QueryOrderBackDetailInfoBean.h"
+#import <LKDBHelper.h>
+#import <NSDate+Helper.h>
 
 @implementation QueryOrderBackDetailInfoBean
+
+//表名
++(NSString *)getTableName
+{
+    return [NSString stringWithFormat:@"t_%d_QueryOrderBackDetailInfoBean",[ShareValue shareInstance].userInfo.USER_ID];
+}
+
+-(void)save
+{
+    [QueryOrderBackDetailInfoBean deleteWithWhere:[NSString stringWithFormat:@"ITEM_ID=%d",[_ITEM_ID intValue]]];
+    [self saveToDB];
+}
 
 @end

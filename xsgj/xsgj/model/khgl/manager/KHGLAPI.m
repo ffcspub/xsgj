@@ -265,7 +265,7 @@
  *  @param fail    失败返回结果
  */
 +(void)queryOrderBackDetailByRequest:(QueryOrderBackDetailHttpRequest *)request success:(void(^)(QueryOrderBackDetailHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
-    [LK_APIUtil getHttpRequest:request apiPath:URL_ORDER_BACK_DETAIL Success:^(LK_HttpBaseResponse *response) {
+    [LK_APIUtil getHttpRequest:request apiPath:URL_ORDER_BACK_DETAIL_OFFLINE Success:^(LK_HttpBaseResponse *response) {
         success((QueryOrderBackDetailHttpResponse *)response);
     } fail:^(BOOL NotReachable, NSString *desciption) {
         fail(NotReachable,desciption);
