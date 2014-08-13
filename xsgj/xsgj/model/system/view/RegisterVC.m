@@ -85,7 +85,8 @@
     UITextField *tfCropName = [ShareValue getDefaultTextField];
     tfCropName.frame = rectContent;
     tfCropName.keyboardType = UIKeyboardTypeDefault;
-    tfCropName.delegate = self;
+    //tfCropName.delegate = self;
+    tfCropName.maxLength = 20;
     [self.svRoot addSubview:tfCropName];
     self.tfCropName = tfCropName;
     
@@ -113,7 +114,7 @@
     tfCropCode.maxLength = 20;
     tfCropCode.font = [UIFont systemFontOfSize:12.f];
     tfCropCode.keyboardType = UIKeyboardTypeASCIICapable;
-    tfCropCode.delegate = self;
+    //tfCropCode.delegate = self;
     [self.svRoot addSubview:tfCropCode];
     self.tfCropCode = tfCropCode;
     
@@ -140,7 +141,7 @@
     tfProvince.frame = rectProvince;
     tfProvince.textAlignment = NSTextAlignmentCenter;
     tfProvince.maxLength = 5;
-    tfProvince.delegate = self;
+    //tfProvince.delegate = self;
     [self.svRoot addSubview:tfProvince];
     self.tfProvince = tfProvince;
     
@@ -155,7 +156,7 @@
     tfCity.frame = rectCity;
     tfCity.textAlignment = NSTextAlignmentCenter;
     tfCity.maxLength = 5;
-    tfCity.delegate = self;
+    //tfCity.delegate = self;
     [self.svRoot addSubview:tfCity];
     self.tfCity = tfCity;
     
@@ -185,7 +186,8 @@
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfType = [ShareValue getDefaultTextField];
     tfType.frame = rectContent;
-    tfType.delegate = self;
+    tfType.maxLength = 10;
+    //tfType.delegate = self;
     [self.svRoot addSubview:tfType];
     self.tfType = tfType;
     
@@ -209,7 +211,8 @@
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfLinkMan = [ShareValue getDefaultTextField];
     tfLinkMan.frame = rectContent;
-    tfLinkMan.delegate = self;
+    tfLinkMan.maxLength = 10;
+    //tfLinkMan.delegate = self;
     [self.svRoot addSubview:tfLinkMan];
     self.tfLinkMan = tfLinkMan;
     
@@ -259,7 +262,8 @@
     UITextField *tfEmail = [ShareValue getDefaultTextField];
     tfEmail.frame = rectContent;
     tfEmail.keyboardType = UIKeyboardTypeEmailAddress;
-    tfEmail.delegate = self;
+    //tfEmail.delegate = self;
+    tfEmail.maxLength = 20;
     [self.svRoot addSubview:tfEmail];
     self.tfEmail = tfEmail;
     
