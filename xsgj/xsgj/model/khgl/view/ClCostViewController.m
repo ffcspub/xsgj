@@ -191,7 +191,7 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
     request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     request.COST       = _tfClCost.text;
     request.CUST_ID    = self.customerInfo.CUST_ID;
-    request.OPER_MENU  = @"34";
+    request.OPER_MENU  = self.strMenuId;
     request.SHAPE_ID   = [NSString stringWithFormat:@"%d",self.clShapeSelect.SHAPE_ID];
     request.VISIT_NO   = self.vistRecord.VISIT_NO;
     request.BEGIN_TIME = _tfTimeBegin.text;

@@ -214,7 +214,7 @@
     request.REMARK    = self.tfMark.text;
     request.SPEC      = _tfSpec.text;
     request.CUST_ID    = self.customerInfo.CUST_ID;
-    request.OPER_MENU  = @"39";
+    request.OPER_MENU  = self.strMenuId;
 
     if(_aryFileId.count >= 1)
     {

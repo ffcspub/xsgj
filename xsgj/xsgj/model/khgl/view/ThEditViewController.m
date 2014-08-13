@@ -244,7 +244,7 @@
     request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     request.VISIT_NO   = self.vistRecord.VISIT_NO;
     request.CUST_ID    = self.customerInfo.CUST_ID;
-    request.OPER_MENU  = @"37";
+    request.OPER_MENU  = self.strMenuId;
     
     NSMutableArray *aryCommit = [[NSMutableArray alloc] init];
     for(ThCommitData *commitBean in _aryKcData)

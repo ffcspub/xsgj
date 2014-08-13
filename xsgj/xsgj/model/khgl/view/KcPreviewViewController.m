@@ -51,6 +51,14 @@
 
 #pragma mark - functions
 
+-(void)backAction{
+    NSDictionary *dicInfo = [NSDictionary dictionaryWithObjectsAndKeys:_arySourceData,@"data",[NSNumber numberWithInt:0],@"prodid", nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_MODIFY_DATA object:dicInfo];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)handleNavBarRight
 {
     BOOL bValid = [self checkCommitDataValid];
@@ -224,7 +232,7 @@
     request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     request.VISIT_NO   = self.vistRecord.VISIT_NO;
     request.CUST_ID    = self.customerInfo.CUST_ID;
-    request.OPER_MENU  = @"35";
+    request.OPER_MENU  = self.strMenuId;
     // StockCommitBean
     NSMutableArray *aryCommit = [[NSMutableArray alloc] init];
     for(KcCommitData *kcCommitBean in _arySourceData)

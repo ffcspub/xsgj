@@ -206,7 +206,7 @@
     request.CASE_ID    = self.clCaseSelect.CASE_ID;
     request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     request.CUST_ID    = self.customerInfo.CUST_ID;
-    request.OPER_MENU  = @"33";
+    request.OPER_MENU  = self.strMenuId;
     request.REMARK     = self.tfMark.text;
     request.VISIT_NO   = self.vistRecord.VISIT_NO;
     
