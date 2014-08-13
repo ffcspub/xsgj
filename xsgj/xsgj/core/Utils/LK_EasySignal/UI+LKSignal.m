@@ -445,6 +445,7 @@
 @dynamic inputRegular;
 @dynamic allowCopy;
 
+
 -(void)setInputRegular:(NSString *)inputRegular{
     NSObject * obj = objc_getAssociatedObject( self, "maxLength" );
 	if ( obj && [obj isKindOfClass:[NSNumber class]] )
@@ -548,6 +549,19 @@
 
 @implementation UITextView(LK_EasySignal_Private)
 
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+    if (!self.allowCopy) {
+        UIMenuController *menuController = [UIMenuController sharedMenuController];
+        if (menuController) {
+            [UIMenuController sharedMenuController].menuVisible = NO;
+        }
+        return NO;
+    }
+    return YES;
+}
+
+
 -(void)addPlaceHolderLable{
     UILabel *placeHolderLable = (UILabel *)[self viewWithTag:109932];
     if (!placeHolderLable) {
@@ -586,6 +600,23 @@
     [super setFrame:frame];
     [self addPlaceHolderLable];
     [self addNotification];
+}
+
+
+-(BOOL)allowCopy{
+    NSObject * obj = objc_getAssociatedObject( self, "allowCopy" );
+	if ( obj && [obj isKindOfClass:[NSNumber class]] )
+		return ((NSNumber *)obj).boolValue;
+	return NO;
+}
+
+-(void)setAllowCopy:(BOOL)allowCopy{
+    NSObject * obj = objc_getAssociatedObject( self, "allowCopy" );
+	if ( obj && [obj isKindOfClass:[NSNumber class]] )
+    {
+        obj = nil;
+    }
+    objc_setAssociatedObject( self, "allowCopy", [NSNumber numberWithBool:allowCopy], OBJC_ASSOCIATION_RETAIN );
 }
 
 -(void)__addDelegate:(NSNotification *)notification{
