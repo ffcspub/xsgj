@@ -111,10 +111,9 @@
     UITextField *tfCropCode = [ShareValue getDefaultTextField];
     tfCropCode.placeholder = @"用英文或数字组成,长度不能超过20";
     tfCropCode.frame = rectContent;
-    tfCropCode.maxLength = 20;
     tfCropCode.font = [UIFont systemFontOfSize:12.f];
     tfCropCode.keyboardType = UIKeyboardTypeASCIICapable;
-    //tfCropCode.delegate = self;
+    tfCropCode.delegate = self;
     [self.svRoot addSubview:tfCropCode];
     self.tfCropCode = tfCropCode;
     
