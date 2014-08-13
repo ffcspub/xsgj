@@ -9,7 +9,7 @@
 #import "HideTabViewController.h"
 #import "LeveyPopListView.h"
 
-@interface WorkReportViewController : HideTabViewController<LeveyPopListViewDelegate>
+@interface WorkReportViewController : HideTabViewController<LeveyPopListViewDelegate,UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *btn_inputType;
