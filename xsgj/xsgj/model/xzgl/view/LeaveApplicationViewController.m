@@ -407,22 +407,21 @@
     UITextField *tf_title = (UITextField *)[_scrollView viewWithTag:401];
     UITextField *tf_day = (UITextField *)[_scrollView viewWithTag:405];
     UITextView *tv_input = (UITextView *)[_scrollView viewWithTag:406];
+    UILabel *lb_begintimeValue = (UILabel *)[_scrollView viewWithTag:403];
+    UILabel *lb_endtimeValue = (UILabel *)[_scrollView viewWithTag:404];
+    NSDate *beginTime = [NSDate dateFromString:lb_begintimeValue.text withFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *endTime = [NSDate dateFromString:lb_endtimeValue.text withFormat:@"yyyy-MM-dd HH:mm:ss"];
+
     if (tf_title.text.length == 0) {
         errorMessage = @"请输入主题";
     }else if(!_selectType){
         errorMessage = @"请选择请假类型";
+    }else if ([beginTime compare:endTime] == NSOrderedDescending) {
+        errorMessage = @"结束时间不能早于起始时间";
     }else if (tf_day.text.length == 0){
         errorMessage = @"请输入请假天数";
     }else if (tv_input.text.length == 0){
         errorMessage = @"请输入请假详情";
-    }else{
-        UILabel *lb_begintimeValue = (UILabel *)[_scrollView viewWithTag:403];
-        UILabel *lb_endtimeValue = (UILabel *)[_scrollView viewWithTag:404];
-        NSDate *beginTime = [NSDate dateFromString:lb_begintimeValue.text withFormat:@"yyyy-MM-dd"];
-        NSDate *endTime = [NSDate dateFromString:lb_endtimeValue.text withFormat:@"yyyy-MM-dd"];
-        if ([beginTime compare:endTime] == NSOrderedDescending) {
-            errorMessage = @"结束时间不能早于起始时间";
-        }
     }
     if (errorMessage.length > 0) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:errorMessage delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
