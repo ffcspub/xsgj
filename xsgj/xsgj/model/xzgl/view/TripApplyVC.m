@@ -538,6 +538,14 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal)
         return NO;
 	}
     
+    // 验证时间
+    NSDate *beginTime = [NSDate dateFromString:self.lblBeginTime.text withFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *endTime = [NSDate dateFromString:self.lblEndTime.text withFormat:@"yyyy-MM-dd HH:mm:ss"];
+    if ([beginTime compare:endTime] == NSOrderedDescending) {
+        [MBProgressHUD showError:@"起始时间应该小于结束时间!" toView:self.view];
+        return NO;
+    }
+    
     return YES;
 }
 
