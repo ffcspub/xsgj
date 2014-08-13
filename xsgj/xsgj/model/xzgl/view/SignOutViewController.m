@@ -88,20 +88,8 @@
 #pragma mark - navBarButton
 
 - (void)setRightBarButtonItem{
+    [self showRightBarButtonItemWithTitle:@"确定" target:self action:@selector(submitAction:)];
     
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    [rightButton setFrame:CGRectMake(0, 2.f, 70.f, 33.f)];
-    [rightButton setBackgroundColor:[UIColor clearColor]];
-    
-    [rightButton setTitle:@"确定" forState:UIControlStateNormal];
-    
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateNormal];
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_press"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateHighlighted];
-    
-    [rightButton addTarget:self action:@selector(submitAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
 }
 
 - (BOOL)isValidData
@@ -162,6 +150,7 @@
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }else{
+            self.navigationItem.rightBarButtonItem.enabled = YES;
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [MBProgressHUD showError:desciption toView:self.view];
         }
@@ -171,7 +160,7 @@
 - (void)uploadPhoto
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     NSDate *now = [NSDate new];
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"yyMMddHHmmss"];

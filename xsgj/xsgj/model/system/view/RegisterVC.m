@@ -37,12 +37,7 @@
     [super viewDidLoad];
     
     self.title = @"申请试用";
-    
-    UIButton *rightButton = [self defaultRightButtonWithTitle:@"提交"];
-    [rightButton addTarget:self
-                    action:@selector(registerAction:)
-          forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(registerAction:)];
     
     [self UI_setup];
 }
@@ -343,9 +338,10 @@
     request.REMARK = @"";
     
     [MBProgressHUD showMessag:@"正在提交···" toView:ShareAppDelegate.window];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     [XTGLAPI addApplyCorpHttpRequest:request success:^(AddApplyCorpHttpResponse *response) {
         [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
-        
+        self.navigationItem.rightBarButtonItem.enabled = YES;
         SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"提示" andMessage:@"申请资料提交成功"];
         [alertView addButtonWithTitle:@"取消"
                                  type:SIAlertViewButtonTypeCancel
@@ -370,7 +366,7 @@
             
             [self performSelector:@selector(backToFront) withObject:nil afterDelay:0.f];
         } else {
-            
+            self.navigationItem.rightBarButtonItem.enabled = YES;
             [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
             [MBProgressHUD showError:desciption toView:nil];
         }

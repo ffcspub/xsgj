@@ -38,12 +38,8 @@
     
     self.tfUserName.text = self.currentCUserName;
     self.tfCorpCode.text = self.currentCropCode;
+    [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(forgetPasswordAction:)];
     
-    UIButton *rightButton = [self defaultRightButtonWithTitle:@"提交"];
-    [rightButton addTarget:self
-                    action:@selector(forgetPasswordAction:)
-          forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     
     // 设置样式
     [self.btnCodeBg setBackgroundImage:[[UIImage imageNamed:@"normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 100, 20, 30)] forState:UIControlStateNormal];
@@ -78,6 +74,7 @@
     request.USER_NAME = self.tfUserName.text;
     
     MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在提交···" toView:ShareAppDelegate.window];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     [hud showAnimated:YES whileExecutingBlock:^{
         [XTGLAPI forgetPwdByRequest:request success:^(ForgetPwdHttpResponse *response) {
             if ([self.tfCorpCode.text isEqual:[ShareValue shareInstance].corpCode] && [self.tfUserName.text isEqual:[ShareValue shareInstance].userName]) {
@@ -85,7 +82,7 @@
             }
             [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
             [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:ShareAppDelegate.window];
-            
+            self.navigationItem.rightBarButtonItem.enabled = YES;
             SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"提示"
                                                             message:@"密码重置成功,密码为123456"
                                                   cancelButtonTitle:@"取消"
@@ -104,6 +101,7 @@
             [alert show];
             
         } fail:^(BOOL notReachable, NSString *desciption) {
+            self.navigationItem.rightBarButtonItem.enabled = YES;
             [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
             [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
         }];

@@ -130,20 +130,7 @@
 #pragma mark - navBarButton
 
 - (void)setRightBarButtonItem{
-    
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    [rightButton setFrame:CGRectMake(0, 2.f, 70.f, 33.f)];
-    [rightButton setBackgroundColor:[UIColor clearColor]];
-    
-    [rightButton setTitle:@"提交" forState:UIControlStateNormal];
-    
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateNormal];
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_press"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateHighlighted];
-    
-    [rightButton addTarget:self action:@selector(submitAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(submitAction:)];
 }
 
 #pragma mark - private
@@ -173,7 +160,7 @@
 - (void)updatePwdRequest
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     UpdataPwdHttpRequest *request = [[UpdataPwdHttpRequest alloc] init];
     request.OLDPWD = [[CRSA shareInstance]encryptByRsa:_tf_oldpwd.text withKeyType:KeyTypePublic];
     request.NEWPWD = [[CRSA shareInstance]encryptByRsa:_tf_newpwd.text withKeyType:KeyTypePublic];
@@ -182,7 +169,7 @@
         
         [MBProgressHUD hideHUDForView:self.view animated:YES];
 //        [MBProgressHUD showSuccess:@"修改成功" toView:self.view];
-        
+        self.navigationItem.rightBarButtonItem.enabled = YES;
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"修改成功" message:@"密码修改成功，确定后跳转到登录页面" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
         alert.tag = 101;
         [alert show];
@@ -190,7 +177,7 @@
 //        [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
         
     } fail:^(BOOL notReachable, NSString *desciption) {
-        
+        self.navigationItem.rightBarButtonItem.enabled = YES;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showError:desciption toView:self.view];
         

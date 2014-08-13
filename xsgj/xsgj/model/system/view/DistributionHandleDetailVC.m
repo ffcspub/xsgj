@@ -17,6 +17,7 @@
 #import "SIAlertView.h"
 #import "ShareValue.h"
 #import "IBActionSheet.h"
+#import "OfflineRequestCache.h"
 
 @interface DistributionHandleDetailVC () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, IBActionSheetDelegate>
 {
@@ -51,11 +52,7 @@
     self.title = @"配送处理";
     self.view.backgroundColor = HEX_RGB(0xefeff4);
     
-    UIButton *rightButton = [self defaultRightButtonWithTitle:@"提交"];
-    [rightButton addTarget:self
-                    action:@selector(submitAction:)
-          forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(submitAction:)];
     
     // 初始化
     self.lblResult.text = [self.arrResult firstObject];
@@ -136,7 +133,7 @@
 - (void)startUpdate
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     NSDate *now = [NSDate new];
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"yyMMddHHmmss"];
@@ -151,9 +148,8 @@
             [self submitDisHandleResult];
             
         } fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {
-            
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
+            _photoId = fileId;
+            [self submitDisHandleResult];
         }];
     } else {
         
@@ -196,9 +192,18 @@
         [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
         
     } fail:^(BOOL notReachable, NSString *desciption) {
-       
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:desciption toView:self.view];
+        if (notReachable) {
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"配送处理"];
+            [cache saveToDB];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
+        }else{
+            self.navigationItem.rightBarButtonItem.enabled = YES;
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+        }
+        
         
     }];
 }

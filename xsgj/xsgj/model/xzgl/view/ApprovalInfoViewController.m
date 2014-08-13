@@ -458,11 +458,11 @@
     request.APPROVE_REMARK = self.tvApprovalDesc.text;
     request.APPROVE_USER = [ShareValue shareInstance].userInfo.USER_ID;
     
-    [MBProgressHUD showMessag:@"处理中···" toView:self.view];
+    [MBProgressHUD showMessag:@"处理中···" toView:ShareAppDelegate.window];
     [XZGLAPI approvalLeaveByRequest:request success:^(ApprovalLeaveHttpResponse *response) {
         
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:ShareAppDelegate.window];
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -473,16 +473,16 @@
         if (notReachable) {
             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"请假审批"];
             [cache saveToDB];
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showMessag:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showMessag:DEFAULT_OFFLINEMESSAGE toView:ShareAppDelegate.window];
             double delayInSeconds = 1.0;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }else {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
         }
         
     }];

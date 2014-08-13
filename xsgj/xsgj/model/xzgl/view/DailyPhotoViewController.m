@@ -115,20 +115,7 @@
 #pragma mark - navBarButton
 
 - (void)setRightBarButtonItem{
-    
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    [rightButton setFrame:CGRectMake(0, 2.f, 70.f, 33.f)];
-    [rightButton setBackgroundColor:[UIColor clearColor]];
-    
-    [rightButton setTitle:@"提交" forState:UIControlStateNormal];
-    
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateNormal];
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_press"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateHighlighted];
-    
-    [rightButton addTarget:self action:@selector(submitAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(submitAction:)];
 }
 
 #pragma mark - private
@@ -292,6 +279,7 @@
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }else{
+            self.navigationItem.rightBarButtonItem.enabled = YES;
             [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
             [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
         }
@@ -301,7 +289,7 @@
 - (void)uploadPhoto
 {
     [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
-    
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     ImageInfo *imageInfo = [_aryfileDatas objectAtIndex:_iSendImgCount];
     
 //    [SystemAPI uploadPhotoByFileName:imageInfo.fileName data:imageInfo.fileData success:^(NSString *fileId) {

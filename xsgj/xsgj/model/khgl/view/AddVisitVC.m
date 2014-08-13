@@ -73,12 +73,7 @@
     self.view.backgroundColor = HEX_RGB(0xefeff4);
     self.svRoot.backgroundColor = HEX_RGB(0xefeff4);
     
-    // 导航按钮
-    UIButton *rightButton = [self defaultRightButtonWithTitle:@"提交"];
-    [rightButton addTarget:self
-                    action:@selector(submitAction:)
-          forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(submitAction:)];
     
     // 外边框
     self.vContaintLocation.layer.borderColor = HEX_RGB(0xd3d3d3).CGColor;
@@ -238,7 +233,7 @@
 - (void)uploadPhoto
 {
     [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
-    
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     NSDate *now = [NSDate new];
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"yyMMddHHmmss"];
@@ -301,6 +296,7 @@
                 [self.navigationController popViewControllerAnimated:YES];
             });
         } else {
+            self.navigationItem.rightBarButtonItem.enabled = YES;
             [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
             [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
         }

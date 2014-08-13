@@ -81,15 +81,7 @@ static const NSString *appleID = @"906620927";
 
 - (void)setRightBarButtonItem
 {
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(0, 2.f, 70.f, 33.f)];
-    [rightButton setBackgroundColor:[UIColor clearColor]];
-    [rightButton setTitle:@"更新" forState:UIControlStateNormal];
-    [rightButton setBackgroundImage:IMG_BTN_BLUE forState:UIControlStateNormal];
-    [rightButton setBackgroundImage:IMG_BTN_BLUE_S forState:UIControlStateHighlighted];
-    [rightButton setBackgroundImage:IMG_BTN_BLUE_D forState:UIControlStateDisabled];
-    [rightButton addTarget:self action:@selector(updateAction:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [self showRightBarButtonItemWithTitle:@"更新" target:self action:@selector(updateAction:)];
 }
 
 -(void)updateAction:(id)sender

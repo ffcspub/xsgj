@@ -399,20 +399,7 @@
 #pragma mark - navBarButton
 
 - (void)setRightBarButtonItem{
-    
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    [rightButton setFrame:CGRectMake(0, 2.f, 70.f, 33.f)];
-    [rightButton setBackgroundColor:[UIColor clearColor]];
-    
-    [rightButton setTitle:@"提交" forState:UIControlStateNormal];
-    
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateNormal];
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_press"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateHighlighted];
-    
-    [rightButton addTarget:self action:@selector(submitAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(submitAction:)];
 }
 
 -(BOOL)isVailData{
@@ -428,6 +415,14 @@
         errorMessage = @"请输入请假天数";
     }else if (tv_input.text.length == 0){
         errorMessage = @"请输入请假详情";
+    }else{
+        UILabel *lb_begintimeValue = (UILabel *)[_scrollView viewWithTag:403];
+        UILabel *lb_endtimeValue = (UILabel *)[_scrollView viewWithTag:404];
+        NSDate *beginTime = [NSDate dateFromString:lb_begintimeValue.text withFormat:@"yyyy-MM-dd"];
+        NSDate *endTime = [NSDate dateFromString:lb_endtimeValue.text withFormat:@"yyyy-MM-dd"];
+        if ([beginTime compare:endTime] == NSOrderedDescending) {
+            errorMessage = @"结束时间不能早于起始时间";
+        }
     }
     if (errorMessage.length > 0) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:errorMessage delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -440,7 +435,7 @@
 - (void)applyLeaveRequest
 {
     [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
-    
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     ApplyLeaveHttpRequest *request = [[ApplyLeaveHttpRequest alloc] init];
     UITextField *tf_title = (UITextField *)[_scrollView viewWithTag:401];
     UILabel *lb_begintimeValue = (UILabel *)[_scrollView viewWithTag:403];
@@ -482,6 +477,7 @@
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }else{
+            self.navigationItem.rightBarButtonItem.enabled = YES;
             [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
             [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
         }

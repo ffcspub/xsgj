@@ -298,11 +298,7 @@
     self.lblApproval.text = [NSString stringWithFormat:@"直接审批人:%@", [ShareValue shareInstance].userInfo.LEADER_NAME];
     
     // 导航
-    UIButton *rightButton = [self defaultRightButtonWithTitle:@"提交"];
-    [rightButton addTarget:self
-                    action:@selector(submitApplyTripAction:)
-          forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(submitApplyTripAction:)];
     
     // 初始化时间
     NSDate *date = [NSDate date];
@@ -466,6 +462,7 @@
     request.APPROVE_USER = [ShareValue shareInstance].userInfo.USER_ID;
 
     [MBProgressHUD showMessag:@"正在提交···" toView:ShareAppDelegate.window];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     [XZGLAPI applyTripByRequest:request success:^(ApplyTripHttpResponse *response) {
         
         [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
@@ -484,7 +481,7 @@
             
             [self performSelector:@selector(backToFront) withObject:nil afterDelay:0.f];
         } else {
-            
+            self.navigationItem.rightBarButtonItem.enabled = YES;
             [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
             [MBProgressHUD showError:desciption toView:nil];
         }

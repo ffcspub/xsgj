@@ -13,6 +13,7 @@
 #import "XZGLAPI.h"
 #import "MBProgressHUD+Add.h"
 #import "SystemAPI.h"
+#import "OfflineRequestCache.h"
 
 @interface InfoCollectViewController ()<MapAddressVCDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>{
     BOOL _isLocationSuccess;
@@ -104,20 +105,7 @@
 }
 
 - (void)setRightBarButtonItem{
-    
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    [rightButton setFrame:CGRectMake(0, 2.f, 70.f, 33.f)];
-    [rightButton setBackgroundColor:[UIColor clearColor]];
-    
-    [rightButton setTitle:@"确定" forState:UIControlStateNormal];
-    
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateNormal];
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_press"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateHighlighted];
-    
-    [rightButton addTarget:self action:@selector(submitAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [self showRightBarButtonItemWithTitle:@"确定" target:self action:@selector(submitAction:)];
 }
 
 - (BOOL)isValidData
@@ -175,9 +163,19 @@
         });
         
     } fail:^(BOOL notReachable, NSString *desciption) {
-        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
-        [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
-        
+        if (notReachable) {
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"客户信息采集"];
+            [cache saveToDB];
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:ShareAppDelegate.window];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self backAction];
+            });
+        }else{
+            self.navigationItem.rightBarButtonItem.enabled = YES;
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
+        }
     }];
 }
 
@@ -217,7 +215,7 @@
 - (void)uploadPhoto
 {
     [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
-    
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     NSDate *now = [NSDate new];
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"yyMMddHHmmss"];
@@ -229,9 +227,8 @@
         [self addCustomerRequest];
         
     } fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {
-        
-        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
-        [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
+        _photoId = fileId;
+        [self addCustomerRequest];
     }];
 }
 

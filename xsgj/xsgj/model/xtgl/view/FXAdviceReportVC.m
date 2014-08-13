@@ -65,19 +65,7 @@
 #pragma mark - navBarButton
 
 - (void)setRightBarButtonItem{
-    
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    [rightButton setFrame:CGRectMake(0, 2.f, 70.f, 33.f)];
-    [rightButton setBackgroundColor:[UIColor clearColor]];
-    
-    [rightButton setTitle:@"提交" forState:UIControlStateNormal];
-    
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateNormal];
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"CommonBtn_press"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 7, 15, 7)] forState:UIControlStateHighlighted];
-    
-    [rightButton addTarget:self action:@selector(submitAction:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [self showRightBarButtonItemWithTitle:@"提交" target:self action:@selector(submitAction:)];
 }
 
 -(void)submitAction:(id)sender
@@ -89,6 +77,7 @@
         return;
     }
     [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     AddAdviceHttpRequest *request = [[AddAdviceHttpRequest alloc]init];
     request.SESSION_ID = [ShareValue shareInstance].userInfo.SESSION_ID;
     request.CORP_ID    = [ShareValue shareInstance].userInfo.CORP_ID;
@@ -124,6 +113,7 @@
         }
         else
         {
+            self.navigationItem.rightBarButtonItem.enabled = YES;
             [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
             [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
         }
