@@ -260,7 +260,7 @@
     rectContent = CGRectOffset(rectContent, 0.f, rowHeight + yOffset);
     UITextField *tfEmail = [ShareValue getDefaultTextField];
     tfEmail.frame = rectContent;
-    tfEmail.keyboardType = UIKeyboardTypeEmailAddress;
+    tfEmail.keyboardType = UIKeyboardTypeASCIICapable;
     //tfEmail.delegate = self;
     tfEmail.maxLength = 20;
     [self.svRoot addSubview:tfEmail];
