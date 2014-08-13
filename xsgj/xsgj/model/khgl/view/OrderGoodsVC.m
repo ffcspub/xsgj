@@ -15,6 +15,7 @@
 #import "OrderGoodsDetailVC.h"
 #import <NSDate+Helper.h>
 #import <LKDBHelper.h>
+#import "OrderDetailBean.h"
 
 static NSString * const OrderGoodsCellIdentifier = @"OrderGoodsCellIdentifier";
 static int const pageSize = 10000;
@@ -106,7 +107,38 @@ static int const pageSize = 10000;
         
         [self loadCacheData];
         
-        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+        OrderDetailHttpRequest *requestDetail = [[OrderDetailHttpRequest alloc] init];
+        requestDetail.BEGIN_DATE = [self.beginDate stringWithFormat:@"yyyy-MM-dd"];
+        requestDetail.END_DATE = [self.endDate stringWithFormat:@"yyyy-MM-dd"];
+
+        [KHGLAPI queryOrderDetailByRequest:requestDetail success:^(OrderDetailHttpResponse *response) {
+            
+            NSLog(@"订货明细查询的总数:%d", [response.rows count]);
+            // 保存订货查询明细离线数据
+            [[LKDBHelper getUsingLKDBHelper] executeDB:^(FMDatabase *db) {
+                @try {
+                    [db beginTransaction];
+                    for (OrderDetailBean *bean in response.rows) {
+                        [bean save];
+                    }
+                    [db commit];
+                }
+                @catch (NSException *exception) {
+                    [db rollback];
+                }
+                @finally {
+                    
+                }
+            }];
+            
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+
+        } fail:^(BOOL notReachable, NSString *desciption) {
+            
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:self.view];
+        }];
+
         
     } fail:^(BOOL notReachable, NSString *desciption) {
         

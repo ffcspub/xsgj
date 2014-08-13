@@ -104,7 +104,7 @@
 
 @implementation OrderDetailHttpResponse
 
-+(Class)__DATAClass{
++(Class)__rowsClass{
     return [OrderDetailBean class];
 }
 

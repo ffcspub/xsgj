@@ -242,7 +242,9 @@
 @property(nonatomic,assign) int 	DEPT_ID	;//	部门ID
 @property(nonatomic,strong) NSString *	USER_AUTH	;//	数据权限
 @property(nonatomic,assign) int 	USER_ID	;//	用户ID
-@property(nonatomic,assign) int     ORDER_ID;//订单标识
+
+@property(nonatomic,strong) NSString *	BEGIN_DATE; // 起始日期 (可选)
+@property(nonatomic,strong) NSString *	END_DATE;   // 结束日期 (可选)
 
 @end
 

@@ -20,4 +20,8 @@
 @property(nonatomic,strong) NSString *  PRODUCT_NAME;
 @property(nonatomic,strong) NSString *  PHOTO1;
 
+@property(nonatomic,assign) int ITEM_ID;// 主键ID
+
+-(void)save;
+
 @end

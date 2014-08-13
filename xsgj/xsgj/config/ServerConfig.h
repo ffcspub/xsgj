@@ -38,6 +38,7 @@
 #define URL_GET_PRODUCT_UNIT @"product/getProductInfo.shtml"// 获取产品单位
 #define URL_QUERY_ORDERS @"order/orderQuery.shtml"// 订货查询
 #define URL_ORDER_DETAIL @"order/orderDetail.shtml"// 订货详情
+#define URL_ORDER_DETAIL_OFFLINE @"order/getOfftimeOrderItem.shtml" // 订货查询明细离线接口
 #define URL_ORDER_BACK_COMMIT @"orderBack/insertOrderBack.shtml"// 退货上报
 #define URL_STOCK_COMMIT @"stock/stockCommit.shtml"// 库存上报
 #define URL_QUERY_ORDER_BACK @"orderBack/queryOrderBack.shtml"// 退货查询

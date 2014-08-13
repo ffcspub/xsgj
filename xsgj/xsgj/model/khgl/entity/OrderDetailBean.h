@@ -29,5 +29,10 @@
 @property(nonatomic,strong) NSString *	STATE	;//	状态
 @property(nonatomic,strong) NSNumber *	TOTAL_PRICE	;//	订货总价
 @property(nonatomic,strong) NSNumber *	TOTAL_RATE	;//	优惠总价
+@property(nonatomic,strong) NSNumber *	ORDER_ID; // 订单标识
+
+@property(nonatomic,strong) NSNumber * ITEM_ID;// 主键ID
+
+-(void)save;
 
 @end

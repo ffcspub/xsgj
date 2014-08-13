@@ -36,6 +36,7 @@
 #import "VisistRecordVO.h"
 #import "OrderInfoBean.h"
 #import "QueryOrderBackInfoBean.h"
+#import "OrderDetailBean.h"
 
 @implementation UserLoginHttpResponse
 
@@ -70,6 +71,7 @@
     [helper createTableWithModelClass:[TripInfoBean2 class ]]; // 出差审批表
     [helper createTableWithModelClass:[SaleTaskInfoBean class ]]; // 销售任务
     [helper createTableWithModelClass:[OrderInfoBean class ]]; // 订货查询
+    [helper createTableWithModelClass:[OrderDetailBean class ]]; // 订货查询明细
     [helper createTableWithModelClass:[QueryOrderBackInfoBean class ]]; // 退货查询
     [helper createTableWithModelClass:[VisistRecordVO class ]]; // 拜访记录
 }

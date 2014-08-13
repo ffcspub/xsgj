@@ -71,6 +71,8 @@
 
 @interface OrderDetailHttpResponse : LK_HttpBasePageResponse
 
+@property(nonatomic,strong) NSArray *rows;
+
 @end
 
 @interface InsertOrderBackHttpResponse : LK_HttpBaseResponse

@@ -11,6 +11,7 @@
 #import "KHGLAPI.h"
 #import "MBProgressHUD+Add.h"
 #import "XCMultiSortTableView.h"
+#import <LKDBHelper.h>
 
 @interface OrderGoodsDetailVC () <XCMultiTableViewDataSource>
 {
@@ -71,21 +72,11 @@
 
 - (void)loadOrderGoodsDetail
 {
-    OrderDetailHttpRequest *request = [[OrderDetailHttpRequest alloc] init];
-    request.ORDER_ID = self.orderInfoBean.ORDER_ID;
-    
-    MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [KHGLAPI queryOrderDetailByRequest:request success:^(OrderDetailHttpResponse *response) {
-        
-        [self.arrOrderGoods removeAllObjects];
-        [self.arrOrderGoods addObjectsFromArray:response.DATA];
-        [self refreshUI];
-        
-        [hub removeFromSuperview];
-    } fail:^(BOOL notReachable, NSString *desciption) {
-        [hub removeFromSuperview];
-        [MBProgressHUD showError:desciption toView:self.view];
-    }];
+    NSString *condition = [NSString stringWithFormat:@"ORDER_ID=%d", self.orderInfoBean.ORDER_ID];
+    NSMutableArray *arrTemp = [OrderDetailBean searchWithWhere:condition orderBy:nil offset:0 count:1000];
+    [self.arrOrderGoods removeAllObjects];
+    [self.arrOrderGoods addObjectsFromArray:arrTemp];
+    [self refreshUI];
 }
 
 /**

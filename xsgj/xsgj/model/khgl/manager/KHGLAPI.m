@@ -219,7 +219,7 @@
  */
 +(void)queryOrderDetailByRequest:(OrderDetailHttpRequest *)request success:(void(^)(OrderDetailHttpResponse *response))success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
     
-    [LK_APIUtil getHttpRequest:request apiPath:URL_ORDER_DETAIL Success:^(LK_HttpBaseResponse *response) {
+    [LK_APIUtil getHttpRequest:request apiPath:URL_ORDER_DETAIL_OFFLINE Success:^(LK_HttpBaseResponse *response) {
         success((OrderDetailHttpResponse *)response);
     } fail:^(BOOL NotReachable, NSString *desciption) {
         fail(NotReachable,desciption);
