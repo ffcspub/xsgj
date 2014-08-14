@@ -241,12 +241,14 @@
     [SystemAPI uploadPhotoByFileName:fileName
                                            data:_imageData
                                         success:^(NSString *fileId) {
-                                            _photoId = fileId;
+                                                _photoId = fileId;
+                                             [self addVisiterAction];
                                         }
                                            fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {
-                                            _photoId = fileId;
+                                                _photoId = fileId;
+                                                [self addVisiterAction];
                                            }];
-    [self addVisiterAction];
+   
 }
 
 /**
