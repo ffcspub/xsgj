@@ -34,7 +34,15 @@ static MapUtils * _Maputils;
 
 -(void)startLocationUpdate{
     if (![CLLocationManager locationServicesEnabled]) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请在系统的设置中打开定位服务" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"提示"
+                                                        message:@"    我们会在7点至20点采集您的定位信息，请在[设置]中打开定位服务，以确保定位准确性。"
+                                              cancelButtonTitle:@"忽略"
+                                                  cancelHandler:^(SIAlertView *alertView) {}
+                                         destructiveButtonTitle:@"设置"
+                                             destructiveHandler:^(SIAlertView *alertView) {
+                                                 [ShareAppDelegate showLocationSetView];
+                                             }];
+        alert.alignment = UITextAlignmentLeft;
         [alert show];
         return;
     }

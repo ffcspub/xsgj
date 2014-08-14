@@ -27,7 +27,7 @@
 
 @property (strong, nonatomic) LoginViewController *loginViewController;
 
-
+-(void)showLocationSetView;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

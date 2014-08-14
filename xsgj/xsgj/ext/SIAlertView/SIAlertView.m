@@ -197,6 +197,7 @@ static SIAlertView *__si_alert_current_view;
 		_title = title;
         _message = message;
 		self.items = [[NSMutableArray alloc] init];
+        _alignment = NSTextAlignmentCenter;
 	}
 	return self;
 }
@@ -281,6 +282,11 @@ static SIAlertView *__si_alert_current_view;
 {
     _title = title;
 	[self invaliadateLayout];
+}
+
+-(void)setAlignment:(NSTextAlignment)alignment{
+    _alignment = alignment;
+    [_titleLabel setTextAlignment:_alignment];
 }
 
 - (void)setMessage:(NSString *)message
@@ -786,7 +792,7 @@ static SIAlertView *__si_alert_current_view;
 	if (self.title) {
 		if (!self.titleLabel) {
 			self.titleLabel = [[UILabel alloc] initWithFrame:self.bounds];
-			self.titleLabel.textAlignment = NSTextAlignmentCenter;
+			self.titleLabel.textAlignment = UITextAlignmentCenter;
             self.titleLabel.backgroundColor = [UIColor clearColor];
 			self.titleLabel.font = self.titleFont;
             self.titleLabel.textColor = self.titleColor;
@@ -814,7 +820,7 @@ static SIAlertView *__si_alert_current_view;
     if (self.message) {
         if (!self.messageLabel) {
             self.messageLabel = [[UILabel alloc] initWithFrame:self.bounds];
-            self.messageLabel.textAlignment = NSTextAlignmentCenter;
+            self.messageLabel.textAlignment = _alignment;
             self.messageLabel.backgroundColor = [UIColor clearColor];
             self.messageLabel.font = self.messageFont;
             self.messageLabel.textColor = self.messageColor;

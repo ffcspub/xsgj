@@ -54,7 +54,7 @@
 #define FONT_SIZE_DETAIL_CONTENT 15.f
 
 #define DEFAULT_OFFLINEMESSAGE @"当前网络不佳，已使用离线存储"
-
+#define DEFAULT_OFFLINEQUERYMESSAGE @"当前网络不佳，已使用离线查询"
 @interface ShareValue : NSObject{
    
 }

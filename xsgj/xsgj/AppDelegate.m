@@ -23,6 +23,7 @@
 #import "BNMobileMenu.h"
 #import <MBProgressHUD.h>
 #import "MapUtils.h"
+#import "SIAlertView.h"
 
 @implementation AppDelegate
 
@@ -138,6 +139,12 @@
     [self saveContext];
     
     
+}
+
+//显示地图设置信息页
+-(void)showLocationSetView{
+    UIViewController *controller = [[UIViewController alloc]init];
+    [_tabBarController presentModalViewController:controller animated:YES];
 }
 
 - (void)saveContext
@@ -261,13 +268,6 @@
     [self initTabBarController];
     [self addController:_tabBarController];
     self.window.rootViewController = _tabBarController;
-    if (![CLLocationManager locationServicesEnabled]) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"我们会在7点至20点采集您的定位信息，请在[设置]中打开定位服务，以确保定位准确性。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
-        });
-        
-    }
 }
 
 @end
