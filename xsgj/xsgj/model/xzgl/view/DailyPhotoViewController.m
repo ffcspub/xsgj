@@ -288,8 +288,6 @@
 
 - (void)uploadPhoto
 {
-    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
-    self.navigationItem.rightBarButtonItem.enabled = NO;
     ImageInfo *imageInfo = [_aryfileDatas objectAtIndex:_iSendImgCount];
     
 //    [SystemAPI uploadPhotoByFileName:imageInfo.fileName data:imageInfo.fileData success:^(NSString *fileId) {
@@ -402,10 +400,10 @@
     if (![self isValidData]) {
         return;
     }
-    
     _iSendImgCount = 0;
     [_aryFileId removeAllObjects];
-    
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     [self uploadPhoto];
 }
 
