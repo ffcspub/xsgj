@@ -232,9 +232,7 @@ static int const pageSize = 10000;
         if (notReachable) {
             [self loadCacheData];
             [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
-            if(self.arrTrips.count == 0){
-                [MBProgressHUD showError:desciption toView:nil];
-            }
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:ShareAppDelegate.window];
         } else {
             [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
             [MBProgressHUD showError:desciption toView:nil];
