@@ -14,6 +14,7 @@
 #import "OfflineRequestCache.h"
 #import "SystemAPI.h"
 #import <LKDBHelper.h>
+#import "UI+LKSignal.h"
 
 @interface WorkReportViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>{
     NSMutableArray *_types;
@@ -57,6 +58,9 @@
 
 - (void)setup
 {
+    self.tv_content.delegate = nil;
+    self.tv_content.maxLength = 200;
+    
     [_btn_inputType setBackgroundImage:[[UIImage imageNamed:@"normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 100, 20, 30)] forState:UIControlStateNormal];
     [_btn_inputType setBackgroundImage:[[UIImage imageNamed:@"press"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 100, 20, 30)] forState:UIControlStateHighlighted];
     [_btn_inputType setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];

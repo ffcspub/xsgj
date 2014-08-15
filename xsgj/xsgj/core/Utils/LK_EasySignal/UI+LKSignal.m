@@ -517,8 +517,9 @@
 
 @implementation UITextViewWrapper
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    if (range.location > textView.maxLength && ![text isEqual:@"\n"] && ![text isEqual:@""]) {
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if (textView.text.length >= textView.maxLength && text.length > range.length) {
         return NO;
     }
     
@@ -526,16 +527,22 @@
         LKSignal *signal = [[LKSignal alloc]initWithSender:textView firstRouter:textView object:nil signalName:UITextView.RETURN tag:textView.tag tagString:textView.tagString];
         [textView sendSignal:signal];
     }
+    
     return YES;
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    if (textView.markedTextRange == nil && textView.maxLength > 0 && textView.text.length > textView.maxLength) {
+        textView.text = [textView.text substringToIndex:textView.maxLength];
+    }
+    
+    LKSignal *signal = [[LKSignal alloc]initWithSender:textView firstRouter:textView object:nil signalName:UITextView.TEXTCHANGED tag:textView.tag tagString:textView.tagString];
+    [textView sendSignal:signal];
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView;{
     LKSignal *signal = [[LKSignal alloc]initWithSender:textView firstRouter:textView object:nil signalName:UITextView.BEGIN_EDITING tag:textView.tag tagString:textView.tagString];
-    [textView sendSignal:signal];
-}
-
--(void)textViewDidChange:(UITextView *)textView{
-    LKSignal *signal = [[LKSignal alloc]initWithSender:textView firstRouter:textView object:nil signalName:UITextView.TEXTCHANGED tag:textView.tag tagString:textView.tagString];
     [textView sendSignal:signal];
 }
 
