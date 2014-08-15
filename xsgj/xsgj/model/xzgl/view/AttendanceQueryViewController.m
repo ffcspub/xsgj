@@ -129,6 +129,9 @@ static int const pageSize = 30;
     int page;
     NSDate *_beginDate;
     NSDate *_endDate;
+    
+    UILabel *lb_starttime;
+    UILabel *lb_endtime;
 }
 
 @end
@@ -165,7 +168,7 @@ static int const pageSize = 30;
     NSDate *date = [NSDate date];
     NSCalendar *cal = [NSCalendar currentCalendar];
     NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:date];
-    [components setMonth:components.month -1];
+    [components setDay:1];
     NSDate *beginDate = [cal dateFromComponents:components];
     _beginDate = beginDate;
     _endDate = [NSDate date];
@@ -186,25 +189,24 @@ static int const pageSize = 30;
     [_btn_endtime setBackgroundImage:[[UIImage imageNamed:@"日期选择控件背板_s"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateHighlighted];
     
     
-    UILabel *lb_starttime = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
+    lb_starttime = [[UILabel alloc] initWithFrame:CGRectInset(_btn_starttime.frame, 10, 0) ];
     lb_starttime.text = [_beginDate stringWithFormat:@"yyyy-MM-dd"];
     lb_starttime.font = [UIFont systemFontOfSize:15];
     lb_starttime.textColor = HEX_RGB(0x000000);
     lb_starttime.backgroundColor = [UIColor clearColor];
-    lb_starttime.tag = 301;
-    [_btn_starttime addSubview:lb_starttime];
+    [self.view addSubview:lb_starttime];
     
     UIImageView *iv_startcalendar = [[UIImageView alloc] initWithFrame:CGRectMake(100, 7, 26, 26)];
     iv_startcalendar.image = [UIImage imageNamed:@"tableCtrlBtnIcon_calendar-nor"];
     [_btn_starttime addSubview:iv_startcalendar];
     
-    UILabel *lb_endtime = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
+    lb_endtime = [[UILabel alloc] initWithFrame:CGRectInset(_btn_endtime.frame, 10, 0)];
     lb_endtime.text = [_endDate stringWithFormat:@"yyyy-MM-dd"];
     lb_endtime.font = [UIFont systemFontOfSize:15];
     lb_endtime.textColor = HEX_RGB(0x000000);
     lb_endtime.backgroundColor = [UIColor clearColor];
     lb_endtime.tag = 302;
-    [_btn_endtime addSubview:lb_endtime];
+    [self.view addSubview:lb_endtime];
     
     UIImageView *iv_endcalendar = [[UIImageView alloc] initWithFrame:CGRectMake(100, 7, 26, 26)];
     iv_endcalendar.image = [UIImage imageNamed:@"tableCtrlBtnIcon_calendar-nor"];
@@ -222,10 +224,8 @@ static int const pageSize = 30;
     
     page++;
     DetailAttendanceHttpRequest *request = [[DetailAttendanceHttpRequest alloc] init];
-    UILabel *lb_starttime = (UILabel *)[_btn_starttime viewWithTag:301];
-    UILabel *lb_endtime = (UILabel *)[_btn_endtime viewWithTag:302];
-    request.BEGIN_TIME = lb_starttime.text;
-    request.END_TIME = lb_endtime.text;
+    request.BEGIN_TIME = [_beginDate stringWithFormat:@"yyyy-MM-dd"];
+    request.END_TIME = [_endDate stringWithFormat:@"yyyy-MM-dd"];
     request.QUERY_USERID = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.USER_ID];
     request.PAGE = page;
     request.ROWS = pageSize;
@@ -293,16 +293,27 @@ static int const pageSize = 30;
 - (void)queryAction:(id)sender
 {
     // 验证时间
-    UILabel *lb_starttime = (UILabel *)[_btn_starttime viewWithTag:301];
-    UILabel *lb_endtime = (UILabel *)[_btn_endtime viewWithTag:302];
-    NSDate *beginTime = [NSDate dateFromString:lb_starttime.text withFormat:@"yyyy-MM-dd"];
-    NSDate *endTime = [NSDate dateFromString:lb_endtime.text withFormat:@"yyyy-MM-dd"];
-    if ([beginTime compare:endTime] == NSOrderedDescending) {
+    NSDate *beginTime = nil;
+    if (lb_starttime.text.length>0) {
+        beginTime = [NSDate dateFromString:lb_starttime.text withFormat:@"yyyy-MM-dd"];
+    }
+    NSDate *endTime = nil;
+    if (lb_endtime.text.length>0) {
+        endTime = [NSDate dateFromString:lb_endtime.text withFormat:@"yyyy-MM-dd"];
+    }
+    
+    if (beginTime && endTime && [beginTime compare:endTime] == NSOrderedDescending) {
         [MBProgressHUD showError:@"起始时间大于结束时间!" toView:self.view];
         return;
     }
-    
+    if (beginTime) {
+        _beginDate = beginTime;
+    }
+    if (endTime) {
+        _endDate = endTime;
+    }
     page = 0;
+    self.tableView.showsInfiniteScrolling = YES;
     [self queryAttendance];
 }
 
@@ -310,10 +321,10 @@ static int const pageSize = 30;
 {
     UIDatePicker *picker = [[UIDatePicker alloc]init];
     picker.datePickerMode = UIDatePickerModeDate;
-     NSDate *date = [NSDate date];
+    NSDate *date = [NSDate date];
     NSCalendar *cal = [NSCalendar currentCalendar];
     NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:date];
-    [components setMonth:components.month -1];
+    [components setDay:1];
     NSDate *beginDate = [cal dateFromComponents:components];
     picker.maximumDate = [NSDate date];
     picker.minimumDate = beginDate;
@@ -335,12 +346,8 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
     NSDate *date = picker.date;
     NSLog(@"%@",[date stringWithFormat:@"yyyy-MM-dd"] );
     if (picker.tag == 101) {
-        _beginDate = date;
-        UILabel *lb_starttime = (UILabel *)[_btn_starttime viewWithTag:301];
         lb_starttime.text = [date stringWithFormat:@"yyyy-MM-dd"];
     } else {
-        _endDate = date;
-        UILabel *lb_endtime = (UILabel *)[_btn_endtime viewWithTag:302];
         lb_endtime.text = [date stringWithFormat:@"yyyy-MM-dd"];
     }
     
