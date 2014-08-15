@@ -19,6 +19,7 @@
 #import "ShareValue.h"
 #import "TripDetailBean.h"
 #import "OfflineRequestCache.h"
+#import "UI+LKSignal.h"
 
 @interface TripDetailVC () <UITextViewDelegate>
 
@@ -314,7 +315,8 @@
     tvApprovalDescValue.textColor = COLOR_DETAIL_CONTENT;
     tvApprovalDescValue.font = [UIFont systemFontOfSize:FONT_SIZE_DETAIL_CONTENT];
     tvApprovalDescValue.backgroundColor = [UIColor whiteColor];
-    tvApprovalDescValue.delegate = self;
+    //tvApprovalDescValue.delegate = self;
+    tvApprovalDescValue.maxLength = 200.f;
     [self.svRoot addSubview:tvApprovalDescValue];
     self.tvApprovalDesc = tvApprovalDescValue;
     
