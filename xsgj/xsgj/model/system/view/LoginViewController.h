@@ -10,7 +10,7 @@
 #import <TTTAttributedLabel.h>
 #import "HideTabViewController.h"
 
-@interface LoginViewController : HideTabViewController
+@interface LoginViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITextField *tf_companycode;
 

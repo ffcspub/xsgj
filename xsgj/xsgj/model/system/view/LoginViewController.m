@@ -43,8 +43,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIButton *btn = (UIButton *)self.navigationItem.rightBarButtonItem.customView;
-    [btn setTitle:@"退出" forState:UIControlStateNormal];
+//    UIButton *btn = (UIButton *)self.navigationItem.rightBarButtonItem.customView;
+//    [btn setTitle:@"退出" forState:UIControlStateNormal];
     [self initView];
 }
 
@@ -89,7 +89,7 @@
     [_btn_login configOrgleStyle];
     [self resetBtns];
     
-    [self setLeftButtonTitle:@"退出"];
+//    [self setLeftButtonTitle:@"退出"];
     
     _tf_companycode.text = [ShareValue shareInstance].corpCode;
     _tf_username.text = [ShareValue shareInstance].userName;

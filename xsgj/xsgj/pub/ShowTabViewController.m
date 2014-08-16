@@ -37,9 +37,9 @@
         self.automaticallyAdjustsScrollViewInsets = YES;
     }
 #endif
-    UIButton *button = [self defaultBackButtonWithTitle:@"退出"];
-    [button addTarget:self action:@selector(exitAction) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    UIButton *button = [self defaultBackButtonWithTitle:@"退出"];
+//    [button addTarget:self action:@selector(exitAction) forControlEvents:UIControlEventTouchUpInside];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
 	// Do any additional setup after loading the view.
 }
 
