@@ -248,7 +248,7 @@ static int const pageSize = 10;
     
     LeaveinfoBean *info = [_leaves objectAtIndex:indexPath.row];
     
-    cell.name = info.TYPE_NAME;
+    cell.name = info.USER_NAME;
     cell.time = info.APPLY_TIME;
     cell.state = info.APPROVE_STATE;
     
