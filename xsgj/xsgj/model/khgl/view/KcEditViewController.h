@@ -13,7 +13,6 @@
 
 @interface KcEditViewController : HideTabViewController<KcEditCellDelegate>
 {
-    NSIndexPath *_selectIndex;
     NSMutableArray *_aryKcData;
     KcEditCell *_cellForDate;
     KcEditCell *_cellForPhoto;
@@ -29,6 +28,8 @@
 @property (weak, nonatomic) BNCustomerInfo *customerInfo;
 @property (weak, nonatomic) BNVistRecord *vistRecord;
 @property (strong, nonatomic) NSString *strMenuId;
+
+@property(nonatomic,strong) NSObject *selectObject;
 
 - (IBAction)handleBtnCommitClicked:(id)sender;
 - (IBAction)handleBtnPreviewClicked:(id)sender;

@@ -345,7 +345,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _selectIndex.row && _selectIndex != nil)
+    OrderItemBean *orderItemBean = [_aryDhData objectAtIndex:indexPath.row];
+    if (_selectObject == orderItemBean)
     {
         return 284;
     }
@@ -365,14 +366,11 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"DHEDITCELL"];
     }
     
-    if(_aryDhData.count > 0)
-    {
-        OrderItemBean *orderItemBean = [_aryDhData objectAtIndex:indexPath.row];
-        cell.indexPath = indexPath;
-        [cell setCellWithValue:orderItemBean];
-    }
+    OrderItemBean *orderItemBean = [_aryDhData objectAtIndex:indexPath.row];
+    cell.indexPath = indexPath;
+    [cell setCellWithValue:orderItemBean];
     
-    if (indexPath.row == _selectIndex.row && _selectIndex != nil)
+    if (_selectObject == orderItemBean)
     {
         cell.vDetail.hidden = NO;
     }
@@ -392,26 +390,24 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (!_selectIndex)
+    if (!_selectObject)
     {
-        _selectIndex = indexPath;
-        [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:_selectIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+        _selectObject = [_aryDhData objectAtIndex:indexPath.row];
+        [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
     else
     {
-        BOOL selectTheSameRow = indexPath.row == _selectIndex.row? YES:NO;
-        if (!selectTheSameRow)
+        NSObject *object = [_aryDhData objectAtIndex:indexPath.row];
+        if (_selectObject != object)
         {
-            NSIndexPath *tempIndexPath = [_selectIndex copy];
-            _selectIndex = nil;
-            [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:tempIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            
-            _selectIndex = indexPath;
-            [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:_selectIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+            int index = [_aryDhData indexOfObject:_selectObject];
+            _selectObject = object;
+            [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
         else
         {
-            _selectIndex = nil;
+            _selectObject = nil;
             [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
     }
@@ -432,8 +428,7 @@
     NSDictionary *dicInfo = [note object];
     NSArray *sourceData = [dicInfo objectForKey:@"data"];
     NSNumber *number = [dicInfo objectForKey:@"prodid"];
-    
-    _selectIndex = nil;
+    _aryData = nil;
     _aryDhData = [[NSMutableArray alloc] initWithArray:sourceData];
     _iExpandProdId = number.intValue;
     [_tvContain reloadData];

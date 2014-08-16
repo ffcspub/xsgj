@@ -9,7 +9,8 @@
 #import "ThEditViewController.h"
 #import "ThPreviewViewController.h"
 
-@interface ThEditViewController ()<UIImagePickerControllerDelegate>
+@interface ThEditViewController ()<UIImagePickerControllerDelegate>{
+}
 
 @end
 
@@ -363,7 +364,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _selectIndex.row && _selectIndex != nil)
+    if (self.selectObject  && self.selectObject == _aryKcData[indexPath.row])
     {
         return 204;
     }
@@ -372,6 +373,7 @@
         return 44;
     }
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -382,14 +384,11 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"THEDITCELL"];
     }
     
-    if(_aryKcData.count > 0)
-    {
-        ThCommitData * bean = [_aryKcData objectAtIndex:indexPath.row];
-        cell.indexPath = indexPath;
-        [cell setCellWithValue:bean];
-    }
+    ThCommitData * bean = [_aryKcData objectAtIndex:indexPath.row];
+    cell.indexPath = indexPath;
+    [cell setCellWithValue:bean];
     
-    if (indexPath.row == _selectIndex.row && _selectIndex != nil)
+    if (self.selectObject == bean)
     {
         cell.vDetail.hidden = NO;
     }
@@ -449,18 +448,6 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
         _thCellForDate.lbDate.text = [selectDate stringWithFormat:@"yyyy-MM-dd"];
         _thCellForDate.thCommitData.BATCH = [selectDate stringWithFormat:@"yyyy-MM-dd"];
     }
-}
-
-- (void)handleNotifyModifyData:(NSNotification *)note
-{
-    NSDictionary *dicInfo = [note object];
-    NSArray *sourceData = [dicInfo objectForKey:@"data"];
-    NSNumber *number = [dicInfo objectForKey:@"prodid"];
-    
-    _selectIndex = nil;
-    _aryKcData = [[NSMutableArray alloc] initWithArray:sourceData];
-    _iExpandProdId = number.intValue;
-    [self.tvContain reloadData];
 }
 
 #pragma mark - UIImagePickerControllerDelegate

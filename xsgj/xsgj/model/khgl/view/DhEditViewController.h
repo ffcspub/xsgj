@@ -20,7 +20,7 @@
     NSArray *_aryPartnerInfoData;
     NSArray *_aryPartnerTypeData;
     NSArray *_aryPartnerTreeData;
-    NSIndexPath *_selectIndex;
+    NSObject *_selectObject;
     NSMutableArray *_aryDhData;
     int _iExpandProdId;
     int _iMakeTreeCount;

@@ -8,6 +8,7 @@
 
 #import "VisitProjectViewController.h"
 #import "SystemAPI.h"
+#import "OAChineseToPinyin.h"
 
 @interface VisitProjectViewController ()
 {
@@ -38,7 +39,6 @@
     
     _aryVisitRecord = [[NSMutableArray alloc] init];
     _aryVisitData = [[NSMutableArray alloc] init];
-    
     [self loadDateInfo];
     [self initView];
     
@@ -97,26 +97,24 @@
     [_aryVisitRecord removeAllObjects];
     
     NSArray *aryPlans = [BNVisitPlan searchWithWhere:[NSString stringWithFormat:@"WEEKDAY=%D",date] orderBy:@"ORDER_NO" offset:0 count:100];
-    NSArray *cusinfo =[BNCustomerInfo searchWithWhere:nil orderBy:@"CUST_NAME_PINYIN" offset:0 count:1000];
-    
-    for(int i=0; i<cusinfo.count; i++)
-    {
-        BNCustomerInfo *customerInfo = [cusinfo objectAtIndex:i];
-        for(BNVisitPlan *visitPlan in aryPlans)
-        {
-            if(customerInfo.CUST_ID == visitPlan.CUST_ID)
-            {
-                [_aryVisitData addObject:customerInfo];
-                break;
-            }
+    NSString *custids = @"";
+    int i = 0;
+    for (BNVisitPlan *plan in aryPlans) {
+        if (i< (aryPlans.count-1)) {
+            custids = [custids stringByAppendingFormat:@"%d,",plan.CUST_ID];
+        }else{
+            custids = [custids stringByAppendingFormat:@"%d",plan.CUST_ID];
         }
+        i++;
     }
+    NSArray *cusinfo =[BNCustomerInfo searchWithWhere:[NSString stringWithFormat:@"CUST_ID in (%@)",custids] orderBy:@"CUST_NAME_PINYIN" offset:0 count:1000];
+    [_aryVisitData addObjectsFromArray:cusinfo];
     
+
     for(int i=0; i<_aryVisitData.count; i++)
     {
         BNCustomerInfo *customerInfo = [_aryVisitData objectAtIndex:i];
-        NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D and VISIT_DATE like '%@%@'",customerInfo.CUST_ID,[[NSDate date] stringWithFormat:@"yyyy-MM-dd"],@"%"] orderBy:nil offset:0 count:100];
-
+        NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D and VISIT_DATE like '%@%@'",customerInfo.CUST_ID,[[NSDate date] stringWithFormat:@"yyyy-MM-dd"],@"%"] orderBy:@"VISIT_DATE desc" offset:0 count:100];
         [_aryVisitRecord addObject:aryRecord];
     }
     [_tvContain reloadData];

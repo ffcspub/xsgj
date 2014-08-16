@@ -32,7 +32,7 @@
     
     _iSendImgCount = 0;
     _iExpandProdId = 0;
-    _selectIndex = nil;
+    _selectObject = nil;
     _aryKcData = [[NSMutableArray alloc] init];
     [self initView];
     [self loadKcCommitData];
@@ -380,7 +380,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _selectIndex.row && _selectIndex != nil)
+    NSObject *object = [_aryKcData objectAtIndex:indexPath.row];
+    if (_selectObject == object)
     {
         return 174;
     }
@@ -399,14 +400,11 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"KCEDITCELL"];
     }
 
-    if(_aryKcData.count > 0)
-    {
-        KcCommitData * bean = [_aryKcData objectAtIndex:indexPath.row];
-        cell.indexPath = indexPath;
-        [cell setCellWithValue:bean];
-    }
+    KcCommitData * bean = [_aryKcData objectAtIndex:indexPath.row];
+    cell.indexPath = indexPath;
+    [cell setCellWithValue:bean];
     
-    if (indexPath.row == _selectIndex.row && _selectIndex != nil)
+    if (_selectObject == bean)
     {
         cell.vDetail.hidden = NO;
     }
@@ -426,26 +424,24 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (!_selectIndex)
+    if (!_selectObject)
     {
-        _selectIndex = indexPath;
-        [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:_selectIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+        _selectObject = [_aryKcData objectAtIndex:indexPath.row];
+        [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
     else
     {
-        BOOL selectTheSameRow = indexPath.row == _selectIndex.row? YES:NO;
-        if (!selectTheSameRow)
+        NSObject *object = [_aryKcData objectAtIndex:indexPath.row];
+        if (_selectObject != object)
         {
-            NSIndexPath *tempIndexPath = [_selectIndex copy];
-            _selectIndex = nil;
-            [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:tempIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            
-            _selectIndex = indexPath;
-            [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:_selectIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+            int index = [_aryKcData indexOfObject:_selectObject];
+            _selectObject = object;
+            [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
         else
         {
-            _selectIndex = nil;
+            _selectObject = nil;
             [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
     }
@@ -508,7 +504,7 @@ ON_LKSIGNAL3(UIDatePicker, COMFIRM, signal){
     NSArray *sourceData = [dicInfo objectForKey:@"data"];
     NSNumber *number = [dicInfo objectForKey:@"prodid"];
     
-    _selectIndex = nil;
+    _selectObject = nil;
     _aryKcData = [[NSMutableArray alloc] initWithArray:sourceData];
     _iExpandProdId = number.intValue;
     [_tvContain reloadData];

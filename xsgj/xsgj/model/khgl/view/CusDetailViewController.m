@@ -11,6 +11,9 @@
 #import "SIAlertView.h"
 #import "InfoCollectViewController.h"
 #import <UIImageView+WebCache.h>
+#import "BNVistRecord.h"
+#import <LKDBHelper.h>
+
 @interface CusDetailViewController ()
 
 @end
@@ -46,9 +49,11 @@
     self.lbMobile.text = self.customerInfo.TEL;
     self.lbAddress.text = self.customerInfo.ADDRESS;
     
-    if(self.visitRecord)
+    BNVistRecord *aryRecord = [BNVistRecord searchSingleWithWhere:[NSString stringWithFormat:@"CUST_ID=%D",self.customerInfo.CUST_ID] orderBy:@"BEGIN_TIME desc"];
+    
+    if(aryRecord)
     {
-        self.lbVisitTime.text = self.visitRecord.END_TIME;
+        self.lbVisitTime.text = aryRecord.END_TIME;
     }
     else
     {
