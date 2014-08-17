@@ -419,6 +419,10 @@
     return self;
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
 -(void)setFrame:(CGRect)frame{
     [super setFrame:frame];
     [self addNotification];
@@ -610,21 +614,7 @@
 }
 
 
--(BOOL)allowCopy{
-    NSObject * obj = objc_getAssociatedObject( self, "allowCopy" );
-	if ( obj && [obj isKindOfClass:[NSNumber class]] )
-		return ((NSNumber *)obj).boolValue;
-	return NO;
-}
 
--(void)setAllowCopy:(BOOL)allowCopy{
-    NSObject * obj = objc_getAssociatedObject( self, "allowCopy" );
-	if ( obj && [obj isKindOfClass:[NSNumber class]] )
-    {
-        obj = nil;
-    }
-    objc_setAssociatedObject( self, "allowCopy", [NSNumber numberWithBool:allowCopy], OBJC_ASSOCIATION_RETAIN );
-}
 
 -(void)__addDelegate:(NSNotification *)notification{
     if (!self.delegate) {
@@ -656,6 +646,9 @@
     return wrapper;
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 
 @end
 
@@ -663,6 +656,23 @@
 
 @dynamic maxLength;
 @dynamic placeHolder;
+@dynamic allowCopy;
+
+-(BOOL)allowCopy{
+    NSObject * obj = objc_getAssociatedObject( self, "allowCopy" );
+	if ( obj && [obj isKindOfClass:[NSNumber class]] )
+		return ((NSNumber *)obj).boolValue;
+	return NO;
+}
+
+-(void)setAllowCopy:(BOOL)allowCopy{
+    NSObject * obj = objc_getAssociatedObject( self, "allowCopy" );
+	if ( obj && [obj isKindOfClass:[NSNumber class]] )
+    {
+        obj = nil;
+    }
+    objc_setAssociatedObject( self, "allowCopy", [NSNumber numberWithBool:allowCopy], OBJC_ASSOCIATION_RETAIN );
+}
 
 -(NSString *)placeHolder{
     NSObject * obj = objc_getAssociatedObject( self, "placeHolder" );
