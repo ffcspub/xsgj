@@ -234,11 +234,7 @@
 {
     [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    NSDate *now = [NSDate new];
-    NSDateFormatter *formatter = [NSDateFormatter new];
-    [formatter setDateFormat:@"yyMMddHHmmss"];
-    NSString *fileName = [NSString stringWithFormat:@"IMG_%@",[formatter stringFromDate:now]];
-    [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
+    [SystemAPI uploadPhotoByFileName:self.title data:_imageData success:^(NSString *fileId) {
         _photoId = fileId;
         [self addVisiterAction];
     } fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {

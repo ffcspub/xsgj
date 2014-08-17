@@ -142,7 +142,7 @@
     // 当存在图片上传
     if (self.currentState == DistributionHandleStateResult && _imageData) {
         
-        [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
+        [SystemAPI uploadPhotoByFileName:self.title data:_imageData success:^(NSString *fileId) {
             
             _photoId = fileId;
             [self submitDisHandleResult];

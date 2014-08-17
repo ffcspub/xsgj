@@ -309,7 +309,7 @@
 //        [MBProgressHUD showError:desciption toView:self.view];
 //    }];
     
-    [SystemAPI uploadPhotoByFileName:imageInfo.fileName data:imageInfo.fileData success:^(NSString *fileId) {
+    [SystemAPI uploadPhotoByFileName:self.title data:imageInfo.fileData success:^(NSString *fileId) {
         [_aryFileId addObject:fileId];
         _iSendImgCount ++;
         if(_iSendImgCount < _aryfileDatas.count)

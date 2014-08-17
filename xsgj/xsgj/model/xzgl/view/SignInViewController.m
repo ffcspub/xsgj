@@ -178,7 +178,7 @@
 //        [MBProgressHUD showError:desciption toView:self.view];
 //    }];
     
-    [SystemAPI uploadPhotoByFileName:fileName data:_imageData success:^(NSString *fileId) {
+    [SystemAPI uploadPhotoByFileName:self.title data:_imageData success:^(NSString *fileId) {
         _photoId = fileId;
         [self signUpRequest];
     } fail:^(BOOL notReachable, NSString *desciption,NSString *fileId) {
