@@ -38,13 +38,14 @@
 {
     [super viewDidLoad];
     
+    // 日期处理
     NSDate *date = [NSDate date];
     NSCalendar *cal = [NSCalendar currentCalendar];
     NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:date];
-    [components setMonth:components.month -1];
+    [components setDay:1];
     NSDate *beginDate = [cal dateFromComponents:components];
-    self.beginDate = beginDate;
-    self.endDate = [NSDate date];
+    _beginDate = beginDate;
+    _endDate = [NSDate date];
     
     [self UI_setup];
 }
