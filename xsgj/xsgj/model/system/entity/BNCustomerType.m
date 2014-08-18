@@ -8,7 +8,7 @@
 
 #import "BNCustomerType.h"
 #import <LKDBHelper.h>
-#import "OAChineseToPinyin.h"
+#import "NSString+URL.h"
 
 @implementation BNCustomerType
 
@@ -51,8 +51,11 @@
 -(void)setTYPE_NAME:(NSString *)TYPE_NAME{
     _TYPE_NAME = TYPE_NAME;
     if (TYPE_NAME) {
-        self.TYPE_NAME_PINYIN = [OAChineseToPinyin pinyinFromChiniseString:TYPE_NAME];
-        self.TYPE_NAME_HEAD   = [self.TYPE_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
+        
+        self.TYPE_NAME_PINYIN = [TYPE_NAME convertCNToPinyin];
+        if (self.TYPE_NAME_PINYIN.length > 0) {
+            self.TYPE_NAME_HEAD   = [self.TYPE_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
+        }
     }
 }
 

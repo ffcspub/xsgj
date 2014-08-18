@@ -11,12 +11,13 @@
 #import "BNCustomerType.h"
 #import "BNAreaInfo.h"
 #import <LKDBHelper.h>
-#import "OAChineseToPinyin.h"
+#import "NSString+URL.h"
 #import "KHGLAPI.h"
 #import "KHGLHttpRequest.h"
 #import "KHGLHttpResponse.h"
 #import <MBProgressHUD.h>
 #import "UIColor+External.h"
+#import "OAChineseToPinyin.h"
 
 @protocol SelectInfoCellDelegate;
 
@@ -759,7 +760,7 @@
                 [_filterCustomers addObject:info];
             }
         }else{
-            NSString *pinyin = [OAChineseToPinyin pinyinFromChiniseString:info.CUST_NAME];
+            NSString *pinyin = [info.CUST_NAME convertCNToPinyin];
             NSComparisonResult result = [pinyin compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
             if (result == NSOrderedSame)
             {

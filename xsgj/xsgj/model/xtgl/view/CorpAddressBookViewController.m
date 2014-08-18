@@ -15,7 +15,7 @@
 #import "ContactBean.h"
 #import "ContactTableViewCell.h"
 #import "MBProgressHUD+Add.h"
-#import "OAChineseToPinyin.h"
+#import "NSString+URL.h"
 #import "NSObject+LKDBHelper.h"
 #import "TreeViewCell.h"
 #import "SelectTreeViewController.h"
@@ -120,8 +120,10 @@
                  NSArray *aryTemp = response.DATA;
                  for (ContactBean *bean in aryTemp)
                  {
-                     bean.USER_NAME_PINYIN = [OAChineseToPinyin pinyinFromChiniseString:bean.REALNAME];
-                     bean.USER_NAME_HEAD   = [bean.USER_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
+                     bean.USER_NAME_PINYIN = [bean.REALNAME convertCNToPinyin];
+                     if (bean.USER_NAME_PINYIN.length > 0) {
+                         bean.USER_NAME_HEAD   = [bean.USER_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
+                     }
                      [bean saveToDB];
                  }
                  // 获取原始联系人数据

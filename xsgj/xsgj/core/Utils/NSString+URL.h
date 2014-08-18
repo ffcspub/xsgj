@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NSString (URL)
 // URL转义
 - (NSString *)URLEncodedString;
@@ -26,5 +27,7 @@
 
 // 邮箱判断
 - (BOOL)isEmail;
+
+- (NSString *)convertCNToPinyin;
 
 @end

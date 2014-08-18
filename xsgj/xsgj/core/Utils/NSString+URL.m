@@ -7,6 +7,7 @@
 //
 
 #import "NSString+URL.h"
+#import "PinYin4Objc.h"
 
 @implementation NSString (URL)
 
@@ -70,6 +71,17 @@
     
     NSPredicate *regExPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
     return [regExPredicate evaluateWithObject:[self lowercaseString]];
+}
+
+- (NSString *)convertCNToPinyin
+{
+    HanyuPinyinOutputFormat *outputFormat=[[HanyuPinyinOutputFormat alloc] init];
+    [outputFormat setToneType:ToneTypeWithoutTone];
+    [outputFormat setVCharType:VCharTypeWithV];
+    [outputFormat setCaseType:CaseTypeLowercase];
+    NSString *outputPinyin=[PinyinHelper toHanyuPinyinStringWithNSString:self
+                                             withHanyuPinyinOutputFormat:outputFormat withNSString:@""];
+    return outputPinyin;
 }
 
 @end
