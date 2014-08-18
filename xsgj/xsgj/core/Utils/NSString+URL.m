@@ -78,7 +78,7 @@
     HanyuPinyinOutputFormat *outputFormat=[[HanyuPinyinOutputFormat alloc] init];
     [outputFormat setToneType:ToneTypeWithoutTone];
     [outputFormat setVCharType:VCharTypeWithV];
-    [outputFormat setCaseType:CaseTypeLowercase];
+    [outputFormat setCaseType:CaseTypeUppercase];
     NSString *outputPinyin=[PinyinHelper toHanyuPinyinStringWithNSString:self
                                              withHanyuPinyinOutputFormat:outputFormat withNSString:@""];
     return outputPinyin;
