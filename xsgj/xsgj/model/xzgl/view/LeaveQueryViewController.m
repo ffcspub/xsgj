@@ -116,6 +116,8 @@ typedef  enum : NSUInteger {
         default:
             break;
     }
+    
+    [self setNeedsDisplay];
 }
 
 - (void)setState:(int)state

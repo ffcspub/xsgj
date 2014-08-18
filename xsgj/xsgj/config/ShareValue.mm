@@ -78,7 +78,7 @@ static UIImage *_imageTablePart3S;
         _imageTablePart1S  = [UIImage imageNamed:@"table_part1_S"];
         _imageTablePart1S = [_imageTablePart1S resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
     }
-    return _imageTablePart2;
+    return _imageTablePart1S;
 }
 
 +(UIImage *)tablePart2S{
