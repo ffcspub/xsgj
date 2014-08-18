@@ -159,7 +159,7 @@ static int const pageSize = 30;
     [self setRightBarButtonItem];
     
     page = 0;
-    [self queryAttendance];
+    
     
     self.view.backgroundColor = HEX_RGB(0xefeff4);
     
@@ -172,6 +172,8 @@ static int const pageSize = 30;
     NSDate *beginDate = [cal dateFromComponents:components];
     _beginDate = beginDate;
     _endDate = [NSDate date];
+    
+    [self queryAttendance];
 }
 
 - (void)didReceiveMemoryWarning
