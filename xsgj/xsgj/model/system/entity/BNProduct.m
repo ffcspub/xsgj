@@ -23,7 +23,9 @@
     _PROD_NAME = PROD_NAME;
     if (PROD_NAME) {
         self.PROD_NAME_PINYIN = [OAChineseToPinyin pinyinFromChiniseString:PROD_NAME];
-        self.PROD_NAME_HEAD   = [self.PROD_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
+        if (self.PROD_NAME_PINYIN.length > 0) {
+            self.PROD_NAME_HEAD   = [self.PROD_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
+        }
     }
     
 }
