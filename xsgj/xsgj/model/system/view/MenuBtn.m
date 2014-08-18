@@ -45,9 +45,9 @@
     _lable.text = menu.MENU_NAME;
     CGSize titileSize = [_menu.MENU_NAME sizeWithFont:[UIFont systemFontOfSize:12]];
     if (titileSize.width > self.frame.size.width) {
-        _lable.frame =CGRectMake(-(titileSize.width - self.frame.size.width)/2, imageSize.height + 20, titileSize.width, 17);
+        _lable.frame =CGRectMake(-(titileSize.width - self.frame.size.width)/2, imageSize.height + 25, titileSize.width, 17);
     }else{
-        _lable.frame =CGRectMake(0, imageSize.height + 20, self.frame.size.width, 17);
+        _lable.frame =CGRectMake(0, imageSize.height + 25, self.frame.size.width, 17);
     }
 }
 
