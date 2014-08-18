@@ -14,9 +14,6 @@
 @property (strong, nonatomic) UIImageView *ivBackground;
 @property (strong, nonatomic) UIImageView *ivBackgroundSelect;
 
-@property (strong, nonatomic) UIImage *imgMiddle;
-@property (strong, nonatomic) UIImage *imgMiddleHight;
-
 - (void)_initialize;
 
 @end
@@ -44,9 +41,9 @@
 
 - (void)awakeFromNib
 {
-    [self _initialize];
-    
     [super awakeFromNib];
+    
+    [self _initialize];
 }
 
 - (void)_initialize
@@ -70,19 +67,12 @@
     // 设置选中效果
     self.ivBackground = [[UIImageView alloc] initWithFrame:self.bounds];
     self.ivBackgroundSelect = [[UIImageView alloc] initWithFrame:self.bounds];
-    
-    // 缓存中间高亮的图片
-    UIImage *image = [UIImage imageNamed:@"table_main_n"];
-    self.imgMiddle = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-    UIImage *imageSelect = [UIImage imageNamed:@"table_main_s"];
-    self.imgMiddleHight = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-    
+
     self.backgroundView = self.ivBackground;
     self.selectedBackgroundView = self.ivBackgroundSelect;
-    self.cellStyle = SINGLE;
+    self.cellStyle = MID;
 }
 
-//!!!: 表格卡顿的原因主要是因为图片引起
 - (void)setCellStyle:(TripQueryCellStyle)cellStyle
 {
     if (_cellStyle != cellStyle) {
@@ -100,8 +90,14 @@
             }
                 break;
             case MID:{
-                self.ivBackground.image = self.imgMiddle;
-                self.ivBackgroundSelect.image = self.imgMiddleHight;
+                // 缓存中间高亮的图片
+                UIImage *image = [UIImage imageNamed:@"table_part2"];
+                image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+                self.ivBackground.image = image;
+                
+                UIImage *imageSelect = [UIImage imageNamed:@"table_part2_s"];
+                imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+                self.ivBackgroundSelect.image = imageSelect;
             }
                 break;
             case BOT:{
