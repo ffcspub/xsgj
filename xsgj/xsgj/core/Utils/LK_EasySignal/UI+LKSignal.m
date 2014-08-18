@@ -419,9 +419,11 @@
     return self;
 }
 
+/*
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
+*/
 
 -(void)setFrame:(CGRect)frame{
     [super setFrame:frame];
@@ -646,9 +648,11 @@
     return wrapper;
 }
 
+/*
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
+*/
 
 @end
 
