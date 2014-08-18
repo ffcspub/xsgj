@@ -95,6 +95,7 @@
     self.tbvQuery.delegate = self;
     self.tbvQuery.dataSource = self;
     [self.tbvQuery setSeparatorColor:[UIColor clearColor]];
+    self.tbvQuery.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tbvQuery.showsVerticalScrollIndicator = NO;
 }
 

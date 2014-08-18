@@ -12,7 +12,8 @@ typedef NS_OPTIONS(NSUInteger, CornerCellStyle) {
     TOP = 0,
     MID = 1,
     BOT = 2,
-    SINGLE = 3
+    SINGLE = 3,
+    UNKNOWN
 };
 
 /**

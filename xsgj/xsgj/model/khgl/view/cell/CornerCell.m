@@ -49,60 +49,58 @@
     self.backgroundView = self.ivBackground;
     self.selectedBackgroundView = self.ivBackgroundSelect;
     
-    self.cellStyle = SINGLE;
+    self.cellStyle = UNKNOWN;
 }
 
 - (void)setCellStyle:(CornerCellStyle)cellStyle
 {
-    if (_cellStyle != cellStyle) {
-        _cellStyle = cellStyle;
-        switch (cellStyle) {
-            case TOP:{
-                UIImage *image = [UIImage imageNamed:@"table_part1"];
-                image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-                self.ivBackground.image = image;
-                
-                UIImage *imageSelect = [UIImage imageNamed:@"table_part1_s"];
-                imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-                self.ivBackgroundSelect.image = imageSelect;
-            }
-                break;
-            case MID:{
-                UIImage *image = [UIImage imageNamed:@"table_part2"];
-                image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-                self.ivBackground.image = image;
-                
-                UIImage *imageSelect = [UIImage imageNamed:@"table_part2_s"];
-                imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-                self.ivBackgroundSelect.image = imageSelect;
-            }
-                break;
-            case BOT:{
-                UIImage *image = [UIImage imageNamed:@"table_part3"];
-                image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-                self.ivBackground.image = image;
-                
-                UIImage *imageSelect = [UIImage imageNamed:@"table_part3_s"];
-                imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-                self.ivBackgroundSelect.image = imageSelect;
-            }
-                break;
-            case SINGLE:{
-                UIImage *image = [UIImage imageNamed:@"table_main_n"];
-                image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-                self.ivBackground.image = image;
-                
-                UIImage *imageSelect = [UIImage imageNamed:@"table_main_s"];
-                imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-                self.ivBackgroundSelect.image = imageSelect;
-            }
-                break;
-            default:
-                break;
+    _cellStyle = cellStyle;
+    switch (cellStyle) {
+        case TOP:{
+            UIImage *image = [UIImage imageNamed:@"table_part1"];
+            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+            self.ivBackground.image = image;
+            
+            UIImage *imageSelect = [UIImage imageNamed:@"table_part1_s"];
+            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+            self.ivBackgroundSelect.image = imageSelect;
         }
-        
-        [self setNeedsDisplay];
+            break;
+        case MID:{
+            UIImage *image = [UIImage imageNamed:@"table_part2"];
+            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+            self.ivBackground.image = image;
+            
+            UIImage *imageSelect = [UIImage imageNamed:@"table_part2_s"];
+            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+            self.ivBackgroundSelect.image = imageSelect;
+        }
+            break;
+        case BOT:{
+            UIImage *image = [UIImage imageNamed:@"table_part3"];
+            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+            self.ivBackground.image = image;
+            
+            UIImage *imageSelect = [UIImage imageNamed:@"table_part3_s"];
+            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+            self.ivBackgroundSelect.image = imageSelect;
+        }
+            break;
+        case SINGLE:{
+            UIImage *image = [UIImage imageNamed:@"table_main_n"];
+            image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+            self.ivBackground.image = image;
+            
+            UIImage *imageSelect = [UIImage imageNamed:@"table_main_s"];
+            imageSelect = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
+            self.ivBackgroundSelect.image = imageSelect;
+        }
+            break;
+        default:
+            break;
     }
+    
+    [self setNeedsDisplay];
 }
 
 @end

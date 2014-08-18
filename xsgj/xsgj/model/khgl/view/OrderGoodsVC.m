@@ -17,7 +17,10 @@
 #import <LKDBHelper.h>
 #import "OrderDetailBean.h"
 
-static NSString * const OrderGoodsCellIdentifier = @"OrderGoodsCellIdentifier";
+static NSString * const TopOrderGoodsCellIdentifier = @"TopOrderGoodsCellIdentifier";
+static NSString * const BotOrderGoodsCellIdentifier = @"BotOrderGoodsCellIdentifier";
+static NSString * const MidOrderGoodsCellIdentifier = @"MidOrderGoodsCellIdentifier";
+static NSString * const SigOrderGoodsCellIdentifier = @"SigOrderGoodsCellIdentifier";
 static int const pageSize = 10000;
 
 @interface OrderGoodsVC ()
@@ -43,7 +46,10 @@ static int const pageSize = 10000;
     [super viewDidLoad];
     
     // 表格设置
-    [self.tbvQuery registerNib:[OrderGoodsCell nib] forCellReuseIdentifier:OrderGoodsCellIdentifier];
+    [self.tbvQuery registerNib:[OrderGoodsCell nib] forCellReuseIdentifier:TopOrderGoodsCellIdentifier];
+    [self.tbvQuery registerNib:[OrderGoodsCell nib] forCellReuseIdentifier:BotOrderGoodsCellIdentifier];
+    [self.tbvQuery registerNib:[OrderGoodsCell nib] forCellReuseIdentifier:MidOrderGoodsCellIdentifier];
+    [self.tbvQuery registerNib:[OrderGoodsCell nib] forCellReuseIdentifier:SigOrderGoodsCellIdentifier];
     
     // 上提加载更多
     __weak OrderGoodsVC *weakSelf = self;
@@ -212,24 +218,26 @@ static int const pageSize = 10000;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OrderGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:OrderGoodsCellIdentifier];
-    [cell setHighlighted:NO animated:NO];
-    
-    // 配置Cell
-    [cell configureForData:self.arrData[indexPath.row]];
-    
+    OrderGoodsCell *cell ;
     // 配置背景
     if ([self.arrData count] == 1) {
+        cell = [tableView dequeueReusableCellWithIdentifier:SigOrderGoodsCellIdentifier];
         cell.cellStyle = SINGLE;
     } else {
         if (indexPath.row == 0) {
+            cell = [tableView dequeueReusableCellWithIdentifier:TopOrderGoodsCellIdentifier];
             cell.cellStyle = TOP;
         } else if (indexPath.row == [self.arrData count] - 1) {
+            cell = [tableView dequeueReusableCellWithIdentifier:BotOrderGoodsCellIdentifier];
             cell.cellStyle = BOT;
         } else {
+            cell = [tableView dequeueReusableCellWithIdentifier:MidOrderGoodsCellIdentifier];
             cell.cellStyle = MID;
         }
     }
+    
+    // 配置Cell
+    [cell configureForData:self.arrData[indexPath.row]];
     
     return cell;
 }
