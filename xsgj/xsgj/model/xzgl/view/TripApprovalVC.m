@@ -27,6 +27,9 @@ static NSString * const TripApprovalCellIdentifier = @"TripApprovalCellIdentifie
 static int const pageSize = 10000;
 
 @interface TripApprovalVC ()
+{
+    BOOL isNeedUpdate;
+}
 
 @property (weak, nonatomic) IBOutlet UITableView *tbvApproval;
 @property (nonatomic, strong) NSMutableArray *arrTrips;
@@ -51,15 +54,30 @@ static int const pageSize = 10000;
     [super viewDidLoad];
     
     [self UI_setup];
+    
+    // 每次进入页面重新加载
+    self.currentPage = 1;
+    [self loadTripList];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleNotifyUpdate:)
+                                                 name:NOTIFICATION_TRIP_NEED_UPDATE
+                                               object:nil];
+}
+
+- (void)viewDidUnload
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_TRIP_NEED_UPDATE object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    // 每次进入页面重新加载
-    self.currentPage = 1;
-    [self loadTripList];
+    if (isNeedUpdate) {
+        self.currentPage = 1;
+        [self loadTripList];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,6 +109,8 @@ static int const pageSize = 10000;
     
     [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     [XZGLAPI queryTrip2ByRequest:request success:^(QueryTrip2HttpResponse *response) {
+        
+        isNeedUpdate = NO;
         
         // 分页
         [self.tbvApproval.infiniteScrollingView stopAnimating];
@@ -150,6 +170,11 @@ static int const pageSize = 10000;
 }
 
 #pragma mark - UI
+
+- (void)handleNotifyUpdate:(NSNotification *)note
+{
+    isNeedUpdate = YES;
+}
 
 - (void)UI_setup
 {

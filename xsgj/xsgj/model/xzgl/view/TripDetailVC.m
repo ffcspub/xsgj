@@ -22,6 +22,9 @@
 #import "UI+LKSignal.h"
 
 @interface TripDetailVC () <UITextViewDelegate>
+{
+    BOOL isNeedUpdate;
+}
 
 @property (nonatomic, strong) TripDetailBean *tripDetail;
 
@@ -78,7 +81,7 @@
     
     [self updateTripInfo];
     
-    [self loadTripDetail];
+    //[self loadTripDetail];
 }
 
 - (void)dealloc
@@ -474,6 +477,8 @@
     self.tvApplyDesc.text = self.tripInfo.REMARK;
     self.tvApprovalDesc.text = self.tripInfo.APPROVE_REMARK;
     
+    self.lblApprovalMan.text = self.tripInfo.REALNAME;
+    
     // 0:未审批 1:已通过 2:未通过
     if ([self.tripInfo.APPROVE_STATE intValue] == 0) {
         self.lblApprovalState.text = @"待审";
@@ -531,6 +536,8 @@
         [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
         [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:nil];
         
+        isNeedUpdate = YES;
+        
         [self performSelector:@selector(backToFront) withObject:nil afterDelay:0.f];
         
     } fail:^(BOOL notReachable, NSString *desciption) {
@@ -553,6 +560,10 @@
 
 - (void)backToFront
 {
+    if (isNeedUpdate) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_TRIP_NEED_UPDATE object:nil userInfo:nil];
+    }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

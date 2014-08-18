@@ -8,6 +8,8 @@
 
 #import "HideTabViewController.h"
 
+#define NOTIFICATION_TRIP_NEED_UPDATE @"NOTIFICATION_TRIP_NEED_UPDATE"
+
 @class TripInfoBean;
 
 /**

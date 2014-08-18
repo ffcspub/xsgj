@@ -72,14 +72,14 @@
     self.ivBackgroundSelect = [[UIImageView alloc] initWithFrame:self.bounds];
     
     // 缓存中间高亮的图片
-    UIImage *image = [UIImage imageNamed:@"table_part2"];
+    UIImage *image = [UIImage imageNamed:@"table_main_n"];
     self.imgMiddle = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
-    UIImage *imageSelect = [UIImage imageNamed:@"table_part2_s"];
+    UIImage *imageSelect = [UIImage imageNamed:@"table_main_s"];
     self.imgMiddleHight = [imageSelect resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
     
     self.backgroundView = self.ivBackground;
     self.selectedBackgroundView = self.ivBackgroundSelect;
-    self.cellStyle = TOP;
+    self.cellStyle = SINGLE;
 }
 
 //!!!: 表格卡顿的原因主要是因为图片引起
