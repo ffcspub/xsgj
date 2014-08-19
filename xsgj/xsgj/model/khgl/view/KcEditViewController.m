@@ -51,7 +51,7 @@
 
 - (void)initView
 {
-    self.title = @"库存编辑";
+    self.title = @"库存上报";
     [_btnCommit setBackgroundImage:IMG_BTN_BLUE forState:UIControlStateNormal];
     [_btnCommit setBackgroundImage:IMG_BTN_BLUE_S forState:UIControlStateHighlighted];
     [_btnPreview setBackgroundImage:IMG_BTN_BLUE forState:UIControlStateNormal];
@@ -462,6 +462,8 @@
     kcCommitBean.SPEC = cell.commitData.SPEC;
     kcCommitBean.PROD_NAME = cell.commitData.PROD_NAME;
     kcCommitBean.PRODUCT_UNIT_NAME = cell.commitData.PRODUCT_UNIT_NAME;
+    kcCommitBean.PhotoImg = cell.commitData.PhotoImg;
+    kcCommitBean.PhotoData = cell.commitData.PhotoData;
     [_aryKcData insertObject:kcCommitBean atIndex:cell.indexPath.row + 1];
     
     [_tvContain reloadData];

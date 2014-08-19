@@ -415,6 +415,8 @@
     ThCommitBean.ITEM_NUM = cell.thCommitData.ITEM_NUM;
     ThCommitBean.PRODUCT_UNIT_ID = cell.thCommitData.PRODUCT_UNIT_ID;
     ThCommitBean.PROD_ID = cell.thCommitData.PROD_ID;
+    ThCommitBean.PhotoImg = cell.thCommitData.PhotoImg;
+    ThCommitBean.PhotoData = cell.thCommitData.PhotoData;
     [_aryKcData insertObject:ThCommitBean atIndex:cell.indexPath.row + 1];
     
     [self.tvContain reloadData];
