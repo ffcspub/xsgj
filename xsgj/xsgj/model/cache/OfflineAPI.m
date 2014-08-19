@@ -17,6 +17,7 @@
 
 @interface OfflineAPI(){
     Reachability *_reachability;
+    NSTimer *_timer;
 }
 
 @property (nonatomic, assign) BOOL isObserve; // 是否监听网络变化
@@ -68,9 +69,8 @@
     return  isExistenceNetwork;
 }
 
--(void)reachabilityChanged: (NSNotification* )note
-{
-    Reachability* curReach = [note object];
+-(void)checkUpdate{
+    Reachability* curReach = _reachability;
     NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
     NetworkStatus netStatus = [curReach currentReachabilityStatus];
     
@@ -101,6 +101,11 @@
             break;
         }
     }
+}
+
+-(void)reachabilityChanged: (NSNotification* )note
+{
+    [self checkUpdate];
 }
 
 +(AFHTTPClient *)client{
@@ -194,8 +199,11 @@
     return result;
 }
 
+
+
 - (void)startListener
 {
+    _timer = [NSTimer scheduledTimerWithTimeInterval:10*60 target:self selector:@selector(checkUpdate) userInfo:nil repeats:YES];
     if (!_reachability) {
         _reachability = [Reachability reachabilityWithHostname:@"www.baidu.com"];  // 测试服务器状态
     }
@@ -212,6 +220,7 @@
 -(void)stopListener
 {
     [_reachability stopNotifier];
+    [_timer invalidate];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     self.isObserve = NO;
 }
