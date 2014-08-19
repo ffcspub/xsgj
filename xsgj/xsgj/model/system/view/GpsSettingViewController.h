@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 ilikeido. All rights reserved.
 //
 
-#import "HideTabViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface GpsSettingViewController : HideTabViewController
+@interface GpsSettingViewController : UIViewController
 
 @end

@@ -24,6 +24,7 @@
 #import <MBProgressHUD.h>
 #import "MapUtils.h"
 #import "SIAlertView.h"
+#import "GpsSettingViewController.h"
 
 @implementation AppDelegate
 
@@ -47,20 +48,18 @@
 #endif
 }
 
--(void)addThirthPart{
+-(void)addThirthPart
+{
     [self test];
-    
     _mapManager = [[BMKMapManager alloc]init];
-    // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
-    BOOL ret = [_mapManager start:@"LoKhl36KEikegL3WHiHFkpc8"  generalDelegate:nil];
-    // 上线版本改成 @"wo0D6wriYPg2x3WOeC721hRU",对应app id为 com.doone.fxtx
-    // BOOL ret = [_mapManager start:@"wo0D6wriYPg2x3WOeC721hRU"  generalDelegate:nil];
-    if (!ret) {
+    // 如果要关注网络及授权验证事件，请设定 generalDelegate参数
+    // 上线版本app id为 com.doone.fxtx
+     BOOL ret = [_mapManager start:@"wo0D6wriYPg2x3WOeC721hRU"  generalDelegate:nil];
+    if (!ret)
+    {
         NSLog(@"manager start failed!");
     }
-
 }
-
 
 -(void)initTabBarController{
     _tabBarController = [[AKTabBarController alloc]initWithTabBarHeight:50];
@@ -143,7 +142,7 @@
 
 //显示地图设置信息页
 -(void)showLocationSetView{
-    UIViewController *controller = [[UIViewController alloc]init];
+    GpsSettingViewController *controller = [[GpsSettingViewController alloc]init];
     [_tabBarController presentModalViewController:controller animated:YES];
 }
 
