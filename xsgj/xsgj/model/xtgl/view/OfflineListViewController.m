@@ -130,7 +130,7 @@ typedef  enum : NSUInteger {
 }
 
 -(void)loadDatas{
-    _datas = [OfflineRequestCache searchWithWhere:nil orderBy:@"time desc" offset:0 count:1000];
+    _datas = [OfflineRequestCache searchWithWhere:@"isUpload=0" orderBy:@"time desc" offset:0 count:1000];
     [_tableView reloadData];
 }
 

@@ -75,7 +75,7 @@ static UIImage *_imageTablePart3S;
 
 +(UIImage *)tablePart1S{
     if (!_imageTablePart1S) {
-        _imageTablePart1S  = [UIImage imageNamed:@"table_part1_S"];
+        _imageTablePart1S  = [UIImage imageNamed:@"table_part1_s"];
         _imageTablePart1S = [_imageTablePart1S resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
     }
     return _imageTablePart1S;
@@ -83,7 +83,7 @@ static UIImage *_imageTablePart3S;
 
 +(UIImage *)tablePart2S{
     if (!_imageTablePart2S) {
-        _imageTablePart2S  = [UIImage imageNamed:@"table_part2_S"];
+        _imageTablePart2S  = [UIImage imageNamed:@"table_part2_s"];
         _imageTablePart2S = [_imageTablePart2S resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
     }
     return _imageTablePart2S;
@@ -91,7 +91,7 @@ static UIImage *_imageTablePart3S;
 
 +(UIImage *)tablePart3S{
     if (!_imageTablePart3S) {
-        _imageTablePart3S  = [UIImage imageNamed:@"table_part3_S"];
+        _imageTablePart3S  = [UIImage imageNamed:@"table_part3_s"];
         _imageTablePart3S = [_imageTablePart3S resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12,5, 12)];
     }
     return _imageTablePart3S;

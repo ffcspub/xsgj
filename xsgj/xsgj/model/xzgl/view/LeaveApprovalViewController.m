@@ -46,6 +46,7 @@ typedef  enum : NSUInteger {
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         _backView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, [LeaveApprovalCell height])];
+        _backSelectedView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, [LeaveApprovalCell height])];
         _stateView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 7, 26, 26)];
         _lb_state = [[UILabel alloc] initWithFrame:CGRectMake(9, 33, 29, 21)];
         _lb_state.font = [UIFont systemFontOfSize:12];
@@ -55,6 +56,7 @@ typedef  enum : NSUInteger {
         _lb_name.font = [UIFont systemFontOfSize:17];
         _lb_time = [[UILabel alloc]initWithFrame:CGRectMake(46, 31, 210,21)];
         _lb_time.textColor = HEX_RGB(0x939fa7);
+        _lb_time.backgroundColor = [UIColor clearColor];
         _lb_time.font = [UIFont systemFontOfSize:15];
         UIImageView *iv_next = [[UIImageView alloc] initWithFrame:CGRectMake(265, 15, 26, 26)];
         iv_next.image = [UIImage imageNamed:@"tableCtrlBtnIcon_next_nor"];
@@ -87,8 +89,8 @@ typedef  enum : NSUInteger {
         }
             break;
         case BOT:{
-//            _backView.image = [ShareValue tablePart3];
-//            _backSelectedView.image = [ShareValue tablePart3S];
+            //            _backView.image = [ShareValue tablePart3];
+            //            _backSelectedView.image = [ShareValue tablePart3S];
             
             UIImage *image = [UIImage imageNamed:@"table_part3"];
             image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(5, 12, 5, 12)];
@@ -112,6 +114,8 @@ typedef  enum : NSUInteger {
         default:
             break;
     }
+    
+    [self setNeedsDisplay];
 }
 
 - (void)setState:(int)state
