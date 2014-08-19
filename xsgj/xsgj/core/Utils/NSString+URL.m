@@ -17,8 +17,8 @@
     NSString *encodedString = (NSString *)
     CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
                                             (CFStringRef)self,
-                                            (CFStringRef)@"!$'()*+,-./:;=?@_~[]",
-                                            (CFStringRef)@"&%#",
+                                            NULL,
+                                            CFSTR(":/?#[]@!$ &'()*+,;=\"<>%{}|\\^~`"),
                                             kCFStringEncodingGB_18030_2000));
     return encodedString;
 }
