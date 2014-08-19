@@ -151,6 +151,11 @@
         request.LAT = manualCoordinate.latitude*1000000;
         request.POSITION = _lb_manualAdjust.text;
     }
+    _customerInfo.LNG = [NSNumber numberWithDouble:request.LNG];
+    _customerInfo.LAT = [NSNumber numberWithDouble:request.LAT];
+    _customerInfo.PHOTO = request.PHOTO;
+    _customerInfo.ADDRESS = request.POSITION;
+    [[LKDBHelper getUsingLKDBHelper]updateToDB:_customerInfo where:[NSString stringWithFormat:@"CUST_ID=%d",_customerInfo.CUST_ID]];
     [KHGLAPI tempVisitByRequest:request success:^(TempVisitHttpResponse *response) {
         [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
         [MBProgressHUD showSuccess:@"提交成功" toView:ShareAppDelegate.window];
