@@ -263,7 +263,7 @@ static int const pageSize = 30;
     request.QUERY_USERID = [NSString stringWithFormat:@"%d",[ShareValue shareInstance].userInfo.USER_ID];
     
     [XZGLAPI queryLeaveByRequest:request success:^(QueryLeaveHttpResponse *response) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
         
         int resultCount = [response.LEAVEINFOBEAN count];
         if (resultCount < pageSize) {
