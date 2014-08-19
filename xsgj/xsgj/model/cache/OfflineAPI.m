@@ -129,6 +129,10 @@
  */
 -(void)sendOfflineRequest
 {
+    NetworkStatus netStatus = [_reachability currentReachabilityStatus];
+    if (netStatus == NotReachable) {
+        return;
+    }
     NSArray *array = [OfflineRequestCache searchWithWhere:nil orderBy:nil offset:0 count:1];
     if (array.count > 0) {
         OfflineRequestCache *cache = array.firstObject;
