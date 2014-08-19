@@ -137,7 +137,11 @@ static int const pageSize = 10000;
         }];
         
         [self loadCacheData];
-        
+        if (self.arrTrips.count > 0) {
+            [self hideNODataLabel];
+        } else {
+            [self showNoDataLabel];
+        }
         [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
         //[MBProgressHUD showError:response.MESSAGE.MESSAGECONTENT toView:self.view];
         

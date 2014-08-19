@@ -233,7 +233,11 @@ static int const pageSize = 10000;
         }];
         
         [self loadCacheData];
-        
+        if (self.arrData.count > 0) {
+            [self hideNODataLabel];
+        } else {
+            [self showNoDataLabel];
+        }
         [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
     } fail:^(BOOL notReachable, NSString *desciption) {
         

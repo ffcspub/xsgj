@@ -107,6 +107,11 @@ static int const pageSize = 10000;
         }];
         
         [self loadCacheData];
+        if (self.arrData.count > 0) {
+            [self hideNODataLabel];
+        } else {
+            [self showNoDataLabel];
+        }
         
         // 加载退货详情列表
         QueryOrderBackDetailHttpRequest *requestDetail = [[QueryOrderBackDetailHttpRequest alloc] init];

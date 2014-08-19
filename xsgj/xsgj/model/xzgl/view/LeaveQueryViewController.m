@@ -279,6 +279,12 @@ static int const pageSize = 30;
         [self.tableView.infiniteScrollingView stopAnimating];
         [_leaves addObjectsFromArray:response.LEAVEINFOBEAN];
         [self.tableView reloadData];
+        
+        if (_leaves.count == 0) {
+            [self showNoDataLabel];
+        }else{
+            [self hideNODataLabel];
+        }
     } fail:^(BOOL notReachable, NSString *desciption) {
         
         [self.tableView.infiniteScrollingView stopAnimating];
