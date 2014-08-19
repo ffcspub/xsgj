@@ -253,8 +253,7 @@ static int const pageSize = 30;
 - (void)queryLeave
 {
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     page++;
     QueryLeaveHttpRequest *request = [[QueryLeaveHttpRequest alloc] init];
     request.BEGINTIME = [_beginDate stringWithFormat:@"yyyy-MM-dd"];
@@ -281,25 +280,33 @@ static int const pageSize = 30;
         [_leaves addObjectsFromArray:response.LEAVEINFOBEAN];
         [self.tableView reloadData];
     } fail:^(BOOL notReachable, NSString *desciption) {
+        
         [self.tableView.infiniteScrollingView stopAnimating];
         self.tableView.showsInfiniteScrolling = NO;
         
-        NSString *sql = [NSString stringWithFormat:@"APPLYTIME>%f and APPLYTIME<%f",[NSDate dateFromString:[_beginDate stringWithFormat:@"yyyy-MM-dd 00:00:00"] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970,[NSDate dateFromString:[_endDate stringWithFormat:@"yyyy-MM-dd 23:59:59"] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970];
-        
-        NSArray *attendances = [LeaveinfoBean searchWithWhere:sql orderBy:@"APPLYTIME DESC" offset:0 count:60];
-        if (page == 1) {
-            [_leaves removeAllObjects];
+        if (notReachable) {
+            
+            NSString *sql = [NSString stringWithFormat:@"APPLYTIME>%f and APPLYTIME<%f",[NSDate dateFromString:[_beginDate stringWithFormat:@"yyyy-MM-dd 00:00:00"] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970,[NSDate dateFromString:[_endDate stringWithFormat:@"yyyy-MM-dd 23:59:59"] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970];
+            NSArray *attendances = [LeaveinfoBean searchWithWhere:sql orderBy:@"APPLYTIME DESC" offset:0 count:60];
+            if (page == 1) {
+                [_leaves removeAllObjects];
+            }
+
+            [_leaves addObjectsFromArray:attendances];
+            [self.tableView reloadData];
+            
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
+            
+            if (_leaves.count == 0) {
+                [self showNoDataLabel];
+            }else{
+                [self hideNODataLabel];
+            }
+        } else {
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:nil];
         }
-        [self.tableView.infiniteScrollingView stopAnimating];
-        [_leaves addObjectsFromArray:attendances];
-        [self.tableView reloadData];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        if (_leaves.count == 0) {
-          [MBProgressHUD showError:desciption toView:self.view];
-        }else{
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
-        }
-        
     }];
 }
 

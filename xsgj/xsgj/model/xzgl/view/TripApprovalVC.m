@@ -148,9 +148,13 @@ static int const pageSize = 10000;
         
         if (notReachable) {
             [self loadCacheData];
-            
+            if (self.arrTrips.count > 0) {
+                [self hideNODataLabel];
+            } else {
+                [self showNoDataLabel];
+            }
             [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:ShareAppDelegate.window];
         } else {
             [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
             [MBProgressHUD showError:desciption toView:nil];
@@ -165,6 +169,7 @@ static int const pageSize = 10000;
         [self.arrTrips removeAllObjects];
         [self.tbvApproval scrollRectToVisible:CGRectMake(0, 0, 320, 1) animated:NO];
     }
+    
     [self.arrTrips addObjectsFromArray:arrTemp];
     [self.tbvApproval reloadData];
 }

@@ -16,4 +16,10 @@
 
 -(void)setLeftButtonTitle:(NSString *)title;
 
+/**
+ *  用于查询类显示"没有数据"
+ */
+-(void)showNoDataLabel;
+-(void)hideNODataLabel;
+
 @end

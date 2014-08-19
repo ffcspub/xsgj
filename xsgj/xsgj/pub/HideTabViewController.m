@@ -12,6 +12,8 @@
 
 @interface HideTabViewController ()
 
+@property (nonatomic, strong) UILabel *lblNoData;
+
 @end
 
 @implementation HideTabViewController
@@ -46,6 +48,21 @@
 //        self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1];
 //    }
 	// Do any additional setup after loading the view.
+    
+    CGRect rect = CGRectMake(0.f, 0.f, CGRectGetWidth(self.view.bounds), 40.f);
+    rect.origin.y = (CGRectGetHeight(self.view.bounds) - 40.f) / 2;
+    self.lblNoData = [[UILabel alloc] initWithFrame:rect];
+    self.lblNoData.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+    self.lblNoData.textAlignment   = UITextAlignmentCenter;
+    self.lblNoData.textColor       = [UIColor blackColor];
+    self.lblNoData.backgroundColor = [UIColor clearColor];
+    self.lblNoData.font            = [UIFont systemFontOfSize:16.f];
+    self.lblNoData.text            = @"没有数据";
+    [self.view addSubview:self.lblNoData];
+    [self.view bringSubviewToFront:self.lblNoData];
+    
+    // 默认不显示
+    [self hideNODataLabel];
 }
 
 -(void)setLeftButtonTitle:(NSString *)title;{
@@ -111,6 +128,18 @@
         return (UIButton *)self.navigationItem.titleView;
     }
     return nil;
+}
+
+-(void)showNoDataLabel
+{
+    [self.view bringSubviewToFront:self.lblNoData];
+    self.lblNoData.alpha = 1.f;
+}
+
+-(void)hideNODataLabel
+{
+    [self.view sendSubviewToBack:self.lblNoData];
+    self.lblNoData.alpha = 0.f;
 }
 
 @end
