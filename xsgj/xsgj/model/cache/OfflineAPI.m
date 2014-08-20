@@ -201,15 +201,14 @@
                 [[LKDBHelper getUsingLKDBHelper] deleteToDB:request];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
                                                                     object:request];
-                result = YES;
-            }else{
-                [request fail];
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
-                                                                    object:request];
-                result = NO;
+                return YES;
             }
        }
     }
+    [request fail];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
+                                                        object:request];
+    result = NO;
     return result;
 }
 

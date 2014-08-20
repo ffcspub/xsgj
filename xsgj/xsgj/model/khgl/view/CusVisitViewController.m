@@ -296,6 +296,16 @@
     }
 
     [KHGLAPI recordVisitByRequest:request success:^(RecordVisitHttpResponse *response){
+        _vistRecord.END_LAT = [request.END_LAT doubleValue];
+        _vistRecord.END_LNG = [request.END_LNG doubleValue];
+        _vistRecord.END_POS = request.END_POS;
+        if (manualCoordinate.longitude > 0) {
+            _vistRecord.END_LAT2 = [request.END_LAT2 doubleValue];
+            _vistRecord.END_LNG2 = [request.END_LNG2 doubleValue];
+            _vistRecord.END_POS2 =  request.END_POS2 ;
+        }
+        _vistRecord.END_TIME = request.END_TIME;
+        [_vistRecord save];
         _btnVisitEnd.enabled = NO;
         _lbEndVisitTime.text = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
         [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
@@ -312,6 +322,17 @@
          [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
          if(notReachable)
          {
+             _vistRecord.END_LAT = [request.END_LAT doubleValue];
+             _vistRecord.END_LNG = [request.END_LNG doubleValue];
+             _vistRecord.END_POS = request.END_POS;
+             if (manualCoordinate.longitude > 0) {
+                 _vistRecord.END_LAT2 = [request.END_LAT2 doubleValue];
+                 _vistRecord.END_LNG2 = [request.END_LNG2 doubleValue];
+                 _vistRecord.END_POS2 =  request.END_POS2 ;
+             }
+             _vistRecord.END_TIME = request.END_TIME;
+             [_vistRecord save];
+             
              OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
              cache.VISIT_NO = _vistRecord.VISIT_NO;
              [cache saveToDB];

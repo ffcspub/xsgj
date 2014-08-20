@@ -40,7 +40,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    self.title = @"客户信息采集";
     _viewContain.layer.borderColor = HEX_RGB(0xd3d3d3).CGColor;
     _viewContain.layer.borderWidth = 1.0;
     
