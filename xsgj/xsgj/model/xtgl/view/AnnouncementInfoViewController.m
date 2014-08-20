@@ -205,6 +205,8 @@
         }];
         [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             [btn setEnabled:YES];
+            MYProgressView *progressView = [_progressViews objectAtIndex:index];
+            [progressView setProgress:1.0];
             NSError *erro = nil;
             [[NSFileManager defaultManager]copyItemAtPath:temppath toPath:path error:&erro];
             if (erro) {
