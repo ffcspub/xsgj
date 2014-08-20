@@ -28,6 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.ivPhoto setHidden:YES];
     // Do any additional setup after loading the view.
 }
 
