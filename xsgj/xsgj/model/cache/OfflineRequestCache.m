@@ -27,10 +27,25 @@
     return self;
 }
 
+-(void)fail{
+    self.sigleUpdateCount ++;
+    self.updateCount ++;
+    if (self.sigleUpdateCount > 5) {
+        if (self.updateCount > 50) {
+            [self deleteToDB];
+            return;
+        }
+        self.datetime = [[NSDate date] stringWithFormat:@"yyyyMMddHHmmss"];
+    }
+    [[LKDBHelper getUsingLKDBHelper]updateToDB:self where:[NSString stringWithFormat:@"rowid=%d",self.rowid]];
+}
+
+
 -(id)initWith:(LK_HttpBaseRequest *)request name:(NSString *)name{
     self = [super init];
     if (self) {
-         self.time = [[NSDate date]stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
+        self.time = [[NSDate date]stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
+        self.datetime = [[NSDate date] stringWithFormat:@"yyyyMMddHHmmss"];
         self.requestJsonStr = request.requestPath;
         self.name = name;
         if ([request isKindOfClass:[UploadPhotoHttpRequest class]]) {

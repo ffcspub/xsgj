@@ -18,7 +18,12 @@
 @property(nonatomic,strong) NSString *requestJsonStr;
 @property(nonatomic,assign) int isUpload;
 @property(nonatomic,strong) NSString *VISIT_NO;//拜访中使用
+@property(nonatomic,strong) NSString *datetime;//上次上传时间
+@property(nonatomic,assign) int sigleUpdateCount;//单次上传次数(失败次数)
+@property(nonatomic,assign) int updateCount;//上传次数(失败次数)
 
 -(id)initWith:(LK_HttpBaseRequest *)request name:(NSString *)name;
+
+-(void)fail;
 
 @end

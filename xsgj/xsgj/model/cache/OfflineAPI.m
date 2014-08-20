@@ -14,6 +14,10 @@
 #import <Reachability.h>
 #import <JSONKit.h>
 #import "BNVisitStepRecord.h"
+#import "LK_HttpResponse.h"
+#import "LK_NSDictionary2Object.h"
+#import "NSDate+Util.h"
+#import <NSDate+Helper.h>
 
 @interface OfflineAPI(){
     Reachability *_reachability;
@@ -138,7 +142,9 @@
     if (netStatus == NotReachable) {
         return;
     }
-    NSArray *array = [OfflineRequestCache searchWithWhere:nil orderBy:nil offset:0 count:1];
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:-60*10];
+    NSString *time = [date stringWithFormat:@"yyyyMMddHHmmss"];
+    NSArray *array = [OfflineRequestCache searchWithWhere:[NSString stringWithFormat:@"datetime<'%@'",time] orderBy:@"datetime" offset:0 count:1];
     if (array.count > 0) {
         OfflineRequestCache *cache = array.firstObject;
         AFHTTPClient *client = OfflineAPI.client;
@@ -151,7 +157,8 @@
                 NSLog(@"离线上报---->[%@] 成功!", cache.name);
                 [self sendOfflineRequest];
             } else {
-                NSLog(@"离线上报---->[%@] 成功!", cache.name);
+                NSLog(@"离线上报---->[%@] 失败!", cache.name);
+                [self sendOfflineRequest];
             }
         }
         
@@ -186,16 +193,24 @@
     } else {
         NSDictionary * JSON = [data objectFromJSONData];
         if(JSON){
-            if (request.VISIT_NO.length>0) {
-                [BNVisitStepRecord updateToDBWithSet:@"SYNC_STATE=2" where:[NSString stringWithFormat:@"VISIT_NO='%@'",request.VISIT_NO]];
+            LK_HttpBaseResponse *response = [JSON objectByClass:[LK_HttpBaseResponse class]];
+            if ([response.MESSAGE.MESSAGECODE isEqual:@"0"]) {
+                if (request.VISIT_NO.length>0) {
+                    [BNVisitStepRecord updateToDBWithSet:@"SYNC_STATE=2" where:[NSString stringWithFormat:@"VISIT_NO='%@'",request.VISIT_NO]];
+                }
+                [[LKDBHelper getUsingLKDBHelper] deleteToDB:request];
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
+                                                                    object:request];
+                result = YES;
+
+            }else{
+                [request fail];
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
+                                                                    object:request];
+                result = NO;
             }
-            [[LKDBHelper getUsingLKDBHelper] deleteToDB:request];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
-                                                                object:request];
-            result = YES;
-        }
+       }
     }
-    
     return result;
 }
 
