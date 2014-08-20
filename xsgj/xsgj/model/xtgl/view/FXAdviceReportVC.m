@@ -85,7 +85,7 @@
     request.USER_AUTH  = [ShareValue shareInstance].userInfo.USER_AUTH;
     request.USER_ID    = [ShareValue shareInstance].userInfo.USER_ID;
     request.CONTENT    = [self.txtAdvice text];
-    request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd"];
+    request.COMMITTIME = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     [XZGLAPI addAdviceByRequest:request success:^(AddAdviceHttpResponse *response)
     {
         [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
