@@ -73,7 +73,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleNotifySelectFin:) name:NOTIFICATION_SELECT_FIN object:nil];
     // 标题按钮
     [self setTitleButtonStyle];
-    // 网路状态好则重新获取信息列表,状态查则从本地数据库读取
+    // 网路状态好则重新获取信息列表,状态差则从本地数据库读取
     if ([self isEnableNetwork])
     {
         [DeptInfoBean deleteWithWhere:nil];
@@ -141,6 +141,7 @@
     // 无网络情况
     else
     {
+        [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         arraySourceDept = [DeptInfoBean searchWithWhere:nil orderBy:nil offset:0 count:1000];
         if (!arraySourceDept)
