@@ -154,7 +154,9 @@
 #pragma mark - functions
 
 -(void)backAction{
-    [self dismissModalViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_VISTILEAVE object:nil];
+    }];
 }
 
 - (IBAction)handleBtnRefreshClicked:(id)sender {
@@ -302,7 +304,7 @@
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
-                [self dismissModalViewControllerAnimated:YES];
+                [self backAction];
             });
         });
         
@@ -319,7 +321,7 @@
                  sleep(1);
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMMITDATA_FIN object:nil];
-                     [self dismissModalViewControllerAnimated:YES];
+                      [self backAction];
                  });
              });
          }

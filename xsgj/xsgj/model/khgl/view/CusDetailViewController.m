@@ -32,6 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleVisitLeave) name:NOTIFICATION_VISTILEAVE object:nil];
     // Do any additional setup after loading the view from its nib.
     
     [self initView];
@@ -186,6 +187,11 @@
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:cusVisitViewController];
     [self presentModalViewController:nav animated:YES];
+}
+
+- (void)handleVisitLeave
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
