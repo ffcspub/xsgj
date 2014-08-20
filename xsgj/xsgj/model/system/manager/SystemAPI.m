@@ -144,7 +144,23 @@
             request.STATE = 0;
             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"手机状态上报"];
             [cache saveToDB];
+        }
+        fail(NotReachable,descript);
+    } class:[InsertMobileStateHttpResponse class]];
+}
 
+//手机状态上报离线
++(void)insertDownMobileSuccess:(void(^)())success fail:(void(^)(BOOL notReachable,NSString *desciption))fail{
+    InsertMobileStateHttpRequest *request = [[InsertMobileStateHttpRequest alloc]init];
+    request.STATE = 0;
+    [LK_APIUtil getHttpRequest:request apiPath:URL_insertMobileState Success:^(LK_HttpBaseResponse *response) {
+        success();
+    } fail:^(BOOL NotReachable, NSString *descript) {
+        if (NotReachable) {
+            //存储离线数据，等待下次上传
+            request.STATE = 0;
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"手机状态上报"];
+            [cache saveToDB];
         }
         fail(NotReachable,descript);
     } class:[InsertMobileStateHttpResponse class]];

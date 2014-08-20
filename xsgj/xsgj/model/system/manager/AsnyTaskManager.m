@@ -21,7 +21,7 @@ static AsnyTaskManager *_shareValue;
     NSArray *_signConfigBeans;
     int _INTERVALTIME;
     NSTimer *_taskTimer;
-    
+    NSTimer *_locationTaskTimer;
 }
 
 @end
@@ -79,6 +79,10 @@ static AsnyTaskManager *_shareValue;
     return flag;
 }
 
+-(void)doLocationUpdateTask{
+    [[MapUtils shareInstance]startLocationUpdate];
+}
+
 -(void)doTask{
     if (![self isWantUpdate]) {
         return;
@@ -88,9 +92,6 @@ static AsnyTaskManager *_shareValue;
     } fail:^(BOOL notReachable, NSString *desciption) {
         
     }];
-    
-    [[MapUtils shareInstance]startLocationUpdate];
-    
 }
 
 
@@ -102,14 +103,22 @@ static AsnyTaskManager *_shareValue;
         [_taskTimer invalidate];
         _taskTimer = nil;
     }
+    if (_locationTaskTimer) {
+        [_locationTaskTimer invalidate];
+        _locationTaskTimer = nil;
+    }
+    [self doLocationUpdateTask];
     [self doTask];
     _taskTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 * _INTERVALTIME target:self selector:@selector(doTask) userInfo:nil repeats:YES];
+    _locationTaskTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 * 15 target:self selector:@selector(doLocationUpdateTask) userInfo:nil repeats:YES];
     
 }
 
 -(void)stopTask{
     [_taskTimer invalidate];
     _taskTimer = nil;
+    [_locationTaskTimer invalidate];
+    _locationTaskTimer = nil;
 }
 
 @end

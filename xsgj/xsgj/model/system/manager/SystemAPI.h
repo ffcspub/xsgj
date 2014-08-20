@@ -30,6 +30,9 @@
 //手机状态上报
 +(void)insertMobileSuccess:(void(^)())success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
 
+//手机状态上报离线
++(void)insertDownMobileSuccess:(void(^)())success fail:(void(^)(BOOL notReachable,NSString *desciption))fail;
+
 /**
  *  照片上传接口
  *
