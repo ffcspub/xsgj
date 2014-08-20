@@ -20,6 +20,7 @@ typedef  enum : NSUInteger {
 @interface OfflineCell : UITableViewCell{
     UILabel *lb_name;
     UILabel *lb_time;
+    UILabel *lb_state;
     UIImageView *_backView;
 }
 @property(nonatomic,assign) OfflineCellStyle style;
@@ -65,15 +66,19 @@ typedef  enum : NSUInteger {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _backView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, 300, [OfflineCell height])];
-        lb_name = [[UILabel alloc]initWithFrame:CGRectMake(15, 0, 280, 22)];
-        lb_time = [[UILabel alloc]initWithFrame:CGRectMake(15, 22, 280, 22)];
+        lb_name = [[UILabel alloc]initWithFrame:CGRectMake(15, 0, 140, 22)];
+        lb_time = [[UILabel alloc]initWithFrame:CGRectMake(150, 0, 130, 22)];
+        lb_state = [[UILabel alloc]initWithFrame:CGRectMake(15, 22, 280, 22)];
         lb_name.font = [UIFont systemFontOfSize:15];
         lb_time.font = [UIFont systemFontOfSize:12];
+        lb_state.font = [UIFont systemFontOfSize:12];
         lb_name.textColor = MCOLOR_BLUE;
+        lb_state.textColor = MCOLOR_BLUE;
         lb_time.textColor = MCOLOR_BLACK;
         [self.contentView addSubview:_backView];
         [self.contentView addSubview:lb_name];
         [self.contentView addSubview:lb_time];
+        [self.contentView addSubview:lb_state];
         self.backgroundView = _backView;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
@@ -84,6 +89,11 @@ typedef  enum : NSUInteger {
     _requestCache = requestCache;
     lb_name.text = _requestCache.name;
     lb_time.text = _requestCache.time;
+    if (requestCache.updateCount > 0) {
+        lb_state.text = @"上报失败，等待重试";
+    }else{
+        lb_state.text = @"等待上报";
+    }
 }
 
 @end

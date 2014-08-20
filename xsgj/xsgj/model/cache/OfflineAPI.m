@@ -194,7 +194,7 @@
         NSDictionary * JSON = [data objectFromJSONData];
         if(JSON){
             LK_HttpBaseResponse *response = [JSON objectByClass:[LK_HttpBaseResponse class]];
-            if ([response.MESSAGE.MESSAGECODE isEqual:@"0"]) {
+            if (response.MESSAGE.MESSAGECODE.integerValue == 0) {
                 if (request.VISIT_NO.length>0) {
                     [BNVisitStepRecord updateToDBWithSet:@"SYNC_STATE=2" where:[NSString stringWithFormat:@"VISIT_NO='%@'",request.VISIT_NO]];
                 }
@@ -202,7 +202,6 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
                                                                     object:request];
                 result = YES;
-
             }else{
                 [request fail];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
