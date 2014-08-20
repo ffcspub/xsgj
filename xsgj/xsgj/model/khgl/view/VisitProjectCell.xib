@@ -45,6 +45,7 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="ivStatus" destination="nAv-Rt-kjO" id="5hb-kP-sfN"/>
                 <outlet property="lbAddress" destination="rgv-af-BEb" id="Ljp-D0-dBd"/>
                 <outlet property="lbName" destination="wxB-ST-JVa" id="Y03-vv-RTn"/>
                 <outlet property="lbStatus" destination="lfV-8o-fVY" id="UMA-y2-Tv3"/>

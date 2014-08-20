@@ -71,6 +71,11 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    if(_customerInfoSelect)
+    {
+        [self reloadCurrentCustomerInfo];
+    }
+    
 }
 
 - (void)viewDidUnload
@@ -213,6 +218,15 @@
     }
 }
 
+- (void)reloadCurrentCustomerInfo
+{
+    NSArray *aryInfos = [BNCustomerInfo searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%d",_customerInfoSelect.CUST_ID] orderBy:@"ORDER_NO,CUST_NAME" offset:0 count:100];
+    if(aryInfos.count > 0)
+    {
+        BNCustomerInfo *customerInfo = [aryInfos objectAtIndex:0];
+        [self showCustomerInfo:customerInfo];
+    }
+}
 
 - (void)loadCustomerInfoWithType:(int)typeid Area:(int)areaid
 {

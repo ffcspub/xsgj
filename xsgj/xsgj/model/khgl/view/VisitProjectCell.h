@@ -12,7 +12,7 @@
 
 @interface VisitProjectCell : UITableViewCell
 
-
+@property (weak, nonatomic) IBOutlet UIImageView *ivStatus;
 @property (weak, nonatomic) IBOutlet UILabel *lbName;
 @property (weak, nonatomic) IBOutlet UILabel *lbAddress;
 @property (weak, nonatomic) IBOutlet UILabel *lbStatus;

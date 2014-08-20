@@ -7,6 +7,7 @@
 //
 
 #import "VisitProjectCell.h"
+#import "OfflineRequestCache.h"
 
 @implementation VisitProjectCell
 
@@ -35,30 +36,45 @@
     else
     {
         BNVistRecord *record = [visitRecord objectAtIndex:0];
-        if(record.END_TIME.length > 0)
+        NSArray *aryCache = [OfflineRequestCache searchWithWhere:[NSString stringWithFormat:@"VISIT_NO=%@'",record.VISIT_NO] orderBy:@"VISIT_DATE desc" offset:0 count:100];
+        if(aryCache.count > 0)
         {
-            if(record.VISIT_TYPE == 0)
-            {
-                strState = @"已临时拜访";
-            }
-            else
-            {
-                strState = @"已计划拜访";
-            }
+            strState = @"上报中";
         }
         else
         {
-            strState = @"未拜访";
+            if(record.END_TIME.length > 0)
+            {
+                if(record.VISIT_TYPE == 0)
+                {
+                    strState = @"已临时拜访";
+                }
+                else
+                {
+                    strState = @"已计划拜访";
+                }
+            }
+            else
+            {
+                strState = @"未拜访";
+            }
         }
     }
     
     if([strState isEqualToString:@"未拜访"])
     {
-        self.lbStatus.textColor = [UIColor colorWithRed:146/255.0 green:221/255.0 blue:253/255.0 alpha:1];
+        _ivStatus.image = [UIImage imageNamed:@"statebtnicon_wait"];
+        self.lbStatus.textColor = MCOLOR_BLUE;
+    }
+    else if([strState isEqualToString:@"上报中"])
+    {
+        _ivStatus.image = [UIImage imageNamed:@"stateicon_nopass"];
+        self.lbStatus.textColor = MCOLOR_ORGLE;
     }
     else
     {
-        self.lbStatus.textColor = [UIColor lightGrayColor];
+        _ivStatus.image = [UIImage imageNamed:@"statebtnicon_finish"];
+        self.lbStatus.textColor = MCOLOR_GRAY;
     }
     
     self.lbStatus.text = strState;

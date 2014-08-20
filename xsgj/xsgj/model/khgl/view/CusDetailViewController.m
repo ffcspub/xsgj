@@ -38,19 +38,41 @@
     [self initView];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self reloadCurrentCustomerInfo];
+}
+
 - (void)initView
 {
     self.title = @"客户详情";
     [self showRightBarButtonItemWithTitle:@"进入" target:self action:@selector(handleNavBarRight)];
     [self.svContain setContentSize:CGSizeMake(320, self.ivPhoto.frame.origin.y + self.ivPhoto.frame.size.height + 15)];
     
-    self.lbName.text = self.customerInfo.CUST_NAME;
-    self.lbType.text = self.customerInfo.TYPE_NAME;
-    self.lbLinkMan.text = self.customerInfo.LINKMAN;
-    self.lbMobile.text = self.customerInfo.TEL;
-    self.lbAddress.text = self.customerInfo.ADDRESS;
+    //[self showCustomerInfo:_customerInfo];
     
-    BNVistRecord *aryRecord = [BNVistRecord searchSingleWithWhere:[NSString stringWithFormat:@"CUST_ID=%D",self.customerInfo.CUST_ID] orderBy:@"BEGIN_TIME desc"];
+}
+
+- (void)reloadCurrentCustomerInfo
+{
+    NSArray *aryInfos = [BNCustomerInfo searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%d",_customerInfo.CUST_ID] orderBy:@"ORDER_NO,CUST_NAME" offset:0 count:100];
+    if(aryInfos.count > 0)
+    {
+        BNCustomerInfo *customerInfo = [aryInfos objectAtIndex:0];
+        [self showCustomerInfo:customerInfo];
+    }
+}
+
+
+- (void)showCustomerInfo:(BNCustomerInfo *)customerInfo
+{
+    self.lbName.text = customerInfo.CUST_NAME;
+    self.lbType.text = customerInfo.TYPE_NAME;
+    self.lbLinkMan.text = customerInfo.LINKMAN;
+    self.lbMobile.text = customerInfo.TEL;
+    self.lbAddress.text = customerInfo.ADDRESS;
+    
+    BNVistRecord *aryRecord = [BNVistRecord searchSingleWithWhere:[NSString stringWithFormat:@"CUST_ID=%D",customerInfo.CUST_ID] orderBy:@"BEGIN_TIME desc"];
     
     if(aryRecord)
     {
@@ -61,12 +83,11 @@
         self.lbVisitTime.text = @"七天前";
     }
     
-    if(self.customerInfo.PHOTO.length > 1)
+    if(customerInfo.PHOTO.length > 1)
     {
-        NSString *strUrl = [ShareValue getFileUrlByFileId:self.customerInfo.PHOTO];
+        NSString *strUrl = [ShareValue getFileUrlByFileId:customerInfo.PHOTO];
         [self.ivPhoto sd_setImageWithURL:[NSURL URLWithString:strUrl] placeholderImage:[UIImage imageNamed:@"defaultPhoto"]];
     }
-    
 }
 
 - (void)didReceiveMemoryWarning
