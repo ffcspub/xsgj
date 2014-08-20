@@ -163,12 +163,15 @@
         }
         i++;
     }
-    UILabel *lb_content = [[UILabel alloc] initWithFrame:CGRectMake(25, originY, 270, 25)];
+    CGSize size = [_noticeDetail.CONTENT sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(270, 1000) lineBreakMode:NSLineBreakByCharWrapping];
+    UILabel *lb_content = [[UILabel alloc] initWithFrame:CGRectMake(25, originY, 270, size.height)];
+    lb_content.numberOfLines = 0;
+    lb_content.lineBreakMode = NSLineBreakByCharWrapping;
     lb_content.text = _noticeDetail.CONTENT;
     lb_content.font = [UIFont systemFontOfSize:16];
     lb_content.backgroundColor = [UIColor clearColor];
     [self.scrollView addSubview:lb_content];
-    _scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width, CGRectGetMaxY(lb_content.frame) + 10);
+    _scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width, size.height + originY + 10);
 }
 
 
