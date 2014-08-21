@@ -352,6 +352,13 @@ static int const pageSize = 30;
 {
     UIDatePicker *picker = [[UIDatePicker alloc]init];
     picker.datePickerMode = UIDatePickerModeDate;
+    NSDate *date = [NSDate date];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:date];
+    [components setDay:1];
+    NSDate *beginDate = [cal dateFromComponents:components];
+    picker.minimumDate = beginDate;
+    picker.maximumDate = [NSDate date];
     picker.tag = 102;
     picker.maximumDate = [NSDate date];
     [picker showTitle:@"请选择" inView:self.view];
