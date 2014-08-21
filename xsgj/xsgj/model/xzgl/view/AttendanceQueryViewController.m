@@ -222,7 +222,7 @@ static int const pageSize = 30;
 
 - (void)queryAttendance
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     
     page++;
     DetailAttendanceHttpRequest *request = [[DetailAttendanceHttpRequest alloc] init];
@@ -232,7 +232,7 @@ static int const pageSize = 30;
     request.PAGE = page;
     request.ROWS = pageSize;
     [XZGLAPI detailAttendanceByRequest:request success:^(DetailAttendanceHttpResponse *response) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
         
         int resultCount = [response.DATA count];
         if (resultCount < pageSize) {
@@ -248,26 +248,40 @@ static int const pageSize = 30;
         [self.tableView.infiniteScrollingView stopAnimating];
         [_attendances addObjectsFromArray:response.DATA];
         [self.tableView reloadData];
+        
+        if (_attendances.count == 0) {
+            [self showNoDataLabel];
+        }else{
+            [self hideNODataLabel];
+        }
     } fail:^(BOOL notReachable, NSString *desciption) {
         [self.tableView.infiniteScrollingView stopAnimating];
         self.tableView.showsInfiniteScrolling = NO;
         
-        NSString *sql = [NSString stringWithFormat:@"SIGNTIME>%f and SIGNTIME<%f",[NSDate dateFromString:[_beginDate stringWithFormat:@"yyyy-MM-dd 00:00:00"] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970,[NSDate dateFromString:[_endDate stringWithFormat:@"yyyy-MM-dd 23:59:59"] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970];
-        
-        NSArray *attendances = [SignDetailBean searchWithWhere:sql orderBy:@"SIGNTIME DESC" offset:0 count:60];
-        if (page == 1) {
-            [_attendances removeAllObjects];
+        if (notReachable) {
+            
+            NSString *sql = [NSString stringWithFormat:@"SIGNTIME>%f and SIGNTIME<%f",[NSDate dateFromString:[_beginDate stringWithFormat:@"yyyy-MM-dd 00:00:00"] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970,[NSDate dateFromString:[_endDate stringWithFormat:@"yyyy-MM-dd 23:59:59"] withFormat:@"yyyy-MM-dd HH:mm:ss"].timeIntervalSince1970];
+            
+            NSArray *attendances = [SignDetailBean searchWithWhere:sql orderBy:@"SIGNTIME DESC" offset:0 count:60];
+            if (page == 1) {
+                [_attendances removeAllObjects];
+            }
+            
+            [_attendances addObjectsFromArray:attendances];
+            [self.tableView reloadData];
+            
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
+            
+            if (_attendances.count == 0) {
+                [self showNoDataLabel];
+            }else{
+                [self hideNODataLabel];
+            }
+        } else {
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:nil];
         }
-        [self.tableView.infiniteScrollingView stopAnimating];
-        [_attendances addObjectsFromArray:attendances];
-        [self.tableView reloadData];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        if (attendances.count == 0) {
-             [MBProgressHUD showError:desciption toView:self.view];
-        }else{
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
-        }
-       
     }];
 }
 
