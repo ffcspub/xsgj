@@ -18,6 +18,7 @@
     NSMutableArray *_aryVisitRecord;
     BNVistRecord *_visitRecord;
     int pageCount;
+    int currentDate;
 }
 
 @end
@@ -40,9 +41,16 @@
     
     _aryVisitRecord = [[NSMutableArray alloc] init];
     _aryVisitData = [[NSMutableArray alloc] init];
+    NSDate *today = [NSDate date];
+    currentDate = [today getWeekDay];
     [self loadDateInfo];
     [self initView];
-    
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = @"正在检查数据更新...";
     [SystemAPI getServerUpdatetimeSuccess:^(unsigned  long long lastupdatetime) {
@@ -61,13 +69,7 @@
         [hud hide:YES];
         [self loadVisitDataWithDate:[[NSDate date] getWeekDay]];
     }];
-}
-
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-//    if (pageCount > 0) {
+    //    if (pageCount > 0) {
 //        [self loadVisitDataWithDate:[[NSDate date] getWeekDay]];
 //    }
 //    pageCount ++;
@@ -122,10 +124,9 @@
 
 - (void)loadDateInfo
 {
-    NSDate *today = [NSDate date];
+    
     _dicWeekInfo = [[NSMutableDictionary alloc] init];
-    int iToday = [today getWeekDay];
-    switch (iToday) {
+    switch (currentDate) {
         case 2:
             [_dicWeekInfo setValue:[[NSDate date] stringWithFormat:@"yyyy-MM-dd"] forKey:@"星期一"];
             [_dicWeekInfo setValue:[[NSDate getNextDate:1] stringWithFormat:@"yyyy-MM-dd"] forKey:@"星期二"];
@@ -238,7 +239,7 @@
         {
             iData = 7;
         }
-        
+        currentDate = iData;
         [self loadVisitDataWithDate:iData];
         [_tvContain reloadData];
     }];

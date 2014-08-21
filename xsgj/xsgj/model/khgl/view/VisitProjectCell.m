@@ -36,7 +36,7 @@
     else
     {
         BNVistRecord *record = [visitRecord objectAtIndex:0];
-        NSArray *aryCache = [OfflineRequestCache searchWithWhere:[NSString stringWithFormat:@"VISIT_NO='%@'",record.VISIT_NO] orderBy:@"VISIT_DATE desc" offset:0 count:100];
+        NSArray *aryCache = [OfflineRequestCache searchWithWhere:[NSString stringWithFormat:@"VISIT_NO='%@'",record.VISIT_NO] orderBy:nil offset:0 count:100];
         if(aryCache.count > 0)
         {
             strState = @"上报中";
