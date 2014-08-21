@@ -67,8 +67,9 @@ static int const pageSize = 10000;
     NSDate *date = [NSDate date];
     NSCalendar *cal = [NSCalendar currentCalendar];
     NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit) fromDate:date];
+    [components setMonth:12];
     _endDate = [cal dateFromComponents:components];   // 当前月
-    [components setYear:components.year - 1];
+    [components setMonth:1];
     _beginDate = [cal dateFromComponents:components]; // 当前月
     
     // 日期控制
@@ -317,7 +318,7 @@ static int const pageSize = 10000;
     picker.delegate = self;
     picker.dataSource = self;
     picker.tag = 1001;
-    [picker selectRow:4 inComponent:0 animated:YES];
+    [picker selectRow:0 inComponent:0 animated:YES];
     [picker selectRow:0 inComponent:1 animated:YES];
     self.currentYear = self.arrPicker[0][0];
     self.currentMonth = [NSString stringWithFormat:@"%02d" ,[self.arrPicker[1][0] intValue]];
