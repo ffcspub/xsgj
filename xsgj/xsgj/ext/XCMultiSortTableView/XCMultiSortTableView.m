@@ -524,14 +524,15 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 
 	CGFloat cellH = [self cellHeightInIndexPath:indexPath];
     CGRect rect = CGRectMake(0, 0, leftHeaderWidth, cellH);
-	UIView *view = [[UIView alloc] initWithFrame:CGRectInset(rect, 5.f, 5.f)];
+	UIView *view = [[UIView alloc] initWithFrame:CGRectInset(rect, 2.f, 2.f)];
 	view.clipsToBounds = YES;
     
 	UILabel *label =  [[UILabel alloc] initWithFrame:view.bounds];
 	label.text = [[leftHeaderDataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-	label.font = [UIFont systemFontOfSize:13.f];
+	label.font = [UIFont systemFontOfSize:10.f];
     label.textColor = self.cellTextColor;
     label.textAlignment = NSTextAlignmentCenter;
+    label.numberOfLines = 0;
     label.backgroundColor = [UIColor clearColor];
     
 	UIColor *color = [self bgColorInSection:indexPath.section InRow:indexPath.row InColumn:-1];
@@ -567,16 +568,17 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 		CGFloat width = [[columnPointCollection objectAtIndex:i] floatValue];
         
         CGRect rect = CGRectMake(0, 0, cellW, cellH);
-        UIView *view = [[UIView alloc] initWithFrame:CGRectInset(rect, 5.f, 5.f)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectInset(rect, 2.f, 2.f)];
 		view.center = CGPointMake(width, cellH / 2.0f);
 		view.clipsToBounds = YES;
 
 		UILabel *label = [[UILabel alloc] initWithFrame:view.bounds];
 		label.text = [NSString stringWithFormat:@"%@", [ary objectAtIndex:i]];
         label.textColor = self.cellTextColor;
-        label.font = [UIFont systemFontOfSize:13.f];
+        label.font = [UIFont systemFontOfSize:10.f];
         label.textAlignment = UITextAlignmentCenter;
         label.backgroundColor = [UIColor clearColor];
+        label.numberOfLines = 0;
         [view addSubview:label];
         
 		UIColor *color = [self bgColorInSection:indexPath.section InRow:indexPath.row InColumn:i];
