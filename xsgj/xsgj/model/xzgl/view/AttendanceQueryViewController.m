@@ -271,7 +271,10 @@ static int const pageSize = 30;
             [self.tableView reloadData];
             
             [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
+            if (!isOffsetPromptShowed) {
+                [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
+                isOffsetPromptShowed = YES;
+            }
             
             if (_attendances.count == 0) {
                 [self showNoDataLabel];

@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface HideTabViewController : UIViewController
+{
+    BOOL isOffsetPromptShowed;
+}
 
 -(UIButton *)titleButton;
 

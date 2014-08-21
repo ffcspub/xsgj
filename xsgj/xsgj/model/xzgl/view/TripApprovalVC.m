@@ -158,7 +158,10 @@ static int const pageSize = 10000;
                 [self showNoDataLabel];
             }
             [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:ShareAppDelegate.window];
+            if (!isOffsetPromptShowed) {
+                [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
+                isOffsetPromptShowed = YES;
+            }
         } else {
             [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
             [MBProgressHUD showError:desciption toView:nil];

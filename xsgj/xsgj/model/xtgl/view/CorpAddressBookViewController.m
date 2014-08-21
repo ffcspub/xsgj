@@ -141,7 +141,10 @@
     // 无网络情况
     else
     {
-        [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
+        if (!isOffsetPromptShowed) {
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
+            isOffsetPromptShowed = YES;
+        }
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         arraySourceDept = [DeptInfoBean searchWithWhere:nil orderBy:nil offset:0 count:1000];
         if (!arraySourceDept)

@@ -122,7 +122,10 @@ static int const pageSize = 10000;
         if (notReachable) {
             [self loadCacheData];
             [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:ShareAppDelegate.window];
+            if (!isOffsetPromptShowed) {
+                [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
+                isOffsetPromptShowed = YES;
+            }
             if(self.arrData.count == 0){
                 [self showNoDataLabel];
             } else {
