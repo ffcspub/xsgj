@@ -202,6 +202,7 @@
 - (void)handleNotifySelectFin:(NSNotification *)note
 {
     BNCustomerType *cusType = [note object];
+    _iTypeSelect = cusType.TYPE_ID;
     [self queryCustomerInfoWithType:cusType.TYPE_ID Name:@""];
 }
 
