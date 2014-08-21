@@ -142,7 +142,7 @@
     if (netStatus == NotReachable) {
         return;
     }
-    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:-60*10];
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:-60*2];
     NSString *time = [date stringWithFormat:@"yyyyMMddHHmmss"];
     NSArray *array = [OfflineRequestCache searchWithWhere:[NSString stringWithFormat:@"datetime<'%@'",time] orderBy:@"datetime" offset:0 count:1];
     if (array.count > 0) {
