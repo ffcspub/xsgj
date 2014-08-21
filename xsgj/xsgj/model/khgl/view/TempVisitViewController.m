@@ -233,7 +233,7 @@
     
     NSString *typeids = [BNCustomerType getOwnerAndChildTypeIds:typeid];
     NSString *areaids = [BNAreaInfo getOwnerAndChildAreaIds:areaid];
-    _aryCusInfoData = [BNCustomerInfo searchWithWhere:[NSString stringWithFormat:@"TYPE_ID in (%@) and AREA_ID in (%@)",typeids,areaids] orderBy:@"ORDER_NO,CUST_NAME" offset:0 count:100];
+    _aryCusInfoData = [BNCustomerInfo searchWithWhere:[NSString stringWithFormat:@"TYPE_ID in (%@) and AREA_ID in (%@)",typeids,areaids] orderBy:@"CUST_NAME" offset:0 count:100];
     if(_aryCusInfoData.count > 0)
     {
         BNCustomerInfo *customerInfo = [_aryCusInfoData objectAtIndex:0];
@@ -263,7 +263,9 @@
     _aryCusTypeData = [BNCustomerType searchWithWhere:nil orderBy:@"TYPE_NAME_PINYIN" offset:0 count:1000];
     if(_aryCusTypeData.count > 0)
     {
-        BNCustomerType *customerType = [_aryCusTypeData objectAtIndex:0];
+         NSArray *data = [self makeCusTypeTreeData];
+        TreeData *treeData = [data firstObject];
+        BNCustomerType *customerType = treeData.dataInfo;
         _cusTypeShow = customerType;
         _lbCusTypeSelect.text = customerType.TYPE_NAME;
     }
@@ -278,9 +280,9 @@
     
     if(_aryCusTypeData.count > 0 && _aryCusAreaData.count > 0)
     {
-        BNCustomerType *customerType = [_aryCusTypeData objectAtIndex:0];
+        //BNCustomerType *customerType = [_aryCusTypeData objectAtIndex:0];
         BNAreaInfo *areaInfo = [_aryCusAreaData objectAtIndex:0];
-        [self loadCustomerInfoWithType:customerType.TYPE_ID Area:areaInfo.AREA_ID];
+        [self loadCustomerInfoWithType:_cusTypeShow.TYPE_ID Area:areaInfo.AREA_ID];
     }
 }
 
