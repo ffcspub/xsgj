@@ -73,10 +73,8 @@ static int const pageSize = 10000;
     
     // 日期控制
     int year = [[NSDate stringFromDate:[NSDate date] withFormat:@"yyyy"] intValue];
-    NSMutableArray *arrYear = [[NSMutableArray alloc] initWithCapacity:5];
-    for (int i = year - 4; i <= year; i++) {
-        [arrYear addObject:[NSString stringWithFormat:@"%d", i]];
-    }
+    NSMutableArray *arrYear = [[NSMutableArray alloc] initWithCapacity:1];
+    [arrYear addObject:[NSString stringWithFormat:@"%d", year]];
     [self.arrPicker addObject:arrYear];
     NSMutableArray *arrMonth = [[NSMutableArray alloc] initWithCapacity:12];
     for (int i = 1; i <= 12; i++) {
@@ -318,7 +316,7 @@ static int const pageSize = 10000;
     picker.tag = 1001;
     [picker selectRow:4 inComponent:0 animated:YES];
     [picker selectRow:0 inComponent:1 animated:YES];
-    self.currentYear = self.arrPicker[0][4];
+    self.currentYear = self.arrPicker[0][0];
     self.currentMonth = [NSString stringWithFormat:@"%02d" ,[self.arrPicker[1][0] intValue]];
     [picker showTitle:@"请选择结束日期" inView:self.view];
 }
