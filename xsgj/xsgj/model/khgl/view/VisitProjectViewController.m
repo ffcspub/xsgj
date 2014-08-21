@@ -9,6 +9,7 @@
 #import "VisitProjectViewController.h"
 #import "SystemAPI.h"
 #import "OAChineseToPinyin.h"
+#import <NSDate+Helper.h>
 
 @interface VisitProjectViewController ()
 {
@@ -265,16 +266,21 @@
     if (!cell) {
         [tableView registerNib:[UINib nibWithNibName:@"VisitProjectCell" bundle:nil] forCellReuseIdentifier:@"VISITPROJECTCELL"];
         cell = [tableView dequeueReusableCellWithIdentifier:@"VISITPROJECTCELL"];
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     }
-    
+    BNCustomerInfo *customerInfo = nil;
     if(_aryVisitData.count > 0)
     {
-        BNCustomerInfo *customerInfo = [_aryVisitData objectAtIndex:indexPath.row];
-        NSArray *aryRecords = [_aryVisitRecord objectAtIndex:indexPath.row];
-        [cell setCellWithValue:customerInfo VistRecord:aryRecords];
+        customerInfo = [_aryVisitData objectAtIndex:indexPath.row];
+    }
+    NSArray *aryRecords = nil;
+    NSDate *date = [NSDate dateFromString:_lbDate.text withFormat:@"yyyy-MM-dd"];
+    if ([date compare:[NSDate date]] == NSOrderedAscending) {
+       aryRecords = [_aryVisitRecord objectAtIndex:indexPath.row];
     }
     
-    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    [cell setCellWithValue:customerInfo VistRecord:aryRecords];
+    
     return cell;
 }
 
@@ -289,7 +295,7 @@
     
     CusDetailViewController *cusDetailViewController = [[CusDetailViewController alloc] initWithNibName:@"CusDetailViewController" bundle:nil];
     cusDetailViewController.customerInfo = customerInfo;
-    if(aryRecords.count > 0)
+    if( aryRecords.count > 0)
     {
         cusDetailViewController.visitRecord = [aryRecords objectAtIndex:0];
     }
