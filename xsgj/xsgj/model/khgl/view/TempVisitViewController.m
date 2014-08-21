@@ -295,7 +295,7 @@
     
     if(customerInfo.CUST_NAME.length > 0 && customerInfo.TYPE_NAME > 0)
     {
-        NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D and VISIT_TYPE=0",customerInfo.CUST_ID] orderBy:nil offset:0 count:100];
+        NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D and VISIT_TYPE=0",customerInfo.CUST_ID] orderBy:@"END_TIME desc" offset:0 count:1];
         if(aryRecord.count > 0)
         {
             self.visitRecordSelect = [aryRecord lastObject];
