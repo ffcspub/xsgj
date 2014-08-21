@@ -529,7 +529,7 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
     
 	UILabel *label =  [[UILabel alloc] initWithFrame:view.bounds];
 	label.text = [[leftHeaderDataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-	label.font = [UIFont systemFontOfSize:10.f];
+	label.font = [UIFont systemFontOfSize:12.f];
     label.textColor = self.cellTextColor;
     label.textAlignment = NSTextAlignmentCenter;
     label.numberOfLines = 0;
@@ -575,7 +575,7 @@ typedef NS_ENUM (NSUInteger, TableColumnSortType) {
 		UILabel *label = [[UILabel alloc] initWithFrame:view.bounds];
 		label.text = [NSString stringWithFormat:@"%@", [ary objectAtIndex:i]];
         label.textColor = self.cellTextColor;
-        label.font = [UIFont systemFontOfSize:10.f];
+        label.font = [UIFont systemFontOfSize:12.f];
         label.textAlignment = UITextAlignmentCenter;
         label.backgroundColor = [UIColor clearColor];
         label.numberOfLines = 0;
