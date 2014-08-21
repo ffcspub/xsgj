@@ -111,11 +111,10 @@
     NSArray *cusinfo =[BNCustomerInfo searchWithWhere:[NSString stringWithFormat:@"CUST_ID in (%@)",custids] orderBy:@"CUST_NAME_PINYIN" offset:0 count:1000];
     [_aryVisitData addObjectsFromArray:cusinfo];
     
-
     for(int i=0; i<_aryVisitData.count; i++)
     {
         BNCustomerInfo *customerInfo = [_aryVisitData objectAtIndex:i];
-        NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D and VISIT_DATE like '%@%@'",customerInfo.CUST_ID,[[NSDate date] stringWithFormat:@"yyyy-MM-dd"],@"%"] orderBy:@"VISIT_DATE desc" offset:0 count:100];
+        NSArray *aryRecord = [BNVistRecord searchWithWhere:[NSString stringWithFormat:@"CUST_ID=%D and VISIT_DATE like '%@%@'",customerInfo.CUST_ID,_lbDate.text,@"%"] orderBy:@"VISIT_DATE desc" offset:0 count:100];
         [_aryVisitRecord addObject:aryRecord];
     }
     [_tvContain reloadData];
@@ -273,12 +272,7 @@
     {
         customerInfo = [_aryVisitData objectAtIndex:indexPath.row];
     }
-    NSArray *aryRecords = nil;
-    NSDate *date = [NSDate dateFromString:_lbDate.text withFormat:@"yyyy-MM-dd"];
-    if ([date compare:[NSDate date]] == NSOrderedAscending) {
-       aryRecords = [_aryVisitRecord objectAtIndex:indexPath.row];
-    }
-    
+    NSArray *aryRecords = [_aryVisitRecord objectAtIndex:indexPath.row];
     [cell setCellWithValue:customerInfo VistRecord:aryRecords];
     
     return cell;
