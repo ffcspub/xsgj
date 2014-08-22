@@ -309,9 +309,9 @@
         }
     }
     
-    [BNVistRecord deleteWithWhere:nil];
+    [BNVistRecord deleteWithWhere:@"SYNC_STATE=1"];
     for (BNVistRecord *bean in _VISIT_RECORDS) {
-        [bean saveToDB];
+        [bean save];
     }
     [BNVisitStepRecord deleteWithWhere:nil];
     for (BNVisitStepRecord *bean in _VISIT_STEP_RECORDS) {
