@@ -27,9 +27,9 @@
     if (syncState == 1) {
         _ivStatus.image = [UIImage imageNamed:@"stateicon_nopass"];
     }else if (syncState == 2){
-        _ivStatus.image = [UIImage imageNamed:@"CheckBox_Selected"];
+        _ivStatus.image = [UIImage imageNamed:@"CheckBox1_Selected"];
     }else{
-        _ivStatus.image = [UIImage imageNamed:@"CheckBox_unSelected"];
+        _ivStatus.image = [UIImage imageNamed:@"CheckBox1_unSelected"];
     }
 }
 

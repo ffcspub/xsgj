@@ -64,6 +64,7 @@
             }];
         }else{
             [self loadVisitDataWithDate:[[NSDate date] getWeekDay]];
+            [hud hide:YES];
         }
     } fail:^(BOOL notReachable, NSString *desciption) {
         [hud hide:YES];
