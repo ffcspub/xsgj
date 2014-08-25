@@ -31,8 +31,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *tfZpPrice;
 @property (weak, nonatomic) IBOutlet UILabel *lbTotalPrice;
-@property (weak, nonatomic) NSIndexPath *indexPath;
-@property (weak, nonatomic) OrderItemBean *commitData;
+@property (strong, nonatomic) NSIndexPath *indexPath;
+@property (strong, nonatomic) OrderItemBean *commitData;
 
 - (void)setCellWithValue:(OrderItemBean *)commitBean;
 - (IBAction)handleBtnAddClicked:(id)sender;
