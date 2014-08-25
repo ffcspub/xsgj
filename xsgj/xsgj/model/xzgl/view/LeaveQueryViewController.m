@@ -303,7 +303,7 @@ static int const pageSize = 30;
             
             [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
             if (!isOffsetPromptShowed) {
-                [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
+                [MBProgressHUD showSuccess:DEFAULT_OFFLINEQUERYMESSAGE toView:nil];
                 isOffsetPromptShowed = YES;
             }
             
