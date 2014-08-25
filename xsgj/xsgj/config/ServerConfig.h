@@ -13,7 +13,7 @@
 
 // **************生产************
 //// 根路径
-//#define BASE_SERVERLURL @"http://117.27.151.203:9099/xsgj_ws/"
+//#define BASE_SERVERLURL @"http://117.27.151.203/xsgj_ws/"
 //// 图片上传路径
 //#define UPLOAD_PIC_URL @"http://117.27.151.204:9099/xsgj_up/"
 //// 图片根路径
