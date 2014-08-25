@@ -143,7 +143,7 @@
             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"签到"];
             [cache saveToDB];
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINE_MESSAGE_REPORT toView:self.view];
             double delayInSeconds = 1.5;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){

@@ -336,7 +336,7 @@
              OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
              cache.VISIT_NO = _vistRecord.VISIT_NO;
              [cache saveToDB];
-             [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:ShareAppDelegate.window];
+             [MBProgressHUD showSuccess:DEFAULT_OFFLINE_MESSAGE_REPORT toView:ShareAppDelegate.window];
              
              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                  sleep(1);

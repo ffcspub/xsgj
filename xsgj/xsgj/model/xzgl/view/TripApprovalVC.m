@@ -159,7 +159,7 @@ static int const pageSize = 10000;
             }
             [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
             if (!isOffsetPromptShowed) {
-                [MBProgressHUD showSuccess:DEFAULT_OFFLINEQUERYMESSAGE toView:nil];
+                [MBProgressHUD showSuccess:DEFAULT_OFFLINE_MESSAGE_QUERY toView:nil];
                 isOffsetPromptShowed = YES;
             }
         } else {

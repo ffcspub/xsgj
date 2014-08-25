@@ -196,7 +196,7 @@
             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"配送处理"];
             [cache saveToDB];
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:self.view];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINE_MESSAGE_REPORT toView:self.view];
             [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
         }else{
             self.navigationItem.rightBarButtonItem.enabled = YES;

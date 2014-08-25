@@ -142,7 +142,7 @@
     else
     {
         if (!isOffsetPromptShowed) {
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEQUERYMESSAGE toView:nil];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINE_MESSAGE_QUERY toView:nil];
             isOffsetPromptShowed = YES;
         }
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];

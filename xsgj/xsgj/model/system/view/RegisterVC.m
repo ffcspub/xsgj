@@ -362,7 +362,7 @@
             [cache saveToDB];
             
             [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINEMESSAGE toView:nil];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINE_MESSAGE_REPORT toView:nil];
             
             [self performSelector:@selector(backToFront) withObject:nil afterDelay:0.f];
         } else {

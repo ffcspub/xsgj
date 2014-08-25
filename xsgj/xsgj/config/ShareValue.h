@@ -53,8 +53,9 @@
 #define COLOR_DETAIL_CONTENT    HEX_RGB(0x5C6871)
 #define FONT_SIZE_DETAIL_CONTENT 15.f
 
-#define DEFAULT_OFFLINEMESSAGE @"当前网络不佳，已使用离线存储"
-#define DEFAULT_OFFLINEQUERYMESSAGE @"网络不稳定，当前显示离线数据"
+#define DEFAULT_OFFLINE_MESSAGE_REPORT @"当前网络不佳,已转为离线上报"
+#define DEFAULT_OFFLINE_MESSAGE_QUERY  @"网络不稳定,当前显示离线数据"
+
 @interface ShareValue : NSObject{
    
 }
