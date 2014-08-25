@@ -9,6 +9,7 @@
 #import "MyCusDetailViewController.h"
 #import <UIImageView+WebCache.h>
 #import "MyCusMapAddressVC.h"
+#import <LKDBHelper.h>
 
 @interface MyCusDetailViewController ()
 
@@ -58,8 +59,12 @@
     {
         self.lbVisitTime.text = @"一周前";
     }
-    
-    
+    if (_custDetailBean.PHOTO.length == 0) {
+        BNCustomerInfo *customerInfo = [BNCustomerInfo searchSingleWithWhere:[NSString stringWithFormat:@"CUST_ID=%d",_custDetailBean.CUST_ID] orderBy:nil];
+        if (customerInfo) {
+            _custDetailBean.PHOTO = customerInfo.PHOTO;
+        }
+    }
     if(_custDetailBean.PHOTO.length > 1)
     {
         NSString *strUrl = [ShareValue getFileUrlByFileId:_custDetailBean.PHOTO];

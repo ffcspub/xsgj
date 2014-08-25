@@ -8,13 +8,17 @@
 
 #import "MyCustomerViewController.h"
 #import "MyCusDetailViewController.h"
+#import <SVPullToRefresh.h>
 
 @interface MyCustomerViewController ()
 {
     NSArray *_aryCusTypeData;
     NSArray *_aryCusTypeTreeData;
-    NSArray *_aryCusInfoData;
+    NSMutableArray *_aryCusInfoData;
     int _iTypeSelect;
+    int _page;
+    int _type;
+    NSString *_name;
 }
 
 @end
@@ -40,6 +44,10 @@
     _iTypeSelect = -1;
     [self initView];
     [self loadCustomerData];
+    _tvContain.showsInfiniteScrolling = YES;
+    [_tvContain addInfiniteScrollingWithActionHandler:^{
+        [self queryCustomerInfoWithType:_type Name:_name];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,6 +65,8 @@
 {
     self.title = @"我的客户";
     [self showRightBarButtonItemWithTitle:@"查询" target:self action:@selector(handleNavBarRight)];
+    _page = 1;
+    _aryCusInfoData = [[NSMutableArray alloc]init];
 }
 
 #pragma mark - functions
@@ -86,6 +96,16 @@
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
+    if (_type != type) {
+        _type = type;
+        _page = 1;
+        [_aryCusInfoData removeAllObjects];
+    }
+    if (![_name isEqual:name]) {
+        _name = name;
+        _page = 1;
+        [_aryCusInfoData removeAllObjects];
+    }
     CustomerDetailHttpRequest *request = [[CustomerDetailHttpRequest alloc]init];
     // 基础用户信息
     request.SESSION_ID  = [ShareValue shareInstance].userInfo.SESSION_ID;
@@ -93,6 +113,7 @@
     request.DEPT_ID     = [ShareValue shareInstance].userInfo.DEPT_ID;
     request.USER_AUTH   = [ShareValue shareInstance].userInfo.USER_AUTH;
     request.USER_ID     = [ShareValue shareInstance].userInfo.USER_ID;
+    
     // 附加信息
     //request.CUST_ID   = self.vistRecord.VISIT_NO;
     if(type > 0)
@@ -105,19 +126,26 @@
         request.CUST_NAME  = name;
     }
     
+    request.PAGE = _page;
+    
     [KHGLAPI customerDetailByRequest:request success:^(CustomerDetailHttpResponse *response) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        _aryCusInfoData = response.DATA;
-        [_tvContain reloadData];
+        [_aryCusInfoData addObjectsFromArray:response.DATA];
+        [_tvContain.infiniteScrollingView stopAnimating];
         if(_aryCusInfoData.count < 1)
         {
             [MBProgressHUD showError:@"查询结果为空" toView:self.view];
         }
-
+        if(response.DATA.count < request.ROWS){
+            _tvContain.showsInfiniteScrolling = NO;
+        }else{
+             _page ++;
+        }
+        [_tvContain reloadData];
     } fail:^(BOOL notReachable, NSString *desciption) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showError:desciption toView:self.view];
-        
+        [_tvContain.infiniteScrollingView stopAnimating];
     }];
 }
 
