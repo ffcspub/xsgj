@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OfflineRequestCache.h"
 
 @interface OfflineAPI : NSObject
 
@@ -15,5 +16,9 @@
 -(void)sendOfflineRequest;
 
 -(void)startListener;//开始监听网络变化
+
+-(void)stopListener;
+
+-(BOOL)sendOfflineRequest:(OfflineRequestCache*)cache;
 
 @end

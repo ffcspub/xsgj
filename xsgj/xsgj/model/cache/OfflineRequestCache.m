@@ -45,7 +45,8 @@
     self = [super init];
     if (self) {
         self.time = [[NSDate date]stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
-        self.datetime = [[NSDate date] stringWithFormat:@"yyyyMMddHHmmss"];
+        NSDate *date = [NSDate dateWithTimeIntervalSinceNow:-60*10];
+        self.datetime = [date stringWithFormat:@"yyyyMMddHHmmss"];
         self.requestJsonStr = request.requestPath;
         self.name = name;
         if ([request isKindOfClass:[UploadPhotoHttpRequest class]]) {

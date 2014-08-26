@@ -1,4 +1,4 @@
-//
+date//
 //  OfflineAPI.m
 //  xsgj
 //
@@ -142,7 +142,7 @@
     if (netStatus == NotReachable) {
         return;
     }
-    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:-60*2];
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:-60*10];
     NSString *time = [date stringWithFormat:@"yyyyMMddHHmmss"];
     NSArray *array = [OfflineRequestCache searchWithWhere:[NSString stringWithFormat:@"datetime<'%@'",time] orderBy:@"datetime" offset:0 count:1];
     if (array.count > 0) {
@@ -164,6 +164,20 @@
         
     }
    
+}
+
+/**
+ *  启动离线上报
+ */
+-(BOOL)sendOfflineRequest:(OfflineRequestCache*)cache{
+    AFHTTPClient *client = OfflineAPI.client;
+    if (cache.isUpload) {
+        client = OfflineAPI.uploadClient;
+    }
+    // 保证只有一个线程在发送请求
+    @synchronized(self) {
+        return [self httpClient:client sendHTTPRequest:cache];
+    }
 }
 
 /**
@@ -216,11 +230,12 @@
 
 - (void)startListener
 {
-    _timer = [NSTimer scheduledTimerWithTimeInterval:10*60 target:self selector:@selector(checkUpdate) userInfo:nil repeats:YES];
     if (!_reachability) {
         _reachability = [Reachability reachabilityWithHostname:@"www.baidu.com"];  // 测试服务器状态
     }
     [_reachability startNotifier]; //开始监听,会启动一个run loop
+    
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1*60 target:self selector:@selector(checkUpdate) userInfo:nil repeats:YES];
     
     if (!self.isObserve) {
         [[NSNotificationCenter defaultCenter] addObserver:self

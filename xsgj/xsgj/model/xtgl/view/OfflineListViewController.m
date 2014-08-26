@@ -9,6 +9,7 @@
 #import "OfflineListViewController.h"
 #import "OfflineRequestCache.h"
 #import <LKDBHelper.h>
+#import "OffilineDetailViewController.h"
 
 typedef  enum : NSUInteger {
     TOP = 0,
@@ -119,8 +120,13 @@ typedef  enum : NSUInteger {
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateSuccess:) name:NOTIFICATION_OFFLINESENDSUCCESS object:nil];
-    [self loadDatas];
+    
     // Do any additional setup after loading the view from its nib.
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self loadDatas];
 }
 
 -(void)viewDidUnload{
@@ -141,7 +147,17 @@ typedef  enum : NSUInteger {
 
 -(void)loadDatas{
     _datas = [OfflineRequestCache searchWithWhere:@"isUpload=0" orderBy:@"time desc" offset:0 count:1000];
-    [_tableView reloadData];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+         [_tableView reloadData];
+    });
+   
+}
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    OffilineDetailViewController *vlc = [[OffilineDetailViewController alloc]init];
+    vlc.cache = [_datas objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:vlc animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
