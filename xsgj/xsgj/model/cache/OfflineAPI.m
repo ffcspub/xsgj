@@ -1,4 +1,4 @@
-date//
+//
 //  OfflineAPI.m
 //  xsgj
 //
@@ -216,10 +216,15 @@ date//
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
                                                                     object:request];
                 return YES;
+            }else{
+                [request fail:1];
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
+                                                                    object:request];
+                return NO;
             }
        }
     }
-    [request fail];
+    [request fail:0];
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
                                                         object:request];
     result = NO;

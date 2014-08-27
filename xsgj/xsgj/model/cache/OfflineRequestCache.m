@@ -27,16 +27,17 @@
     return self;
 }
 
--(void)fail{
+-(void)fail:(int)netstate{
     self.sigleUpdateCount ++;
     self.updateCount ++;
+    self.netstate = netstate;
     if (self.sigleUpdateCount > 5) {
         if (self.updateCount > 50) {
             [self deleteToDB];
             return;
         }
-        self.datetime = [[NSDate date] stringWithFormat:@"yyyyMMddHHmmss"];
     }
+    self.datetime = [[NSDate date] stringWithFormat:@"yyyyMMddHHmmss"];
     [[LKDBHelper getUsingLKDBHelper]updateToDB:self where:[NSString stringWithFormat:@"rowid=%d",self.rowid]];
 }
 

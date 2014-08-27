@@ -9,6 +9,7 @@
 #import "OffilineDetailViewController.h"
 #import "OfflineAPI.h"
 #import "MBProgressHUD+Add.h"
+#import <NSDate+Helper.h>
 
 @interface OffilineDetailViewController (){
     
@@ -45,6 +46,11 @@
 {
     [super viewDidLoad];
     [btn_update configBlueStyle];
+    [self upUI];
+    // Do any additional setup after loading the view from its nib.
+}
+
+-(void)upUI{
     lb_title.text = _cache.name;
     if (_cache.updateCount > 0) {
         lb_state.text = @"上报失败";
@@ -54,10 +60,10 @@
     lb_creattime.text = _cache.time;
     lb_trytime.text = [NSString stringWithFormat:@"%d次",_cache.updateCount];
     if (_cache.updateCount > 0) {
-        lb_lasttime.text = _cache.datetime;
-        lb_lastnet.text = @"有网络";
+        NSDate *date = [NSDate dateFromString:_cache.datetime withFormat:@"yyyyMMddHHmmss"];
+        lb_lasttime.text = [date stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
+        lb_lastnet.text = _cache.netstate==1?@"有网络":@"无网络";
     }
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,20 +73,26 @@
 }
 
 - (IBAction)uploadAction:(id)sender {
-    [MBProgressHUD showMessag:@"正在提交" toView:self.view];
+   MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在提交" toView:ShareAppDelegate.window];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         BOOL flag = [[OfflineAPI shareInstance]sendOfflineRequest:_cache];
         if (flag) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
+                hud.mode = MBProgressHUDModeText;
+                hud.labelText = @"上传成功";
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [hud hide:YES];
                     [self.navigationController popViewControllerAnimated:YES];
                 });
             });
         }else{
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:@"上传失败" toView:self.view];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [hud hide:YES];
+                [MBProgressHUD showError:@"上传失败" toView:ShareAppDelegate.window];
+                _cache = [OfflineRequestCache searchSingleWithWhere:[NSString stringWithFormat:@"rowid=%d",_cache.rowid ] orderBy:nil];
+                [self upUI];
+            });
+            
         }
     });
     
