@@ -27,6 +27,7 @@
 #import "GpsSettingViewController.h"
 #import "SystemAPI.h"
 #import "AsnyTaskManager.h"
+#import "OfflineAPI.h"
 
 @implementation AppDelegate
 
@@ -130,6 +131,9 @@
             
         }];
         [[AsnyTaskManager shareInstance] stopTask];
+        
+        [[OfflineAPI shareInstance]stopListener];
+        
     }
     
 }
@@ -144,6 +148,11 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    if (self.window.rootViewController == _tabBarController) {
+        [[AsnyTaskManager shareInstance] startTask];
+        [[OfflineAPI shareInstance]startListener];
+        
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
