@@ -18,6 +18,7 @@
 #import "ShareValue.h"
 #import "IBActionSheet.h"
 #import "OfflineRequestCache.h"
+#import "LK_EasySignal.h"
 
 @interface DistributionHandleDetailVC () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, IBActionSheetDelegate>
 {
@@ -56,7 +57,8 @@
     
     // 初始化
     self.lblResult.text = [self.arrResult firstObject];
-    
+    _tfMoney.keyboardType = UIKeyboardTypeDecimalPad;
+    _tfMoney.inputRegular = @"^(\\d?\\d?\\d?\\d?\\d?\\d?\\d?\\d?\\d?)(\\.\\d?\\d?)?$";
     if (self.currentState == DistributionHandleStateResult) {
         self.svHandleTwo.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.view addSubview:self.svHandleTwo];

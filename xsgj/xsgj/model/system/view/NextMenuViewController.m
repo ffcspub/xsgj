@@ -16,6 +16,7 @@
 @interface NextMenuViewController (){
     
     __weak IBOutlet UIView *iv_netstate;
+    Reachability *_reachability;
 }
 
 @end
@@ -35,7 +36,11 @@
 {
     [super viewDidLoad];
     [self reloadScrollView];
-    
+    // Do any additional setup after loading the view from its nib.
+    if (!_reachability) {
+        _reachability = [Reachability reachabilityWithHostname:@"www.baidu.com"];  // 测试服务器状态
+    }
+    [_reachability startNotifier]; //开始监听,会启动一个run loop
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
     
     // Do any additional setup after loading the view from its nib.

@@ -233,24 +233,26 @@
 }
 
 -(void)locationUpdated{
+    _isLocationSuccess = YES;
     [[MapUtils shareInstance] startGeoCodeSearch];
 }
 
 -(void)locationUpdateError{
-    _lb_currentLocation.text = @"定位失败";
-    _isLocationSuccess = NO;
+    if (_lb_currentLocation.text.length == 0) {
+        _lb_currentLocation.text = @"定位失败";
+        _isLocationSuccess = NO;
+        _btn_update.enabled = YES;
+    }
 }
 
 -(void)locationAddressUpdate{
     _lb_currentLocation.text = [ShareValue shareInstance].address;
     _btn_update.enabled = YES;
-    _isLocationSuccess = YES;
 }
 
 -(void)locationAddressUpdateErro{
     _lb_currentLocation.text = @"定位失败";
     _btn_update.enabled = YES;
-    _isLocationSuccess = NO;
 }
 
 #pragma mark

@@ -432,8 +432,11 @@
 }
 
 -(void)locationUpdateError{
-    self.lblAutoLocation.text = @"定位失败";
-    _isLocationSuccess = NO;
+    if (self.lblAutoLocation.text.length == 0) {
+        self.lblAutoLocation.text = @"定位失败";
+        _btnRefresh.enabled = YES;
+        _isLocationSuccess = NO;
+    }
 }
 
 -(void)locationAddressUpdate{

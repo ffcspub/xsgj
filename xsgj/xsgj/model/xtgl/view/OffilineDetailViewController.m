@@ -73,6 +73,8 @@
 }
 
 - (IBAction)uploadAction:(id)sender {
+    UIButton *btn = (UIButton *)sender;
+    btn.enabled = NO;
    MBProgressHUD *hud = [MBProgressHUD showMessag:@"正在提交" toView:ShareAppDelegate.window];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         BOOL flag = [[OfflineAPI shareInstance]sendOfflineRequest:_cache];
@@ -89,6 +91,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [hud hide:YES];
                 [MBProgressHUD showError:@"上传失败" toView:ShareAppDelegate.window];
+                btn.enabled = YES;
                 _cache = [OfflineRequestCache searchSingleWithWhere:[NSString stringWithFormat:@"rowid=%d",_cache.rowid ] orderBy:nil];
                 [self upUI];
             });
