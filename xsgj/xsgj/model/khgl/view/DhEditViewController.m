@@ -113,6 +113,10 @@
     viewController.aryData = _aryDhData;
     viewController.customerInfo = self.customerInfo;
     viewController.vistRecord = self.vistRecord;
+    // 合作商名称
+    BNPartnerInfoBean *partnerInfo =[[BNPartnerInfoBean alloc]init];
+    partnerInfo.PARTNER_NAME= self.tfName.text;
+    viewController.partnerInfo = partnerInfo;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
