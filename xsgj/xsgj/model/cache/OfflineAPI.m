@@ -146,18 +146,20 @@
     NSString *time = [date stringWithFormat:@"yyyyMMddHHmmss"];
     NSArray *array = [OfflineRequestCache searchWithWhere:[NSString stringWithFormat:@"datetime<'%@'",time] orderBy:@"datetime" offset:0 count:1];
     if (array.count > 0) {
-        OfflineRequestCache *cache = array.firstObject;
-        AFHTTPClient *client = OfflineAPI.client;
-        if (cache.isUpload) {
-            client = OfflineAPI.uploadClient;
-        }
-        // 保证只有一个线程在发送请求
+                // 保证只有一个线程在发送请求
         @synchronized(self) {
+            OfflineRequestCache *cache = array.firstObject;
+            AFHTTPClient *client = OfflineAPI.client;
+            if (cache.isUpload) {
+                client = OfflineAPI.uploadClient;
+            }
             if ([self httpClient:client sendHTTPRequest:cache]) {
                 NSLog(@"离线上报---->[%@] 成功!", cache.name);
+                sleep(0.5);
                 [self sendOfflineRequest];
             } else {
                 NSLog(@"离线上报---->[%@] 失败!", cache.name);
+                sleep(0.5);
                 [self sendOfflineRequest];
             }
         }
@@ -217,6 +219,7 @@
                                                                     object:request];
                 return YES;
             }else{
+                request.errorDescript = response.MESSAGE.MESSAGECONTENT;
                 [request fail:1];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OFFLINESENDSUCCESS
                                                                     object:request];

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1280" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -9,11 +9,14 @@
             <connections>
                 <outlet property="btn_update" destination="Dad-pr-Zen" id="Cqw-P4-A0R"/>
                 <outlet property="lb_creattime" destination="7c2-ox-Cwr" id="793-Zz-mXS"/>
+                <outlet property="lb_error" destination="rmS-lC-93M" id="VnI-PU-sQf"/>
                 <outlet property="lb_lastnet" destination="IEd-wH-S3a" id="waW-iM-RS7"/>
                 <outlet property="lb_lasttime" destination="dAe-J0-4oV" id="6P1-PB-dc5"/>
                 <outlet property="lb_state" destination="xCf-69-kZh" id="6Ks-4Y-o0P"/>
                 <outlet property="lb_title" destination="BzN-vk-ljG" id="T62-eq-8Le"/>
                 <outlet property="lb_trytime" destination="uUt-QD-Mvb" id="dv0-yp-Lu9"/>
+                <outlet property="vi_content" destination="4kI-ce-P5z" id="nAM-Jt-GY0"/>
+                <outlet property="vi_error" destination="jxn-vN-aGY" id="h5l-9j-hzG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,13 +25,13 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" id="4kI-ce-P5z">
-                    <rect key="frame" x="7" y="18" width="306" height="233"/>
+                <view clipsSubviews="YES" contentMode="scaleToFill" id="4kI-ce-P5z">
+                    <rect key="frame" x="7" y="18" width="306" height="232"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="3nr-u7-Zh6">
                             <rect key="frame" x="1" y="1" width="304" height="37"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="类型" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HzT-DP-fa0">
                                     <rect key="frame" x="20" y="8" width="42" height="21"/>
@@ -49,7 +52,7 @@
                         </view>
                         <view contentMode="scaleToFill" id="vHf-Ca-BTl">
                             <rect key="frame" x="1" y="39" width="304" height="37"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上报状态" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HDf-lR-uMg">
                                     <rect key="frame" x="20" y="8" width="60" height="21"/>
@@ -70,7 +73,7 @@
                         </view>
                         <view contentMode="scaleToFill" id="9zb-hW-vBo">
                             <rect key="frame" x="1" y="77" width="304" height="37"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提交时间" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dQq-dL-OhE">
                                     <rect key="frame" x="20" y="8" width="60" height="21"/>
@@ -91,7 +94,7 @@
                         </view>
                         <view contentMode="scaleToFill" id="ibq-Hh-hy8">
                             <rect key="frame" x="1" y="115" width="304" height="37"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="尝试次数" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4yR-qd-he0">
                                     <rect key="frame" x="20" y="8" width="60" height="21"/>
@@ -111,8 +114,8 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
                         <view contentMode="scaleToFill" id="jov-ZT-Xh1">
-                            <rect key="frame" x="1" y="153" width="304" height="37"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <rect key="frame" x="1" y="153" width="304" height="38"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最近上报时间" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="haK-Vs-Tyt">
                                     <rect key="frame" x="20" y="4" width="74" height="29"/>
@@ -132,7 +135,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
                         <view contentMode="scaleToFill" id="W6X-aH-vdZ">
-                            <rect key="frame" x="1" y="191" width="304" height="40"/>
+                            <rect key="frame" x="1" y="192" width="304" height="39"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最近上报网络状态" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZTr-0i-l1f">
@@ -152,11 +155,32 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
+                        <view contentMode="scaleToFill" id="jxn-vN-aGY">
+                            <rect key="frame" x="1" y="232" width="304" height="40"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="错误提示" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tF5-qI-aiK">
+                                    <rect key="frame" x="20" y="6" width="77" height="29"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rmS-lC-93M">
+                                    <rect key="frame" x="113" y="9" width="171" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.93333339689999995" green="0.93333339689999995" blue="0.93333339689999995" alpha="1" colorSpace="deviceRGB"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Dad-pr-Zen">
-                    <rect key="frame" x="7" y="259" width="306" height="34"/>
+                    <rect key="frame" x="7" y="293" width="306" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="上传">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

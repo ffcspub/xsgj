@@ -27,6 +27,11 @@
     
     __weak IBOutlet UIButton *btn_update;
 
+    __weak IBOutlet UILabel *lb_error;
+    
+    __weak IBOutlet UIView *vi_error;
+    
+    __weak IBOutlet UIView *vi_content;
 }
 
 @end
@@ -58,12 +63,22 @@
         lb_state.text = @"等待上报";
     }
     lb_creattime.text = _cache.time;
+    lb_error.text = _cache.errorDescript;
     lb_trytime.text = [NSString stringWithFormat:@"%d次",_cache.updateCount];
     if (_cache.updateCount > 0) {
         NSDate *date = [NSDate dateFromString:_cache.datetime withFormat:@"yyyyMMddHHmmss"];
         lb_lasttime.text = [date stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
         lb_lastnet.text = _cache.netstate==1?@"有网络":@"无网络";
+        if (_cache.netstate==1) {
+            CGRect rect = vi_content.frame;
+            rect.size.height = 273.0;
+            vi_content.frame = rect;
+            return;
+        }
     }
+    CGRect rect = vi_content.frame;
+    rect.size.height = 232.0;
+    vi_content.frame = rect;
 }
 
 - (void)didReceiveMemoryWarning

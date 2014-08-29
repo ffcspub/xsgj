@@ -36,14 +36,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
     [self reloadScrollView];
     // Do any additional setup after loading the view from its nib.
-    if (!_reachability) {
-        _reachability = [Reachability reachabilityWithHostname:@"www.baidu.com"];  // 测试服务器状态
-    }
-    [_reachability startNotifier]; //开始监听,会启动一个run loop
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self reachabilityChanged:nil];
 }
 
 -(void)showNetStateBar{
@@ -69,7 +69,7 @@
 }
 
 -(void)reachabilityChanged: (NSNotification* )note {
-    Reachability* curReach = [note object];
+    Reachability* curReach = [Reachability reachabilityWithHostname:@"www.baidu.com"];
     NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
     
     NetworkStatus netStatus = [curReach currentReachabilityStatus];

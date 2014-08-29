@@ -22,6 +22,7 @@
 @property(nonatomic,assign) int sigleUpdateCount;//单次上传次数(失败次数)
 @property(nonatomic,assign) int updateCount;//上传次数(失败次数)
 @property(nonatomic,assign) int netstate;//上传时的网络状态  0：无网络  1:有网络
+@property(nonatomic,strong) NSString *errorDescript;//错误提示
 
 -(id)initWith:(LK_HttpBaseRequest *)request name:(NSString *)name;
 
