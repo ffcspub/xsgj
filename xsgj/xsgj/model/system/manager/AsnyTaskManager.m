@@ -22,6 +22,7 @@ static AsnyTaskManager *_shareValue;
     int _INTERVALTIME;
     NSTimer *_taskTimer;
     NSTimer *_locationTaskTimer;
+    NSDate *_lasttime;
 }
 
 @end
@@ -80,7 +81,12 @@ static AsnyTaskManager *_shareValue;
 }
 
 -(void)doLocationUpdateTask{
-    [[MapUtils shareInstance]startLocationUpdate];
+    NSDate *lastupdate = [NSDate dateWithTimeIntervalSinceNow:-15*60];
+    if (!_lasttime || [_lasttime earlierDate:lastupdate]) {
+        _lasttime = [NSDate date];
+        [[MapUtils shareInstance]startLocationUpdate];
+    }
+    
 }
 
 -(void)doTask{
@@ -115,6 +121,7 @@ static AsnyTaskManager *_shareValue;
 }
 
 -(void)stopTask{
+    _lasttime = nil;
     [_taskTimer invalidate];
     _taskTimer = nil;
     [_locationTaskTimer invalidate];
