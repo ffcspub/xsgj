@@ -81,12 +81,7 @@ static AsnyTaskManager *_shareValue;
 }
 
 -(void)doLocationUpdateTask{
-    NSDate *lastupdate = [NSDate dateWithTimeIntervalSinceNow:-15*60];
-    if (!_lasttime || [_lasttime earlierDate:lastupdate]) {
-        _lasttime = [NSDate date];
-        [[MapUtils shareInstance]startLocationUpdate];
-    }
-    
+     [[MapUtils shareInstance]startLocationUpdate];
 }
 
 -(void)doTask{
@@ -102,6 +97,9 @@ static AsnyTaskManager *_shareValue;
 
 
 -(void)startTask{
+    if (_taskTimer && [_taskTimer isValid]) {
+        return;
+    }
     if (_INTERVALTIME < 15.0) {
         _INTERVALTIME = 15.0;//默认15分钟
     }
