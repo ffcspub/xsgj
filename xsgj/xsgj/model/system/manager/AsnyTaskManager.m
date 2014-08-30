@@ -97,7 +97,7 @@ static AsnyTaskManager *_shareValue;
 
 
 -(void)startTask{
-    if (_taskTimer && [_taskTimer isValid]) {
+    if (_taskTimer) {
         return;
     }
     if (_INTERVALTIME < 15.0) {
