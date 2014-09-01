@@ -130,8 +130,8 @@
     
     [XZGLAPI signupByRequest:request success:^(SignUpHttpReponse *response) {
         
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:self.view];
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+        [MBProgressHUD showSuccess:response.MESSAGE.MESSAGECONTENT toView:ShareAppDelegate.window];
         
         [self performSelector:@selector(back) withObject:nil afterDelay:.5f];
     } fail:^(BOOL notReachable, NSString *desciption) {
@@ -142,8 +142,8 @@
         if (notReachable) {
             OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"签退"];
             [cache saveToDB];
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showSuccess:DEFAULT_OFFLINE_MESSAGE_REPORT toView:self.view];
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showSuccess:DEFAULT_OFFLINE_MESSAGE_REPORT toView:ShareAppDelegate.window];
             double delayInSeconds = 1.5;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -151,15 +151,15 @@
             });
         }else{
             self.navigationItem.rightBarButtonItem.enabled = YES;
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [MBProgressHUD showError:desciption toView:self.view];
+            [MBProgressHUD hideAllHUDsForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
         }
     }];
 }
 
 - (void)uploadPhoto
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     self.navigationItem.rightBarButtonItem.enabled = NO;
     NSDate *now = [NSDate new];
     NSDateFormatter *formatter = [NSDateFormatter new];
