@@ -32,4 +32,6 @@
 
 -(void)save;
 
++(void)deleteAll;
+
 @end

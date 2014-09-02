@@ -13,6 +13,7 @@
 #import "LeaveInfoBean.h"
 #import "SVPullToRefresh.h"
 #import "ApprovalInfoViewController.h"
+#import <LKDBHelper.h>
 
 typedef  enum : NSUInteger {
     TOP = 0,
@@ -176,7 +177,7 @@ static int const pageSize = 10;
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    [[LKDBHelper getUsingLKDBHelper] createTableWithModelClass:[LeaveinfoBean class]];
     _leaves = [[NSMutableArray alloc] init];
     
     __weak LeaveApprovalViewController *weakSelf = self;
@@ -204,7 +205,7 @@ static int const pageSize = 10;
 
 - (void)loadLeaves
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:ShareAppDelegate.window animated:YES];
     
     page++;
     QueryLeaveHttpRequest *request = [[QueryLeaveHttpRequest alloc] init];
@@ -214,25 +215,47 @@ static int const pageSize = 10;
     request.APPROVE_STATE = @"";
     
     [XZGLAPI queryLeaveByRequest:request success:^(QueryLeaveHttpResponse *response) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        
+        [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
         int resultCount = [response.LEAVEINFOBEAN count];
         if (resultCount < pageSize) {
             self.tableView.showsInfiniteScrolling = NO;
         }
         if (page == 1) {
             [_leaves removeAllObjects];
+            [LeaveinfoBean deleteAll];
         }
-        
+        for (LeaveinfoBean *bean in response.LEAVEINFOBEAN ) {
+            [bean save];
+        }
         [self.tableView.infiniteScrollingView stopAnimating];
         [_leaves addObjectsFromArray:response.LEAVEINFOBEAN];
         [self.tableView reloadData];
     } fail:^(BOOL notReachable, NSString *desciption) {
         [self.tableView.infiniteScrollingView stopAnimating];
         self.tableView.showsInfiniteScrolling = NO;
+        if (notReachable) {
+            if (page == 1) {
+                [_leaves removeAllObjects];
+            }
+            NSArray *attendances = [LeaveinfoBean searchWithWhere:nil orderBy:@"APPROVE_STATE,APPLY_TIME DESC" offset:0 count:100];
+            [_leaves addObjectsFromArray:attendances];
+            [self.tableView reloadData];
+            
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            if (!isOffsetPromptShowed) {
+                [MBProgressHUD showSuccess:DEFAULT_OFFLINE_MESSAGE_QUERY toView:nil];
+                isOffsetPromptShowed = YES;
+            }
+            if (_leaves.count == 0) {
+                [self showNoDataLabel];
+            }else{
+                [self hideNODataLabel];
+            }
+        } else {
+            [MBProgressHUD hideHUDForView:ShareAppDelegate.window animated:YES];
+            [MBProgressHUD showError:desciption toView:ShareAppDelegate.window];
+        }
         
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:@"网络不给力" toView:self.view];
     }];
 }
 

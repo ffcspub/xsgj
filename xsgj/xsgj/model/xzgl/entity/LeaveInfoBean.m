@@ -26,8 +26,12 @@
 }
 
 -(void)save{
-    [LeaveinfoBean deleteWithWhere:[NSString stringWithFormat:@"APPLY_TIME='%@'",_APPLY_TIME]];
+    [LeaveinfoBean deleteWithWhere:[NSString stringWithFormat:@"LEAVE_ID='%@'",_LEAVE_ID]];
     [self saveToDB];
+}
+
++(void)deleteAll{
+    [[LKDBHelper getUsingLKDBHelper]deleteWithClass:[LeaveinfoBean class] where:nil];
 }
 
 @end
