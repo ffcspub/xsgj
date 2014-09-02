@@ -236,7 +236,7 @@
             step.SYNC_STATE = 1;
             [step save];
             
-            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:self.title];
+            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"退货上报"];
             cache.VISIT_NO = self.vistRecord.VISIT_NO;
             [cache saveToDB];
             [MBProgressHUD showSuccess:DEFAULT_OFFLINE_MESSAGE_REPORT toView:ShareAppDelegate.window];
