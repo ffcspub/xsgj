@@ -125,8 +125,8 @@
         success();
     } fail:^(BOOL NotReachable, NSString *descript) {
         if (NotReachable) {
-            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"实时定位上报"];
-            [cache saveToDB];
+//            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"实时定位上报"];
+//            [cache saveToDB];
         }
         fail(NotReachable,descript);
     } class:[LocateCommitHttpResponse class]];
@@ -140,10 +140,10 @@
         success();
     } fail:^(BOOL NotReachable, NSString *descript) {
         if (NotReachable) {
-            //存储离线数据，等待下次上传
-            request.STATE = 0;
-            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"手机状态上报"];
-            [cache saveToDB];
+//            //存储离线数据，等待下次上传
+//            request.STATE = 0;
+//            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"手机状态上报"];
+//            [cache saveToDB];
         }
         fail(NotReachable,descript);
     } class:[InsertMobileStateHttpResponse class]];
@@ -157,10 +157,10 @@
         success();
     } fail:^(BOOL NotReachable, NSString *descript) {
         if (NotReachable) {
-            //存储离线数据，等待下次上传
-            request.STATE = 0;
-            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"手机状态上报"];
-            [cache saveToDB];
+//            //存储离线数据，等待下次上传
+//            request.STATE = 0;
+//            OfflineRequestCache *cache = [[OfflineRequestCache alloc]initWith:request name:@"手机状态上报"];
+//            [cache saveToDB];
         }
         fail(NotReachable,descript);
     } class:[InsertMobileStateHttpResponse class]];
