@@ -81,7 +81,7 @@
     [outputFormat setCaseType:CaseTypeUppercase];
     NSString *outputPinyin=[PinyinHelper toHanyuPinyinStringWithNSString:self
                                              withHanyuPinyinOutputFormat:outputFormat withNSString:@""];
-    return outputPinyin;
+    return [outputPinyin uppercaseString];
 }
 
 @end
