@@ -54,7 +54,9 @@
     
     
     //!!!: 临时用最2B的方法解决iOS6.1.2的问题，主要问题就是因为编码格式；好像只有在6.1.2才有问题
-    if (SYSTEM_VERSION_EQUAL_TO(@"6.1.2")) {
+    /*
+    if (SYSTEM_VERSION_EQUAL_TO(@"6.1.2"))
+    {
         
         userInfo.REALNAME                    = [[ShareValue shareInstance].userInfo.REALNAME stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         userInfo.LEADER_NAME                 = [[ShareValue shareInstance].userInfo.LEADER_NAME stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -62,7 +64,7 @@
         userInfo.DEPT_NAME                   = [[ShareValue shareInstance].userInfo.DEPT_NAME stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         userInfo.ROLE_NAME                   = [[ShareValue shareInstance].userInfo.ROLE_NAME stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     }
-
+    */
     request.USER_INFO_BEAN = userInfo;
     NSNumber *lastupdatetime = [ShareValue shareInstance].lastUpdateTime;
     if (!lastupdatetime) {
@@ -72,11 +74,13 @@
     [LK_APIUtil getHttpRequest:request apiPath:URL_UPDATE_CONFIG Success:^(LK_HttpBaseResponse *response) {
         if ([DEFINE_SUCCESSCODE isEqual:response.MESSAGE.MESSAGECODE]) {
             UpdateConfigHttpResponse *tResponse = (UpdateConfigHttpResponse *)response;
-            if (tResponse.CORP_NOTICE_UPDATE_STATE) {
+            /*
+            if (tResponse.CORP_NOTICE_UPDATE_STATE)
+            {
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"企业公告有新的信息" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alert show];
             }
-            
+            */
             // 更新配置添加事务
             [[LKDBHelper getUsingLKDBHelper] executeDB:^(FMDatabase *db) {
                 @try {

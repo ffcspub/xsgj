@@ -121,7 +121,8 @@
                  for (ContactBean *bean in aryTemp)
                  {
                      bean.USER_NAME_PINYIN = [bean.REALNAME convertCNToPinyin];
-                     if (bean.USER_NAME_PINYIN.length > 0) {
+                     if (bean.USER_NAME_PINYIN.length > 0)
+                     {
                          bean.USER_NAME_HEAD   = [bean.USER_NAME_PINYIN substringWithRange:NSMakeRange(0, 1)];
                      }
                      [bean saveToDB];
